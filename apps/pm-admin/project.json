@@ -1,0 +1,80 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/pm-admin/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/pm-admin",
+        "index": "apps/pm-admin/src/index.html",
+        "baseHref": "/",
+        "main": "apps/pm-admin/src/main.js",
+        "polyfills": "apps/pm-admin/src/polyfills.js",
+        "tsConfig": "apps/pm-admin/tsconfig.app.json",
+        "assets": ["apps/pm-admin/src/favicon.ico", "apps/pm-admin/src/assets"],
+        "styles": ["apps/pm-admin/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pm-admin/src/environments/environment.js",
+              "with": "apps/pm-admin/src/environments/environment.prod.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pm-admin:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "pm-admin:build:development"
+        },
+        "production": {
+          "buildTarget": "pm-admin:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/pm-admin/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/pm-admin"],
+      "options": {
+        "jestConfig": "apps/pm-admin/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
