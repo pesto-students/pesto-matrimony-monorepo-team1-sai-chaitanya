@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@pm/pm-business": ["libs/pm-business/src/index.js"],
+      "@pm/pm-ui": ["libs/pm-ui/src/index.js"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
