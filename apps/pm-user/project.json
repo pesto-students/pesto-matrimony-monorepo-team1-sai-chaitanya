@@ -48,7 +48,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "pm-user:build",
-        "hmr": true
+        "hmr": true,
+        "port": 3331
       },
       "configurations": {
         "development": {
@@ -73,6 +74,22 @@
       "options": {
         "jestConfig": "apps/pm-user/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "runAllApps": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx run pm-backend:serve"
+          },
+          {
+            "command": "nx run pm-user:serve"
+          },
+          {
+            "command": "nx run pm-admin:serve"
+          }
+        ]
       }
     }
   },

@@ -1,8 +1,16 @@
-
-
 # Pm
 
 This project was generated using [Nx](https://nx.dev).
+
+Notes:
+
+#### To run all apps at once, use any one below command during development
+
+`nx run-many --target=serve --projects=pm-admin,pm-user,pm-backend --parallel=true`
+
+`npx nx run pm-user:runAllApps`
+
+`nx run pm-user:runAllApps`
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
@@ -78,8 +86,6 @@ Run `nx graph` to see a diagram of the dependencies of your projects.
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
 
 ## ☁ Nx Cloud
 
