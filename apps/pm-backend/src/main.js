@@ -10,6 +10,7 @@ const app = express();
 app.get('/', (req, res) => {
   res.send({ message: 'Welcome to pm-backend!' });
 });
+
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to pm-backend!' });
 });

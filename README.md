@@ -1,16 +1,20 @@
-# Pm
+## Notes:
 
-This project was generated using [Nx](https://nx.dev).
-
-Notes:
-
-#### To run all apps at once, use any one below command during development
+#### To run all apps at once, use any ONE command shown below (during development)
 
 `nx run-many --target=serve --projects=pm-admin,pm-user,pm-backend --parallel=true`
 
 `npx nx run pm-user:runAllApps`
 
 `nx run pm-user:runAllApps`
+
+pm-user (React App) runs on port 3331 <br/>
+pm-admin (React App) runs on port 3332 <br/>
+pm-backend (Express App) runs on port 3333
+
+# Pesto Matrimony
+
+This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 

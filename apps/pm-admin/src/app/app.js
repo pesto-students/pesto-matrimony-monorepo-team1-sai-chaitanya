@@ -1,10 +1,7 @@
-import NxWelcome from './nx-welcome';
-
 import { Route, Routes, Link } from 'react-router-dom';
-export function App() {
+function App() {
   return (
     <>
-      <NxWelcome title="pm-admin" />
       <div />
 
       {/* START: routes */}
