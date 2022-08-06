@@ -1,3 +1,3 @@
-import { LoginForm } from './organisms/LoginForm';
+import { LoginForm } from './molecules/LoginForm';
 
 export { LoginForm };
