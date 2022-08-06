@@ -49,7 +49,7 @@
       "options": {
         "buildTarget": "pm-user:build",
         "hmr": true,
-        "port": 3331
+        "port": 3000
       },
       "configurations": {
         "development": {

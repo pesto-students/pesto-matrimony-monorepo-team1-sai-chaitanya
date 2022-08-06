@@ -1,2 +1,3 @@
-import FormLogin from "./FormLogin";
-export default FormLogin;
+// import FormLogin from "./FormLogin";
+// export default FormLogin;
+export { FormLogin } from './FormLogin';

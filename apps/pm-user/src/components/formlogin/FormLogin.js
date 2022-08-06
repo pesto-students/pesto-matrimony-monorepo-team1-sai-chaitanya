@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import "./formlogin.scss";
-import Button from "../button";
-import MyInput from "../myinput";
-import img from "../../assets/loginimages/loginpage.jpg";
+import React, { useState } from 'react';
+import './formlogin.scss';
+import Button from '../button';
+import MyInput from '../myinput';
+import img from '../../assets/loginimages/loginpage.jpg';
 
 const FormLogin = ({ onLogin }) => {
   const [formValues, setFormValues] = useState({
-    emailValue: "",
-    passwordValue: "",
+    emailValue: '',
+    passwordValue: '',
   });
 
   function submitForm(e) {
@@ -16,7 +16,7 @@ const FormLogin = ({ onLogin }) => {
     if (formValues) {
       onLogin(formValues.passwordValue, formValues.emailValue);
     } else {
-      console.log("email or password can not be empty");
+      console.log('email or password can not be empty');
     }
   }
 
@@ -60,7 +60,7 @@ const FormLogin = ({ onLogin }) => {
             </form>
             <p>Forgot Password</p>
             <p>
-              Don't haveaccount? <span className="signup_link">SignUp</span>
+              Don't have an account? <span className="signup_link">SignUp</span>
             </p>
           </div>
         </div>
@@ -69,4 +69,4 @@ const FormLogin = ({ onLogin }) => {
   );
 };
 
-export default FormLogin;
+export { FormLogin };

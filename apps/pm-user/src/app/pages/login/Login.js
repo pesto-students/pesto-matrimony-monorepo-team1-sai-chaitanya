@@ -1,7 +1,6 @@
-import React from "react";
-import { useOktaAuth } from "@okta/okta-react";
-import "./login.scss";
-import { FormLogin } from "../../components";
+import { useOktaAuth } from '@okta/okta-react';
+import './login.scss';
+import { FormLogin } from '../../../components/formlogin';
 
 const Login = () => {
   const { oktaAuth, authState } = useOktaAuth();
@@ -13,19 +12,19 @@ const Login = () => {
         const { status, sessionToken } = res;
         // store.set(LOCAL_STORE.OKTA_SESSION_TOKEN, sessionToken);
 
-        if (status === "SUCCESS") {
+        if (status === 'SUCCESS') {
           if (!sessionToken) {
-            console.error("authentication process failed");
+            console.error('authentication process failed');
           }
 
           oktaAuth.signInWithRedirect({
-            originalUri: "/",
+            originalUri: '/',
             sessionToken,
           });
         }
       });
 
-  const logout = async () => oktaAuth.signOut("/");
+  const logout = async () => oktaAuth.signOut('/');
 
   if (!authState) {
     return <div>Loading...</div>;
