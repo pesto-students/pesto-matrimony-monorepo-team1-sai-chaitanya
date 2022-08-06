@@ -1,1 +1,1 @@
-export * from './lib/Pm-Ui';
+export * from './lib/';
