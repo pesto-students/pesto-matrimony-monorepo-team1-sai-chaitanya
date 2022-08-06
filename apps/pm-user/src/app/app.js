@@ -1,46 +1,37 @@
-import { Route, Routes, Link } from 'react-router-dom';
-export function App() {
-  return (
-    <>
-      <div />
+import { SecureRoute, Security, LoginCallback } from "@okta/okta-react";
+import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
+import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import Protected from "./Protected";
+import { FormLogin, HomeSignup, Login } from "./pages";
+import "./App.css";
 
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
-    </>
+const oktaAuth = new OktaAuth({
+  issuer: "https://dev-42684472.okta.com/oauth2/default",
+  clientId: "0oa61onsa5MnlL90C5d7",
+  redirectUri: window.location.origin + "/login/callback",
+});
+
+const App = () => {
+  const history = useHistory();
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
+    history.replace(toRelativeUrl(originalUri || "/", window.location.origin));
+  };
+
+  return (
+    <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+      <Route path="/login" exact={true} component={Login} />
+      <Route path="/" exact={true} component={HomeSignup} />
+      <Route path="/aboutus" exact={true} component={FormLogin} />
+      <SecureRoute path="/protected" component={Protected} />
+      <Route path="/login/callback" component={LoginCallback} />
+    </Security>
   );
-}
-export default App;
+};
+
+const AppWithRouterAccess = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWithRouterAccess;
