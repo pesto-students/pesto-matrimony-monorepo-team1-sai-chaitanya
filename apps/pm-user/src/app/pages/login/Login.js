@@ -1,7 +1,7 @@
 import React from "react";
 import { useOktaAuth } from "@okta/okta-react";
-import "./login.css";
-import FormLogin from "../formlogin";
+import "./login.scss";
+import { FormLogin } from "../../components";
 
 const Login = () => {
   const { oktaAuth, authState } = useOktaAuth();

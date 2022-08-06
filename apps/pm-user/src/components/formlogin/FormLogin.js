@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import "./formlogin.css";
-import img from "./images/loginpage.jpg";
+import "./formlogin.scss";
+import Button from "../button";
+import MyInput from "../myinput";
+import img from "../../assets/loginimages/loginpage.jpg";
 
-const AboutUs = ({ onLogin }) => {
+const FormLogin = ({ onLogin }) => {
   const [formValues, setFormValues] = useState({
     emailValue: "",
     passwordValue: "",
@@ -38,31 +40,23 @@ const AboutUs = ({ onLogin }) => {
             <div className="login_logo">Pesto Matrimony</div>
             <div className="signin_text">Sign in</div>
             <form onSubmit={submitForm}>
-              <input
-                className="email_input"
+              <MyInput
                 type="email"
                 placeholder="Email Address"
-                onChange={getFormValues}
                 name="emailValue"
                 value={formValues.emailValue}
-              />{" "}
+                onChangeHandler={getFormValues}
+              />
               <br />
-              <input
-                className="password_input"
+              <MyInput
                 type="password"
                 placeholder="password"
-                onChange={getFormValues}
                 name="passwordValue"
                 value={formValues.passwordValue}
+                onChangeHandler={getFormValues}
               />
               <br />
-              <input
-                className="checkbox_input"
-                type="checkbox"
-                name="login_remember"
-              />
-              <label htmlFor="login_remember"> Remember Me </label> <br />
-              <button className="signin_btn">Log in</button>
+              <Button type="submit" />
             </form>
             <p>Forgot Password</p>
             <p>
@@ -75,4 +69,4 @@ const AboutUs = ({ onLogin }) => {
   );
 };
 
-export default AboutUs;
+export default FormLogin;
