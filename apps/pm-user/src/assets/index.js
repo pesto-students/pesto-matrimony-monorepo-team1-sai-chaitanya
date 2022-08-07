@@ -1,0 +1,1 @@
+export { loginImage } from './loginPage';

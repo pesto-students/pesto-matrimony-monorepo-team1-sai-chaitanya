@@ -1,7 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import _noop from "lodash/noop";
-import "./myinput.scss";
+import PropTypes from 'prop-types';
+import _noop from 'lodash/noop';
+import './myinput.scss';
 
 const MyInput = ({ name, onChangeHandler, placeholder, type, value }) => {
   return (
@@ -25,11 +24,11 @@ MyInput.propTypes = {
 };
 
 MyInput.defaultProps = {
-  name: "",
+  name: '',
   onChangeHandler: _noop,
-  placeholder: "",
-  type: "",
-  value: "",
+  placeholder: '',
+  type: '',
+  value: '',
 };
 
 export default MyInput;

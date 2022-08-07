@@ -1,6 +1,6 @@
 import { useOktaAuth } from '@okta/okta-react';
+import { LoginForm } from '../../components';
 import './login.scss';
-import { FormLogin } from '../../../components/formlogin';
 
 const Login = () => {
   const { oktaAuth, authState } = useOktaAuth();
@@ -33,7 +33,7 @@ const Login = () => {
   if (!authState.isAuthenticated) {
     return (
       <div>
-        <FormLogin onLogin={login} on />
+        <LoginForm onLogin={login} on />
       </div>
     );
   }

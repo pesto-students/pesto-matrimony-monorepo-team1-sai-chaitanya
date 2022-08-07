@@ -1,8 +1,7 @@
 import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
-import Protected from './Protected';
-import { Login } from './pages';
+import { Protected, Login } from '../pages';
 import './App.scss';
 
 const oktaAuth = new OktaAuth({
