@@ -24,10 +24,10 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  name: '',
+  name: 'name',
   onChangeHandler: _noop,
-  placeholder: '',
-  type: '',
+  placeholder: 'placeholder',
+  type: 'text',
   value: '',
 };
 
