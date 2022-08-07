@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './loginForm.module.scss';
-import { Button, MyInput } from '../../../components';
-import { loginImage } from '../../../assets';
+import { Button, Input } from '../..';
+// import { loginImage } from '../../../assets';
 
 const LoginForm = ({ onLogin }) => {
   const [formValues, setFormValues] = useState({
@@ -31,14 +31,14 @@ const LoginForm = ({ onLogin }) => {
   return (
     <div className={styles.super_container}>
       <div className={styles.left_container}>
-        <img src={loginImage} alt="couple" />
+        {/* <img src={loginImage} alt="couple" /> */}
       </div>
       <div className={styles.right_container}>
         <div className={styles.login_box}>
           <div className={styles.login_logo}>Pesto Matrimony</div>
           <div className={styles.signin_text}>Sign in</div>
           <form onSubmit={submitForm}>
-            <MyInput
+            <Input
               type="email"
               placeholder="Email Address"
               name="emailValue"
@@ -46,9 +46,9 @@ const LoginForm = ({ onLogin }) => {
               onChangeHandler={getFormValues}
             />
             <br />
-            <MyInput
+            <Input
               type="password"
-              placeholder="password"
+              placeholder="Password"
               name="passwordValue"
               value={formValues.passwordValue}
               onChangeHandler={getFormValues}
@@ -56,10 +56,9 @@ const LoginForm = ({ onLogin }) => {
             <br />
             <Button type="submit" />
           </form>
-          <p>Forgot Password</p>
-          <p>
-            Don't have an account?
-            <span className={styles.signup_link}>SignUp</span>
+          <p className={styles.paragraph}>Forgot Password</p>
+          <p className={styles.paragraph}>
+            Don't have an account? <span className={styles.link}>SignUp</span>
           </p>
         </div>
       </div>

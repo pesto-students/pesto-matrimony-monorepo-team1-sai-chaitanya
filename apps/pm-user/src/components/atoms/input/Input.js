@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import _noop from 'lodash/noop';
-import styles from './myInput.module.scss';
+import styles from './Input.module.scss';
 
-const MyInput = ({ name, onChangeHandler, placeholder, type, value }) => {
+const Input = ({ name, onChangeHandler, placeholder, type, value }) => {
   return (
     <input
-      className={styles.InputField}
+      className={styles.Input}
       type={type}
       placeholder={placeholder}
       onChange={onChangeHandler}
@@ -15,7 +15,7 @@ const MyInput = ({ name, onChangeHandler, placeholder, type, value }) => {
   );
 };
 
-MyInput.propTypes = {
+Input.propTypes = {
   name: PropTypes.string,
   onChangeHandler: PropTypes.func,
   placeholder: PropTypes.string,
@@ -23,7 +23,7 @@ MyInput.propTypes = {
   value: PropTypes.string,
 };
 
-MyInput.defaultProps = {
+Input.defaultProps = {
   name: '',
   onChangeHandler: _noop,
   placeholder: '',
@@ -31,4 +31,4 @@ MyInput.defaultProps = {
   value: '',
 };
 
-export default MyInput;
+export default Input;

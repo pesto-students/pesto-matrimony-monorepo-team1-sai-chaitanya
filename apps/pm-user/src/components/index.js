@@ -1,5 +1,4 @@
-import Button from './atoms/button';
-import LoginForm from './organisms/loginForm';
-import MyInput from './molecules/myInput';
+import { Button, Input } from './atoms/';
+import { LoginForm } from './molecules/';
 
-export { Button, LoginForm, MyInput };
+export { Button, LoginForm, Input };
