@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import _noop from 'lodash/noop';
-import './myinput.scss';
+import styles from './myInput.module.scss';
 
 const MyInput = ({ name, onChangeHandler, placeholder, type, value }) => {
   return (
     <input
-      className="InputField"
+      className={styles.InputField}
       type={type}
       placeholder={placeholder}
       onChange={onChangeHandler}

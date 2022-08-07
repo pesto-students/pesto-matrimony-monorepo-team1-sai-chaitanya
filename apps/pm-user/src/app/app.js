@@ -2,7 +2,7 @@ import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
 import { Protected, Login } from '../pages';
-import './App.scss';
+import styles from './App.module.scss';
 
 const oktaAuth = new OktaAuth({
   issuer: 'https://dev-42684472.okta.com/oauth2/default',

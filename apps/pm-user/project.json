@@ -16,7 +16,7 @@
         "polyfills": "apps/pm-user/src/polyfills.js",
         "tsConfig": "apps/pm-user/tsconfig.app.json",
         "assets": ["apps/pm-user/src/favicon.ico", "apps/pm-user/src/assets"],
-        "styles": ["apps/pm-user/src/styles.css"],
+        "styles": ["apps/pm-user/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },

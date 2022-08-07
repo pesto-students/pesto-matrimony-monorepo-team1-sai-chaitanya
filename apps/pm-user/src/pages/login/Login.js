@@ -1,6 +1,6 @@
 import { useOktaAuth } from '@okta/okta-react';
 import { LoginForm } from '../../components';
-import './login.scss';
+import styles from './login.module.scss';
 
 const Login = () => {
   const { oktaAuth, authState } = useOktaAuth();

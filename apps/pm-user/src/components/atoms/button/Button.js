@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./button.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './button.module.scss';
 
 const Button = ({ type }) => {
   return (
-    <button type={type} className="signin_btn">
+    <button type={type} className={styles.signin_btn}>
       Log in
     </button>
   );
@@ -15,7 +15,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  type: "",
+  type: '',
 };
 
 export default Button;

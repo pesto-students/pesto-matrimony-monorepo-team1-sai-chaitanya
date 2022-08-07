@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './loginForm.scss';
+import styles from './loginForm.module.scss';
 import { Button, MyInput } from '../../../components';
 import { loginImage } from '../../../assets';
 
@@ -29,14 +29,14 @@ const LoginForm = ({ onLogin }) => {
   }
 
   return (
-    <div className="super_container">
-      <div className="left_container">
+    <div className={styles.super_container}>
+      <div className={styles.left_container}>
         <img src={loginImage} alt="couple" />
       </div>
-      <div className="right_container">
-        <div className="login_box">
-          <div className="login_logo">Pesto Matrimony</div>
-          <div className="signin_text">Sign in</div>
+      <div className={styles.right_container}>
+        <div className={styles.login_box}>
+          <div className={styles.login_logo}>Pesto Matrimony</div>
+          <div className={styles.signin_text}>Sign in</div>
           <form onSubmit={submitForm}>
             <MyInput
               type="email"
@@ -58,7 +58,8 @@ const LoginForm = ({ onLogin }) => {
           </form>
           <p>Forgot Password</p>
           <p>
-            Don't have an account? <span className="signup_link">SignUp</span>
+            Don't have an account?
+            <span className={styles.signup_link}>SignUp</span>
           </p>
         </div>
       </div>

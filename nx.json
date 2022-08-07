@@ -28,15 +28,15 @@
   "generators": {
     "@nrwl/react": {
       "application": {
-        "style": "css",
+        "style": "scss",
         "linter": "eslint",
         "babel": true
       },
       "component": {
-        "style": "css"
+        "style": "scss"
       },
       "library": {
-        "style": "css",
+        "style": "scss",
         "linter": "eslint"
       }
     }
