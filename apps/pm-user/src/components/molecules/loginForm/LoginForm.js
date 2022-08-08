@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './loginForm.module.scss';
 import { Button, Input } from '../..';
-// import { loginImage } from '../../../assets';
 
 const LoginForm = ({ onLogin }) => {
   const [formValues, setFormValues] = useState({
@@ -30,9 +29,7 @@ const LoginForm = ({ onLogin }) => {
 
   return (
     <div className={styles.super_container}>
-      <div className={styles.left_container}>
-        {/* <img src={loginImage} alt="couple" /> */}
-      </div>
+      <div className={styles.left_container}></div>
       <div className={styles.right_container}>
         <div className={styles.login_box}>
           <div className={styles.login_logo}>Pesto Matrimony</div>
@@ -54,7 +51,7 @@ const LoginForm = ({ onLogin }) => {
               onChangeHandler={getFormValues}
             />
             <br />
-            <Button type="submit" />
+            <Button type="submit" label="Login" className="btn-login-signup" />
           </form>
           <p className={styles.paragraph}>Forgot Password</p>
           <p className={styles.paragraph}>

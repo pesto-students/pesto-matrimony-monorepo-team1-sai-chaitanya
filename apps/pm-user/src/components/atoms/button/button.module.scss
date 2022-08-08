@@ -1,13 +1,54 @@
-.btn {
+.btn-primary {
   border: none;
   background-color: #d42c3d;
   color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 10px;
+  border-radius: 48px;
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+}
+
+.btn-secondary {
+  @extend .btn-primary;
+  background-color: #2fd42c;
+}
+
+.btn-tertiary {
+  @extend .btn-primary;
+  background-color: #4656eb;
+}
+
+.btn-upgrade {
+  @extend .btn-primary;
+  border-radius: 24px;
+}
+
+.btn-login-signup {
+  @extend .btn-primary;
   font-size: 16px;
-  font-weight: 600;
-  padding: 8px 10px 8px 10px;
   width: 252px;
-  border-radius: 6px;
-  box-shadow: 0px 0px 26px 1px #c0bebe;
-  margin-top: 26px;
-  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 28px;
+  box-shadow: 0px 0px 12px 4px #c0bebe;
+}
+
+.btn-mailbox-send {
+  @extend .btn-primary;
+  background-color: #8f93ff;
+}
+
+.btn-mailbox-show-msg {
+  @extend .btn-primary;
+  background-color: #d4d900;
+}
+
+.btn-load-more {
+  @extend .btn-primary;
+  background-color: #5e68a4;
 }

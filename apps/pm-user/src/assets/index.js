@@ -1,1 +1,1 @@
-export { loginImage } from './loginPage';
+export { loginBackground } from './images';
