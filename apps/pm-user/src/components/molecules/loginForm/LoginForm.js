@@ -51,7 +51,7 @@ const LoginForm = ({ onLogin }) => {
               onChangeHandler={getFormValues}
             />
             <br />
-            <Button type="submit" label="Login" className="btn-login-signup" />
+            <Button type="submit" label="Login" className="btnLoginSignup" />
           </form>
           <p className={styles.paragraph}>Forgot Password</p>
           <p className={styles.paragraph}>

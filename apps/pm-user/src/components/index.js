@@ -1,4 +1,4 @@
 import { Button, Input } from './atoms/';
-import { LoginForm } from './molecules/';
+import { Header, LoginForm } from './molecules/';
 
-export { Button, LoginForm, Input };
+export { Button, Header, LoginForm, Input };

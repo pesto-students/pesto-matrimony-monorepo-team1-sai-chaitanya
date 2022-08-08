@@ -1,4 +1,4 @@
-.btn-primary {
+.btnRed {
   border: none;
   background-color: #d42c3d;
   color: white;
@@ -6,31 +6,29 @@
   font-weight: bold;
   padding: 8px 10px;
   border-radius: 48px;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
   &:active {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   }
 }
 
-.btn-secondary {
-  @extend .btn-primary;
+.btnGreen {
+  @extend .btnRed;
   background-color: #2fd42c;
 }
 
-.btn-tertiary {
-  @extend .btn-primary;
+.btnBlue {
+  @extend .btnRed;
   background-color: #4656eb;
 }
 
-.btn-upgrade {
-  @extend .btn-primary;
+.btnUpgrade {
+  @extend .btnRed;
   border-radius: 24px;
 }
 
-.btn-login-signup {
-  @extend .btn-primary;
+.btnLoginSignup {
+  @extend .btnRed;
   font-size: 16px;
   width: 252px;
   border-radius: 8px;
@@ -38,17 +36,18 @@
   box-shadow: 0px 0px 12px 4px #c0bebe;
 }
 
-.btn-mailbox-send {
-  @extend .btn-primary;
+.btnMailboxSend {
+  @extend .btnRed;
   background-color: #8f93ff;
+  box-shadow: 0px 0px 12px 4px #c0bebe;
 }
 
-.btn-mailbox-show-msg {
-  @extend .btn-primary;
+.btnMailboxShowMsg {
+  @extend .btnRed;
   background-color: #d4d900;
 }
 
-.btn-load-more {
-  @extend .btn-primary;
+.btnLoadMore {
+  @extend .btnRed;
   background-color: #5e68a4;
 }

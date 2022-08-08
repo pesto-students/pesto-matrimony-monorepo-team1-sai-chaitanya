@@ -21,7 +21,7 @@ Button.defaultProps = {
   type: 'button',
   label: 'Button',
   onClick: _noop,
-  className: 'btn-primary',
+  className: 'btnRed',
 };
 
 export default Button;

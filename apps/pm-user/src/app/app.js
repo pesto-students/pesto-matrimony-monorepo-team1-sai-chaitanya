@@ -2,6 +2,7 @@ import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
 import { Protected, Login } from '../pages';
+import { Header } from '../components';
 import styles from './App.module.scss';
 
 const oktaAuth = new OktaAuth({
@@ -17,18 +18,15 @@ const App = () => {
   };
 
   return (
-    <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-      <Route path="/login" exact={true} component={Login} />
-      <SecureRoute path="/protected" component={Protected} />
-      <Route path="/login/callback" component={LoginCallback} />
-    </Security>
+    <Router>
+      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+        <Header />
+        <Route path="/login" exact={true} component={Login} />
+        <SecureRoute path="/protected" component={Protected} />
+        <Route path="/login/callback" component={LoginCallback} />
+      </Security>
+    </Router>
   );
 };
 
-const AppWithRouterAccess = () => (
-  <Router>
-    <App />
-  </Router>
-);
-
-export default AppWithRouterAccess;
+export default App;

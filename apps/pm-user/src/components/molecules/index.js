@@ -1,3 +1,4 @@
-import LoginForm from '../molecules/loginForm';
+import LoginForm from './loginForm';
+import Header from './header';
 
-export { LoginForm };
+export { Header, LoginForm };
