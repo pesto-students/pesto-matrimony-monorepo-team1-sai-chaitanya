@@ -1,4 +1,5 @@
-import LoginForm from './loginForm';
 import Header from './header';
+import InfoSummaryCard from './infoSummaryCard';
+import LoginForm from './loginForm';
 
-export { Header, LoginForm };
+export { Header, InfoSummaryCard, LoginForm };
