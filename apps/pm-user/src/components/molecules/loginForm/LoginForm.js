@@ -3,63 +3,38 @@ import styles from './loginForm.module.scss';
 import { Button, Input } from '../..';
 
 const LoginForm = ({ onLogin }) => {
-  const [formValues, setFormValues] = useState({
-    emailValue: '',
-    passwordValue: '',
-  });
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
-  function submitForm(e) {
+  function formSubmitHandler(e) {
     e.preventDefault();
-
-    if (formValues) {
-      onLogin(formValues.passwordValue, formValues.emailValue);
+    if (emailValue.trim() && passwordValue.trim()) {
+      onLogin(passwordValue, emailValue);
     } else {
       console.log('email or password can not be empty');
     }
   }
 
-  function getFormValues(e) {
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setFormValues((oldVlaues) => {
-      return { ...oldVlaues, [name]: value };
-    });
-  }
-
   return (
-    <div className={styles.super_container}>
-      <div className={styles.left_container}></div>
-      <div className={styles.right_container}>
-        <div className={styles.login_box}>
-          <div className={styles.login_logo}>Pesto Matrimony</div>
-          <div className={styles.signin_text}>Sign in</div>
-          <form onSubmit={submitForm}>
-            <Input
-              type="email"
-              placeholder="Email Address"
-              name="emailValue"
-              value={formValues.emailValue}
-              onChangeHandler={getFormValues}
-            />
-            <br />
-            <Input
-              type="password"
-              placeholder="Password"
-              name="passwordValue"
-              value={formValues.passwordValue}
-              onChangeHandler={getFormValues}
-            />
-            <br />
-            <Button type="submit" label="Login" className="btnLoginSignup" />
-          </form>
-          <p className={styles.paragraph}>Forgot Password</p>
-          <p className={styles.paragraph}>
-            Don't have an account? <span className={styles.link}>SignUp</span>
-          </p>
-        </div>
-      </div>
-    </div>
+    <form onSubmit={formSubmitHandler}>
+      <Input
+        type="email"
+        placeholder="Email Address"
+        name="emailValue"
+        value={emailValue}
+        onChange={(e) => setEmailValue(e.target.value)}
+      />
+      <br />
+      <Input
+        type="password"
+        placeholder="Password"
+        name="passwordValue"
+        value={passwordValue}
+        onChange={(e) => setPasswordValue(e.target.value)}
+      />
+      <br />
+      <Button type="submit" label="Login" className="btnLoginSignup" />
+    </form>
   );
 };
 

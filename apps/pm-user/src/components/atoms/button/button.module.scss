@@ -1,7 +1,7 @@
-.btnRed {
+.btn {
   border: none;
-  background-color: #d42c3d;
   color: white;
+  background-color: #5e68a4;
   font-size: 14px;
   font-weight: bold;
   padding: 8px 10px;
@@ -12,43 +12,49 @@
   }
 }
 
+.btnRed {
+  @extend .btn;
+  background-color: #d42c3d;
+}
+
 .btnGreen {
-  @extend .btnRed;
+  @extend .btn;
   background-color: #2fd42c;
 }
 
 .btnBlue {
-  @extend .btnRed;
+  @extend .btn;
   background-color: #4656eb;
 }
 
 .btnUpgrade {
-  @extend .btnRed;
+  @extend .btn;
   border-radius: 24px;
   padding: 8px 18px;
 }
 
 .btnLoginSignup {
-  @extend .btnRed;
+  @extend .btn;
   font-size: 16px;
   width: 252px;
   border-radius: 8px;
   margin-top: 28px;
+  background-color: #d42c3d;
   box-shadow: 0px 0px 12px 4px #c0bebe;
 }
 
 .btnMailboxSend {
-  @extend .btnRed;
+  @extend .btn;
   background-color: #8f93ff;
   box-shadow: 0px 0px 12px 4px #c0bebe;
 }
 
 .btnMailboxShowMsg {
-  @extend .btnRed;
+  @extend .btn;
   background-color: #d4d900;
 }
 
 .btnLoadMore {
-  @extend .btnRed;
+  @extend .btn;
   background-color: #5e68a4;
 }

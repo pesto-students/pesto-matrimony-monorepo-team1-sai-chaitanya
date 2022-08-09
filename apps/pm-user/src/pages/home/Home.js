@@ -2,8 +2,8 @@ import { useOktaAuth } from '@okta/okta-react';
 
 const Home = () => {
   const { oktaAuth, authState } = useOktaAuth();
-  const login = async () => oktaAuth.signInWithRedirect();
-  const logout = async () => oktaAuth.signOut('/');
+  const loginHandler = () => oktaAuth.signInWithRedirect();
+  const logoutHandler = () => oktaAuth.signOut('/');
 
   if (!authState) {
     return <div>Loading...</div>;
@@ -13,7 +13,8 @@ const Home = () => {
     return (
       <div>
         <p>Not Logged in yet</p>
-        <button onClick={login}>Login</button>
+        <button onClick={loginHandler}>Login</button>
+        <Button onClick={loginHandler}>LoginStuff</Button>
       </div>
     );
   }
@@ -21,7 +22,7 @@ const Home = () => {
   return (
     <div>
       <p>Logged in!</p>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logoutHandler}>Logout</button>
     </div>
   );
 };

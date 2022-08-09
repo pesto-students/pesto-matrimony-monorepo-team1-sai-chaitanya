@@ -25,26 +25,26 @@ InfoSummaryCard.propTypes = {
 
 InfoSummaryCard.defaultProps = {
   count: 0,
-  className: 'red',
+  className: 'cardRed',
   label: "Give 'label' prop",
   target: undefined,
 };
 
 export default InfoSummaryCard;
 
-// Please use below examples to understand how this works.
+// See these examples to understand how this works.
 {
   /* 
-      <InfoSummaryCard label="Unread Messages" className="red" count={4} />
-      <InfoSummaryCard label="Interests Sent" className="yellow" count={5} />
+      <InfoSummaryCard label="Unread Messages" className="redCard" count={4} />
+      <InfoSummaryCard label="Interests Sent" className="yellowCard" count={5} />
       <InfoSummaryCard
         label="Interests Received"
-        className="blue"
+        className="blueCard"
         count={10}
       />
       <InfoSummaryCard
         label="Interests Accepted"
-        className="green"
+        className="greenCard"
         count={2}
       />
 */

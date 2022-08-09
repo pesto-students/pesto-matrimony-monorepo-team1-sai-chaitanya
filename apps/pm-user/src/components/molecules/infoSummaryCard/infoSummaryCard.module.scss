@@ -1,4 +1,4 @@
-.red {
+.card {
   padding: 8px;
   margin: 16px;
   height: 75px;
@@ -16,7 +16,6 @@
     width: 28px;
     height: 28px;
     border: none;
-    background-image: url('../../../assets/icons/mailboxicon.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; /* optional, center the image */
@@ -28,7 +27,6 @@
     text-align: right;
     font-weight: bold;
     font-size: 14px;
-    color: #d42c3d;
   }
 
   .name {
@@ -43,8 +41,18 @@
   }
 }
 
-.blue {
-  @extend .red;
+.redCard {
+  @extend .card;
+  border-top: 1px solid #6074ec;
+  .right {
+    color: #d42c3d;
+  }
+  .img {
+    background-image: url('../../../assets/icons/mailboxicon.png');
+  }
+}
+.blueCard {
+  @extend .card;
   border-top: 1px solid #6074ec;
   .right {
     color: #6074ec;
@@ -53,8 +61,8 @@
     background-image: url('../../../assets/icons/receivedIcon.png');
   }
 }
-.yellow {
-  @extend .red;
+.yellowCard {
+  @extend .card;
   border-top: 1px solid #cec603;
   .right {
     color: #cec603;
@@ -63,8 +71,8 @@
     background-image: url('../../../assets/icons/sentIcon.png');
   }
 }
-.green {
-  @extend .red;
+.greenCard {
+  @extend .card;
   border-top: 1px solid #2fd42c;
   .right {
     color: #2fd42c;

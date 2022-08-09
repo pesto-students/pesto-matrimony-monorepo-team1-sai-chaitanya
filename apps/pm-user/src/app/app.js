@@ -1,8 +1,8 @@
 import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
-import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import { Protected, Login } from '../pages';
-import { Header, InfoSummaryCard } from '../components';
+import { Header, InfoSummaryCard, OwnProfileSummaryCard } from '../components';
 import styles from './App.module.scss';
 
 const oktaAuth = new OktaAuth({
@@ -17,16 +17,21 @@ const App = () => {
     history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
 
+  function customAuthHandler() {
+    history.push('/login');
+  }
+
   return (
-    <Router>
-      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-        <Header />
-      
-        <Route path="/login" exact={true} component={Login} />
-        <SecureRoute path="/protected" component={Protected} />
-        <Route path="/login/callback" component={LoginCallback} />
-      </Security>
-    </Router>
+    <Security
+      oktaAuth={oktaAuth}
+      restoreOriginalUri={restoreOriginalUri}
+      onAuthRequired={customAuthHandler}
+    >
+      <Header />
+      <Route path="/login" exact={true} component={Login} />
+      <SecureRoute path="/protected" component={Protected} />
+      <Route path="/login/callback" component={LoginCallback} />
+    </Security>
   );
 };
 
