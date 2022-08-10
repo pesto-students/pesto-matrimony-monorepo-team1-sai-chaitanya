@@ -1,9 +1,8 @@
-import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
+import { Security } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
-import { Route, useHistory } from 'react-router-dom';
-import { Protected, Login } from '../pages';
-import { Header, InfoSummaryCard, OwnProfileSummaryCard } from '../components';
-import styles from './App.module.scss';
+import { BrowserRouter, useHistory } from 'react-router-dom';
+
+import Routes from '../routes';
 
 const oktaAuth = new OktaAuth({
   issuer: 'https://dev-42684472.okta.com/oauth2/default',
@@ -27,10 +26,9 @@ const App = () => {
       restoreOriginalUri={restoreOriginalUri}
       onAuthRequired={customAuthHandler}
     >
-      <Header />
-      <Route path="/login" exact={true} component={Login} />
-      <SecureRoute path="/protected" component={Protected} />
-      <Route path="/login/callback" component={LoginCallback} />
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </Security>
   );
 };
