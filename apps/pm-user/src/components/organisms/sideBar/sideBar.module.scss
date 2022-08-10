@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 3.2rem;
+
+  .menu {
+    :global {
+      .ant-menu-item.ant-menu-item-selected {
+        background-color: #f5f6ff;
+        border-radius: 0.8rem;
+        color: #565676;
+      }
+      .ant-menu-item {
+        color: #a6a7b2;
+      }
+
+      .ant-menu-item.ant-menu-item-selected > .ant-menu-item-icon {
+        color: #5c5fee;
+      }
+    }
+  }
+}

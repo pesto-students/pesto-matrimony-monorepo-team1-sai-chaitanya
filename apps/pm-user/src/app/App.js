@@ -21,15 +21,15 @@ const App = () => {
   }
 
   return (
-    <Security
-      oktaAuth={oktaAuth}
-      restoreOriginalUri={restoreOriginalUri}
-      onAuthRequired={customAuthHandler}
-    >
+    // <Security
+    //   oktaAuth={oktaAuth}
+    //   restoreOriginalUri={restoreOriginalUri}
+    //   onAuthRequired={customAuthHandler}
+    // >
       <BrowserRouter>
         <Routes />
       </BrowserRouter>
-    </Security>
+    // </Security>
   );
 };
 

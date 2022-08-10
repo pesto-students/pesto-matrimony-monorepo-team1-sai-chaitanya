@@ -13,7 +13,8 @@ function Routes() {
       <Route exact path={PATHS.LOGIN} component={Login} />
       <Route exact path={PATHS.FAQ} component={Faq} />
       <Route exact path={PATHS.LOGIN_CALLBACK} component={LoginCallback} />
-      <SecureRoute path="*" component={SecureRoutes} />
+      {/* <SecureRoute path="*" component={SecureRoutes} /> */}
+      <Route path="*" component={SecureRoutes} />
     </Switch>
   );
 }

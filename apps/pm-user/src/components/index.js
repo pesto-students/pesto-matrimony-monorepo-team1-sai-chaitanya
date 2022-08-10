@@ -1,16 +1,3 @@
-import { Button, Input } from './atoms/';
-import {
-  Header,
-  InfoSummaryCard,
-  LoginForm,
-  OwnProfileSummaryCard,
-} from './molecules/';
-
-export {
-  Button,
-  Header,
-  InfoSummaryCard,
-  Input,
-  LoginForm,
-  OwnProfileSummaryCard,
-};
+export * from "./atoms";
+export * from "./molecules";
+export * from "./organisms";
