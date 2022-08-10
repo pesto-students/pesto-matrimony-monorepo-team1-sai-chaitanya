@@ -1,0 +1,15 @@
+.outerFlexBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerFlexBox {
+  display: flex;
+}
+
+.links {
+  text-decoration: none;
+  color: #03b7de;
+}

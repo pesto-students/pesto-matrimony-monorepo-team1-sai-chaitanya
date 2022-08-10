@@ -1,0 +1,18 @@
+.input {
+  background-color: #ebedf9;
+  border: 2px solid #a5aee2;
+  width: 234px;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: small;
+  font-family: 'Lato';
+  &::placeholder {
+    color: #576194;
+  }
+}
+input:focus {
+  font-family: 'Lato';
+  color: black;
+  outline: 0px solid #a5aee2;
+}

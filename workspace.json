@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "pm-admin": "apps/pm-admin",
+    "pm-backend": "apps/pm-backend",
+    "pm-business": "libs/pm-business",
+    "pm-ui": "libs/pm-ui",
+    "pm-user": "apps/pm-user"
+  }
+}
