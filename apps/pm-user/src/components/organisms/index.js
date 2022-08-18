@@ -1,2 +1,2 @@
 export { default as AppSkeleton } from "./appSkeleton";
-export { default as QuickLinkCard } from "./quickLinkCard";
+export { default as QuickLinksCard } from "./quickLinksCard";

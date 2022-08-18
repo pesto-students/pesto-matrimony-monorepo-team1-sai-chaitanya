@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './quickLinkCard.module.scss';
+import styles from './quickLinksCard.module.scss';
 import { MyCard } from '../../molecules';
 
-function QuickLinkCard() {
+function QuickLinksCard() {
   return (
     <>
       <MyCard cardTitle="Masseges" className="myCard" />
@@ -11,4 +11,4 @@ function QuickLinkCard() {
   );
 }
 
-export default QuickLinkCard;
+export default QuickLinksCard;

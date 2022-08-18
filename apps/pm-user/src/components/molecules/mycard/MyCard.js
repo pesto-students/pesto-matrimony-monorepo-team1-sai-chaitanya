@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '../../atoms';
-import styles from './mycard.module.scss';
+import styles from './myCard.module.scss';
 
 const MyCard = ({ cardTitle, cardLink, className }) => {
   return (
