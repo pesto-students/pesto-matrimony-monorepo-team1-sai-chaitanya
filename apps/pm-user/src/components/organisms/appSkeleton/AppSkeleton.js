@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { SideBar } from '../sideBar';
+import QuickLinksCard from '../quickLinksCard';
 import styles from './appSkeleton.module.scss';
 
 function AppSkeleton({ children }) {
@@ -13,6 +14,9 @@ function AppSkeleton({ children }) {
           <SideBar />
         </div>
         <div className={styles.children}>{children}</div>
+        <div className={styles.quickLinksCard}>
+          <QuickLinksCard />
+        </div>
       </div>
     </div>
   );

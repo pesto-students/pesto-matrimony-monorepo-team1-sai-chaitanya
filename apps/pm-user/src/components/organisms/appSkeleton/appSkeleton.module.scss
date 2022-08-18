@@ -16,10 +16,17 @@
 .content {
   width: 100%;
   height: calc(100% - 60px);
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .sideBar {
   height: 100%;
   width: 240px;
   background-color: white;
+}
+
+.quickLinksCard {
+  padding: 12px;
 }
