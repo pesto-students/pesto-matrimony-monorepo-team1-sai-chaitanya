@@ -1,4 +1,4 @@
-import { ResultSection } from '../../components/molecules';
+import { ResultSection } from '../../components/';
 
 function PageNotFound() {
   return <ResultSection />;

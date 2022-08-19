@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Result } from '../../atoms';
+import { Button, HomeOutlined, Result } from '../../atoms';
 import { useHistory } from 'react-router-dom';
-import { HomeOutlined } from '../../atoms/icon';
 import PropTypes from 'prop-types';
 import styles from './resultSection.module.scss';
 
