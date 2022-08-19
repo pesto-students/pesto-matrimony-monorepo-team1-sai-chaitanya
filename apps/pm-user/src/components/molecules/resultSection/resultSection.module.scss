@@ -1,0 +1,11 @@
+.resultSection {
+  :global {
+    .ant-result-extra {
+      button.ant-btn.ant-btn-primary {
+        border-color: #5c5fee;
+        background: #5c5fee;
+        border-radius: 2.4rem;
+      }
+    }
+  }
+}
