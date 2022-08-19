@@ -5,7 +5,7 @@ import { HomeOutlined } from '../../atoms/icon';
 import PropTypes from 'prop-types';
 import styles from './resultSection.module.scss';
 
-const ResultSection = ({ statusCode, title, subTitle }) => {
+const ResultSection = ({ statusCode, subTitle, title }) => {
   const history = useHistory();
   function homeButtonHandler() {
     history.push('/');
@@ -32,13 +32,13 @@ const ResultSection = ({ statusCode, title, subTitle }) => {
 
 ResultSection.propTypes = {
   statusCode: PropTypes.string,
-  title: PropTypes.string,
   subTitle: PropTypes.string,
+  title: PropTypes.string,
 };
 ResultSection.defaultProps = {
   statusCode: '404',
-  title: '404',
   subTitle: 'Sorry, the page you visited does not exist.',
+  title: '404',
 };
 
 export default ResultSection;
