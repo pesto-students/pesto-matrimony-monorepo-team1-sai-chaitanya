@@ -6,3 +6,4 @@ import OwnProfileSummaryCard from './ownProfileSummaryCard';
 export { Header, InfoSummaryCard, LoginForm, OwnProfileSummaryCard };
 
 export { default as MyCard } from './myCard';
+export { default as UserItemsList } from './userItemsList';

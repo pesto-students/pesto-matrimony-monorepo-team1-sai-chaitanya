@@ -22,8 +22,12 @@ function AppSkeleton({ children }) {
   );
 }
 
-AppSkeleton.propTypes = {};
+AppSkeleton.propTypes = {
+  children: PropTypes.object,
+};
 
-AppSkeleton.defaultProps = {};
+AppSkeleton.defaultProps = {
+  children: {},
+};
 
 export default AppSkeleton;
