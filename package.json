@@ -10,9 +10,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
-    "@mui/material": "^5.9.3",
     "@okta/okta-auth-js": "^6.7.4",
     "@okta/okta-react": "^6.6.0",
     "antd": "^4.22.4",
