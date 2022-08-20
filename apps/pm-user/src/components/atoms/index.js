@@ -10,3 +10,4 @@ export { default as Logo } from './logo';
 export { default as Menu } from './menu';
 export { default as Modal } from './modal';
 export { default as Result } from './result';
+export { default as Segmented } from './segmented';

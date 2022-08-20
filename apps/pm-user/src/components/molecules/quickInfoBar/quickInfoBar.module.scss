@@ -1,0 +1,24 @@
+.quickInfoBar {
+  & p{
+    font-weight: 600;
+    color: #5c5fee;
+  }
+  :global {
+    .ant-segmented {
+      background: transparent;
+    }
+    .ant-segmented-item-label {
+      padding: 5px;
+    }
+    .ant-segmented-item-selected {
+      background-color: #f5f6ff;
+      border-radius: 8px;
+    }
+
+    .ant-segmented:not(.ant-segmented-disabled):hover{
+    background: transparent;
+    }
+  }
+}
+
+

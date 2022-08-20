@@ -1,20 +1,27 @@
 import React from 'react';
-import { Menu } from '../../atoms';
-import { ProfileSummary } from "../../molecules";
-import styles from './sideBar.module.scss';
 import { DEFAULT_SELECTED_ITEM_KEY, MENU_ITEMS } from './constants';
+import { Menu } from '../../atoms';
+import { ProfileSummary } from '../../molecules';
+import { QuickInfoBar } from '../../molecules';
+import styles from './sideBar.module.scss';
 
 function SideBar() {
-
   const handleMenuItemClick = ({ key }) => {
     //some code here
   };
 
-
   return (
     <div className={styles.container}>
-    <div className={styles.profileSummary}>
-        <ProfileSummary imageChangeLink="#" userDetails="Software Developer, 32" userImageSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" userName="Vinit Sharma" />
+      <div className={styles.profileSummary}>
+        <ProfileSummary
+          imageChangeLink="#"
+          userDetails="Software Developer, 32"
+          userImageSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          userName="Vinit Sharma"
+        />
+      </div>
+      <div className={styles.quickInfoBarWraper}>
+        <QuickInfoBar />
       </div>
       <div className={styles.menu}>
         <Menu
@@ -22,7 +29,7 @@ function SideBar() {
           items={MENU_ITEMS}
           onClick={handleMenuItemClick}
           style={{
-            borderRight: "none"
+            borderRight: 'none',
           }}
         />
       </div>

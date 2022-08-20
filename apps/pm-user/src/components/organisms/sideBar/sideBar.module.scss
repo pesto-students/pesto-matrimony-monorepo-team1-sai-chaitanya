@@ -3,6 +3,14 @@
   flex-direction: column;
   padding: 3.2rem;
 
+  .profileSummary {
+    margin-bottom: 40px;
+  }
+
+  .quickInfoBarWraper {
+    margin-bottom: 40px;
+  }
+
   .menu {
     :global {
       .ant-menu-item.ant-menu-item-selected {
@@ -19,8 +27,4 @@
       }
     }
   }
-}
-
-.profileSummary{
-  margin-bottom: 52px;
 }
