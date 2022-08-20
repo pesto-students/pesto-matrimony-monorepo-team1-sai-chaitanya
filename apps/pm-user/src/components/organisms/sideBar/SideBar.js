@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from '../../atoms';
-import { ProfileSummery } from "../../molecules";
+import { ProfileSummary } from "../../molecules";
 import styles from './sideBar.module.scss';
 import { DEFAULT_SELECTED_ITEM_KEY, MENU_ITEMS } from './constants';
 
@@ -14,7 +14,7 @@ function SideBar() {
   return (
     <div className={styles.container}>
     <div className={styles.profileSummary}>
-        <ProfileSummery imageChangeLink="#" userDetails="Software Developer, 32" userImageSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" userName="Vinit Sharma" />
+        <ProfileSummary imageChangeLink="#" userDetails="Software Developer, 32" userImageSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" userName="Vinit Sharma" />
       </div>
       <div className={styles.menu}>
         <Menu

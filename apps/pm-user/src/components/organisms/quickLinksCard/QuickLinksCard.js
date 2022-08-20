@@ -5,7 +5,7 @@ import { MyCard, UserItemsList } from '../../molecules';
 function QuickLinksCard() {
   return (
     <>
-      <MyCard cardTitle="Masseges" className="myCard" cardLink="#">
+      <MyCard cardTitle="Messages" className="myCard" cardLink="#">
         <UserItemsList
           userdescription="Ant Design, a design language..."
           userImageSrc="https://joeschmoe.io/api/v1/random"
