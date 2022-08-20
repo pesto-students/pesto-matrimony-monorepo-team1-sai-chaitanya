@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from '../../atoms';
 import PropTypes from 'prop-types';
-import styles from './profilesummary.module.scss';
+import styles from './profileSummary.module.scss';
 
 const ProfileSummary = ({
   imageChangeLink,
