@@ -2,7 +2,7 @@ import { startCase, toLower } from 'lodash';
 import PropTypes from 'prop-types';
 import styles from './ownProfileSummaryCard.module.scss';
 
-const OwnProfileSummaryCard = ({ imgSrc, name, profileId, isSubscribed }) => {
+const OwnProfileSummaryCard = ({ imgSrc, isSubscribed, name, profileId }) => {
   return (
     <div className={styles.outerFlexBox}>
       <div>
@@ -40,16 +40,16 @@ const OwnProfileSummaryCard = ({ imgSrc, name, profileId, isSubscribed }) => {
 
 OwnProfileSummaryCard.propTypes = {
   imageSrc: PropTypes.string,
+  isSubscribed: PropTypes.bool,
   name: PropTypes.string,
   profileId: PropTypes.string,
-  isSubscribed: PropTypes.bool,
 };
 
 OwnProfileSummaryCard.defaultProps = {
   imageSrc: null,
+  isSubscribed: false,
   name: 'Umesh Ahirvar',
   profileId: 'ABCD1234',
-  isSubscribed: false,
 };
 
 export default OwnProfileSummaryCard;
