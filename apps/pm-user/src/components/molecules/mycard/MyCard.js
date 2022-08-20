@@ -3,28 +3,32 @@ import PropTypes from 'prop-types';
 import { Card } from '../../atoms';
 import styles from './myCard.module.scss';
 
-const MyCard = ({ cardTitle, cardLink, className }) => {
+const MyCard = ({ cardLink, cardTitle, children, className }) => {
   return (
     <Card
       className={styles[`${className}`]}
       title={cardTitle}
-      extra={<a href="#">See all</a>}
+      extra={<a href={cardLink}>See all</a>}
       style={{
         width: 400,
       }}
-    ></Card>
+    >
+      {children}
+    </Card>
   );
 };
 
 MyCard.propTypes = {
-  cardTitle: PropTypes.string,
   cardLink: PropTypes.string,
+  cardTitle: PropTypes.string,
+  children: PropTypes.object,
   className: PropTypes.string,
 };
 
 MyCard.defaultProps = {
-  cardTitle: 'Masseges',
   cardLink: '#',
+  cardTitle: 'Masseges',
+  children: {},
   className: 'avatarList',
 };
 
