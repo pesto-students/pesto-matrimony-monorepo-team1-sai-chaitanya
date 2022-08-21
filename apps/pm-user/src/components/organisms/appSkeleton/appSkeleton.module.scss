@@ -2,13 +2,13 @@
   height: 100vh;
   width: 100vw;
   // overflow: hidden;
+  overflow-x: hidden;
   background-color: #f6f7ff;
 }
 
 .content {
   width: 100%;
   height: calc(100% - 60px);
-
   display: flex;
   justify-content: space-between;
 }
@@ -17,6 +17,7 @@
   height: 100%;
   width: 20%;
   background-color: white;
+  margin-right: 12px;
 }
 
 .children {
