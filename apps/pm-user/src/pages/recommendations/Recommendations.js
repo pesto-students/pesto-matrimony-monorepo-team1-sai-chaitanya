@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { UserInfoCard } from '../../components';
 
 function Recommendations() {
-  return (
-    <div>Recommendations</div>
-  )
+  // return <div>Recommendations</div>;
+  return <UserInfoCard />;
 }
 
-export default Recommendations
+export default Recommendations;

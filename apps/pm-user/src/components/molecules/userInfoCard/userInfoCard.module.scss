@@ -40,11 +40,11 @@
   }
 }
 
-.bigRecommendationCard {
+.userInfoCard {
   padding: 0.8rem;
   border-bottom: 1px solid #5c5fee;
   border-radius: 2.4rem;
-  margin: 1rem 0.4rem;
+  margin: 1rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   .carousel {
@@ -69,9 +69,9 @@
       padding: 0 1rem;
       color: #5a5b7f;
       font-size: 1.4rem;
-      // font-weight: 600;
     }
     p {
+      font-size: 1.4rem;
       padding: 1rem;
       line-height: 1.8rem;
     }
@@ -106,7 +106,7 @@
 
   .buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
 }

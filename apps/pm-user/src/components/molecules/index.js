@@ -1,4 +1,3 @@
-export { default as BigRecommendationCard } from './bigRecommendationCard';
 export { default as LoginForm } from './loginForm';
 export { default as MyCard } from './myCard';
 export { default as NavBar } from './navBar';
@@ -7,3 +6,4 @@ export { default as ProfileSummary } from './profileSummary';
 export { default as QuickInfoBar } from './quickInfoBar';
 export { default as ResultSection } from './resultSection';
 export { default as UserItemsList } from './userItemsList';
+export { default as UserInfoCard } from './userInfoCard';
