@@ -1,12 +1,16 @@
+import { useState, useRef } from 'react';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './userInfoCard.module.scss';
 import {
   Button,
   Carousel,
+  ClearOutlined,
   HeartOutlined,
+  Input,
   Modal,
   ProfileOutlined,
+  SendOutlined,
 } from '../../atoms';
 
 const UserInfoCard = ({
@@ -17,6 +21,20 @@ const UserInfoCard = ({
   profileImages,
   profileName,
 }) => {
+  const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
+  const { TextArea } = Input;
+  const messageRef = useRef();
+  const showMessageModal = () => {
+    setIsMessageModalVisible(true);
+  };
+
+  const handleMessageCancel = () => {
+    setIsMessageModalVisible(false);
+  };
+
+  function sendMessageHandler() {
+    showMessageModal();
+  }
   function sendInterestHandler() {
     console.log('Connect to Backend & send message with template text');
 
@@ -37,8 +55,25 @@ const UserInfoCard = ({
     );
   }
 
-  function sendMessageHandler() {
-    // some code here
+  function sendMessageViaModalHandler() {
+    const message = messageRef.current.resizableTextArea.props.value;
+    console.log(message);
+    // Connect with Backend and save this message.
+
+    // Show any one notification below.
+    if (message.trim().length > 0) {
+      setTimeout(() => {
+        handleMessageCancel();
+        showNotification(
+          'success',
+          'Message Sent',
+          `Congratulations! Your message has been sent to ${profileName}`,
+          0
+        );
+      }, 1500);
+    } else {
+      showNotification('warn', 'Error!', "Message can't be empty.");
+    }
   }
   function toggleShortlistHandler() {
     console.log(
@@ -77,47 +112,77 @@ const UserInfoCard = ({
   });
 
   return (
-    <div className={styles.userInfoCard}>
-      <Carousel effect="fade" autoplay autoplaySpeed={2000}>
-        {carouselImages}
-      </Carousel>
-      <div className={styles.briefIntro}>
-        <h2>{profileName}</h2>
-        <h4>
-          {profileAge}, {profileLocation}
-        </h4>
-        <p>{profileAboutMe}</p>
+    <>
+      <div className={styles.userInfoCard}>
+        <Carousel effect="fade" autoplay autoplaySpeed={2000}>
+          {carouselImages}
+        </Carousel>
+        <div className={styles.briefIntro}>
+          <h2>{profileName}</h2>
+          <h4>
+            {profileAge}, {profileLocation}
+          </h4>
+          <p>{profileAboutMe}</p>
+        </div>
+        <div className={styles.buttons}>
+          <Button
+            type="primary"
+            shape="round"
+            icon={<HeartOutlined />}
+            size="middle"
+            onClick={sendInterestHandler}
+          >
+            Send Interest
+          </Button>
+          <Button
+            type="primary"
+            shape="round"
+            icon={<ProfileOutlined />}
+            size="middle"
+            onClick={toggleShortlistHandler}
+          >
+            Shortlist
+          </Button>
+          <Button
+            type="primary"
+            shape="round"
+            icon={<SendOutlined />}
+            size="middle"
+            onClick={sendMessageHandler}
+          >
+            Send Message
+          </Button>
+        </div>
       </div>
-      <div className={styles.buttons}>
+      <Modal
+        title={`Sending Message to ${profileName}`}
+        visible={isMessageModalVisible}
+        onCancel={handleMessageCancel}
+        destroyOnClose={true}
+        footer={null}
+      >
+        <p>Type your message below : </p>
+        <TextArea showCount maxLength={300} ref={messageRef} allowClear />
         <Button
           type="primary"
           shape="round"
-          icon={<HeartOutlined />}
+          icon={<SendOutlined />}
           size="middle"
-          onClick={sendInterestHandler}
-        >
-          Send Interest
-        </Button>
-        <Button
-          type="primary"
-          shape="round"
-          icon={<ProfileOutlined />}
-          size="middle"
-          onClick={toggleShortlistHandler}
-        >
-          Shortlist
-        </Button>
-        <Button
-          type="primary"
-          shape="round"
-          icon={<HeartOutlined />}
-          size="middle"
-          onClick={sendMessageHandler}
+          onClick={sendMessageViaModalHandler}
         >
           Send Message
         </Button>
-      </div>
-    </div>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<ClearOutlined />}
+          size="middle"
+          onClick={handleMessageCancel}
+        >
+          Cancel
+        </Button>
+      </Modal>
+    </>
   );
 };
 
