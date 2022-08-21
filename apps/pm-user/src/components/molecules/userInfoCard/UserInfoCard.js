@@ -155,7 +155,7 @@ const UserInfoCard = ({
         </div>
       </div>
       <Modal
-        title={`Sending Message to ${name}`}
+        title={`Sending Message to ${profileName}`}
         visible={isMessageModalVisible}
         onCancel={handleMessageCancel}
         destroyOnClose={true}
