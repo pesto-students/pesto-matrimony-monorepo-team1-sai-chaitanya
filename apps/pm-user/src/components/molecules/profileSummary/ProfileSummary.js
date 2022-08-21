@@ -11,7 +11,7 @@ const ProfileSummary = ({
 }) => {
   return (
     <div className={styles.profileSummary}>
-      <Image width={176} src={userImageSrc} />
+      <Image src={userImageSrc} />
       <div className={styles.changeImage}>
         <a href={imageChangeLink}>Change Image</a>
       </div>

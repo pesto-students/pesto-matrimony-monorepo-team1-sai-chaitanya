@@ -1,4 +1,4 @@
-export { default as Header } from './header';
+export { default as NavBar } from './navBar';
 export { default as LoginForm } from './loginForm';
 export { default as MyCard } from './myCard';
 export { default as OwnProfileSummaryCard } from './ownProfileSummaryCard';
