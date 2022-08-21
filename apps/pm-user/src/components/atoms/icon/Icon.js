@@ -28,10 +28,9 @@ import {
   EyeOutlined,
   InfoCircleOutlined,
   UserOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  ProfileOutlined,
 } from '@ant-design/icons';
-
-
 
 export {
   DownOutlined,
@@ -63,5 +62,6 @@ export {
   EyeOutlined,
   InfoCircleOutlined,
   UserOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  ProfileOutlined,
 };
