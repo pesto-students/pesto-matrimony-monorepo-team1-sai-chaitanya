@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { DEFAULT_SELECTED_ITEM_KEY, MENU_ITEMS } from './constants';
 import { Menu } from '../../atoms';
 import { ProfileSummary } from '../../molecules';
@@ -6,8 +7,9 @@ import { QuickInfoBar } from '../../molecules';
 import styles from './sideBar.module.scss';
 
 function SideBar() {
+  const history = useHistory();
   const handleMenuItemClick = ({ key }) => {
-    //some code here
+    history.push(`/${key}`);
   };
 
   return (

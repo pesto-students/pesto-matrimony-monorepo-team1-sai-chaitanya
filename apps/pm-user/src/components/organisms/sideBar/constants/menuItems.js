@@ -1,25 +1,30 @@
-import { SearchOutlined, UserOutlined, HomeOutlined, UnorderedListOutlined } from '../../../atoms';
+import {
+  SearchOutlined,
+  UserOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+} from '../../../atoms';
 
 const RECOMMENDATIONS = {
-  key: 'RECOMMENDATIONS',
+  key: 'recommendations',
   icon: <HomeOutlined />,
   label: 'Recommendations',
 };
 
 const MYPROFILE = {
-  key: 'MYPROFILE',
+  key: 'profile',
   icon: <UserOutlined />,
   label: 'MyProfile',
 };
 
 const SHORTLISTED = {
-  key: 'SHORTLISTED',
+  key: 'shortlisted',
   icon: <UnorderedListOutlined />,
   label: 'Shortlisted',
 };
 
 const SEARCH = {
-  key: 'SEARCH',
+  key: 'search',
   icon: <SearchOutlined />,
   label: 'Search',
 };
