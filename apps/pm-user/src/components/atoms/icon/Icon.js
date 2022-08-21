@@ -27,7 +27,11 @@ import {
   PlusCircleOutlined,
   EyeOutlined,
   InfoCircleOutlined,
+  UserOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons';
+
+
 
 export {
   DownOutlined,
@@ -58,4 +62,6 @@ export {
   PlusCircleOutlined,
   EyeOutlined,
   InfoCircleOutlined,
+  UserOutlined,
+  UnorderedListOutlined
 };

@@ -8,16 +8,17 @@ const QuickInfoBar = () => {
   const history = useHistory();
 
   //redirecting on changing the value
-  function handleRedirectOnClick(value) {
+  function handleRedirectOnClick(e) {
+    // const value = e.target.value;
     // switch (value) {
     //     case "received" :
-    //         return history.pushs("/recieved");
+    //          history.push("/recieved");
     //     case "sent" :
-    //         return history.pushs("/sent");
+    //          history.push("/sent");
     //     case "accepted" :
-    //         return history.pushs("/accepted");
+    //          history.push("/accepted");
     //     default :
-    //         return history.pushs("/recieved");
+    //          history.push("/recieved");
     // }
   }
 
