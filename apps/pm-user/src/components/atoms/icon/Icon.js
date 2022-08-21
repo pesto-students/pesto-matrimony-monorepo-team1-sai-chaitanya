@@ -30,6 +30,8 @@ import {
   UserOutlined,
   UnorderedListOutlined,
   ProfileOutlined,
+  SendOutlined,
+  ClearOutlined,
 } from '@ant-design/icons';
 
 export {
@@ -64,4 +66,6 @@ export {
   UserOutlined,
   UnorderedListOutlined,
   ProfileOutlined,
+  SendOutlined,
+  ClearOutlined,
 };
