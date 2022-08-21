@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { NavBar } from '../../molecules';
 import { SideBar } from '../sideBar';
 import QuickLinksCard from '../quickLinksCard';
 import styles from './appSkeleton.module.scss';
@@ -8,7 +8,9 @@ import styles from './appSkeleton.module.scss';
 function AppSkeleton({ children }) {
   return (
     <div className={styles.container}>
-      <nav className={styles.navbar}>Navbar</nav>
+      <nav className={styles.navbarWraper}>
+        <NavBar />
+      </nav>
       <div className={styles.content}>
         <div className={styles.sideBar}>
           <SideBar />
