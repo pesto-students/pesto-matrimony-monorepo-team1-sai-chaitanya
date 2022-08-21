@@ -10,7 +10,7 @@ const MyCard = ({ cardLink, cardTitle, children, className }) => {
       title={cardTitle}
       extra={<a href={cardLink}>See all</a>}
       style={{
-        width: 400,
+        width: "100%",
       }}
     >
       {children}
