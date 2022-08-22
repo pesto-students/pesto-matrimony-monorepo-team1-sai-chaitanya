@@ -7,3 +7,4 @@ export { default as QuickInfoBar } from './quickInfoBar';
 export { default as ResultSection } from './resultSection';
 export { default as UserItemsList } from './userItemsList';
 export { default as UserInfoCard } from './userInfoCard';
+export { default as UserInfoCardsList } from './userInfoCardsList';

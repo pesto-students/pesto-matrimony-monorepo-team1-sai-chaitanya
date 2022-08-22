@@ -12,6 +12,7 @@ function SecureRoutes() {
         <Route exact path={PATHS.PROFILE} component={Profile} />
         <Route exact path={PATHS.HOME} component={Home} />
         <Route exact path={PATHS.RECOMMENDATIONS} component={Recommendations} />
+        {/* <Route path={PATHS.MATCHES} component={Matches} /> */}
         <Route component={PageNotFound} />
       </Switch>
     </AppSkeleton>
