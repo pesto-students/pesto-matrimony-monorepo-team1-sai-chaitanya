@@ -3,13 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { PATHS } from '../constants';
 import { AppSkeleton } from '../components';
-import {
-  Home,
-  Matches,
-  PageNotFound,
-  Profile,
-  Recommendations,
-} from '../pages';
+import { Home, PageNotFound, Profile, Recommendations } from '../pages';
 
 function SecureRoutes() {
   return (
