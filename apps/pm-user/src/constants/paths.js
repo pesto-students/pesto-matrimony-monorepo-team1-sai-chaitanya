@@ -6,7 +6,7 @@ const PATHS = {
   LOGIN_CALLBACK: '/login/callback',
   FAQ: '/faq',
   RECOMMENDATIONS: '/recommendations',
-  MATCHES: '/matches',
+  MATCHES: '/matches/:matchStatus',
 };
 
 export { PATHS };
