@@ -1,1 +1,1 @@
-export { default } from './ViewAndSendButtonsns';
+export { default } from './ViewAndSendButtons';

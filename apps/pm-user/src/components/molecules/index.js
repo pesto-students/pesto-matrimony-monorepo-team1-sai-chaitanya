@@ -2,7 +2,7 @@ export { default as AcceptDeclineButtons } from './acceptDeclineButtons';
 export { default as DeclinedInfoButtons } from './declinedInfoButtons';
 export { default as InterestBox } from './interestBox';
 export { default as LoginForm } from './loginForm';
-export { default as MessagingButtons } from './viewAndSendButtons';
+export { default as ViewAndSendButtons } from './viewAndSendButtons';
 export { default as MyCard } from './myCard';
 export { default as NavBar } from './navBar';
 export { default as OwnProfileSummaryCard } from './ownProfileSummaryCard';

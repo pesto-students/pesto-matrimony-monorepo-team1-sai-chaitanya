@@ -4,30 +4,19 @@ import PropTypes from 'prop-types';
 import styles from './interestBox.module.scss';
 import { Button, Input, Modal } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
+import { ClearOutlined, SendOutlined } from '../../atoms/icon';
 
-import {
-  ClearOutlined,
-  DeleteOutlined,
-  DislikeOutlined,
-  ExclamationCircleOutlined,
-  EyeOutlined,
-  LikeOutlined,
-  ReadOutlined,
-  SendOutlined,
-} from '../../atoms/icon';
-import AcceptDeclineButtons from '../acceptDeclineButtons/AcceptDeclineButtons';
-
-// myId is the _id of the loggedin user.
+// idOfLoggedInUser is the _id of the loggedin user.
 const InterestBox = ({
-  myId,
-  fromName,
-  fromId,
-  fromAge,
-  fromImage,
-  toId,
-  toName,
-  toAge,
-  toImage,
+  idOfLoggedInUser,
+  interestSenderName,
+  interestSenderId,
+  interestSenderAge,
+  interestSenderImage,
+  interestReceiverId,
+  interestReceiverName,
+  interestReceiverAge,
+  interestReceiverImage,
   isAccepted,
   isRejected,
   conversations,
@@ -121,7 +110,7 @@ const InterestBox = ({
         showNotification(
           'success',
           'Message Sent',
-          `Relax! Your message has been sent to ${toName}`,
+          `Relax! Your message has been sent to ${interestReceiverName}`,
           0
         );
       }, 1500);
@@ -135,98 +124,31 @@ const InterestBox = ({
 
   const history = useHistory();
   function viewProfileHandler() {
-    history.push(`/profile/${fromId}`);
-  }
-
-  const viewAndSendButtons = (
-    <MessagingButtons
-      sendNewMessageHandler={sendNewMessageHandler}
-      viewMessagesHandler={viewMessagesHandler}
-    />
-  );
-
-  const acceptDeclineButtons = (
-    <AcceptDeclineButtons
-      acceptInterestHandler={acceptInterestHandler}
-      fromId={fromId}
-      rejectInterestHandler={rejectInterestHandler}
-    />
-  );
-
-  const deleteRejectedInterestButton = (
-    // if interest is declined, no messages can be sent.
-    // only option is to delete the interest sent
-    <>
-      <Button type="text" danger icon={<ExclamationCircleOutlined />}>
-        Your Interest was rejected!
-      </Button>
-      <Button
-        danger
-        type="text"
-        shape="round"
-        icon={<DeleteOutlined />}
-        size="middle"
-        onClick={deleteRejectedInterestHandler}
-      >
-        Delete
-      </Button>
-    </>
-  );
-  const deleteInterestDeclinedByMe = (
-    // if interest is declined, no messages can be sent.
-    // only option is to delete the interest sent
-    <>
-      <Button type="text" danger icon={<ExclamationCircleOutlined />}>
-        You rejected this interest!
-      </Button>
-      <Button
-        danger
-        type="text"
-        shape="round"
-        icon={<DeleteOutlined />}
-        size="middle"
-        onClick={deleteRejectedInterestHandler}
-      >
-        Delete
-      </Button>
-    </>
-  );
-
-  let buttonsToDisplay = '';
-  if (isRejected === false && myId === fromId && isAccepted === false) {
-    // Buttons to be shown for sender of interest
-    // Interest sender can send messages only if receiver accepts interest.
-    buttonsToDisplay = `Wait for ${toName} to accept interest.`;
-  } else if (isAccepted === false && myId === toId && isRejected === false) {
-    // buttons to be shown for receiver of interest
-    buttonsToDisplay = acceptDeclineButtons;
-  } else if (isRejected === false && isAccepted === true) {
-    // receiver accepted interest
-    buttonsToDisplay = viewAndSendButtons;
-  } else if (isRejected === true && myId === fromId) {
-    // receiver rejected the interest.
-    // There is option to delete the interest in the mailbox of both sender and receiver.
-    buttonsToDisplay = deleteRejectedInterestButton;
-  } else if (isRejected === true && myId === toId) {
-    // receiver rejected the interest.
-    // There is option to delete the interest in the mailbox of both sender and receiver.
-    buttonsToDisplay = deleteInterestDeclinedByMe;
+    history.push(`/profile/${interestSenderId}`);
   }
 
   return (
     <>
       <div className={styles.interestBox}>
         <div>
-          <img src={myId === fromId ? `${toImage}` : `${fromImage}`} />
+          <img
+            src={
+              idOfLoggedInUser === interestSenderId
+                ? `${interestReceiverImage}`
+                : `${interestSenderImage}`
+            }
+          />
         </div>
         <div>
-          {myId === fromId ? `${toName}, ${toAge}` : `${fromName}, ${fromAge}`}
+          {idOfLoggedInUser === interestSenderId
+            ? `${interestReceiverName}, ${interestReceiverAge}`
+            : `${interestSenderName}, ${interestSenderAge}`}
         </div>
         <div>{buttonsToDisplay}</div>
       </div>
       {isNewMessageModalVisible && (
         <Modal
-          title={`Sending Message to ${toName}`}
+          title={`Sending Message to ${interestReceiverName}`}
           visible={isNewMessageModalVisible}
           onCancel={handleNewMessageCancel}
           destroyOnClose={true}
@@ -256,7 +178,7 @@ const InterestBox = ({
       )}
       {isViewMessageHistoryModalVisible && (
         <Modal
-          title={`Viewing Previous Conversation with ${toName}`}
+          title={`Viewing Previous Conversation with ${interestReceiverName}`}
           visible={isViewMessageHistoryModalVisible}
           onCancel={hideMessageHistoryModal}
           destroyOnClose={true}
@@ -267,11 +189,23 @@ const InterestBox = ({
           ) : (
             <div>
               {conversations.map(
-                ({ message, fromId, fromImage, toId, toImage }) => {
+                ({
+                  message,
+                  interestSenderId,
+                  interestSenderImage,
+                  interestReceiverId,
+                  interestReceiverImage,
+                }) => {
                   return (
                     <div className={styles.message}>
                       <div>
-                        <img src={fromId === myId ? fromImage : toImage} />
+                        <img
+                          src={
+                            interestSenderId === idOfLoggedInUser
+                              ? interestSenderImage
+                              : interestReceiverImage
+                          }
+                        />
                       </div>
                       <div>{message}</div>
                     </div>
@@ -297,30 +231,30 @@ const InterestBox = ({
 };
 
 InterestBox.PropTypes = {
-  myId: PropTypes.string,
-  fromName: PropTypes.string,
-  fromId: PropTypes.string,
-  fromAge: PropTypes.number,
-  fromImage: PropTypes.string,
-  toId: PropTypes.string,
-  toName: PropTypes.string,
-  toAge: PropTypes.number,
-  toImage: PropTypes.string,
+  idOfLoggedInUser: PropTypes.string,
+  interestSenderName: PropTypes.string,
+  interestSenderId: PropTypes.string,
+  interestSenderAge: PropTypes.number,
+  interestSenderImage: PropTypes.string,
+  interestReceiverId: PropTypes.string,
+  interestReceiverName: PropTypes.string,
+  interestReceiverAge: PropTypes.number,
+  interestReceiverImage: PropTypes.string,
   isAccepted: PropTypes.bool,
   isRejected: PropTypes.bool,
   conversations: PropTypes.array,
 };
 
 InterestBox.defaultProps = {
-  myId: 'abc',
-  fromName: 'Vishal',
-  fromId: 'abc',
-  fromAge: 23,
-  fromImage: 'https://placehold.jp/150x150.png',
-  toId: 'xyz',
-  toName: 'Kavita',
-  toAge: 22,
-  toImage: 'https://placehold.jp/150x150.png',
+  idOfLoggedInUser: 'abc',
+  interestSenderName: 'Vishal',
+  interestSenderId: 'abc',
+  interestSenderAge: 23,
+  interestSenderImage: 'https://placehold.jp/150x150.png',
+  interestReceiverId: 'xyz',
+  interestReceiverName: 'Kavita',
+  interestReceiverAge: 22,
+  interestReceiverImage: 'https://placehold.jp/150x150.png',
   isAccepted: false,
   isRejected: false,
   conversations: [],
