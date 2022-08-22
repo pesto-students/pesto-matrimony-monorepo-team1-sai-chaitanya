@@ -11,6 +11,9 @@ function SideBar() {
   const handleMenuItemClick = ({ key }) => {
     history.push(`/${key}`);
   };
+  const handleRedirectToMatches = (matchStatus) => {
+    history.push(`/matches/${matchStatus}`);
+  };
 
   return (
     <div className={styles.container}>
@@ -23,7 +26,7 @@ function SideBar() {
         />
       </div>
       <div className={styles.quickInfoBarWraper}>
-        <QuickInfoBar />
+        <QuickInfoBar onClick={handleRedirectToMatches} />
       </div>
       <div className={styles.menu}>
         <Menu
