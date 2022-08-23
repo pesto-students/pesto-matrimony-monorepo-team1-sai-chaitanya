@@ -32,6 +32,8 @@ import {
   ProfileOutlined,
   SendOutlined,
   ClearOutlined,
+  ReadOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
 
 export {
@@ -68,4 +70,6 @@ export {
   ProfileOutlined,
   SendOutlined,
   ClearOutlined,
+  ReadOutlined,
+  ExclamationCircleOutlined,
 };
