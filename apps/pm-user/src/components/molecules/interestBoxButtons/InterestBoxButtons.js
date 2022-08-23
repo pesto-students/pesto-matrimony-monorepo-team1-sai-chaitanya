@@ -1,12 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { noop as _noop } from 'lodash';
 import {
   AcceptDeclineButtons,
   DeclinedInfoButtons,
   ViewAndSendButtons,
 } from '..';
 
-const MailBoxButtons = ({
+const InterestBoxButtons = ({
   isRejected,
   isAccepted,
   idOfLoggedInUser,
@@ -60,10 +60,10 @@ const MailBoxButtons = ({
       />
     );
   }
-  return <>{buttonsToDisplay}</>;
+  return buttonsToDisplay;
 };
 
-MailBoxButtons.propTypes = {
+InterestBoxButtons.propTypes = {
   isRejected: PropTypes.bool,
   isAccepted: PropTypes.bool,
   idOfLoggedInUser: PropTypes.string,
@@ -76,18 +76,18 @@ MailBoxButtons.propTypes = {
   sendNewMessageHandler: PropTypes.func,
   viewMessagesHandler: PropTypes.func,
 };
-// MailBoxButtons.defaultProps = {
-//   isRejected: PropTypes.bool,
-//   isAccepted: PropTypes.bool,
-//   idOfLoggedInUser: PropTypes.string,
-//   interestReceiverId: PropTypes.string,
-//   interestReceiverName: PropTypes.string,
-//   interestSenderId: PropTypes.string,
-//   acceptInterestHandler: PropTypes.func,
-//   deleteRejectedInterestHandler: PropTypes.func,
-//   rejectInterestHandler: PropTypes.func,
-//   sendNewMessageHandler: PropTypes.func,
-//   viewMessagesHandler: PropTypes.func,
-// };
+InterestBoxButtons.defaultProps = {
+  isRejected: false,
+  isAccepted: false,
+  idOfLoggedInUser: 'fetchFromDB',
+  interestReceiverId: 'receiverId',
+  interestReceiverName: 'Not Specified',
+  interestSenderId: 'senderId',
+  acceptInterestHandler: _noop,
+  deleteRejectedInterestHandler: _noop,
+  rejectInterestHandler: _noop,
+  sendNewMessageHandler: _noop,
+  viewMessagesHandler: _noop,
+};
 
-export default MailBoxButtons;
+export default InterestBoxButtons;

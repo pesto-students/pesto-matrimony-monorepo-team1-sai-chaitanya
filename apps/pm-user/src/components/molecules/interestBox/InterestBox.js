@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
+import { InterestBoxButtons, OldMessages } from '..';
+import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './interestBox.module.scss';
-import { Button, Input, Modal } from '../../atoms';
-import { showNotification } from '@pm/pm-ui';
-import { ClearOutlined, SendOutlined } from '../../atoms/icon';
+import { HistoryOutlined } from '@ant-design/icons';
 
 // idOfLoggedInUser is the _id of the loggedin user.
 const InterestBox = ({
@@ -31,74 +32,50 @@ const InterestBox = ({
       'Interest Accepted!',
       'Congratulations. You are one step closer to finding your soul-mate.'
     );
-    showNotification(
-      'error',
-      'Error!',
-      'Error accepting the interest. Please try later.'
-    );
+    showNotification('error', 'Error!', 'Error accepting the interest. Please try later.');
   }
   function deleteRejectedInterestHandler() {
     // Do DB operation. delete interest object inside interests array
     // depending on who initiated this delete operation.
 
     // Then send notification about success / failure
-    showNotification(
-      'success',
-      'Interest Deleted!',
-      'Interest successfully deleted.'
-    );
-    showNotification(
-      'error',
-      'Error!',
-      'Error deleting the interest. Please try again.'
-    );
+    showNotification('success', 'Interest Deleted!', 'Interest successfully deleted.');
+    showNotification('error', 'Error!', 'Error deleting the interest. Please try again.');
   }
   function rejectInterestHandler() {
     // Do DB operation. update isRejected to true for interest object inside of sender only.
     // Then delete the interest object in receiver
 
     // Then send notification about success / failure
-    showNotification(
-      'info',
-      'Interest Declined!',
-      'You will no longer receive messages from the sender.'
-    );
-    showNotification(
-      'error',
-      'Error!',
-      'Error declining the interest. Please try later.'
-    );
+    showNotification('info', 'Interest Declined!', 'You will no longer receive messages from the sender.');
+    showNotification('error', 'Error!', 'Error declining the interest. Please try later.');
   }
 
   const messageRef = useRef();
-  // New Message Modal
-  const [isNewMessageModalVisible, setIsNewMessageModalVisible] =
-    useState(false);
+  // Messaging Modal
+  const [isMessagingModalVisible, setisMessagingModalVisible] = useState(false);
 
-  const showNewMessageModal = () => {
-    setIsNewMessageModalVisible(true);
+  const showMessagingModal = () => {
+    setisMessagingModalVisible(true);
   };
 
   const handleNewMessageCancel = () => {
-    setIsNewMessageModalVisible(false);
+    setisMessagingModalVisible(false);
   };
 
   function sendNewMessageHandler() {
-    showNewMessageModal();
+    showMessagingModal();
   }
   // Message History Modal
-  const [
-    isViewMessageHistoryModalVisible,
-    setIsViewMessageHistoryModalVisible,
-  ] = useState(false);
+  // const [isViewMessageHistoryModalVisible, setIsViewMessageHistoryModalVisible] = useState(false);
 
-  const viewMessageHistoryModal = () => {
-    setIsViewMessageHistoryModalVisible(true);
-  };
+  // const viewMessageHistoryModal = () => {
+  //   setIsViewMessageHistoryModalVisible(true);
+  // };
 
-  const hideMessageHistoryModal = () => {
-    setIsViewMessageHistoryModalVisible(false);
-  };
+  // const hideMessageHistoryModal = () => {
+  //   setIsViewMessageHistoryModalVisible(false);
+  // };
 
   function sendMessageHandler() {
     const message = messageRef.current.resizableTextArea.props.value;
@@ -107,76 +84,82 @@ const InterestBox = ({
     if (message.trim().length > 0) {
       setTimeout(() => {
         handleNewMessageCancel();
-        showNotification(
-          'success',
-          'Message Sent',
-          `Relax! Your message has been sent to ${interestReceiverName}`,
-          0
-        );
+        showNotification('success', 'Message Sent', `Relax! Your message has been sent to ${interestReceiverName}`, 0);
       }, 1500);
     } else {
       showNotification('warn', 'Error!', "Message can't be empty.");
     }
   }
   function viewMessagesHandler() {
-    viewMessageHistoryModal();
+    showMessagingModal();
   }
 
   const history = useHistory();
-  function viewProfileHandler() {
+  function imageClickHandler(idOfLoggedInUser, interestSenderId, interestReceiverId) {
+    if (idOfLoggedInUser === interestSenderId) {
+      history.push(`/profile/${interestReceiverId}`);
+      return;
+    }
     history.push(`/profile/${interestSenderId}`);
   }
 
   return (
     <>
       <div className={styles.interestBox}>
-        <div>
+        <div className={styles.profileImage}>
           <img
-            src={
-              idOfLoggedInUser === interestSenderId
-                ? `${interestReceiverImage}`
-                : `${interestSenderImage}`
-            }
+            src={idOfLoggedInUser === interestSenderId ? interestReceiverImage : interestSenderImage}
+            alt={idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName}
+            onClick={() => imageClickHandler(idOfLoggedInUser, interestSenderId, interestReceiverId)}
           />
         </div>
-        <div>
+        <div className={styles.profileBrief}>
           {idOfLoggedInUser === interestSenderId
             ? `${interestReceiverName}, ${interestReceiverAge}`
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
-        <div>{buttonsToDisplay}</div>
+        <div className={styles.buttons}>
+          <InterestBoxButtons
+            isRejected={isRejected}
+            isAccepted={isAccepted}
+            idOfLoggedInUser={idOfLoggedInUser}
+            interestReceiverId={interestReceiverId}
+            interestReceiverName={interestReceiverName}
+            interestSenderId={interestSenderId}
+            acceptInterestHandler={acceptInterestHandler}
+            deleteRejectedInterestHandler={deleteRejectedInterestHandler}
+            rejectInterestHandler={rejectInterestHandler}
+            sendNewMessageHandler={sendNewMessageHandler}
+            viewMessagesHandler={viewMessagesHandler}
+          />
+        </div>
       </div>
-      {isNewMessageModalVisible && (
+      {/* Messaging Modal Start */}
+      {isMessagingModalVisible && (
         <Modal
-          title={`Sending Message to ${interestReceiverName}`}
-          visible={isNewMessageModalVisible}
+          title={`Sending Message to ${idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName}`}
+          visible={isMessagingModalVisible}
           onCancel={handleNewMessageCancel}
           destroyOnClose={true}
           footer={null}
         >
+          <h2>Previous Messages:</h2>
+          <OldMessages conversations={conversations} idOfLoggedInUser={idOfLoggedInUser} />
+          <br />
           <p>Type your message below : </p>
           <TextArea showCount maxLength={300} ref={messageRef} allowClear />
-          <Button
-            type="primary"
-            shape="round"
-            icon={<SendOutlined />}
-            size="middle"
-            onClick={sendMessageHandler}
-          >
+          <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageHandler}>
             Send Message
           </Button>
-          <Button
-            type="primary"
-            shape="round"
-            icon={<ClearOutlined />}
-            size="middle"
-            onClick={handleNewMessageCancel}
-          >
+          <Button type="primary" shape="round" icon={<ClearOutlined />} size="middle" onClick={handleNewMessageCancel}>
             Cancel
           </Button>
         </Modal>
       )}
-      {isViewMessageHistoryModalVisible && (
+      {/* Messaging Modal End */}
+
+      {/* Message History Modal Start */}
+      {/* {isViewMessageHistoryModalVisible && (
         <Modal
           title={`Viewing Previous Conversation with ${interestReceiverName}`}
           visible={isViewMessageHistoryModalVisible}
@@ -184,53 +167,19 @@ const InterestBox = ({
           destroyOnClose={true}
           footer={null}
         >
-          {conversations.length === 0 ? (
-            <p>No Messages.</p>
-          ) : (
-            <div>
-              {conversations.map(
-                ({
-                  message,
-                  interestSenderId,
-                  interestSenderImage,
-                  interestReceiverId,
-                  interestReceiverImage,
-                }) => {
-                  return (
-                    <div className={styles.message}>
-                      <div>
-                        <img
-                          src={
-                            interestSenderId === idOfLoggedInUser
-                              ? interestSenderImage
-                              : interestReceiverImage
-                          }
-                        />
-                      </div>
-                      <div>{message}</div>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-          )}
+          {conversations.length === 0 ? <p>No Messages.</p> : <PreviousConversations />}
 
-          <Button
-            type="primary"
-            shape="round"
-            icon={<ClearOutlined />}
-            size="middle"
-            onClick={hideMessageHistoryModal}
-          >
+          <Button type="primary" shape="round" icon={<ClearOutlined />} size="middle" onClick={hideMessageHistoryModal}>
             Close
           </Button>
         </Modal>
-      )}
+      )} */}
+      {/* Message History Modal End */}
     </>
   );
 };
 
-InterestBox.PropTypes = {
+InterestBox.propTypes = {
   idOfLoggedInUser: PropTypes.string,
   interestSenderName: PropTypes.string,
   interestSenderId: PropTypes.string,
