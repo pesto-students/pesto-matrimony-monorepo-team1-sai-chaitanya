@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, ExclamationCircleOutlined } from '../../atoms';
+import { Button, DeleteOutlined, ExclamationCircleOutlined } from '../../atoms';
 
 const DeclinedInfoButtons = ({
   deleteRejectedInterestHandler,

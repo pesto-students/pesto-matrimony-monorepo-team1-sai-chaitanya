@@ -1,11 +1,9 @@
 import { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
 import { InterestBoxButtons, OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './interestBox.module.scss';
-import { HistoryOutlined } from '@ant-design/icons';
 
 // idOfLoggedInUser is the _id of the loggedin user.
 const InterestBox = ({
@@ -81,28 +79,28 @@ const InterestBox = ({
     const message = messageRef.current.resizableTextArea.props.value;
     console.log(message);
     // Connect with Backend and save this message inside both users.
+
+    const messageReceiverName = idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName;
     if (message.trim().length > 0) {
       setTimeout(() => {
         handleNewMessageCancel();
-        showNotification('success', 'Message Sent', `Relax! Your message has been sent to ${interestReceiverName}`, 0);
+        showNotification('success', 'Message Sent', `Relax! Your message has been sent to ${messageReceiverName}`, 0);
       }, 1500);
     } else {
       showNotification('warn', 'Error!', "Message can't be empty.");
     }
   }
-  function viewMessagesHandler() {
-    showMessagingModal();
-  }
 
-  const history = useHistory();
   function imageClickHandler(idOfLoggedInUser, interestSenderId, interestReceiverId) {
     if (idOfLoggedInUser === interestSenderId) {
-      history.push(`/profile/${interestReceiverId}`);
+      // open profile in new tab
+      window.open(`/profile/${interestReceiverId}`, "_blank");
       return;
     }
-    history.push(`/profile/${interestSenderId}`);
+    // open profile in new tab
+    window.open(`/profile/${interestSenderId}`, "_blank");
   }
-
+  console.log(idOfLoggedInUser);
   return (
     <>
       <div className={styles.interestBox}>
@@ -126,11 +124,11 @@ const InterestBox = ({
             interestReceiverId={interestReceiverId}
             interestReceiverName={interestReceiverName}
             interestSenderId={interestSenderId}
+            interestSenderName={interestSenderName}
             acceptInterestHandler={acceptInterestHandler}
             deleteRejectedInterestHandler={deleteRejectedInterestHandler}
             rejectInterestHandler={rejectInterestHandler}
             sendNewMessageHandler={sendNewMessageHandler}
-            viewMessagesHandler={viewMessagesHandler}
           />
         </div>
       </div>
@@ -143,10 +141,10 @@ const InterestBox = ({
           destroyOnClose={true}
           footer={null}
         >
-          <h2>Previous Messages:</h2>
-          <OldMessages conversations={conversations} idOfLoggedInUser={idOfLoggedInUser} />
+          <h2 className={styles.heading}>Previous Messages:</h2>
+          <OldMessages conversations={conversations} idOfLoggedInUser={idOfLoggedInUser} interestSenderImage={interestSenderImage} interestReceiverImage={interestReceiverImage} />
           <br />
-          <p>Type your message below : </p>
+          <h2 className={styles.heading}>Type your message below : </h2>
           <TextArea showCount maxLength={300} ref={messageRef} allowClear />
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageHandler}>
             Send Message
@@ -179,34 +177,34 @@ const InterestBox = ({
   );
 };
 
-InterestBox.propTypes = {
-  idOfLoggedInUser: PropTypes.string,
-  interestSenderName: PropTypes.string,
-  interestSenderId: PropTypes.string,
-  interestSenderAge: PropTypes.number,
-  interestSenderImage: PropTypes.string,
-  interestReceiverId: PropTypes.string,
-  interestReceiverName: PropTypes.string,
-  interestReceiverAge: PropTypes.number,
-  interestReceiverImage: PropTypes.string,
-  isAccepted: PropTypes.bool,
-  isRejected: PropTypes.bool,
-  conversations: PropTypes.array,
-};
+// InterestBox.propTypes = {
+//   idOfLoggedInUser: PropTypes.string,
+//   interestSenderName: PropTypes.string,
+//   interestSenderId: PropTypes.string,
+//   interestSenderAge: PropTypes.number,
+//   interestSenderImage: PropTypes.string,
+//   interestReceiverId: PropTypes.string,
+//   interestReceiverName: PropTypes.string,
+//   interestReceiverAge: PropTypes.number,
+//   interestReceiverImage: PropTypes.string,
+//   isAccepted: PropTypes.bool,
+//   isRejected: PropTypes.bool,
+//   conversations: PropTypes.array,
+// };
 
-InterestBox.defaultProps = {
-  idOfLoggedInUser: 'abc',
-  interestSenderName: 'Vishal',
-  interestSenderId: 'abc',
-  interestSenderAge: 23,
-  interestSenderImage: 'https://placehold.jp/150x150.png',
-  interestReceiverId: 'xyz',
-  interestReceiverName: 'Kavita',
-  interestReceiverAge: 22,
-  interestReceiverImage: 'https://placehold.jp/150x150.png',
-  isAccepted: false,
-  isRejected: false,
-  conversations: [],
-};
+// InterestBox.defaultProps = {
+//   idOfLoggedInUser: 'abc',
+//   interestSenderName: 'Vishal',
+//   interestSenderId: 'abc',
+//   interestSenderAge: 23,
+//   interestSenderImage: 'https://placehold.jp/150x150.png',
+//   interestReceiverId: 'xyz',
+//   interestReceiverName: 'Kavita',
+//   interestReceiverAge: 22,
+//   interestReceiverImage: 'https://placehold.jp/150x150.png',
+//   isAccepted: false,
+//   isRejected: true,
+//   conversations: [],
+// };
 
 export default InterestBox;

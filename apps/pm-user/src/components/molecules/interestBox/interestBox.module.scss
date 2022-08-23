@@ -1,12 +1,29 @@
 .interestBox {
-  border: 1px solid grey;
+  border-bottom: 1px dotted #5c5fee;
   border-radius: 2.4rem;
   margin: 1.2rem 1.8rem;
-  padding: 1.2rem;
+  padding: 1.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.4rem;
+
+  img {
+    border-radius: 50%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  :global {
+    button.ant-btn.ant-btn-primary {
+      border-color: #5c5fee;
+      background: #5c5fee;
+    }
+    .ant-modal {
+      top: 2.4rem;
+    }
+  }
 }
 
 .message {
@@ -19,7 +36,17 @@
 
 :global {
   .ant-modal-body {
+    top: 1.8rem;
     height: max-content;
+    padding: 1rem 2.4rem;
     // overflow: scroll;
   }
+  .ant-modal {
+    top: 2.4rem;
+  }
+}
+
+.heading {
+  font-size: 1.55rem;
+  margin-bottom: 0.8rem;
 }

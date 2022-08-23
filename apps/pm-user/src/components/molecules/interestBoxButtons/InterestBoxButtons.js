@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import { noop as _noop } from 'lodash';
 import {
   AcceptDeclineButtons,
   DeclinedInfoButtons,
@@ -17,7 +15,6 @@ const InterestBoxButtons = ({
   deleteRejectedInterestHandler,
   rejectInterestHandler,
   sendNewMessageHandler,
-  viewMessagesHandler,
 }) => {
   let buttonsToDisplay = '';
   if (
@@ -46,7 +43,6 @@ const InterestBoxButtons = ({
     buttonsToDisplay = (
       <ViewAndSendButtons
         sendNewMessageHandler={sendNewMessageHandler}
-        viewMessagesHandler={viewMessagesHandler}
       />
     );
   } else if (isRejected === true) {
@@ -60,34 +56,7 @@ const InterestBoxButtons = ({
       />
     );
   }
-  return buttonsToDisplay;
-};
-
-InterestBoxButtons.propTypes = {
-  isRejected: PropTypes.bool,
-  isAccepted: PropTypes.bool,
-  idOfLoggedInUser: PropTypes.string,
-  interestReceiverId: PropTypes.string,
-  interestReceiverName: PropTypes.string,
-  interestSenderId: PropTypes.string,
-  acceptInterestHandler: PropTypes.func,
-  deleteRejectedInterestHandler: PropTypes.func,
-  rejectInterestHandler: PropTypes.func,
-  sendNewMessageHandler: PropTypes.func,
-  viewMessagesHandler: PropTypes.func,
-};
-InterestBoxButtons.defaultProps = {
-  isRejected: false,
-  isAccepted: false,
-  idOfLoggedInUser: 'fetchFromDB',
-  interestReceiverId: 'receiverId',
-  interestReceiverName: 'Not Specified',
-  interestSenderId: 'senderId',
-  acceptInterestHandler: _noop,
-  deleteRejectedInterestHandler: _noop,
-  rejectInterestHandler: _noop,
-  sendNewMessageHandler: _noop,
-  viewMessagesHandler: _noop,
+  return buttonsToDisplay
 };
 
 export default InterestBoxButtons;

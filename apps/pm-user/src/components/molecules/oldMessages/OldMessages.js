@@ -2,24 +2,21 @@ import React from 'react';
 import styles from './oldMessages.module.scss';
 import PropTypes from 'prop-types';
 
-const OldMessages = ({ conversations, idOfLoggedInUser }) => {
+const OldMessages = ({ conversations, idOfLoggedInUser, interestSenderImage, interestReceiverImage }) => {
+  console.log(idOfLoggedInUser, interestSenderImage, interestReceiverImage)
   return (
     <div className={styles.oldMessages}>
       {conversations.map(
         ({
           message,
-          interestSenderId,
-          interestSenderImage,
-          interestReceiverImage,
-          interestReceiverName,
-          interestSenderName,
+          messageSenderId,
         }) => {
+          const thisClassName = idOfLoggedInUser === messageSenderId ? "sender" : "receiver";
           return (
-            <div className={idOfLoggedInUser === interestSenderId ? `${styles.sender}` : `${styles.receiver}`}>
+            <div className={styles[thisClassName]}>
               <div className={styles.image}>
                 <img
-                  src={interestSenderId === idOfLoggedInUser ? interestSenderImage : interestReceiverImage}
-                  alt={interestSenderId === idOfLoggedInUser ? interestSenderName : interestReceiverName}
+                  src={messageSenderId === idOfLoggedInUser ? interestReceiverImage : interestSenderImage}
                 />
               </div>
               <div className={styles.messageText}>{message}</div>

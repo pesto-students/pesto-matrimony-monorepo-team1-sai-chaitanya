@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Button,
   DislikeOutlined,
@@ -8,7 +7,7 @@ import {
 
 const AcceptDeclineButtons = ({
   acceptInterestHandler,
-  fromId,
+  interestSenderId,
   rejectInterestHandler,
 }) => {
   return (
@@ -19,7 +18,7 @@ const AcceptDeclineButtons = ({
         icon={<EyeOutlined />}
         size="middle"
         target="_blank"
-        href={`/profile/${fromId}`}
+        href={`/profile/${interestSenderId}`}
       >
         View Sender's Profile
       </Button>
