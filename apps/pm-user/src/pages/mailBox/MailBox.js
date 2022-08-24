@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { InterestBox } from '../../components';
 import styles from './mailBox.module.scss';
 
-
 const DUMMY_INTERESTS_ARRAY = [
   {
     interestSenderAge: 23,
@@ -26,7 +25,7 @@ const DUMMY_INTERESTS_ARRAY = [
   },
 ];
 
-const MailBox = ({ interestsSentAndReceived, idOfLoggedInUser }) => {
+const MailBox = ({ idOfLoggedInUser, interestsSentAndReceived }) => {
   console.log(idOfLoggedInUser);
   const renderMailBox = DUMMY_INTERESTS_ARRAY?.map((interest, i) => {
     return (<div key={i}>
@@ -61,13 +60,13 @@ const MailBox = ({ interestsSentAndReceived, idOfLoggedInUser }) => {
 };
 
 MailBox.propTypes = {
-  interestsSentAndReceived: PropTypes.array,
   idOfLoggedInUser: PropTypes.string,
+  interestsSentAndReceived: PropTypes.array,
 };
 
 MailBox.defaultProps = {
+  idOfLoggedInUser: 'vishal',
   interestsSentAndReceived: [],
-  idOfLoggedInUser: 'shivani',
 };
 
 export default MailBox;

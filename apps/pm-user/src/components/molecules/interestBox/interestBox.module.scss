@@ -16,9 +16,10 @@
   }
 
   :global {
-    button.ant-btn.ant-btn-primary {
+    .ant-btn.ant-btn-primary {
       border-color: #5c5fee;
       background: #5c5fee;
+      margin: 0 0.4rem;
     }
     .ant-modal {
       top: 2.4rem;
