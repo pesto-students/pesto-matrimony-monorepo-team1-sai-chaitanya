@@ -1,16 +1,8 @@
-import React from 'react';
-import {
-  Button,
-  DislikeOutlined,
-  EyeOutlined,
-  LikeOutlined,
-} from '../../atoms';
+import { noop as _noop } from 'lodash';
+import { Button, DislikeOutlined, EyeOutlined, LikeOutlined } from '../../atoms';
+import PropTypes from 'prop-types';
 
-const AcceptDeclineButtons = ({
-  acceptInterestHandler,
-  fromId,
-  rejectInterestHandler,
-}) => {
+const AcceptDeclineButtons = ({ acceptInterestHandler, interestSenderId, rejectInterestHandler }) => {
   return (
     <>
       <Button
@@ -19,30 +11,28 @@ const AcceptDeclineButtons = ({
         icon={<EyeOutlined />}
         size="middle"
         target="_blank"
-        href={`/profile/${fromId}`}
+        href={`/profile/${interestSenderId}`}
       >
-        View Sender's Profile
+        View Profile
       </Button>
-      <Button
-        type="primary"
-        shape="round"
-        icon={<LikeOutlined />}
-        size="middle"
-        onClick={acceptInterestHandler}
-      >
+      <Button type="primary" shape="round" icon={<LikeOutlined />} size="middle" onClick={acceptInterestHandler}>
         Accept
       </Button>
-      <Button
-        type="primary"
-        shape="round"
-        icon={<DislikeOutlined />}
-        size="middle"
-        onClick={rejectInterestHandler}
-      >
+      <Button type="primary" shape="round" icon={<DislikeOutlined />} size="middle" onClick={rejectInterestHandler}>
         Reject
       </Button>
     </>
   );
+};
+AcceptDeclineButtons.propTypes = {
+  acceptInterestHandler: PropTypes.func,
+  interestSenderId: PropTypes.string,
+  rejectInterestHandler: PropTypes.func,
+};
+AcceptDeclineButtons.defaultProps = {
+  acceptInterestHandler: _noop,
+  interestSenderId: 'interestSenderId',
+  rejectInterestHandler: _noop,
 };
 
 export default AcceptDeclineButtons;

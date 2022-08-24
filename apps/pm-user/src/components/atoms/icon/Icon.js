@@ -34,6 +34,9 @@ import {
   ClearOutlined,
   ReadOutlined,
   ExclamationCircleOutlined,
+  MailOutlined,
+  DislikeOutlined,
+  LikeOutlined,
 } from '@ant-design/icons';
 
 export {
@@ -72,4 +75,7 @@ export {
   ClearOutlined,
   ReadOutlined,
   ExclamationCircleOutlined,
+  MailOutlined,
+  DislikeOutlined,
+  LikeOutlined,
 };

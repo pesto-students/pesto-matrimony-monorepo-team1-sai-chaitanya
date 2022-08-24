@@ -1,8 +1,9 @@
 import {
-  SearchOutlined,
-  UserOutlined,
   HomeOutlined,
+  MailOutlined,
+  SearchOutlined,
   UnorderedListOutlined,
+  UserOutlined,
 } from '../../../atoms';
 
 const RECOMMENDATIONS = {
@@ -29,7 +30,13 @@ const SEARCH = {
   label: 'Search',
 };
 
-const MENU_ITEMS = [RECOMMENDATIONS, MYPROFILE, SHORTLISTED, SEARCH];
+const MAILBOX = {
+  key: "mailbox",
+  icon: <MailOutlined />,
+  label: 'MailBox'
+}
+
+const MENU_ITEMS = [RECOMMENDATIONS, MYPROFILE, SHORTLISTED, SEARCH, MAILBOX];
 const DEFAULT_SELECTED_ITEM_KEY = RECOMMENDATIONS.key;
 
 export { DEFAULT_SELECTED_ITEM_KEY, MENU_ITEMS };

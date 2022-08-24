@@ -6,6 +6,7 @@ import { AppSkeleton } from '../components';
 import {
   Home,
   Matches,
+  MailBox,
   PageNotFound,
   Profile,
   Recommendations,
@@ -19,6 +20,7 @@ function SecureRoutes() {
         <Route exact path={PATHS.HOME} component={Home} />
         <Route exact path={PATHS.RECOMMENDATIONS} component={Recommendations} />
         <Route path={PATHS.MATCHES} component={Matches} />
+        <Route path={PATHS.MAILBOX} component={MailBox} />
         <Route component={PageNotFound} />
       </Switch>
     </AppSkeleton>
