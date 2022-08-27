@@ -3,10 +3,11 @@ import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
 import { InterestBoxButtons, OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
-import styles from './interestBox.module.scss';
+import styles from './messagesBox.module.scss';
+import ViewAndSendButtons from '../viewAndSendButtons';
 
 // idOfLoggedInUser is the _id of the loggedin user.
-const InterestBox = ({
+const MessagesBox = ({
   conversations,
   idOfLoggedInUser,
   interestSenderAge,
@@ -93,7 +94,7 @@ const InterestBox = ({
   console.log(idOfLoggedInUser);
   return (
     <>
-      <div className={styles.interestBox}>
+      <div className={styles.messagesBox}>
         <div className={styles.profileImage}>
           <img
             src={idOfLoggedInUser === interestSenderId ? interestReceiverImage : interestSenderImage}
@@ -107,7 +108,8 @@ const InterestBox = ({
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
         <div className={styles.buttons}>
-          <InterestBoxButtons
+          <ViewAndSendButtons sendNewMessageHandler={sendNewMessageHandler} />
+          {/* <InterestBoxButtons
             acceptInterestHandler={acceptInterestHandler}
             deleteRejectedInterestHandler={deleteRejectedInterestHandler}
             idOfLoggedInUser={idOfLoggedInUser}
@@ -119,7 +121,7 @@ const InterestBox = ({
             isAccepted={isAccepted}
             rejectInterestHandler={rejectInterestHandler}
             sendNewMessageHandler={sendNewMessageHandler}
-          />
+          /> */}
         </div>
       </div>
       {/* Messaging Modal Start */}
@@ -155,7 +157,7 @@ const InterestBox = ({
   );
 };
 
-InterestBox.propTypes = {
+MessagesBox.propTypes = {
   conversations: PropTypes.array,
   idOfLoggedInUser: PropTypes.string,
   interestSenderAge: PropTypes.number,
@@ -170,7 +172,7 @@ InterestBox.propTypes = {
   isRejected: PropTypes.bool,
 };
 
-InterestBox.defaultProps = {
+MessagesBox.defaultProps = {
   conversations: [],
   idOfLoggedInUser: 'idOfLoggedInUser',
   interestSenderAge: 99,
@@ -185,4 +187,4 @@ InterestBox.defaultProps = {
   isRejected: false,
 };
 
-export default InterestBox;
+export default MessagesBox;

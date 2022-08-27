@@ -8,6 +8,7 @@ const PATHS = {
   RECOMMENDATIONS: '/recommendations',
   MATCHES: '/matches/:matchStatus',
   MAILBOX: '/mailbox',
+  SEARCH: '/search'
 };
 
 export { PATHS };

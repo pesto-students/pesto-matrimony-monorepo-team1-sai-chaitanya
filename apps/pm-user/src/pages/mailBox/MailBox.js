@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { InterestBox } from '../../components';
+import { MessagesBox } from '../../components';
 import styles from './mailBox.module.scss';
 
 const DUMMY_INTERESTS_ARRAY = [
@@ -12,7 +12,7 @@ const DUMMY_INTERESTS_ARRAY = [
     interestReceiverId: 'shivani',
     interestReceiverImage: 'http://placehold.jp/12/573527/ffffff/40x40.png',
     interestReceiverName: 'Shivani',
-    isAccepted: true,
+    isAccepted: false,
     isRejected: false,
     conversations: [
       { messageSenderId: 'vishal', messageReceiverId: 'shivani', message: 'Hello, Shivani.' },
@@ -26,25 +26,26 @@ const DUMMY_INTERESTS_ARRAY = [
 ];
 
 const MailBox = ({ idOfLoggedInUser, interestsSentAndReceived }) => {
-  console.log(idOfLoggedInUser);
   const renderMailBox = DUMMY_INTERESTS_ARRAY?.map((interest, i) => {
-    return (<div key={i}>
-      <InterestBox
-        idOfLoggedInUser={idOfLoggedInUser}
-        interestSenderName={interest.interestSenderName}
-        interestSenderId={interest.interestSenderId}
-        interestSenderAge={interest.interestSenderAge}
-        interestSenderImage={interest.interestSenderImage}
-        interestReceiverId={interest.interestReceiverId}
-        interestReceiverName={interest.interestReceiverName}
-        interestReceiverAge={interest.interestReceiverAge}
-        interestReceiverImage={interest.interestReceiverImage}
-        isAccepted={interest.isAccepted}
-        isRejected={interest.isRejected}
-        conversations={interest.conversations}
-      />
-    </div>
-    );
+    if (interest.conversations.length > 0) {
+      return (<div key={i}>
+        <MessagesBox
+          idOfLoggedInUser={idOfLoggedInUser}
+          interestSenderName={interest.interestSenderName}
+          interestSenderId={interest.interestSenderId}
+          interestSenderAge={interest.interestSenderAge}
+          interestSenderImage={interest.interestSenderImage}
+          interestReceiverId={interest.interestReceiverId}
+          interestReceiverName={interest.interestReceiverName}
+          interestReceiverAge={interest.interestReceiverAge}
+          interestReceiverImage={interest.interestReceiverImage}
+          isAccepted={interest.isAccepted}
+          isRejected={interest.isRejected}
+          conversations={interest.conversations}
+        />
+      </div>
+      );
+    }
   });
 
   return (
@@ -65,7 +66,7 @@ MailBox.propTypes = {
 };
 
 MailBox.defaultProps = {
-  idOfLoggedInUser: 'vishal',
+  idOfLoggedInUser: 'shivani',
   interestsSentAndReceived: [],
 };
 
