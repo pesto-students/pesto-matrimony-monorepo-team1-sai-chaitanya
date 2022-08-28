@@ -18,4 +18,4 @@ export { default as UserItemsList } from './userItemsList';
 export { default as UserInfoCard } from './userInfoCard';
 export { default as UserInfoCardButtons } from './userInfoCardButtons';
 export { default as UserInfoCardsList } from './userInfoCardsList';
-export { default as ViewAndSendButtons } from './viewAndSendButtons';
+export { default as ViewAndSendButton } from './viewAndSendButton';

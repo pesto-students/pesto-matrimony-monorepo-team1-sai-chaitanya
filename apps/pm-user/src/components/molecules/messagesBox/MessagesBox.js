@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
 import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
-import { OldMessages } from '..';
+import { OldMessages, ViewAndSendButton } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
-import ViewAndSendButtons from '../viewAndSendButtons';
 
 // idOfLoggedInUser is the _id of the loggedin user.
 const MessagesBox = ({
@@ -77,7 +76,7 @@ const MessagesBox = ({
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
         <div className={styles.buttons}>
-          <ViewAndSendButtons sendNewMessageHandler={sendNewMessageHandler} />
+          <ViewAndSendButton onClick={sendNewMessageHandler} />
         </div>
       </div>
       {/* Messaging Modal Start */}
