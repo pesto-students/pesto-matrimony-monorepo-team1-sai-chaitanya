@@ -130,7 +130,7 @@ const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, 
   return (
     <>
       <div className={styles.userInfoCard}>
-        <Carousel effect="fade" autoplay autoplaySpeed={2000}>
+        <Carousel effect="fade" autoplay autoplaySpeed={5000}>
           {carouselImages}
         </Carousel>
         <div className={styles.briefIntro}>
@@ -243,17 +243,17 @@ UserInfoCard.propTypes = {
 
 UserInfoCard.defaultProps = {
   profileAboutMe: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum reiciendis deserunt esse harum impedit non beatae sequi facilis officiis consequuntur possimus porro minima maxime inventore sed, error unde perferendis? Laboriosam?`,
-  profileAge: 32,
+  profileAge: 29,
   profileId: 'abcd',
   profileImages: [
-    'https://picsum.photos/800/800',
-    'https://picsum.photos/800/801',
-    'https://picsum.photos/800/900',
-    'https://picsum.photos/900/800',
-    'https://picsum.photos/900/802',
+    'https://picsum.photos/700/500?random=1',
+    'https://picsum.photos/700/500?random=2',
+    'https://picsum.photos/700/500?random=3',
+    'https://picsum.photos/700/500?random=4',
+    'https://picsum.photos/700/500?random=5',
   ],
   profileLocation: 'Bhopal',
-  profileName: 'Vinit Sharma',
+  profileName: 'Payal Singh',
 };
 
 export default UserInfoCard;
