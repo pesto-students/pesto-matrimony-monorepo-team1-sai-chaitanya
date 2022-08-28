@@ -1,13 +1,14 @@
 const PATHS = {
-  LOGIN: '/login',
+  FAQ: '/faq',
   FORGOT_PASSWORD: '/forgot-password',
   HOME: '/home',
-  PROFILE: '/profile',
+  LOGIN: '/login',
   LOGIN_CALLBACK: '/login/callback',
-  FAQ: '/faq',
-  RECOMMENDATIONS: '/recommendations',
-  MATCHES: '/matches/:matchStatus',
   MAILBOX: '/mailbox',
+  MATCHES: '/matches/:matchStatus',
+  PROFILE: '/profile',
+  RECOMMENDATIONS: '/recommendations',
+  SIGNUP: '/signup',
 };
 
 export { PATHS };
