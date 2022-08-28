@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
-import { InterestBoxButtons, OldMessages } from '..';
+import { OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
@@ -18,12 +18,8 @@ const MessagesBox = ({
   interestReceiverId,
   interestReceiverImage,
   interestReceiverName,
-  isAccepted,
-  isRejected,
 }) => {
   const { TextArea } = Input;
-  
-
   const messageRef = useRef();
   // Messaging Modal
   const [isMessagingModalVisible, setisMessagingModalVisible] = useState(false);
@@ -83,26 +79,14 @@ const MessagesBox = ({
         </div>
         <div className={styles.buttons}>
           <ViewAndSendButtons sendNewMessageHandler={sendNewMessageHandler} />
-          {/* <InterestBoxButtons
-            acceptInterestHandler={acceptInterestHandler}
-            deleteRejectedInterestHandler={deleteRejectedInterestHandler}
-            idOfLoggedInUser={idOfLoggedInUser}
-            interestReceiverId={interestReceiverId}
-            interestReceiverName={interestReceiverName}
-            interestSenderId={interestSenderId}
-            interestSenderName={interestSenderName}
-            isRejected={isRejected}
-            isAccepted={isAccepted}
-            rejectInterestHandler={rejectInterestHandler}
-            sendNewMessageHandler={sendNewMessageHandler}
-          /> */}
         </div>
       </div>
       {/* Messaging Modal Start */}
       {isMessagingModalVisible && (
         <Modal
-          title={`Sending Message to ${idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName
-            }`}
+          title={`Sending Message to ${
+            idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName
+          }`}
           visible={isMessagingModalVisible}
           onCancel={handleNewMessageCancel}
           destroyOnClose={true}
@@ -142,8 +126,6 @@ MessagesBox.propTypes = {
   interestReceiverId: PropTypes.string,
   interestReceiverImage: PropTypes.string,
   interestReceiverName: PropTypes.string,
-  isAccepted: PropTypes.bool,
-  isRejected: PropTypes.bool,
 };
 
 MessagesBox.defaultProps = {
@@ -157,8 +139,6 @@ MessagesBox.defaultProps = {
   interestReceiverId: 'interestReceiverId',
   interestReceiverImage: 'https://placehold.jp/40x40.png',
   interestReceiverName: 'interestReceiverName',
-  isAccepted: false,
-  isRejected: false,
 };
 
 export default MessagesBox;
