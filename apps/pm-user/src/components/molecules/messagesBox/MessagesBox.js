@@ -61,7 +61,6 @@ const MessagesBox = ({
     // open profile in new tab
     window.open(`/profile/${interestSenderId}`, '_blank');
   }
-  console.log(idOfLoggedInUser);
   return (
     <>
       <div className={styles.messagesBox}>
