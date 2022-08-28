@@ -7,6 +7,8 @@ import {
   ShortlistButton,
 } from '../';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { noop as _noop } from 'lodash';
 
 const UserInfoCardButtons = ({
   acceptInterestHandler,
@@ -38,6 +40,24 @@ const UserInfoCardButtons = ({
     );
   }
   return buttonsToDisplay;
+};
+
+UserInfoCardButtons.propTypes = {
+  acceptInterestHandler: PropTypes.func,
+  cancelInterestHandler: PropTypes.func,
+  rejectInterestHandler: PropTypes.func,
+  sendInterestHandler: PropTypes.func,
+  sendMessageHandler: PropTypes.func,
+  toggleShortlistHandler: PropTypes.func,
+};
+
+UserInfoCardButtons.propTypes = {
+  acceptInterestHandler: _noop,
+  cancelInterestHandler: _noop,
+  rejectInterestHandler: _noop,
+  sendInterestHandler: _noop,
+  sendMessageHandler: _noop,
+  toggleShortlistHandler: _noop,
 };
 
 export default UserInfoCardButtons;
