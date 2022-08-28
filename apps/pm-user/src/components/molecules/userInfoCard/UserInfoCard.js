@@ -3,19 +3,7 @@ import { showNotification } from '@pm/pm-ui';
 import { UserInfoCardButtons } from '../';
 import PropTypes from 'prop-types';
 import styles from './userInfoCard.module.scss';
-import {
-  Button,
-  Carousel,
-  ClearOutlined,
-  CloseCircleOutlined,
-  DislikeOutlined,
-  HeartOutlined,
-  Input,
-  LikeOutlined,
-  Modal,
-  ProfileOutlined,
-  SendOutlined,
-} from '../../atoms';
+import { Button, Carousel, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
 
 const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, profileImages, profileName }) => {
   const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
@@ -31,6 +19,35 @@ const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, 
 
   function sendMessageHandler() {
     showMessageModal();
+  }
+  function acceptInterestHandler() {
+    // Do DB operation. update isAccepted to true for interest object inside both receiver and sender
+
+    // Then send notification about success / failure
+    showNotification(
+      'success',
+      'Interest Accepted!',
+      'Congratulations. You are one step closer to finding your soul-mate.'
+    );
+    showNotification('error', 'Error!', 'Error accepting the interest. Please try later.');
+  }
+  function cancelInterestHandler() {
+    // connect to backend and delete the interest object in interestsReceived array of receiver
+    // also, delete interest object in interestsSent array of Sender
+
+    // if success
+    showNotification('success', 'Success!', `You've cancelled interest sent to ${profileName}.`);
+
+    // if fails
+    showNotification('warn', 'Error!', "Couldn't cancel your interest. Please try later.");
+  }
+  function rejectInterestHandler() {
+    // Do DB operation. update isRejected to true for interest object inside of sender only.
+    // Then delete the interest object in receiver
+
+    // Then send notification about success / failure
+    showNotification('info', 'Interest Declined!', 'You will no longer receive messages from the sender.');
+    showNotification('error', 'Error!', 'Error declining the interest. Please try later.');
   }
   function sendInterestHandler() {
     // connect to backend and add the interest object in interestsReceived array of receiver
@@ -48,43 +65,6 @@ const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, 
 
     // if fails
     showNotification('warn', 'Error!', "Couldn't send your interest. Please try later.");
-  }
-  function cancelInterestHandler() {
-    // connect to backend and delete the interest object in interestsReceived array of receiver
-    // also, delete interest object in interestsSent array of Sender
-
-    // if success
-    showNotification('success', 'Success!', `You've cancelled interest sent to ${profileName}.`);
-
-    // if fails
-    showNotification('warn', 'Error!', "Couldn't cancel your interest. Please try later.");
-  }
-  function acceptInterestHandler() {
-    // Do DB operation. update isAccepted to true for interest object inside both receiver and sender
-
-    // Then send notification about success / failure
-    showNotification(
-      'success',
-      'Interest Accepted!',
-      'Congratulations. You are one step closer to finding your soul-mate.'
-    );
-    showNotification('error', 'Error!', 'Error accepting the interest. Please try later.');
-  }
-  // function deleteRejectedInterestHandler() {
-  //   // Do DB operation. delete interest object inside interests array
-  //   // depending on who initiated this delete operation.
-
-  //   // Then send notification about success / failure
-  //   showNotification('success', 'Interest Deleted!', 'Interest successfully deleted.');
-  //   showNotification('error', 'Error!', 'Error deleting the interest. Please try again.');
-  // }
-  function rejectInterestHandler() {
-    // Do DB operation. update isRejected to true for interest object inside of sender only.
-    // Then delete the interest object in receiver
-
-    // Then send notification about success / failure
-    showNotification('info', 'Interest Declined!', 'You will no longer receive messages from the sender.');
-    showNotification('error', 'Error!', 'Error declining the interest. Please try later.');
   }
   function sendMessageViaModalHandler() {
     const message = messageRef.current.resizableTextArea.props.value;
@@ -149,67 +129,6 @@ const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, 
             sendMessageHandler={sendMessageHandler}
             toggleShortlistHandler={toggleShortlistHandler}
           />
-
-          {/* send interest */}
-          {/* <Button
-            type="primary"
-            shape="round"
-            icon={<HeartOutlined />}
-            size="middle"
-            onClick={sendInterestHandler}
-          >
-            Send Interest
-          </Button> */}
-          {/* shortlist */}
-          {/* <Button
-            type="primary"
-            shape="round"
-            icon={<ProfileOutlined />}
-            size="middle"
-            onClick={toggleShortlistHandler}
-          >
-            Shortlist
-          </Button> */}
-          {/* send message */}
-          {/* <Button
-            type="primary"
-            shape="round"
-            icon={<SendOutlined />}
-            size="middle"
-            onClick={sendMessageHandler}
-          >
-            Send Message
-          </Button> */}
-          {/* cancel interest */}
-          {/* <Button
-            type="primary"
-            shape="round"
-            icon={<CloseCircleOutlined />}
-            size="middle"
-            onClick={cancelInterestHandler}
-          >
-            Cancel Interest
-          </Button> */}
-          {/* accept interest */}
-          {/* <Button
-            type="primary"
-            shape="round"
-            icon={<LikeOutlined />}
-            size="middle"
-            onClick={acceptInterestHandler}
-          >
-            Accept
-          </Button> */}
-          {/* decline interest */}
-          {/* <Button
-            type="primary"
-            shape="round"
-            icon={<DislikeOutlined />}
-            size="middle"
-            onClick={rejectInterestHandler}
-          >
-            Reject
-          </Button> */}
         </div>
       </div>
       <Modal
