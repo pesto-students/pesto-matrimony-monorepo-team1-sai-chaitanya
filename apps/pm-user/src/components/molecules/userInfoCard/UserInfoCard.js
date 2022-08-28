@@ -1,26 +1,23 @@
 import { useState, useRef } from 'react';
 import { showNotification } from '@pm/pm-ui';
+import { UserInfoCardButtons } from '../';
 import PropTypes from 'prop-types';
 import styles from './userInfoCard.module.scss';
 import {
   Button,
   Carousel,
   ClearOutlined,
+  CloseCircleOutlined,
+  DislikeOutlined,
   HeartOutlined,
   Input,
+  LikeOutlined,
   Modal,
   ProfileOutlined,
   SendOutlined,
 } from '../../atoms';
 
-const UserInfoCard = ({
-  profileAboutMe,
-  profileAge,
-  profileId,
-  profileLocation,
-  profileImages,
-  profileName,
-}) => {
+const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, profileImages, profileName }) => {
   const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
   const { TextArea } = Input;
   const messageRef = useRef();
@@ -36,10 +33,12 @@ const UserInfoCard = ({
     showMessageModal();
   }
   function sendInterestHandler() {
-    console.log('Connect to Backend & send message with template text');
+    // connect to backend and add the interest object in interestsReceived array of receiver
+    // also, add the same interest object in interestsSent array of Sender
 
     // show ANY ONE notification after backend operation succeeds.
-
+    // If interest was previously sent... notify that it was sent already.
+    // If interest was NOT sent before... notify that
     // if success
     showNotification(
       'success',
@@ -48,13 +47,45 @@ const UserInfoCard = ({
     );
 
     // if fails
-    showNotification(
-      'warn',
-      'Error!',
-      "Couldn't send your interest. Please try later."
-    );
+    showNotification('warn', 'Error!', "Couldn't send your interest. Please try later.");
   }
+  function cancelInterestHandler() {
+    // connect to backend and delete the interest object in interestsReceived array of receiver
+    // also, delete interest object in interestsSent array of Sender
 
+    // if success
+    showNotification('success', 'Success!', `You've cancelled interest sent to ${profileName}.`);
+
+    // if fails
+    showNotification('warn', 'Error!', "Couldn't cancel your interest. Please try later.");
+  }
+  function acceptInterestHandler() {
+    // Do DB operation. update isAccepted to true for interest object inside both receiver and sender
+
+    // Then send notification about success / failure
+    showNotification(
+      'success',
+      'Interest Accepted!',
+      'Congratulations. You are one step closer to finding your soul-mate.'
+    );
+    showNotification('error', 'Error!', 'Error accepting the interest. Please try later.');
+  }
+  // function deleteRejectedInterestHandler() {
+  //   // Do DB operation. delete interest object inside interests array
+  //   // depending on who initiated this delete operation.
+
+  //   // Then send notification about success / failure
+  //   showNotification('success', 'Interest Deleted!', 'Interest successfully deleted.');
+  //   showNotification('error', 'Error!', 'Error deleting the interest. Please try again.');
+  // }
+  function rejectInterestHandler() {
+    // Do DB operation. update isRejected to true for interest object inside of sender only.
+    // Then delete the interest object in receiver
+
+    // Then send notification about success / failure
+    showNotification('info', 'Interest Declined!', 'You will no longer receive messages from the sender.');
+    showNotification('error', 'Error!', 'Error declining the interest. Please try later.');
+  }
   function sendMessageViaModalHandler() {
     const message = messageRef.current.resizableTextArea.props.value;
     console.log(message);
@@ -64,37 +95,22 @@ const UserInfoCard = ({
     if (message.trim().length > 0) {
       setTimeout(() => {
         handleMessageCancel();
-        showNotification(
-          'success',
-          'Message Sent',
-          `Congratulations! Your message has been sent to ${profileName}`,
-          0
-        );
+        showNotification('success', 'Message Sent', `Congratulations! Your message has been sent to ${profileName}`, 0);
       }, 1500);
     } else {
       showNotification('warn', 'Error!', "Message can't be empty.");
     }
   }
   function toggleShortlistHandler() {
-    console.log(
-      "Connect to Backend & save _id of this profile to logged-in user's shortlist array"
-    );
+    console.log("Connect to Backend & save _id of this profile to logged-in user's shortlist array");
 
     // show ANY ONE notification after backend operation succeeds.
 
     // if success
-    showNotification(
-      'success',
-      'Success!',
-      `${profileName} has been shortlisted.`
-    );
+    showNotification('success', 'Success!', `${profileName} has been shortlisted.`);
 
     // if fails
-    showNotification(
-      'warn',
-      'Error!',
-      "Couldn't shortlist profile. Please try later."
-    );
+    showNotification('warn', 'Error!', "Couldn't shortlist profile. Please try later.");
 
     // pick any one of below notifications based on server response.
   }
@@ -125,7 +141,17 @@ const UserInfoCard = ({
           <p>{profileAboutMe}</p>
         </div>
         <div className={styles.buttons}>
-          <Button
+          <UserInfoCardButtons
+            acceptInterestHandler={acceptInterestHandler}
+            cancelInterestHandler={cancelInterestHandler}
+            rejectInterestHandler={rejectInterestHandler}
+            sendInterestHandler={sendInterestHandler}
+            sendMessageHandler={sendMessageHandler}
+            toggleShortlistHandler={toggleShortlistHandler}
+          />
+
+          {/* send interest */}
+          {/* <Button
             type="primary"
             shape="round"
             icon={<HeartOutlined />}
@@ -133,8 +159,9 @@ const UserInfoCard = ({
             onClick={sendInterestHandler}
           >
             Send Interest
-          </Button>
-          <Button
+          </Button> */}
+          {/* shortlist */}
+          {/* <Button
             type="primary"
             shape="round"
             icon={<ProfileOutlined />}
@@ -142,8 +169,9 @@ const UserInfoCard = ({
             onClick={toggleShortlistHandler}
           >
             Shortlist
-          </Button>
-          <Button
+          </Button> */}
+          {/* send message */}
+          {/* <Button
             type="primary"
             shape="round"
             icon={<SendOutlined />}
@@ -151,7 +179,37 @@ const UserInfoCard = ({
             onClick={sendMessageHandler}
           >
             Send Message
-          </Button>
+          </Button> */}
+          {/* cancel interest */}
+          {/* <Button
+            type="primary"
+            shape="round"
+            icon={<CloseCircleOutlined />}
+            size="middle"
+            onClick={cancelInterestHandler}
+          >
+            Cancel Interest
+          </Button> */}
+          {/* accept interest */}
+          {/* <Button
+            type="primary"
+            shape="round"
+            icon={<LikeOutlined />}
+            size="middle"
+            onClick={acceptInterestHandler}
+          >
+            Accept
+          </Button> */}
+          {/* decline interest */}
+          {/* <Button
+            type="primary"
+            shape="round"
+            icon={<DislikeOutlined />}
+            size="middle"
+            onClick={rejectInterestHandler}
+          >
+            Reject
+          </Button> */}
         </div>
       </div>
       <Modal
@@ -163,22 +221,10 @@ const UserInfoCard = ({
       >
         <p>Type your message below : </p>
         <TextArea showCount maxLength={300} ref={messageRef} allowClear />
-        <Button
-          type="primary"
-          shape="round"
-          icon={<SendOutlined />}
-          size="middle"
-          onClick={sendMessageViaModalHandler}
-        >
+        <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageViaModalHandler}>
           Send Message
         </Button>
-        <Button
-          type="primary"
-          shape="round"
-          icon={<ClearOutlined />}
-          size="middle"
-          onClick={handleMessageCancel}
-        >
+        <Button type="primary" shape="round" icon={<ClearOutlined />} size="middle" onClick={handleMessageCancel}>
           Cancel
         </Button>
       </Modal>

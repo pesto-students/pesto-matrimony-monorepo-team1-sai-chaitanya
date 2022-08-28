@@ -22,33 +22,7 @@ const MessagesBox = ({
   isRejected,
 }) => {
   const { TextArea } = Input;
-  function acceptInterestHandler() {
-    // Do DB operation. update isAccepted to true for interest object inside both receiver and sender
-
-    // Then send notification about success / failure
-    showNotification(
-      'success',
-      'Interest Accepted!',
-      'Congratulations. You are one step closer to finding your soul-mate.'
-    );
-    showNotification('error', 'Error!', 'Error accepting the interest. Please try later.');
-  }
-  function deleteRejectedInterestHandler() {
-    // Do DB operation. delete interest object inside interests array
-    // depending on who initiated this delete operation.
-
-    // Then send notification about success / failure
-    showNotification('success', 'Interest Deleted!', 'Interest successfully deleted.');
-    showNotification('error', 'Error!', 'Error deleting the interest. Please try again.');
-  }
-  function rejectInterestHandler() {
-    // Do DB operation. update isRejected to true for interest object inside of sender only.
-    // Then delete the interest object in receiver
-
-    // Then send notification about success / failure
-    showNotification('info', 'Interest Declined!', 'You will no longer receive messages from the sender.');
-    showNotification('error', 'Error!', 'Error declining the interest. Please try later.');
-  }
+  
 
   const messageRef = useRef();
   // Messaging Modal

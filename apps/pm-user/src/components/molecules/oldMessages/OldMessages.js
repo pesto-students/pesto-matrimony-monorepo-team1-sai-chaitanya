@@ -8,7 +8,7 @@ const OldMessages = ({ conversations, idOfLoggedInUser, interestReceiverImage, i
     return (
       <div className={styles[thisClassName]}>
         <div className={styles.image}>
-          <img src={messageSenderId === idOfLoggedInUser ? interestSenderImage : interestReceiverImage} />
+          <img src={messageSenderId === idOfLoggedInUser ? interestReceiverImage : interestSenderImage} />
         </div>
         <div className={styles.messageText}>{message}</div>
       </div>
@@ -23,6 +23,7 @@ OldMessages.propTypes = {
   interestReceiverImage: PropTypes.string,
   interestSenderImage: PropTypes.string,
 };
+
 OldMessages.defaultProps = {
   conversations: [],
   idOfLoggedInUser: 'idOfLoggedInUser',

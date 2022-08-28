@@ -10,10 +10,11 @@ const Matches = () => {
   const [matchesData, setMatchesData] = useState([]);
   // Create a Backend Route for "/matches/:matchStatus" that sends
   // different data based on "matchStatus" parameter.
+  console.log("currentPage= ", matchStatus)
 
   useEffect(() => {
-    // Do a GET request for the backend route
-    // Fetch appropriate data (shortlisted/accepted).
+    // Do a GET request for the backend route 
+    // Fetch appropriate data (shortlisted/accepted) based on the "matchStatus" url param.
     // use setMatchesData and set state variable
     // Then Matches page will re-render with updated(appropriate) data...
   }, []);
