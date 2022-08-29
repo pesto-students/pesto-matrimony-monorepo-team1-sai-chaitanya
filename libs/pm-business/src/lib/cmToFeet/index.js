@@ -1,1 +1,1 @@
-export { cmToInFeet } from './cmToFeet';
+export { cmToFeet } from './cmToFeet';

@@ -1,18 +1,19 @@
 import { Button, Form, Input, SearchOutlined, Select, Slider } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
+import { cmToFeet } from '@pm/pm-business';
 import styles from './searchProfiles.module.scss';
 import { useState } from 'react';
 
 const SearchProfiles = () => {
-  const [minHeight, setMinHeight] = useState(122);
-  const [maxHeight, setMaxHeight] = useState(212);
+  const [minHeight, setMinHeight] = useState(154);
+  const [maxHeight, setMaxHeight] = useState(182);
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);
     setMaxHeight(values[1]);
   };
-  const [minAge, setMinAge] = useState(21);
-  const [maxAge, setMaxAge] = useState(25);
+  const [minAge, setMinAge] = useState(25);
+  const [maxAge, setMaxAge] = useState(29);
 
   const handleAgeSliderChange = (values) => {
     setMinAge(values[0]);
@@ -21,14 +22,14 @@ const SearchProfiles = () => {
 
   const heightBoundaries = {
     [`${minHeight}`]: {
-      label: `${minHeight}`,
+      label: `${cmToFeet(minHeight)}`,
       style: {
         color: '#5c5fee',
         fontWeight: 'bold',
       },
     },
     [`${maxHeight}`]: {
-      label: `${maxHeight}`,
+      label: `${cmToFeet(maxHeight)}`,
       style: {
         color: '#5c5fee',
         fontWeight: 'bold',
@@ -37,16 +38,14 @@ const SearchProfiles = () => {
   };
   const ageBoundaries = {
     [`${minAge}`]: {
-      label: `${minAge}
-              yr`,
+      label: `${minAge}`,
       style: {
         color: '#5c5fee',
         fontWeight: 'bold',
       },
     },
     [`${maxAge}`]: {
-      label: `${maxAge}
-              yr`,
+      label: `${maxAge}`,
       style: {
         color: '#5c5fee',
         fontWeight: 'bold',
@@ -92,13 +91,12 @@ const SearchProfiles = () => {
         <div className={styles.col1}>
           <Form.Item label="Height" name="heightRange">
             <Slider
-              defaultValue={[122, 180]}
-              tooltipPlacement="bottom"
+              defaultValue={[154, 182]}
               range={{ draggableTrack: true }}
               min={122}
-              max={212}
+              max={214}
               marks={heightBoundaries}
-              step={10}
+              step={1}
               onChange={handleHeightSliderChange}
               style={{
                 width: 150,
@@ -107,8 +105,7 @@ const SearchProfiles = () => {
           </Form.Item>
           <Form.Item label="Age" name="ageRange">
             <Slider
-              defaultValue={[21, 25]}
-              tooltipPlacement="bottom"
+              defaultValue={[25, 29]}
               range={{ draggableTrack: true }}
               min={18}
               max={50}

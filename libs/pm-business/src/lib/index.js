@@ -1,1 +1,2 @@
-export { reader } from './readers';
+export { reader } from './reader';
+export { cmToFeet } from './cmToFeet';
