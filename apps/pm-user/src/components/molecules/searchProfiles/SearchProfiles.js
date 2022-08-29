@@ -1,27 +1,37 @@
-import { Button, Checkbox, Form, Input, Select } from 'antd';
-import React from 'react';
+import { Button, Form, Input, SearchOutlined, Select } from '../../atoms';
+import { useRef } from 'react';
 import { showNotification } from '@pm/pm-ui';
-import styles from './searchProfiles.module.scss'
+import styles from './searchProfiles.module.scss';
 
 const SearchProfiles = () => {
+  const minAgeRef = useRef();
+  const maxAgeRef = useRef();
+  const testRef = useRef();
   const onFinish = (values) => {
+    delete values.age;
     console.log('Success:', values);
-    showNotification("success", "Searching...", "Please wait while we search for profiles based on your criteria...", 10)
+    console.log('testRef: ', testRef.current);
+    showNotification(
+      'success',
+      'Searching...',
+      'Please wait while we search for profiles based on your criteria...',
+      10
+    );
   };
 
   const onFinishFailed = (errorInfo) => {
-    showNotification("error", "Error!", "Please re-check your search criteria and try again.")
+    showNotification('error', 'Error!', 'Please re-check your search criteria and try again.');
     console.log('Failed:', errorInfo);
   };
 
   function handleChange() {
-    console.log("change")
+    console.log('change');
   }
   return (
     <Form
       name="basic"
       labelCol={{
-        span: 8,
+        span: 10,
       }}
       wrapperCol={{
         span: 8,
@@ -34,53 +44,67 @@ const SearchProfiles = () => {
       autoComplete="off"
     >
       <div className={styles.searchProfiles}>
-
         <div className={styles.col1}>
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your username!',
-              },
-            ]}
-          >
-            <Input />
+          <Form.Item label="Username" name="username">
+            <Input ref={testRef} />
           </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                message: 'Please input your password!',
-              },
-            ]}
-          >
-            <Input.Password />
+          <Form.Item label="Age" name="minAge">
+            <Select
+              style={{
+                width: 60,
+              }}
+              ref={minAgeRef}
+            >
+              <Option value="18">18</Option>
+              <Option value="19">19</Option>
+              <Option value="20">20</Option>
+              <Option value="21">21</Option>
+              <Option value="22">22</Option>
+              <Option value="23">23</Option>
+              <Option value="24">24</Option>
+              <Option value="25">25</Option>
+              <Option value="26">26</Option>
+              <Option value="27">27</Option>
+            </Select>
           </Form.Item>
-
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
+          to
+          <Form.Item label="Age" name="maxAge">
+            <Select
+              style={{
+                width: 60,
+              }}
+              ref={maxAgeRef}
+            >
+              <Option value="18">18</Option>
+              <Option value="19">19</Option>
+              <Option value="20">20</Option>
+              <Option value="21">21</Option>
+              <Option value="22">22</Option>
+              <Option value="23">23</Option>
+              <Option value="24">24</Option>
+              <Option value="25">25</Option>
+              <Option value="26">26</Option>
+              <Option value="27">27</Option>
+            </Select>
           </Form.Item>
-
-          <Form.Item
-            name="religon"
-            valuePropName="religionname"
-            wrapperCol={{
-              offset: 8,
-              span: 10,
-            }}
-          >
-            <Select>
+          <Form.Item label="Marital Status" name="maritalStatus">
+            <Select
+              style={{
+                width: 160,
+              }}
+            >
+              <Option value="Never Married">Never Married</Option>
+              <Option value="Divorced">Divorced</Option>
+              <Option value="Awaiting Divorce">Awaiting Divorce</Option>
+              <Option value="Widow/Widower">Widow/Widower</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item label="Religion" name="religon">
+            <Select
+              style={{
+                width: 160,
+              }}
+            >
               <Option value="Christian">Christian</Option>
               <Option value="Hindu">Hindu</Option>
               <Option value="Sikh">Sikh</Option>
@@ -90,16 +114,7 @@ const SearchProfiles = () => {
         </div>
 
         <div className={styles.col2}>
-          <Form.Item
-            label="Community"
-            name="community"
-            rules={[
-              {
-                required: true,
-                message: 'Please select a community!',
-              },
-            ]}
-          >
+          <Form.Item label="Community" name="community">
             <Select
               style={{
                 width: 160,
@@ -114,16 +129,7 @@ const SearchProfiles = () => {
               <Option value="Community 6">Community 6</Option>
             </Select>
           </Form.Item>
-          <Form.Item
-            label="City"
-            name="City"
-            rules={[
-              {
-                required: true,
-                message: 'Please select a city!',
-              },
-            ]}
-          >
+          <Form.Item label="City" name="City">
             <Select
               style={{
                 width: 160,
@@ -138,16 +144,7 @@ const SearchProfiles = () => {
               <Option value="City 6">City 6</Option>
             </Select>
           </Form.Item>
-          <Form.Item
-            label="State"
-            name="State"
-            rules={[
-              {
-                required: true,
-                message: 'Please select a state!',
-              },
-            ]}
-          >
+          <Form.Item label="State" name="State">
             <Select
               style={{
                 width: 160,
@@ -162,16 +159,7 @@ const SearchProfiles = () => {
               <Option value="State 6">State 6</Option>
             </Select>
           </Form.Item>
-          <Form.Item
-            label="Country"
-            name="Country"
-            rules={[
-              {
-                required: true,
-                message: 'Please select a country!',
-              },
-            ]}
-          >
+          <Form.Item label="Country" name="Country">
             <Select
               style={{
                 width: 160,
@@ -186,36 +174,27 @@ const SearchProfiles = () => {
               <Option value="Country 6">Country 6</Option>
             </Select>
           </Form.Item>
-
-
         </div>
-
       </div>
       <div className={styles.submitBtn}>
-
         <Form.Item
           wrapperCol={{
             offset: 8,
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" icon={<SearchOutlined />}>
             Search
           </Button>
         </Form.Item>
       </div>
-
     </Form>
-
   );
-}
+};
 
-export default SearchProfiles
-
+export default SearchProfiles;
 
 // const App = () => {
-
-
 
 // };
 
