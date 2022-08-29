@@ -1,16 +1,61 @@
-import { Button, Form, Input, SearchOutlined, Select } from '../../atoms';
-import { useRef } from 'react';
+import { Button, Form, Input, SearchOutlined, Select, Slider } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
 import styles from './searchProfiles.module.scss';
+import { useState } from 'react';
 
 const SearchProfiles = () => {
-  const minAgeRef = useRef();
-  const maxAgeRef = useRef();
-  const testRef = useRef();
+  const [minHeight, setMinHeight] = useState(122);
+  const [maxHeight, setMaxHeight] = useState(212);
+
+  const handleHeightSliderChange = (values) => {
+    setMinHeight(values[0]);
+    setMaxHeight(values[1]);
+  };
+  const [minAge, setMinAge] = useState(21);
+  const [maxAge, setMaxAge] = useState(25);
+
+  const handleAgeSliderChange = (values) => {
+    setMinAge(values[0]);
+    setMaxAge(values[1]);
+  };
+
+  const heightBoundaries = {
+    [`${minHeight}`]: {
+      label: `${minHeight}`,
+      style: {
+        color: '#5c5fee',
+        fontWeight: 'bold',
+      },
+    },
+    [`${maxHeight}`]: {
+      label: `${maxHeight}`,
+      style: {
+        color: '#5c5fee',
+        fontWeight: 'bold',
+      },
+    },
+  };
+  const ageBoundaries = {
+    [`${minAge}`]: {
+      label: `${minAge}
+              yr`,
+      style: {
+        color: '#5c5fee',
+        fontWeight: 'bold',
+      },
+    },
+    [`${maxAge}`]: {
+      label: `${maxAge}
+              yr`,
+      style: {
+        color: '#5c5fee',
+        fontWeight: 'bold',
+      },
+    },
+  };
+
   const onFinish = (values) => {
-    delete values.age;
     console.log('Success:', values);
-    console.log('testRef: ', testRef.current);
     showNotification(
       'success',
       'Searching...',
@@ -45,47 +90,34 @@ const SearchProfiles = () => {
     >
       <div className={styles.searchProfiles}>
         <div className={styles.col1}>
-          <Form.Item label="Username" name="username">
-            <Input ref={testRef} />
-          </Form.Item>
-          <Form.Item label="Age" name="minAge">
-            <Select
+          <Form.Item label="Height" name="heightRange">
+            <Slider
+              defaultValue={[122, 180]}
+              tooltipPlacement="bottom"
+              range={{ draggableTrack: true }}
+              min={122}
+              max={212}
+              marks={heightBoundaries}
+              step={10}
+              onChange={handleHeightSliderChange}
               style={{
-                width: 60,
+                width: 150,
               }}
-              ref={minAgeRef}
-            >
-              <Option value="18">18</Option>
-              <Option value="19">19</Option>
-              <Option value="20">20</Option>
-              <Option value="21">21</Option>
-              <Option value="22">22</Option>
-              <Option value="23">23</Option>
-              <Option value="24">24</Option>
-              <Option value="25">25</Option>
-              <Option value="26">26</Option>
-              <Option value="27">27</Option>
-            </Select>
+            />
           </Form.Item>
-          to
-          <Form.Item label="Age" name="maxAge">
-            <Select
+          <Form.Item label="Age" name="ageRange">
+            <Slider
+              defaultValue={[21, 25]}
+              tooltipPlacement="bottom"
+              range={{ draggableTrack: true }}
+              min={18}
+              max={50}
+              marks={ageBoundaries}
+              onChange={handleAgeSliderChange}
               style={{
-                width: 60,
+                width: 150,
               }}
-              ref={maxAgeRef}
-            >
-              <Option value="18">18</Option>
-              <Option value="19">19</Option>
-              <Option value="20">20</Option>
-              <Option value="21">21</Option>
-              <Option value="22">22</Option>
-              <Option value="23">23</Option>
-              <Option value="24">24</Option>
-              <Option value="25">25</Option>
-              <Option value="26">26</Option>
-              <Option value="27">27</Option>
-            </Select>
+            />
           </Form.Item>
           <Form.Item label="Marital Status" name="maritalStatus">
             <Select
