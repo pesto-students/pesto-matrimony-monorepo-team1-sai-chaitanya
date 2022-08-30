@@ -22,7 +22,7 @@ function Login() {
           });
         }
       })
-      .catch((err) => console.log('vinit', err));
+      .catch((err) => console.log('Error', err));
 
   if (!authState) {
     return <div>Loading...</div>;
@@ -30,7 +30,7 @@ function Login() {
   if (!authState.isAuthenticated) {
     return (
       <FormWrapper
-        bottomText="Dont have account?"
+        bottomText="Don't have an account? "
         formTitle="Login"
         formDescription="Login to your account!"
         pageToRedirect="signup"

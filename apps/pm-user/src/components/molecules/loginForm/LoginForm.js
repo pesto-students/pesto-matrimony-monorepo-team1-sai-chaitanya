@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Form,
-  Input,
-  InputPassword,
-  MailOutlined,
-  KeyOutlined,
-} from '../../atoms';
+import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined } from '../../atoms';
 import PropTypes from 'prop-types';
 import _noop from 'lodash';
 import { useHistory } from 'react-router-dom';
@@ -72,13 +65,7 @@ const LoginForm = ({ onFormSubmit }) => {
             type="password"
             className="antdInput"
             placeholder="Password"
-            prefix={
-              <KeyOutlined
-                rotate="45"
-                className={styles.inputIcon}
-                size="large"
-              />
-            }
+            prefix={<KeyOutlined rotate="45" className={styles.inputIcon} size="large" />}
           />
         </Form.Item>
 
