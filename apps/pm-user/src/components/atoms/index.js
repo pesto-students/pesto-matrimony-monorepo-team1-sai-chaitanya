@@ -4,9 +4,10 @@ export { default as Card } from './card';
 export { default as Carousel } from './carousel';
 export { default as Checkbox } from './checkbox'
 export { default as DatePicker } from './datePicker'
-export { default as Form } from './form'
-export { default as Input } from './input';
+export { default as Form  } from "./form";
+export { default as FormWrapper } from "./formWrapper";
 export { default as Image } from './image';
+export { Input, InputPassword } from "./input";
 export * from './icon';
 export { default as List } from './list';
 export { default as Logo } from './logo';
