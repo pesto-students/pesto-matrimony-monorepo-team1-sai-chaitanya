@@ -29,6 +29,11 @@
 
 .children {
   width: 57%;
+  overflow: auto;
+}
+
+.children::-webkit-scrollbar {
+  display: none;
 }
 
 .quickLinksCard {

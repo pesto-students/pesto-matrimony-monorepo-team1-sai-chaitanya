@@ -3,7 +3,12 @@ import { UserInfoCard } from '../../components';
 
 function Recommendations() {
   // return <div>Recommendations</div>;
-  return <UserInfoCard />;
+  return (<>
+  <UserInfoCard />
+  <UserInfoCard />
+  <UserInfoCard />
+  </>
+  );
 }
 
 export default Recommendations;
