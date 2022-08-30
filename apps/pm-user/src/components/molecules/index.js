@@ -1,5 +1,6 @@
 export { default as AcceptDeclineButtons } from './acceptDeclineButtons';
 export { default as DeclinedInfoButtons } from './declinedInfoButtons';
+export { default as FormWrapper } from "./formWrapper";
 export { default as InterestBox } from './interestBox';
 export { default as InterestBoxButtons } from './interestBoxButtons';
 export { default as LoginForm } from './loginForm';
