@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './formWraper.module.scss';
+import styles from './formWrapper.module.scss';
 import PropTypes from 'prop-types';
 import Logo from '../logo';
 import { Link } from 'react-router-dom';
 
-const FormWraper = ({
+const FormWrapper = ({
   bottomText,
   children,
   formDescription,
@@ -37,7 +37,7 @@ const FormWraper = ({
   );
 };
 
-FormWraper.propTypes = {
+FormWrapper.propTypes = {
   bottomText: PropTypes.string,
   children: PropTypes.object,
   formTitle: PropTypes.string,
@@ -46,7 +46,7 @@ FormWraper.propTypes = {
   sideImage: PropTypes.string,
 };
 
-FormWraper.defaultProps = {
+FormWrapper.defaultProps = {
   bottomText: 'already have account then!',
   children: {},
   formTitle: 'SignUp',
@@ -55,4 +55,4 @@ FormWraper.defaultProps = {
   sideImage: 'signupPage',
 };
 
-export default FormWraper;
+export default FormWrapper;

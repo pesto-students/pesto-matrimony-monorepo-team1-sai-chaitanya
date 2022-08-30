@@ -1,11 +1,11 @@
 import React from 'react';
-import { FormWraper, SignUpForm } from '../../components';
+import { FormWrapper, SignUpForm } from '../../components';
 import styles from './signUp.module.scss';
 
 function SignUp() {
   return (
-    <FormWraper
-      bottomText="Already have account then!"
+    <FormWrapper
+      bottomText="Already have an account? "
       formTitle="SignUp"
       formDescription="if you dont have account create here!"
       pageToRedirect="login"
@@ -13,7 +13,7 @@ function SignUp() {
       sideImage="signupPage"
     >
       <SignUpForm />
-    </FormWraper>
+    </FormWrapper>
   );
 }
 

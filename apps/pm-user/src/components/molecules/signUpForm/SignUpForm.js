@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, InputPassword, UserOutlined, MailOutlined, KeyOutlined } from '../../atoms';
+import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined, Select, UserOutlined } from '../../atoms';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import styles from './signUpForm.module.scss';
@@ -7,7 +7,7 @@ import styles from './signUpForm.module.scss';
 const SignUpForm = () => {
   const history = useHistory();
 
-  async function signUpUser(firstName, lastName, email, password) {
+  async function signUpUser(firstName, lastName, email, gender, password) {
     try {
       const response = await axios.post('http://localhost:3333/api/v1/newuser', {
         profile: {
@@ -15,6 +15,7 @@ const SignUpForm = () => {
           lastName,
           email,
           login: email,
+          gender: gender,
         },
         credentials: {
           password: {
@@ -32,7 +33,7 @@ const SignUpForm = () => {
   const onFinish = (values) => {
     if (values.confirmPassword === values.password) {
       console.log('Success:', values);
-      signUpUser(values.firstName, values.lastName, values.email, values.password);
+      signUpUser(values.firstName, values.lastName, values.email, values.gender, values.password);
     } else {
       alert('password and confirmPassword should be same');
     }
@@ -111,6 +112,20 @@ const SignUpForm = () => {
             prefix={<MailOutlined className={styles.inputIcon} />}
             size="large"
           />
+        </Form.Item>
+
+        <Form.Item
+          name="gender"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Select placeholder="Select Gender" bordered={false} size="small" className="antdSelect">
+            <Option value="female">Female</Option>
+            <Option value="male">Male</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item

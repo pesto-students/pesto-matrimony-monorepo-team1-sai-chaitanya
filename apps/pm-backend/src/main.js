@@ -8,7 +8,7 @@
  const express = require("express");
  const cors = require('cors');
  const okta = require('@okta/okta-sdk-nodejs');
- 
+
  const app = express();
  
  app.use(express.json());
@@ -24,7 +24,7 @@
    res.send({ message: 'Welcome to pm-backend!' });
  });
  
- app.post('/api/v1/newuser', async (req, res) => {
+ app.post('/api/v1/newuser', async (req, res, next) => {
  
    const body = req.body;
  
@@ -32,19 +32,22 @@
      createUserInOkta();
      async function createUserInOkta(){
        const response = await client.createUser(body);
+      //  console.log(response);
        res.send({
          res: response
        });
      }
    }catch(err){
-     res.send(err);
+     res.send({
+      err: err
+     });
    }
  
  });
+
  
  const port = process.env.port || 3333;
  const server = app.listen(port, () => {
    console.log(`Listening at http://localhost:${port}/api`);
  });
  server.on('error', console.error);
- 
