@@ -1,2 +1,2 @@
-import { Form } from "antd";
+import { Form } from 'antd';
 export default Form;

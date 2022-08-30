@@ -14,6 +14,7 @@ export { default as SearchProfiles } from './searchProfiles';
 export { default as SendInterestButton } from './sendInterestButton';
 export { default as SendMessageButton } from './sendMessageButton';
 export { default as ShortlistButton } from './shortlistButton';
+export { default as SignUpForm } from './signUpForm';
 export { default as UserItemsList } from './userItemsList';
 export { default as UserInfoCard } from './userInfoCard';
 export { default as UserInfoCardButtons } from './userInfoCardButtons';

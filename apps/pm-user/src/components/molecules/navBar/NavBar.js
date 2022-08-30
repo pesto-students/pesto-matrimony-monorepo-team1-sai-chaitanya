@@ -5,7 +5,7 @@ import styles from './navBar.module.scss';
 const NavBar = () => {
   return (
     <div className={styles.navBar}>
-      <Logo />
+      <Logo size="small" />
     </div>
   );
 };
