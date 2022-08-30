@@ -1,18 +1,31 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { DEFAULT_SELECTED_ITEM_KEY, MENU_ITEMS } from './constants';
-import { Menu } from '../../atoms';
+import { Menu, Button } from '../../atoms';
 import { ProfileSummary } from '../../molecules';
+import { useOktaAuth } from '@okta/okta-react';
 import { QuickInfoBar } from '../../molecules';
 import styles from './sideBar.module.scss';
 
 function SideBar() {
   const history = useHistory();
+  const { oktaAuth, authState } = useOktaAuth();
+
   const handleMenuItemClick = ({ key }) => {
     history.push(`/${key}`);
   };
   const handleRedirectToMatches = (matchStatus) => {
     history.push(`/matches/${matchStatus}`);
+  };
+  const logoutHandler = () => oktaAuth.signOut('/login');
+  const logOutMe = () => {
+    if (authState.isAuthenticated) {
+      return (
+        <Button onClick={logoutHandler} type="text" block>
+          Logout
+        </Button>
+      );
+    }
   };
 
   return (
@@ -39,6 +52,7 @@ function SideBar() {
         />
       </div>
       <div className={styles.settings}></div>
+      <div className={styles.logoutBtn}>{logOutMe()}</div>
     </div>
   );
 }

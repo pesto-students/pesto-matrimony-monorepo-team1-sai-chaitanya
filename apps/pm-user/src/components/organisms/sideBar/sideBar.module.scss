@@ -27,4 +27,15 @@
       }
     }
   }
+
+  .logoutBtn{
+    margin-top: 25px;
+  }
+
+  .logoutBtn > button{
+    border-radius: 6px;
+    text-align: left;
+    font-weight: 700;
+    color: #a6a7b2;
+  }
 }
