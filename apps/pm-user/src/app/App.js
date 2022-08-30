@@ -21,16 +21,20 @@ const App = () => {
   }
 
   return (
-    // <Security
-    //   oktaAuth={oktaAuth}
-    //   restoreOriginalUri={restoreOriginalUri}
-    //   onAuthRequired={customAuthHandler}
-    // >
-      <BrowserRouter>
+    <Security
+      oktaAuth={oktaAuth}
+      restoreOriginalUri={restoreOriginalUri}
+      onAuthRequired={customAuthHandler}
+    >
         <Routes />
-      </BrowserRouter>
-    // </Security>
+    </Security>
   );
 };
 
-export default App;
+const AppWithRouterAccess = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+export default AppWithRouterAccess;
