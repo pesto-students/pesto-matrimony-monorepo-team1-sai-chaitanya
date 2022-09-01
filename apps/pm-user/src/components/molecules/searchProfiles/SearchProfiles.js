@@ -6,7 +6,12 @@ import styles from './searchProfiles.module.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+// constants
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
+const MININUM_HEIGHT_IN_CMS = 122;
+const MAXIMUM_HEIGHT_IN_CMS = 214;
+const MINIMUM_ALLOWED_AGE = 21;
+const MAXIMUM_ALLOWED_AGE = 50;
 
 const SearchProfiles = () => {
   const [displayText, setDisplayText] = useState('Start your search...');
@@ -33,15 +38,15 @@ const SearchProfiles = () => {
       });
   }, []);
 
-  const [minHeight, setMinHeight] = useState(122);
-  const [maxHeight, setMaxHeight] = useState(214);
+  const [minHeight, setMinHeight] = useState(MININUM_HEIGHT_IN_CMS);
+  const [maxHeight, setMaxHeight] = useState(MAXIMUM_HEIGHT_IN_CMS);
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);
     setMaxHeight(values[1]);
   };
-  const [minAge, setMinAge] = useState(18);
-  const [maxAge, setMaxAge] = useState(50);
+  const [minAge, setMinAge] = useState(MINIMUM_ALLOWED_AGE);
+  const [maxAge, setMaxAge] = useState(MAXIMUM_ALLOWED_AGE);
 
   const handleAgeSliderChange = (values) => {
     setMinAge(values[0]);
@@ -169,10 +174,10 @@ const SearchProfiles = () => {
             <div className={styles.col1}>
               <Form.Item label="Age" name="ageRange">
                 <Slider
-                  defaultValue={[18, 50]}
+                  defaultValue={[MINIMUM_ALLOWED_AGE, MAXIMUM_ALLOWED_AGE]}
                   range={{ draggableTrack: true }}
-                  min={18}
-                  max={50}
+                  min={MINIMUM_ALLOWED_AGE}
+                  max={MAXIMUM_ALLOWED_AGE}
                   marks={ageBoundaries}
                   onChange={handleAgeSliderChange}
                   style={{
@@ -231,10 +236,10 @@ const SearchProfiles = () => {
             <div className={styles.col2}>
               <Form.Item label="Height" name="heightRange">
                 <Slider
-                  defaultValue={[122, 214]}
+                  defaultValue={[MININUM_HEIGHT_IN_CMS, MAXIMUM_HEIGHT_IN_CMS]}
                   range={{ draggableTrack: true }}
-                  min={122}
-                  max={214}
+                  min={MININUM_HEIGHT_IN_CMS}
+                  max={MAXIMUM_HEIGHT_IN_CMS}
                   marks={heightBoundaries}
                   step={1}
                   onChange={handleHeightSliderChange}
