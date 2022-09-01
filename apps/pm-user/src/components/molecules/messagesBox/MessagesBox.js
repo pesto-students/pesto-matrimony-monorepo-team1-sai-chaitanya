@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
+import { Button, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
 import { OldMessages, ViewAndSendButton } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
@@ -18,8 +18,8 @@ const MessagesBox = ({
   interestReceiverImage,
   interestReceiverName,
 }) => {
-  const { TextArea } = Input;
   const messageRef = useRef();
+
   // Messaging Modal
   const [isMessagingModalVisible, setisMessagingModalVisible] = useState(false);
 

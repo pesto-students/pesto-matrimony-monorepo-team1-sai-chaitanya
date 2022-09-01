@@ -11,17 +11,29 @@
   height: calc(100% - 60px);
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .sideBar {
   height: 100%;
-  width: 20%;
+  width: 18%;
   background-color: white;
   margin-right: 12px;
+  overflow: auto;
+}
+
+//hide scroll bar but keep funtionality
+.sideBar::-webkit-scrollbar {
+  display: none;
 }
 
 .children {
-  width: 55%;
+  width: 57%;
+  overflow: auto;
+}
+
+.children::-webkit-scrollbar {
+  display: none;
 }
 
 .quickLinksCard {

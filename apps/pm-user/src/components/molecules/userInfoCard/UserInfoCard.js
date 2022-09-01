@@ -3,11 +3,10 @@ import { showNotification } from '@pm/pm-ui';
 import { UserInfoCardButtons } from '../';
 import PropTypes from 'prop-types';
 import styles from './userInfoCard.module.scss';
-import { Button, Carousel, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
+import { Button, Carousel, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
 
 const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, profileImages, profileName }) => {
   const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
-  const { TextArea } = Input;
   const messageRef = useRef();
   const showMessageModal = () => {
     setIsMessageModalVisible(true);

@@ -1,10 +1,10 @@
 import { Button, Form, SearchOutlined, Select, Slider } from '../../atoms';
+import { UserInfoCardsList } from '..';
 import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
 import styles from './searchProfiles.module.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { UserInfoCardsList } from '..';
 
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
 
@@ -125,7 +125,6 @@ const SearchProfiles = () => {
       });
   };
   const handleStateChange = (value) => {
-    console.log(value);
     axios
       .get(`${COUNTRY_API_URL}/cities/${value}`, {
         headers: {

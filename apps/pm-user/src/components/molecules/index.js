@@ -1,5 +1,6 @@
 export { default as AcceptInterestButton } from './acceptInterestButton';
 export { default as CancelInterestButton } from './cancelInterestButton';
+export { default as FormWrapper } from './formWrapper';
 export { default as LoginForm } from './loginForm';
 export { default as MessagesBox } from './messagesBox';
 export { default as MyCard } from './myCard';

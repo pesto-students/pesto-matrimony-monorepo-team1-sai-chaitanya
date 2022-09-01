@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './formWrapper.module.scss';
 import PropTypes from 'prop-types';
-import Logo from '../logo';
+import { Logo } from '../../atoms';
 import { Link } from 'react-router-dom';
 
 const FormWrapper = ({
