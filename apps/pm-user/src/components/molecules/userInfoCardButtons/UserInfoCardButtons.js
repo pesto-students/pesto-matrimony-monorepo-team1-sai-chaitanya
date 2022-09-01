@@ -1,11 +1,12 @@
 import {
-  AcceptInterestButton,
-  CancelInterestButton,
-  RejectInterestButton,
-  SendInterestButton,
-  SendMessageButton,
-  ShortlistButton,
-} from '../';
+  Button,
+  CloseCircleOutlined,
+  DislikeOutlined,
+  HeartOutlined,
+  LikeOutlined,
+  ProfileOutlined,
+  SendOutlined,
+} from '../../atoms';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { noop as _noop } from 'lodash';
@@ -24,20 +25,36 @@ const UserInfoCardButtons = ({
 
   let buttonsToDisplay = (
     <>
-      <SendInterestButton onClick={sendInterestHandler} />
-      <ShortlistButton onClick={toggleShortlistHandler} />
+      <Button onClick={sendInterestHandler} type="primary" shape="round" size="middle" icon={<HeartOutlined />}>
+        Send Interest
+      </Button>
+      <Button onClick={toggleShortlistHandler} type="primary" shape="round" size="middle" icon={<ProfileOutlined />}>
+        Shortlist
+      </Button>
     </>
   );
 
   if (matchStatus === 'accepted') {
-    buttonsToDisplay = <SendMessageButton onClick={sendMessageHandler} />;
+    buttonsToDisplay = (
+      <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageHandler}>
+        Send Message
+      </Button>
+    );
   } else if (matchStatus === 'sent') {
-    buttonsToDisplay = <CancelInterestButton onClick={cancelInterestHandler} />;
+    buttonsToDisplay = (
+      <Button type="primary" shape="round" icon={<CloseCircleOutlined />} size="middle" onClick={cancelInterestHandler}>
+        Cancel Interest
+      </Button>
+    );
   } else if (matchStatus === 'received') {
     buttonsToDisplay = (
       <>
-        <AcceptInterestButton onClick={acceptInterestHandler} />
-        <RejectInterestButton onClick={rejectInterestHandler} />
+        <Button type="primary" shape="round" icon={<LikeOutlined />} size="middle" onClick={acceptInterestHandler}>
+          Accept
+        </Button>
+        <Button type="primary" shape="round" icon={<DislikeOutlined />} size="middle" onClick={rejectInterestHandler}>
+          Reject
+        </Button>
       </>
     );
   }
