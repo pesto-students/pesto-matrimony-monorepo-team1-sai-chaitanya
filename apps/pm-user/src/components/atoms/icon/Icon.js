@@ -37,7 +37,8 @@ import {
   MailOutlined,
   DislikeOutlined,
   LikeOutlined,
-  KeyOutlined
+  CloseCircleOutlined,
+  KeyOutlined,
 } from '@ant-design/icons';
 
 export {
@@ -79,5 +80,6 @@ export {
   MailOutlined,
   DislikeOutlined,
   LikeOutlined,
+  CloseCircleOutlined,
   KeyOutlined,
 };

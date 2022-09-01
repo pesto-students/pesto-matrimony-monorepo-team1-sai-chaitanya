@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { FormWrapper, LoginForm } from '../../components';
 import styles from './login.module.scss';

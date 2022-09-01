@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '../../atoms';
 import styles from './myCard.module.scss';
@@ -10,7 +9,7 @@ const MyCard = ({ cardLink, cardTitle, children, className }) => {
       title={cardTitle}
       extra={<a href={cardLink}>See all</a>}
       style={{
-        width: "100%",
+        width: '100%',
       }}
     >
       {children}

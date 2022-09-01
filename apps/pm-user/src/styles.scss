@@ -134,6 +134,10 @@ table {
 
 html {
   font-size: 10px !important;
+  ::selection {
+    color: #fff;
+    background: #5c5fee;
+  }
 }
 
 @import 'antd/dist/antd.css';

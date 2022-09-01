@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
-import { Button, ClearOutlined, Input, Modal, SendOutlined } from '../../atoms';
-import { InterestBoxButtons, OldMessages } from '..';
+import { Button, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
+import { OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
-import styles from './interestBox.module.scss';
+import styles from './messagesBox.module.scss';
 
 // idOfLoggedInUser is the _id of the loggedin user.
-const InterestBox = ({
+const MessagesBox = ({
   conversations,
   idOfLoggedInUser,
   interestSenderAge,
@@ -17,39 +17,9 @@ const InterestBox = ({
   interestReceiverId,
   interestReceiverImage,
   interestReceiverName,
-  isAccepted,
-  isRejected,
 }) => {
-  const { TextArea } = Input;
-  function acceptInterestHandler() {
-    // Do DB operation. update isAccepted to true for interest object inside both receiver and sender
-
-    // Then send notification about success / failure
-    showNotification(
-      'success',
-      'Interest Accepted!',
-      'Congratulations. You are one step closer to finding your soul-mate.'
-    );
-    showNotification('error', 'Error!', 'Error accepting the interest. Please try later.');
-  }
-  function deleteRejectedInterestHandler() {
-    // Do DB operation. delete interest object inside interests array
-    // depending on who initiated this delete operation.
-
-    // Then send notification about success / failure
-    showNotification('success', 'Interest Deleted!', 'Interest successfully deleted.');
-    showNotification('error', 'Error!', 'Error deleting the interest. Please try again.');
-  }
-  function rejectInterestHandler() {
-    // Do DB operation. update isRejected to true for interest object inside of sender only.
-    // Then delete the interest object in receiver
-
-    // Then send notification about success / failure
-    showNotification('info', 'Interest Declined!', 'You will no longer receive messages from the sender.');
-    showNotification('error', 'Error!', 'Error declining the interest. Please try later.');
-  }
-
   const messageRef = useRef();
+
   // Messaging Modal
   const [isMessagingModalVisible, setisMessagingModalVisible] = useState(false);
 
@@ -90,10 +60,9 @@ const InterestBox = ({
     // open profile in new tab
     window.open(`/profile/${interestSenderId}`, '_blank');
   }
-  console.log(idOfLoggedInUser);
   return (
     <>
-      <div className={styles.interestBox}>
+      <div className={styles.messagesBox}>
         <div className={styles.profileImage}>
           <img
             src={idOfLoggedInUser === interestSenderId ? interestReceiverImage : interestSenderImage}
@@ -107,26 +76,17 @@ const InterestBox = ({
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
         <div className={styles.buttons}>
-          <InterestBoxButtons
-            acceptInterestHandler={acceptInterestHandler}
-            deleteRejectedInterestHandler={deleteRejectedInterestHandler}
-            idOfLoggedInUser={idOfLoggedInUser}
-            interestReceiverId={interestReceiverId}
-            interestReceiverName={interestReceiverName}
-            interestSenderId={interestSenderId}
-            interestSenderName={interestSenderName}
-            isRejected={isRejected}
-            isAccepted={isAccepted}
-            rejectInterestHandler={rejectInterestHandler}
-            sendNewMessageHandler={sendNewMessageHandler}
-          />
+          <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
+            View & Send Messages
+          </Button>
         </div>
       </div>
       {/* Messaging Modal Start */}
       {isMessagingModalVisible && (
         <Modal
-          title={`Sending Message to ${idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName
-            }`}
+          title={`Sending Message to ${
+            idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName
+          }`}
           visible={isMessagingModalVisible}
           onCancel={handleNewMessageCancel}
           destroyOnClose={true}
@@ -155,7 +115,7 @@ const InterestBox = ({
   );
 };
 
-InterestBox.propTypes = {
+MessagesBox.propTypes = {
   conversations: PropTypes.array,
   idOfLoggedInUser: PropTypes.string,
   interestSenderAge: PropTypes.number,
@@ -166,11 +126,9 @@ InterestBox.propTypes = {
   interestReceiverId: PropTypes.string,
   interestReceiverImage: PropTypes.string,
   interestReceiverName: PropTypes.string,
-  isAccepted: PropTypes.bool,
-  isRejected: PropTypes.bool,
 };
 
-InterestBox.defaultProps = {
+MessagesBox.defaultProps = {
   conversations: [],
   idOfLoggedInUser: 'idOfLoggedInUser',
   interestSenderAge: 99,
@@ -181,8 +139,6 @@ InterestBox.defaultProps = {
   interestReceiverId: 'interestReceiverId',
   interestReceiverImage: 'https://placehold.jp/40x40.png',
   interestReceiverName: 'interestReceiverName',
-  isAccepted: false,
-  isRejected: false,
 };
 
-export default InterestBox;
+export default MessagesBox;
