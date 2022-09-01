@@ -12,6 +12,8 @@ const MININUM_HEIGHT_IN_CMS = 122;
 const MAXIMUM_HEIGHT_IN_CMS = 214;
 const MINIMUM_ALLOWED_AGE = 21;
 const MAXIMUM_ALLOWED_AGE = 50;
+const COUNTRIES_API_TOKEN = 'UZXlBoEnsLp9p54HXkWSBMYYv0-BQ06V0AyH8VVO3VgVYPUZFOklqwegWta3iC742jA';
+const COUNTRIES_API_REGISTERED_EMAIL = 'testapi@trash-mail.com';
 
 const SearchProfiles = () => {
   const [displayText, setDisplayText] = useState('Start your search...');
@@ -25,11 +27,12 @@ const SearchProfiles = () => {
       .get(`${COUNTRY_API_URL}/getaccesstoken`, {
         headers: {
           Accept: 'application/json',
-          'api-token': 'UZXlBoEnsLp9p54HXkWSBMYYv0-BQ06V0AyH8VVO3VgVYPUZFOklqwegWta3iC742jA',
-          'user-email': 'testapi@trash-mail.com',
+          'api-token': COUNTRIES_API_TOKEN,
+          'user-email': COUNTRIES_API_REGISTERED_EMAIL,
         },
       })
       .then((res) => {
+        // must fetch and use Auth Token to use Countries API
         setAuthToken(res.data.auth_token);
       })
       .catch((err) => {
