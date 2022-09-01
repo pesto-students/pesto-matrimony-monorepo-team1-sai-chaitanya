@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Button, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
-import { OldMessages, ViewAndSendButton } from '..';
+import { OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
@@ -76,7 +76,10 @@ const MessagesBox = ({
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
         <div className={styles.buttons}>
-          <ViewAndSendButton onClick={sendNewMessageHandler} />
+          {/* <ViewAndSendButton onClick={sendNewMessageHandler} /> */}
+          <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
+            View & Send Messages
+          </Button>
         </div>
       </div>
       {/* Messaging Modal Start */}
