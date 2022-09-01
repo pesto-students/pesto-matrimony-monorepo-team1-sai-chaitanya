@@ -10,6 +10,8 @@ import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { noop as _noop } from 'lodash';
 
+// Buttons displayed on UserInfoCard will change
+// depending on the page (params) where they are rendered.
 const UserInfoCardButtons = ({
   acceptInterestHandler,
   cancelInterestHandler,
