@@ -1,4 +1,3 @@
-import React from 'react';
 import { UserInfoCard } from '../../components';
 
 function Recommendations() {

@@ -1,15 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, List } from '../../atoms';
 import styles from './userItemsList.module.scss';
 
-const UserItemsList = ({
-  className,
-  userdescription,
-  userImageSrc,
-  userProfileLink,
-  userTitle,
-}) => {
+const UserItemsList = ({ className, userdescription, userImageSrc, userProfileLink, userTitle }) => {
   //demo data
   const data = [
     {

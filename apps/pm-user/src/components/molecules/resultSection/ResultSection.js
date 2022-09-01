@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, HomeOutlined, Result } from '../../atoms';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -16,11 +15,7 @@ const ResultSection = ({ statusCode, subTitle, title }) => {
         title={title}
         subTitle={subTitle}
         extra={
-          <Button
-            type="primary"
-            onClick={homeButtonHandler}
-            icon={<HomeOutlined />}
-          >
+          <Button type="primary" onClick={homeButtonHandler} icon={<HomeOutlined />}>
             Go Home
           </Button>
         }

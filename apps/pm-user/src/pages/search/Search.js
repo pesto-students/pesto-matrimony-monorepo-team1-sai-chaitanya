@@ -1,4 +1,3 @@
-import React from 'react';
 import { SearchProfiles } from '../../components';
 import styles from './search.module.scss';
 const Search = () => {

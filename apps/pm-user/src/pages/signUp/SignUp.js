@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormWrapper, SignUpForm } from '../../components';
 import styles from './signUp.module.scss';
 
