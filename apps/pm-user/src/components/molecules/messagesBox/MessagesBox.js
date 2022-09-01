@@ -76,7 +76,6 @@ const MessagesBox = ({
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
         <div className={styles.buttons}>
-          {/* <ViewAndSendButton onClick={sendNewMessageHandler} /> */}
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
             View & Send Messages
           </Button>
