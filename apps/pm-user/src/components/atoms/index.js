@@ -14,7 +14,8 @@ export { default as Menu } from './menu';
 export { default as Modal } from './modal';
 export { default as Result } from './result';
 export { default as Segmented } from './segmented';
-export { default as Select } from './select'
-export { default as Space } from './space'
-export { default as TimePicker } from './timePicker'
-export { default as Upload } from './upload'
+export { default as Select } from './select';
+export { default as Space } from './space';
+export { default as TimePicker } from './timePicker';
+export { default as Tooltip } from "./tooltip";
+export { default as Upload } from './upload';
