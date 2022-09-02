@@ -5,6 +5,8 @@ import styles from './login.module.scss';
 function Login() {
   const { oktaAuth, authState } = useOktaAuth();
 
+  // console.log(authState?.accessToken.claims);
+
   //login hander
   const loginHandler = (password, email) =>
     oktaAuth

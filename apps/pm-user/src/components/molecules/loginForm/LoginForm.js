@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined } from '../../atoms';
 import PropTypes from 'prop-types';
 import _noop from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styles from './loginForm.module.scss';
 
 const LoginForm = ({ onFormSubmit }) => {
@@ -90,6 +90,7 @@ const LoginForm = ({ onFormSubmit }) => {
           </Button>
         </Form.Item>
       </Form>
+      <Link className={styles.forgotPassword} to="/forgot-password"><p>Forgot Password?</p></Link>
     </>
   );
 };

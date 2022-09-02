@@ -1,7 +1,7 @@
 export { default as FormWrapper } from './formWrapper';
 export { default as LoginForm } from './loginForm';
 export { default as MessagesBox } from './messagesBox';
-export { default as MyCard } from './myCard';
+export { default as MyCard } from './mycard';
 export { default as NavBar } from './navBar';
 export { default as OldMessages } from './oldMessages';
 export { default as OwnProfileSummaryCard } from './ownProfileSummaryCard';
@@ -14,3 +14,9 @@ export { default as UserItemsList } from './userItemsList';
 export { default as UserInfoCard } from './userInfoCard';
 export { default as UserInfoCardButtons } from './userInfoCardButtons';
 export { default as UserInfoCardsList } from './userInfoCardsList';
+
+export { default as UserProfileCard } from './userProfileCard';
+export { default as UserProfileCardContent } from './userProfileCardContent';
+// export { default as ViewAndSendButtons } from './viewAndSendButtons';
+
+
