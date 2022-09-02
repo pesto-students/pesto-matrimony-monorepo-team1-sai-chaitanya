@@ -23,7 +23,7 @@ const SignUpForm = () => {
           },
         },
       });
-      console.log(response);
+      // console.log("response", response);
       history.push('/recommendations');
     } catch (err) {
       console.log('error:', err);

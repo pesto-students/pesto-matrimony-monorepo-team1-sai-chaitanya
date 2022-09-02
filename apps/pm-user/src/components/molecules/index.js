@@ -15,4 +15,6 @@ export { default as SignUpForm } from "./signUpForm";
 export { default as UserItemsList } from './userItemsList';
 export { default as UserInfoCard } from './userInfoCard';
 export { default as UserInfoCardsList } from './userInfoCardsList';
+export { default as UserProfileCard } from './userProfileCard';
+export { default as UserProfileCardContent } from './userProfileCardContent';
 export { default as ViewAndSendButtons } from './viewAndSendButtons';
