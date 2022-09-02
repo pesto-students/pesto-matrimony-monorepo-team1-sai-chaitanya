@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined } from '../../atoms';
 import PropTypes from 'prop-types';
 import _noop from 'lodash';

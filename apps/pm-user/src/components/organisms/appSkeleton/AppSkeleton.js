@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { NavBar } from '../../molecules';
 import { SideBar } from '../sideBar';

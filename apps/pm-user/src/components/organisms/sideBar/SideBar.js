@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { DEFAULT_SELECTED_ITEM_KEY, MENU_ITEMS } from './constants';
 import { Menu, Button } from '../../atoms';

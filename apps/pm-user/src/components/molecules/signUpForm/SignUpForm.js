@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined, Select, UserOutlined } from '../../atoms';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';

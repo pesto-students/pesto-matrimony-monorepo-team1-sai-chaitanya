@@ -5,6 +5,7 @@ const PATHS = {
   LOGIN: '/login',
   LOGIN_CALLBACK: '/login/callback',
   MAILBOX: '/mailbox',
+  SEARCH: '/search',
   MATCHES: '/matches/:matchStatus',
   PROFILE: '/profile',
   RECOMMENDATIONS: '/recommendations',

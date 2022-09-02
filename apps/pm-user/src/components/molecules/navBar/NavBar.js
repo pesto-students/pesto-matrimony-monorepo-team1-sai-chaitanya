@@ -1,4 +1,3 @@
-import React from 'react';
 import { Logo } from '../../atoms';
 import styles from './navBar.module.scss';
 

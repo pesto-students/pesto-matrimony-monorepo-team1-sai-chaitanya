@@ -10,6 +10,7 @@ import {
   PageNotFound,
   Profile,
   Recommendations,
+  Search
 } from '../pages';
 
 function SecureRoutes() {
@@ -21,6 +22,7 @@ function SecureRoutes() {
         <Route exact path={PATHS.RECOMMENDATIONS} component={Recommendations} />
         <Route path={PATHS.MATCHES} component={Matches} />
         <Route path={PATHS.MAILBOX} component={MailBox} />
+        <Route path={PATHS.SEARCH} component={Search} />
         <Route component={PageNotFound} />
       </Switch>
     </AppSkeleton>
