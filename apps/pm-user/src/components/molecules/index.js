@@ -2,6 +2,7 @@ export { default as EditEducationAndCareerDetails } from './editEducationAndCare
 export { default as EditFamilyDetails } from './editFamilyDetails';
 export { default as EditPartnerPreferences } from './editPartnerPreferences';
 export { default as EditPersonalDetails } from './editPersonalDetails';
+export { default as EditReligionDetails } from './editReligionDetails';
 export { default as FormWrapper } from './formWrapper';
 export { default as LoginForm } from './loginForm';
 export { default as MessagesBox } from './messagesBox';
