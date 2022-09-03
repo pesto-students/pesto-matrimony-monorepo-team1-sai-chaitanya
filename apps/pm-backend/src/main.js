@@ -33,10 +33,7 @@ app.post('/api/v1/newuser', async (req, res, next) => {
     createUserInOkta();
     async function createUserInOkta() {
       const response = await client.createUser(body);
-
-      console.log('oktaAuth:', oktaAuth);
-      console.log('authState:', authState);
-
+      
       res.send({
         res: response,
       });

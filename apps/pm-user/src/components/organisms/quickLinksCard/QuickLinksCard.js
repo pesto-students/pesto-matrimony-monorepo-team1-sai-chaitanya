@@ -12,13 +12,13 @@ function QuickLinksCard() {
         />
       </MyCard>
 
-      <MyCard cardTitle="Matches" className="myCard" cardLink="#">
+      {/* <MyCard cardTitle="Matches" className="myCard" cardLink="#">
         <UserItemsList
           userdescription="Ant Design, a design language..."
           userImageSrc="https://joeschmoe.io/api/v1/random"
           userProfileLink="https://ant.design"
         />
-      </MyCard>
+      </MyCard> */}
     </>
   );
 }

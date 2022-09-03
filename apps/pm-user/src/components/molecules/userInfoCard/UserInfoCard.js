@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from './userInfoCard.module.scss';
 import { Button, Carousel, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
 
-const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, profileImages, profileName }) => {
+const UserInfoCard = ({ idOfLoggedInUser, profileAboutMe, profileAge, profileId, profileLocation, profileImages, profileName }) => {
   const [isMessageModalVisible, setIsMessageModalVisible] = useState(false);
   const messageRef = useRef();
   const showMessageModal = () => {
@@ -120,14 +120,18 @@ const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, 
           <p>{profileAboutMe}</p>
         </div>
         <div className={styles.buttons}>
-          <UserInfoCardButtons
-            acceptInterestHandler={acceptInterestHandler}
-            cancelInterestHandler={cancelInterestHandler}
-            rejectInterestHandler={rejectInterestHandler}
-            sendInterestHandler={sendInterestHandler}
-            sendMessageHandler={sendMessageHandler}
-            toggleShortlistHandler={toggleShortlistHandler}
-          />
+        {idOfLoggedInUser !== profileId ? (
+            <UserInfoCardButtons
+              acceptInterestHandler={acceptInterestHandler}
+              cancelInterestHandler={cancelInterestHandler}
+              rejectInterestHandler={rejectInterestHandler}
+              sendInterestHandler={sendInterestHandler}
+              sendMessageHandler={sendMessageHandler}
+              toggleShortlistHandler={toggleShortlistHandler}
+            />
+          ) : (
+            ' '
+          )}
         </div>
       </div>
       <Modal
@@ -151,6 +155,7 @@ const UserInfoCard = ({ profileAboutMe, profileAge, profileId, profileLocation, 
 };
 
 UserInfoCard.propTypes = {
+  idOfLoggedInUser: PropTypes.string,
   profileAboutMe: PropTypes.string,
   profileAge: PropTypes.number,
   profileId: PropTypes.string,
@@ -160,9 +165,10 @@ UserInfoCard.propTypes = {
 };
 
 UserInfoCard.defaultProps = {
+  idOfLoggedInUser: 'abcd',
   profileAboutMe: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum reiciendis deserunt esse harum impedit non beatae sequi facilis officiis consequuntur possimus porro minima maxime inventore sed, error unde perferendis? Laboriosam?`,
   profileAge: 29,
-  profileId: 'abcd',
+  profileId: 'xyz',
   profileImages: [
     'https://picsum.photos/700/500?random=1',
     'https://picsum.photos/700/500?random=2',
