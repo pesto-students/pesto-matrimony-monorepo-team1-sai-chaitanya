@@ -23,3 +23,4 @@ export { default as UserInfoCardButtons } from './userInfoCardButtons';
 export { default as UserInfoCardsList } from './userInfoCardsList';
 export { default as UserProfileCard } from './userProfileCard';
 export { default as UserProfileCardContent } from './userProfileCardContent';
+export { default as ViewProfile } from './viewProfile';
