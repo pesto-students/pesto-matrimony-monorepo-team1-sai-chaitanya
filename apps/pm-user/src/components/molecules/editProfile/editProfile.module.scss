@@ -1,0 +1,145 @@
+.editProfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    text-align: center;
+    margin: 2.4rem 0;
+  }
+
+  :global {
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+      height: 32px;
+    }
+
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector::after,
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item,
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
+      line-height: 32px;
+    }
+
+    button.ant-btn.ant-btn-round {
+      margin: 0.4rem 0.4rem;
+    }
+
+    .ant-btn-primary {
+      border-color: #5c5fee;
+      background: #5c5fee;
+    }
+
+    .ant-btn-round {
+      height: 36px;
+    }
+
+    .ant-form-item-label {
+      label::after {
+        margin: 0 3rem;
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 1.2rem;
+
+      .ant-form-item-control-input-content {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .ant-form .ant-form-item-label>label {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: 100%;
+      height: 32px;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 14px;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    span.ant-slider-mark-text.ant-slider-mark-text-active:first-child {
+      padding-right: 2rem;
+      font-size: 1.2rem;
+    }
+
+    span.ant-slider-mark-text.ant-slider-mark-text-active:last-child {
+      padding-left: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .ant-slider-handle {
+      width: 1.8rem;
+      height: 1.8rem;
+      border: solid 2px #5c5fee;
+    }
+
+    .ant-slider:hover .ant-slider-track {
+      background-color: #5c5fee;
+      height: 8px;
+    }
+
+    .ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
+      border-color: #5c5fee;
+    }
+
+    .ant-slider-track {
+      position: absolute;
+      height: 8px;
+      background-color: #5c5fee;
+      border-radius: 2px;
+      transition: background-color 0.3s;
+    }
+
+    .ant-slider-rail {
+      position: absolute;
+      width: 100%;
+      height: 8px;
+      background-color: #857e7e;
+      border-radius: 2px;
+      transition: background-color 1s;
+
+      &:hover {
+        background-color: #5c5fee;
+      }
+    }
+
+    .ant-form-item-label {
+      label::after {
+        margin: 0 3rem;
+      }
+    }
+
+  }
+
+  .imagesSection {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1.2rem;
+    border-radius: 2.4rem;
+    border-bottom: 2px solid #5c5fee;
+    margin-bottom: 1.8rem;
+  }
+
+  .personalDetails,
+  .familyDetails,
+  .educationDetails,
+  .religionDetails,
+  .partnerPreferences {
+    min-width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 3.6rem;
+    border-radius: 2.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 2px solid #5c5fee;
+    background-color: white;
+    margin-bottom: 1.8rem;
+  }
+}
