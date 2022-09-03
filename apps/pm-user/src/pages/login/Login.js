@@ -18,7 +18,7 @@ function Login() {
             console.error('authentication process failed');
           }
           oktaAuth.signInWithRedirect({
-            originalUri: '/',
+            originalUri: '/recommendations',
             sessionToken,
           });
         }
