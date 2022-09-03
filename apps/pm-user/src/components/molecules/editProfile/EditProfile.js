@@ -8,7 +8,7 @@ import {
 } from '../../molecules';
 import styles from './editProfile.module.scss';
 
-const EditProfile = ({}) => {
+const EditProfile = () => {
   return (
     <div className={styles.editProfile}>
       <div className={styles.imagesSection}>

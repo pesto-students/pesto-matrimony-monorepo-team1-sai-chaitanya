@@ -1,9 +1,11 @@
 import React from 'react';
-import { UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
-
+import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
+import { EditProfilePage } from '..';
 const Profile = () => {
   return (
     <>
+      {/* Temporarily displaying EditProfile Page here */}
+      <EditProfilePage />
       <UserInfoCard
         idOfLoggedInUser="abcd"
         profileAboutMe=""
@@ -51,8 +53,6 @@ const Profile = () => {
       </UserProfileCard>
     </>
   );
-}
-
-
+};
 
 export default Profile;

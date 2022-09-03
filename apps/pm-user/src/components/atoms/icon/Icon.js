@@ -39,6 +39,8 @@ import {
   LikeOutlined,
   CloseCircleOutlined,
   KeyOutlined,
+  SaveOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
 
 export {
@@ -82,4 +84,6 @@ export {
   LikeOutlined,
   CloseCircleOutlined,
   KeyOutlined,
+  SaveOutlined,
+  UploadOutlined,
 };

@@ -30,6 +30,13 @@
 .children {
   width: 57%;
   overflow: auto;
+  padding: 1.2rem;
+  margin: 1.8rem 0;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
 }
 
 .children::-webkit-scrollbar {
