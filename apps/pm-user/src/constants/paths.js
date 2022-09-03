@@ -1,5 +1,6 @@
 const PATHS = {
   FAQ: '/faq',
+  SHORTLISTED: '/shortlisted',
   FORGOT_PASSWORD: '/forgot-password',
   HOME: '/home',
   LOGIN: '/login',
@@ -8,6 +9,7 @@ const PATHS = {
   SEARCH: '/search',
   MATCHES: '/matches/:matchStatus',
   PROFILE: '/profile',
+  EDIT_PROFILE: '/edit-profile',
   RECOMMENDATIONS: '/recommendations',
   SIGNUP: '/signup',
 };

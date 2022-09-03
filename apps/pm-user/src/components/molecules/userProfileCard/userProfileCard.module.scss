@@ -6,7 +6,9 @@
     box-shadow: rgb(125 125 125 / 35%) 0px 1px 9px 1px;
 }
 
-.cardTitle{
+.cardTitleWrpper{
+    display: flex;
+    justify-content: space-between;
     font-size: 18px;
     font-weight: 700;
     border-bottom: 1px solid #dcdbdb;
