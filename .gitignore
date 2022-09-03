@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# config files
+.env
+*.prettierignore
+*.prettierrc
 # compiled output
 /dist
 /tmp
@@ -7,6 +11,8 @@
 
 # dependencies
 node_modules
+libs
+tools
 
 # IDEs and editors
 /.idea
