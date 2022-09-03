@@ -4,6 +4,7 @@ export { default as EditPartnerPreferences } from './editPartnerPreferences';
 export { default as EditPersonalDetails } from './editPersonalDetails';
 export { default as EditReligionDetails } from './editReligionDetails';
 export { default as FormWrapper } from './formWrapper';
+export { default as ImageUploadSection } from './imageUploadSection';
 export { default as LoginForm } from './loginForm';
 export { default as MessagesBox } from './messagesBox';
 export { default as MyCard } from './myCard';
