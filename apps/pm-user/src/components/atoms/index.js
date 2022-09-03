@@ -15,6 +15,8 @@ export { default as Modal } from './modal';
 export { default as Result } from './result';
 export { default as Segmented } from './segmented';
 export { default as Select } from './select';
+export { default as SimpleInput } from './simpleInput';
+export { default as SimpleSelect } from './simpleSelect';
 export { default as Slider } from './slider';
 export { default as Space } from './space';
 export { default as TextArea } from './textArea';
