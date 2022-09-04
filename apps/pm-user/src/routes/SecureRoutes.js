@@ -10,14 +10,18 @@ import {
   PageNotFound,
   Profile,
   Recommendations,
-  Search
+  Search,
+  EditProfilePage,
+  Shortlisted
 } from '../pages';
 
-function SecureRoutes() {
+function SecureRoutes() { 
   return (
     <AppSkeleton>
       <Switch>
         <Route exact path={PATHS.PROFILE} component={Profile} />
+        <Route exact path={PATHS.EDIT_PROFILE} component={EditProfilePage} />
+        <Route exact path={PATHS.SHORTLISTED} component={Shortlisted} />
         <Route exact path={PATHS.HOME} component={Home} />
         <Route exact path={PATHS.RECOMMENDATIONS} component={Recommendations} />
         <Route path={PATHS.MATCHES} component={Matches} />

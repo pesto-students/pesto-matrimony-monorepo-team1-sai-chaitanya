@@ -5,7 +5,7 @@ const Profile = () => {
   return (
     <>
       {/* Temporarily displaying EditProfile Page here */}
-      <EditProfilePage />
+      {/* <EditProfilePage /> */}
       <UserInfoCard
         idOfLoggedInUser="abcd"
         profileAboutMe=""

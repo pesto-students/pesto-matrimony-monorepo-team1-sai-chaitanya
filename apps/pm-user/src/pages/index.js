@@ -10,3 +10,4 @@ export { default as SignUp } from './signUp';
 export { default as Recommendations } from './recommendations';
 export { default as Search } from './search';
 export { default as EditProfilePage } from './editProfilePage';
+export { default as Shortlisted } from './shortlisted';

@@ -1,3 +1,5 @@
+
+
 const mongoose = require('mongoose');
 
 const Preferences = new mongoose.Schema({
@@ -40,7 +42,6 @@ const MessageSchema = new mongoose.Schema({
 const UserSchema = new mongoose.Schema({
   createdFor: {
     type: String,
-    required: [true, 'Profile is created for whom ?'],
     enum: ['Self', 'Son', 'Daughter', 'Brother', 'Sister', 'Relative', 'Client'],
   },
   name: {
@@ -53,7 +54,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Email is missing!'],
     trim: true,
-    enum: ['Male', 'Female'],
   },
   email: {
     type: String,
@@ -68,9 +68,7 @@ const UserSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: [true, 'Phone number is missing!'],
-    unique: true,
-    dropDups: true,
+    default: "",
     maxlength: [20, 'Phone number can not be longer than 20 characters'],
   },
   createdAt: {
