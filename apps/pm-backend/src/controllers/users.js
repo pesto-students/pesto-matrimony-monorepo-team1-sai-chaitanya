@@ -1,6 +1,7 @@
 const asyncHandler = require('../middleware/async');
 const User = require('../models/Users');
 const CustomErrorResponse = require('../utilities/errorResponse');
+const okta = require('@okta/okta-sdk-nodejs');
 
 // @desc   Register a new Profile
 // @route  POST /api/v1/users/
@@ -17,7 +18,61 @@ exports.registerUserProfile = asyncHandler(async (req, res, next) => {
 // @route  GET /api/v1/users/:userId
 // @access Private
 
+
+//creating user inside mongodb with oktaInformation.
+const creteUserInMongoDb = async (mongoUser) => {
+  const user = await User.create(mongoUser); 
+  console.log(user); 
+  return user;
+}
+
+
+//signing up user into okta
+exports.oktaSignUp = asyncHandler(async (req, res, next) => {
+
+  const client = new okta.Client({
+    orgUrl: 'https://dev-42684472.okta.com/',
+    token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
+  });
+
+  const body = req.body;
+
+  try {
+    createUserInOkta();
+    async function createUserInOkta() {
+      const response = await client.createUser(body);
+
+      //will update it with destructure
+      const oktaId = response.id;
+      const name = `${response.profile.firstName} ${response.profile.lastName}`;
+      const gender = response.profile.gender;
+      const email = response.profile.email
+
+      const mongoUser = {
+        oktaUserId: oktaId,
+        name,
+        gender,
+        email
+      }
+
+      const mongoReponse = await creteUserInMongoDb(mongoUser);
+
+      res.send({
+        res: response,
+      });
+    }
+  } catch (err) {
+    res.send({
+      err: err,
+    });
+  }
+})
+
+
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
+
+  const body = req.body;
+
   const user = await User.findById(req.params.userId);
   console.log(user);
   if (!user) {

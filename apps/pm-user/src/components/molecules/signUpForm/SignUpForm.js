@@ -6,9 +6,12 @@ import styles from './signUpForm.module.scss';
 const SignUpForm = () => {
   const history = useHistory();
 
+  const url1 = 'http://localhost:3333/api/v1/newuser';
+  const url2 = 'http://localhost:8000/api/v1/users/oktasignup'
+
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
-      const response = await axios.post('http://localhost:3333/api/v1/newuser', {
+      const response = await axios.post(url2, {
         profile: {
           firstName,
           lastName,
@@ -22,7 +25,7 @@ const SignUpForm = () => {
           },
         },
       });
-      // console.log("response", response);
+      console.log("response", response);
       history.push('/recommendations');
     } catch (err) {
       console.log('error:', err);

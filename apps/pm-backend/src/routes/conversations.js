@@ -1,5 +1,5 @@
 const express = require('express');
-const { deleteMessage, getMessages, sendMessage, markMessageAsRead } = require('../controllers/conversations.js');
+const { deleteMessage, getMessages, sendMessage, markMessageAsRead } = require('../controllers/conversations');
 
 const router = express.Router();
 

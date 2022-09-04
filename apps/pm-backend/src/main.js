@@ -1,87 +1,43 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
-// import * as express from 'express';
-
-const express = require('express');
 const cors = require('cors');
-const okta = require('@okta/okta-sdk-nodejs');
-const axios = require('axios');
+const express = require('express');
+const dotenv = require('dotenv');
+const dbConnection = require('./config/database');
+const errorHandler = require('./middleware/error');
 
+
+dotenv.config({ path: './config/config.env' });
+
+// Connect to MongoDB
+dbConnection();
+
+
+// Start Express Server
 const app = express();
-
-app.use(express.json());
 
 app.use(cors());
 
-const client = new okta.Client({
-  orgUrl: 'https://dev-42684472.okta.com/',
-  token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
+app.use(express.json());
+
+// importing routes
+const users = require('./routes/users.js');
+const conversations = require('./routes/conversations.js');
+
+// mounting routes
+app.use('/api/v1/users', users);
+app.use('/api/v1/conversations', conversations);
+
+// error Handler
+app.use(errorHandler);
+
+
+const server = app.listen(
+  process.env.PORT || 8000,
+  console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${process.env.NODE_ENV.toUpperCase()}`)
+);
+
+// Error in connecting to MongoDB triggers unhandledRejection at global level
+// That is being handled here. This stops server if MongoDB is NOT connected.
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  server.close(() => process.exit(1));
 });
-
-app.get('/', (req, res) => {
-  res.send({ message: 'Welcome to pm-backend!' });
-});
-
-//for signing up the user
-app.post('/api/v1/newuser', async (req, res, next) => {
-  const body = req.body;
-
-  try {
-    createUserInOkta();
-    async function createUserInOkta() {
-      const response = await client.createUser(body);
-      
-      res.send({
-        res: response,
-      });
-    }
-  } catch (err) {
-    res.send({
-      err: err,
-    });
-  }
-});
-
-//for foreget password
-app.get('/api/v1/forgotpassword', (req, res) => {
-  // const id = req.body;
-
-  const api_token = '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P';
-
-  const url =
-    'https://dev-42684472.okta.com/api/v1/users/00u6ch8hf8la2KWR55d7/credentials/forgot_password?sendEmail=true';
-
-  forgotPassword();
-  async function forgotPassword() {
-    try {
-      const res = await axios({
-        method: 'post',
-        url: url,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `SSWS ${api_token}`,
-        },
-      });
-
-      // console.log(res);
-
-      res.send({
-        data: res,
-      });
-    } catch (err) {
-      res.send({
-        Error: err,
-      });
-    }
-  }
-});
-
-const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
