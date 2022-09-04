@@ -1,16 +1,16 @@
-import { ActionTypes } from "../constants";
-import Apis from "../../apis"; 
+import { ActionTypes } from '../constants';
+import axios from 'axios';
+// import Apis from "../../apis";
 
+export const getUserProfile = (oktaUserId) => {
+  return async (dispatch) => {
+    const url = `http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`;
 
-export const submitFormData = () => {
-    return async (dispatch) => {
+    const response = await axios.get(url);
 
-        //in "fakeStoreApi.get("/products")" the api-url coming from the axios.create() from src/apis/fakeStoreApi.js.
-        const response = await Apis.post("/data");
-        
-        dispatch({
-            type: ActionTypes.FORM_SUBMIT,
-            payload: response.data
-        });
-    };
+    dispatch({
+      type: ActionTypes.GET_USER_PROFILE,
+      payload: response.data.user[0],
+    });
+  };
 };

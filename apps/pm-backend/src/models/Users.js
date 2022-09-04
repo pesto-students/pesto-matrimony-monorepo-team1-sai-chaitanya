@@ -281,6 +281,7 @@ const UserSchema = new mongoose.Schema({
       interestReceiverName: { type: String },
       isAccepted: { type: Boolean, default: false },
       isRejected: { type: Boolean, default: false },
+
       conversations: [MessageSchema],
     },
   ],
