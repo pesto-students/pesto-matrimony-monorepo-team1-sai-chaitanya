@@ -1,15 +1,10 @@
 const cors = require('cors');
 const express = require('express');
-const dotenv = require('dotenv');
 const dbConnection = require('./config/database');
 const errorHandler = require('./middleware/error');
 
-
-dotenv.config({ path: './config/config.env' });
-
 // Connect to MongoDB
 dbConnection();
-
 
 // Start Express Server
 const app = express();
@@ -28,7 +23,6 @@ app.use('/api/v1/conversations', conversations);
 
 // error Handler
 app.use(errorHandler);
-
 
 const server = app.listen(
   process.env.PORT || 8000,

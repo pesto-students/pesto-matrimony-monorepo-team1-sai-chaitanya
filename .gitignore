@@ -2,6 +2,7 @@
 
 # config files
 *.env
+*.local
 .prettierignore
 .prettierrc
 # compiled output

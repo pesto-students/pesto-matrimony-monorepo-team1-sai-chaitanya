@@ -1,26 +1,11 @@
-
-
 const mongoose = require('mongoose');
 
-const Preferences = new mongoose.Schema({
-  religion: {
-    type: String,
-    trim: true,
-    enum: ['Hindu', 'Muslim', 'Sikh', 'Christian', 'Buddhist', 'Jain', 'Parsi', 'Jewish', 'Bahai'],
-  },
-  maritalStatus: {
-    type: String,
-    trim: true,
-    enum: ['Never Married', 'Awaiting Divorce', 'Divorced', 'Widowed', 'Annulled'],
-  },
-});
-
 const MessageSchema = new mongoose.Schema({
-  sender: {
+  messageSenderId: {
     type: mongoose.SchemaTypes.ObjectId,
     trim: true,
   },
-  receiver: {
+  messageReceiverId: {
     type: mongoose.SchemaTypes.ObjectId,
     trim: true,
   },
@@ -40,10 +25,6 @@ const MessageSchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
-  createdFor: {
-    type: String,
-    enum: ['Self', 'Son', 'Daughter', 'Brother', 'Sister', 'Relative', 'Client'],
-  },
   name: {
     type: String,
     trim: true,
@@ -59,16 +40,211 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Email is missing!'],
     unique: true,
-    dropDups: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please add a valid email'],
   },
   oktaUserId: {
     type: String,
-    required: [true, 'Where is Okta User Id ?'],
+    unique: true,
+    required: [true, 'Okta User Id is missing !'],
   },
+  images: {
+    type: [String],
+    default: [],
+  },
+
+  // Personal Information
+
+  aboutMe: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  age: {
+    type: Number,
+    trim: true,
+  },
+  citizenship: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  drinkingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  eatingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  height: {
+    type: Number,
+    trim: true,
+  },
+  hobbies: {
+    type: [String],
+    default: [],
+  },
+  hobbies: {
+    type: [String],
+    default: [],
+  },
+  location: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  marriageStatus: {
+    type: String,
+    default: 'Never Married',
+    enum: ['Never Married', 'Awaiting Divorce', 'Divorced', 'Widowed'],
+  },
+  motherTongue: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  physique: {
+    type: String,
+    default: '',
+    trim: true,
+  },
+  smokingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  spokenLanguages: {
+    type: [String],
+    default: [],
+  },
+  state: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  weight: {
+    type: Number,
+  },
+
+  // Education & Occupation Details
+
+  employer: {
+    type: String,
+    default: '',
+  },
+  income: {
+    type: Number,
+  },
+  occupation: {
+    type: String,
+    default: '',
+  },
+  qualification: {
+    type: String,
+    default: '',
+  },
+
+  // Family Details
+
+  aboutFamily: {
+    type: String,
+    default: '',
+  },
+  brothers: {
+    type: Number,
+  },
+  familyStatus: {
+    type: String,
+    default: '',
+  },
+  marriedBrothers: {
+    type: Number,
+  },
+  marriedSisters: {
+    type: Number,
+  },
+  sisters: {
+    type: Number,
+  },
+
+  // Religious Details
+
+  dateOfBirth: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  gothram: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  placeOfBirth: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  religion: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  timeOfBirth: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  zodiacSign: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+
+  // Preference Details
+
+  partnerAgeRange: {
+    type: [Number],
+    default: [],
+  },
+  partnerCountry: {
+    type: String,
+    default: '',
+  },
+  partnerEatingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  partnerHeightRange: {
+    type: [Number],
+    default: [],
+  },
+  partnerIncomeRange: {
+    type: [Number],
+    default: [],
+  },
+  partnerMaritalStatus: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  partnerMotherTongue: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  partnerReligion: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+
   phone: {
     type: String,
-    default: "",
+    default: '',
+    trim: true,
     maxlength: [20, 'Phone number can not be longer than 20 characters'],
   },
   createdAt: {
@@ -82,41 +258,50 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     default: 'User',
-    enum: ['User', 'Admin', 'CustomerService'],
+    enum: ['User', 'Admin'],
   },
-  //stored mongoDB Ids of all shortlisted users.
-  shortlistedMatches: [],
+
+  //store mongoDB Ids of all shortlisted users.
+  shortlistedMatches: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    default: [],
+  },
+
   // for each interest received... a unique object is created.
   // Subsequent messages "to & from" the sender are stored in conversations array inside the object.
   interestsReceived: [
     {
-      receivedFrom: { type: mongoose.SchemaTypes.ObjectId, unique: true, dropDups: true },
+      interestSenderAge: { type: Number },
+      interestSenderId: { type: mongoose.SchemaTypes.ObjectId },
+      interestSenderImage: { type: String },
+      interestSenderName: { type: String },
+      interestReceiverAge: { type: Number },
+      interestReceiverId: { type: mongoose.SchemaTypes.ObjectId },
+      interestReceiverImage: { type: String },
+      interestReceiverName: { type: String },
+      isAccepted: { type: Boolean, default: false },
+      isRejected: { type: Boolean, default: false },
       conversations: [MessageSchema],
     },
   ],
+
   // for each interest sent... a unique object is created...
   // Subsequent messages "to & from" the receiver are stored in conversations array inside the object
   interestsSent: [
     {
-      sentTo: { type: mongoose.SchemaTypes.ObjectId, unique: true, dropDups: true },
+      interestSenderAge: { type: Number },
+      interestSenderId: { type: mongoose.SchemaTypes.ObjectId },
+      interestSenderImage: { type: String },
+      interestSenderName: { type: String },
+      interestReceiverAge: { type: Number },
+      interestReceiverId: { type: mongoose.SchemaTypes.ObjectId },
+      interestReceiverImage: { type: String },
+      interestReceiverName: { type: String },
+      isAccepted: { type: Boolean, default: false },
+      isRejected: { type: Boolean, default: false },
       conversations: [MessageSchema],
     },
   ],
-  religion: {
-    type: String,
-    trim: true,
-    enum: ['Hindu', 'Muslim', 'Sikh', 'Christian', 'Buddhist', 'Jain', 'Parsi', 'Jewish', 'Bahai'],
-  },
-  maritalStatus: {
-    type: String,
-    trim: true,
-    enum: ['Never Married', 'Awaiting Divorce', 'Divorced', 'Widowed', 'Annulled'],
-  },
-
-  images: {
-    type: [String],
-    default: [],
-  },
 });
 
 module.exports = mongoose.model('User', UserSchema);
