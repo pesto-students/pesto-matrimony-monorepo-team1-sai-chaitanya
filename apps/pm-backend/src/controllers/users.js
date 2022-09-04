@@ -18,18 +18,15 @@ exports.registerUserProfile = asyncHandler(async (req, res, next) => {
 // @route  GET /api/v1/users/:userId
 // @access Private
 
-
 //creating user inside mongodb with oktaInformation.
 const creteUserInMongoDb = async (mongoUser) => {
-  const user = await User.create(mongoUser); 
-  console.log(user); 
+  const user = await User.create(mongoUser);
+  console.log(user);
   return user;
-}
-
+};
 
 //signing up user into okta
 exports.oktaSignUp = asyncHandler(async (req, res, next) => {
-
   const client = new okta.Client({
     orgUrl: 'https://dev-42684472.okta.com/',
     token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
@@ -46,14 +43,14 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
       const oktaId = response.id;
       const name = `${response.profile.firstName} ${response.profile.lastName}`;
       const gender = response.profile.gender;
-      const email = response.profile.email
+      const email = response.profile.email;
 
       const mongoUser = {
         oktaUserId: oktaId,
         name,
         gender,
-        email
-      }
+        email,
+      };
 
       const mongoReponse = await creteUserInMongoDb(mongoUser);
 
@@ -66,19 +63,23 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
       err: err,
     });
   }
-})
-
+});
 
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
+  const params = req.params;
 
-  const body = req.body;
+  const oktaId = params.id;
 
-  const user = await User.findById(req.params.userId);
-  console.log(user);
+  const user = await User.find({ oktaUserId: oktaId });
+
+  const UserMongoId = user._id;
+
+  console.log('UserMongoId', UserMongoId);
+
   if (!user) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
-  res.status(200).json({ success: true, data: user });
+  res.status(200).json({ user });
 });
 /** ----------------------------------------- */
 

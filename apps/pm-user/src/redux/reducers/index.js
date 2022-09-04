@@ -1,11 +1,9 @@
-import { combineReducers } from "redux";
-import { submitFormDataReducer } from './Reducers';
-
+import { combineReducers } from 'redux';
+import { getUserProfileReducer } from './Reducers';
 
 const reducers = combineReducers({
-    formSubmitResonse: submitFormDataReducer, //first reducer function
+  getUserProfileResponse: getUserProfileReducer, //first reducer function
 });
 
 //exporting it to src/redux/store.js file
 export default reducers;
-

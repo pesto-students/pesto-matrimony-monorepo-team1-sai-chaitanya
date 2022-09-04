@@ -1,6 +1,12 @@
 const express = require('express');
 
-const { deleteUserProfile, getUserProfile, registerUserProfile, updateUserProfile, oktaSignUp } = require('../controllers/users');
+const {
+  deleteUserProfile,
+  getUserProfile,
+  registerUserProfile,
+  updateUserProfile,
+  oktaSignUp,
+} = require('../controllers/users');
 
 const router = express.Router();
 
@@ -9,8 +15,7 @@ const router = express.Router();
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
 // router.route('/').post(registerUserProfile);
-router.route('/recommendation/:id').post(getUserProfile);
-
+router.route('/userprofile/:id').get(getUserProfile);
 
 // Update / Delete
 router.route('/:userId').get(getUserProfile).put(updateUserProfile).delete(deleteUserProfile);

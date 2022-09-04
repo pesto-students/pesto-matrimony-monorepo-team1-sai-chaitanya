@@ -1,5 +1,3 @@
-
-
 const mongoose = require('mongoose');
 
 const Preferences = new mongoose.Schema({
@@ -68,7 +66,6 @@ const UserSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: "",
     maxlength: [20, 'Phone number can not be longer than 20 characters'],
   },
   createdAt: {
@@ -90,7 +87,7 @@ const UserSchema = new mongoose.Schema({
   // Subsequent messages "to & from" the sender are stored in conversations array inside the object.
   interestsReceived: [
     {
-      receivedFrom: { type: mongoose.SchemaTypes.ObjectId, unique: true, dropDups: true },
+      receivedFrom: { type: mongoose.SchemaTypes.ObjectId },
       conversations: [MessageSchema],
     },
   ],
@@ -98,7 +95,7 @@ const UserSchema = new mongoose.Schema({
   // Subsequent messages "to & from" the receiver are stored in conversations array inside the object
   interestsSent: [
     {
-      sentTo: { type: mongoose.SchemaTypes.ObjectId, unique: true, dropDups: true },
+      sentTo: { type: mongoose.SchemaTypes.ObjectId },
       conversations: [MessageSchema],
     },
   ],
