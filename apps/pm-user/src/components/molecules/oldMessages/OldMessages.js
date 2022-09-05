@@ -6,7 +6,7 @@ const OldMessages = ({ conversations, idOfLoggedInUser, interestReceiverImage, i
   const renderOldMessages = conversations.map(({ message, messageSenderId }) => {
     const thisClassName = idOfLoggedInUser === messageSenderId ? 'sender' : 'receiver';
     return (
-      <div className={styles[thisClassName]}>
+      <div className={styles[thisClassName]} key={Math.random()}>
         <div className={styles.image}>
           <img src={messageSenderId === idOfLoggedInUser ? interestReceiverImage : interestSenderImage} />
         </div>
