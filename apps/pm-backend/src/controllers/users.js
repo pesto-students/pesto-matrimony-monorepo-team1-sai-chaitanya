@@ -14,12 +14,8 @@ exports.registerUserProfile = asyncHandler(async (req, res, next) => {
 });
 /** ----------------------------------------- */
 
-// @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/:userId
-// @access Private
-
 //creating user inside mongodb with oktaInformation.
-const creteUserInMongoDb = async (mongoUser) => {
+const createUserInMongoDB = async (mongoUser) => {
   const user = await User.create(mongoUser);
   console.log(user);
   return user;
@@ -35,9 +31,10 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   const body = req.body;
 
   try {
-    createUserInOkta();
     async function createUserInOkta() {
+      console.log('trying to create user in Okta');
       const response = await client.createUser(body);
+      console.log('successfully created user in Okta');
 
       //will update it with destructure
       const oktaId = response.id;
@@ -52,19 +49,24 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         email,
       };
 
-      const mongoReponse = await creteUserInMongoDb(mongoUser);
+      const mongoReponse = await createUserInMongoDB(mongoUser);
 
       res.send({
         res: response,
       });
     }
+    await createUserInOkta();
   } catch (err) {
+    console.log(err);
     res.send({
       err: err,
     });
   }
 });
 
+// @desc   Retrieve a user Profile
+// @route  GET /api/v1/users/:userId
+// @access Private
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
 

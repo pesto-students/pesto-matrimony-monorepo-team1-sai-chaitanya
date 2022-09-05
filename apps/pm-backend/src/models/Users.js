@@ -206,7 +206,7 @@ const UserSchema = new mongoose.Schema({
 
   partnerAgeRange: {
     type: [Number],
-    default: [21,50],
+    default: [21, 50],
   },
   partnerCountry: {
     type: String,
@@ -281,7 +281,6 @@ const UserSchema = new mongoose.Schema({
       interestReceiverName: { type: String },
       isAccepted: { type: Boolean, default: false },
       isRejected: { type: Boolean, default: false },
-
       conversations: [MessageSchema],
     },
   ],

@@ -15,10 +15,12 @@ app.use(express.json());
 
 // importing routes
 const users = require('./routes/users.js');
+const interests = require('./routes/interests.js');
 const conversations = require('./routes/conversations.js');
 
 // mounting routes
 app.use('/api/v1/users', users);
+app.use('/api/v1/interests', interests);
 app.use('/api/v1/conversations', conversations);
 
 // error Handler

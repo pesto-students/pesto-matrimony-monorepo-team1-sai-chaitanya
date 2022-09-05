@@ -14,6 +14,7 @@ const router = express.Router();
 
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
+
 // router.route('/').post(registerUserProfile);
 router.route('/userprofile/:id').get(getUserProfile);
 
@@ -22,6 +23,7 @@ router.route('/:userId').get(getUserProfile).put(updateUserProfile).delete(delet
 
 // Fetch User Profiles
 // router.route("/").get(getProfilesByPreference);
+
 // Have to create another route & controller function for...
 // handling search and filters with pagination..
 // This route will have a lot of complex logic.
