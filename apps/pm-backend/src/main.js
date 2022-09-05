@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const dbConnection = require('./config/database');
 const errorHandler = require('./middleware/error');
+const bodyParser = require('body-parser');
 
 // Connect to MongoDB
 dbConnection();
@@ -12,6 +13,11 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
 
 // importing routes
 const users = require('./routes/users.js');

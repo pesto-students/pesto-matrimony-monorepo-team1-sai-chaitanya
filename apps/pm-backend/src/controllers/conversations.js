@@ -13,12 +13,12 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   const userID1 = req.query.sender;
   const userID2 = req.query.receiver;
   const message = {
-    message: req.body,
+    message: req.body.message,
     messageSenderId: userID1,
     messageReceiverId: userID2,
     isRead: false,
   };
-  console.log('request', req);
+  console.log('requestbody', req.body.message);
   console.log(message);
   const session = await User.startSession();
   try {
