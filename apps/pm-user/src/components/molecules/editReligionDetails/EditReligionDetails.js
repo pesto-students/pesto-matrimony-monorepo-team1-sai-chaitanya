@@ -6,7 +6,17 @@ const { Option } = SimpleSelect;
 
 const EditReligionDetails = () => {
   const onFinish = (value) => {
-    console.log(value);
+    if (value.placeOfBirth !== null) {
+      value.placeOfBirth = value.placeOfBirth.trim();
+    }
+    Object.keys(value).forEach((key) => {
+      if (value[key] === undefined || value[key] === null) {
+        delete value[key];
+      }
+    });
+
+    console.log(JSON.stringify(value));
+    
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -158,16 +168,8 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Date of Birth" name="dateOfBirth" initialValue={null}>
-        <DatePicker style={{ width: '100%' }} />
-      </Form.Item>
-
       <Form.Item label="Place of birth" name="placeOfBirth" initialValue={null}>
         <SimpleInput placeholder="Please type your birth place." maxLength={MAX_LENGTH_OF_PLACE_OF_BIRTH} showCount />
-      </Form.Item>
-
-      <Form.Item label="Time of Birth" name="timeOfBirth" initialValue={null}>
-        <TimePicker use12Hours format="h:mm:ss A" style={{ width: '100%' }} />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

@@ -32,9 +32,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
 
   try {
     async function createUserInOkta() {
-      console.log('trying to create user in Okta');
       const response = await client.createUser(body);
-      console.log('successfully created user in Okta');
 
       //will update it with destructure
       const oktaId = response.id;
@@ -56,6 +54,8 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
       });
     }
     await createUserInOkta();
+    // not using await will cause breakdown of express server
+    // whenever there is any error while trying to create user in Okta.
   } catch (err) {
     console.log(err);
     res.send({
@@ -81,7 +81,11 @@ exports.getUserProfile = asyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
-  res.status(200).json({ user });
+  res.status(200).json({
+    success: true,
+    message: 'Retrieved User successfully',
+    user: user,
+  });
 });
 /** ----------------------------------------- */
 
@@ -100,13 +104,14 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
   }
 
-  // Remove properties with 'undefined' values before storing in DB
+  // Remove properties with 'undefined' & 'null' values before storing in DB
   const data = req.body;
   Object.keys(data).forEach((key) => {
-    if (data[key] === undefined) {
+    if (data[key] === undefined || data[key] === null) {
       delete data[key];
     }
   });
+
   user = await User.findByIdAndUpdate(req.params.userId, data, {
     new: true,
     runValidators: true,
@@ -120,22 +125,33 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
 });
 /** ----------------------------------------- */
 
-// @desc   Delete a new Profile
-// @route  DELETE /api/v1/users/:userId
+// @desc   Search Profiles
+// @route  GET /api/v1/users/search/
 // @access Private
 
-exports.deleteUserProfile = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.userId);
-  if (!user) {
-    return next(new CustomErrorResponse(`No user found with id of ${req.params.userId}`, 404));
+exports.searchProfiles = asyncHandler(async (req, res, next) => {
+  const searchCriteria = req.body;
+
+  // NOTE : WORK IN PROGRESS....
+
+  // Remove properties with 'undefined' values before perfmorming search in DB
+  Object.keys(searchCriteria).forEach((key) => {
+    if (searchCriteria[key] === undefined) {
+      delete searchCriteria[key];
+    }
+  });
+
+  let matchingProfiles = await User.find({ name: 'john', age: { $gte: 18 } }).exec();
+
+  console.log(matchingProfiles);
+
+  if (matchingProfiles.length < 1) {
+    return next(new CustomErrorResponse(`Could not find matching profiles`, 400));
   }
-  // I could have used findByIdAndDelete().
-  // But remove() allows using middleware... so I will use remove()
-  await user.remove();
 
   res.status(200).json({
     success: true,
-    message: 'User successfully deleted',
+    message: 'Updated User successfully',
+    data: matchingProfiles,
   });
 });
-/** ----------------------------------------- */

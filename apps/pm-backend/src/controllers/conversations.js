@@ -22,8 +22,9 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     messageReceiverId: userID2,
     isRead: false,
   };
-  console.log(message);
+
   const session = await User.startSession();
+
   try {
     session.startTransaction();
 
@@ -211,9 +212,16 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc   Get all messages between two users as "Read"
+// @route  GET /api/v1/conversations/:userId
+// @access Private
+
 exports.getMessages = asyncHandler(async (req, res, next) => {
   const userId = req.params.userId;
   const user = await User.findById(userId);
+  if (!user) {
+    return next(new CustomErrorResponse(`User not found!`, 404));
+  }
   res.status(200).json({
     success: true,
     message: 'Data Retrieved Successfull !',

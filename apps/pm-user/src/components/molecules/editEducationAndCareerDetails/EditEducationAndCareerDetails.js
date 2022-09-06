@@ -7,7 +7,6 @@ const MAXIMUM_INCOME = 100;
 const { Option, OptGroup } = SimpleSelect;
 
 const EditEducationAndCareerDetails = () => {
-
   const [income, setIncome] = useState(0);
 
   const handleIncomeSliderChange = (values) => {
@@ -24,7 +23,15 @@ const EditEducationAndCareerDetails = () => {
     },
   };
   const onFinish = (value) => {
-    console.log(value);
+    value.income = value.income[0];
+    Object.keys(value).forEach((key) => {
+      if (value[key] === undefined || value[key] === null) {
+        delete value[key];
+      }
+    });
+
+    console.log(JSON.stringify(value));
+
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -43,7 +50,7 @@ const EditEducationAndCareerDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="Qualification" name="qualification">
+      <Form.Item label="Qualification" name="qualification" initialValue={null}>
         <Select bordered>
           <Option value="Doctorate">Doctorate</Option>
           <Option value="Master's Degree">Master's Degree</Option>
@@ -53,7 +60,7 @@ const EditEducationAndCareerDetails = () => {
           <Option value="Less than High School">Less than High School</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Occupation" name="occupation">
+      <Form.Item label="Occupation" name="occupation" initialValue={null}>
         <Select bordered>
           <OptGroup label="Accounting, Banking & Finance">
             <Option value="Banking Professional">Banking Professional</Option>
