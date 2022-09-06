@@ -99,10 +99,20 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
   if (!user) {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
   }
-  user = await User.findByIdAndUpdate(req.params.userId, req.body, {
+
+  // Remove properties with 'undefined' values before storing in DB
+  const data = req.body;
+  Object.keys(data).forEach((key) => {
+    if (data[key] === undefined) {
+      delete data[key];
+    }
+  });
+
+  user = await User.findByIdAndUpdate(req.params.userId, data, {
     new: true,
     runValidators: true,
   });
+
   res.status(200).json({
     success: true,
     message: 'Updated User successfully',
