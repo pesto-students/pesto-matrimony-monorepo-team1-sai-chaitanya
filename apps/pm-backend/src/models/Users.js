@@ -206,7 +206,7 @@ const UserSchema = new mongoose.Schema({
 
   partnerAgeRange: {
     type: [Number],
-    default: [],
+    default: [21,50],
   },
   partnerCountry: {
     type: String,
