@@ -4,6 +4,7 @@ const {
   deleteUserProfile,
   getUserProfile,
   registerUserProfile,
+  uploadImageToMongoDb,
   updateUserProfile,
   oktaSignUp,
 } = require('../controllers/users');
@@ -16,6 +17,7 @@ const router = express.Router();
 router.route('/oktasignup').post(oktaSignUp);
 // router.route('/').post(registerUserProfile);
 router.route('/userprofile/:id').get(getUserProfile);
+router.route('/imageupload/:id').post(uploadImageToMongoDb);
 
 // Update / Delete
 router.route('/:userId').get(getUserProfile).put(updateUserProfile).delete(deleteUserProfile);

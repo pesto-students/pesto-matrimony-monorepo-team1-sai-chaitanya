@@ -1,14 +1,23 @@
 import { Button, Form, SaveOutlined, Select, SimpleSelect, Slider } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useOktaAuth } from '@okta/okta-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../../../redux/actions/Actions";
+import _ from "lodash";
 
 const MINIMUM_INCOME = 0;
 const MAXIMUM_INCOME = 100;
 const { Option, OptGroup } = SimpleSelect;
 
 const EditEducationAndCareerDetails = () => {
-
+  const { oktaAuth, authState } = useOktaAuth();
+  const dispatch = useDispatch();
   const [income, setIncome] = useState(0);
+  const [ userProfileData, setUserProfileData ] = useState({});
+
+  // getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
 
   const handleIncomeSliderChange = (values) => {
     setIncome(values[0]);
@@ -23,8 +32,19 @@ const EditEducationAndCareerDetails = () => {
       },
     },
   };
+
+  useEffect(() => {
+    if(!_.isEmpty(userProfileData)){
+      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    }
+  }, [userProfileData]);
+
+  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  console.log(responseData);
+  
   const onFinish = (value) => {
-    console.log(value);
+    setUserProfileData(value);
+
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -200,7 +220,7 @@ const EditEducationAndCareerDetails = () => {
           </OptGroup>
         </Select>
       </Form.Item>
-      <Form.Item label="Employed in" name="employer" initialValue={null}>
+      <Form.Item label="Employed in" name="employer">
         <Select bordered>
           <Option value="Private Company">Private Company</Option>
           <Option value="Government / Public Sector">Government / Public Sector</Option>
@@ -209,12 +229,12 @@ const EditEducationAndCareerDetails = () => {
           <Option value="Not Working">Not Working</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Income (Lakhs/Yr)" name="income" initialValue={[null]}>
+      <Form.Item label="Income (Lakhs/Yr)" name="income">
         <Slider
-          range
+          // range
           min={MINIMUM_INCOME}
           max={MAXIMUM_INCOME}
-          marks={incomeMark}
+          // marks={incomeMark}
           step={1}
           onChange={handleIncomeSliderChange}
           style={{

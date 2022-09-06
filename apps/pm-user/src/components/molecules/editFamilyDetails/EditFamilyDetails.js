@@ -1,11 +1,36 @@
+import { useState, useEffect } from 'react';
 import { Button, Form, SaveOutlined, Select, SimpleSelect, TextArea } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
+import { useOktaAuth } from '@okta/okta-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../../../redux/actions/Actions";
+import _ from "lodash";
 
 const MAX_TEXT_LENGTH = 300;
 const { Option } = SimpleSelect;
 
 const EditFamilyDetails = () => {
+
+  const { oktaAuth, authState } = useOktaAuth();
+  const dispatch = useDispatch();
+  const [ userProfileData, setUserProfileData ] = useState({});
+
+  // getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
+
+  useEffect(() => {
+    if(!_.isEmpty(userProfileData)){
+      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    }
+  }, [userProfileData]);
+
+  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  console.log(responseData);
+
   const onFinish = (value) => {
+
+    setUserProfileData(value);
+
     console.log(value);
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
@@ -30,7 +55,7 @@ const EditFamilyDetails = () => {
           placeholder="Please write a few words about your family. Maximum 300 characters allowed."
         />
       </Form.Item>
-      <Form.Item label="Brother(s)" name="brothers" initialValue={0}>
+      <Form.Item label="Brother(s)" name="brothers">
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -40,7 +65,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Married Brother(s)" name="marriedBrothers" initialValue={0}>
+      <Form.Item label="Married Brother(s)" name="marriedBrothers">
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -50,7 +75,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Sister(s)" name="sisters" initialValue={0}>
+      <Form.Item label="Sister(s)" name="sisters">
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -60,7 +85,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Married Sister(s)" name="marriedSisters" initialValue={0}>
+      <Form.Item label="Married Sister(s)" name="marriedSisters">
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -70,7 +95,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Family Status" name="familyStatus" initialValue={null}>
+      <Form.Item label="Family Status" name="familyStatus">
         <Select bordered>
           <Option value="Affluent">Affluent</Option>
           <Option value="Upper Middle Class">Upper Middle Class</Option>

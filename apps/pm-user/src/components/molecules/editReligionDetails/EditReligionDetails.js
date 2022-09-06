@@ -1,3 +1,8 @@
+import { useState, useEffect } from 'react';
+import { useOktaAuth } from '@okta/okta-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../../../redux/actions/Actions";
+import _ from "lodash";
 import { Button, DatePicker, Form, SaveOutlined, Select, SimpleInput, SimpleSelect, TimePicker } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
 
@@ -5,7 +10,30 @@ const MAX_LENGTH_OF_PLACE_OF_BIRTH = 20;
 const { Option } = SimpleSelect;
 
 const EditReligionDetails = () => {
+
+  const { oktaAuth, authState } = useOktaAuth();
+  const dispatch = useDispatch();
+  const [ userProfileData, setUserProfileData ] = useState({});
+
+  // getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
+
+  useEffect(() => {
+    if(!_.isEmpty(userProfileData)){
+      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    }
+  }, [userProfileData]);
+
+  console.log(userProfileData);
+
+  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  console.log(responseData);
+
+
   const onFinish = (value) => {
+
+    setUserProfileData(value);
+
     console.log(value);
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
@@ -24,7 +52,7 @@ const EditReligionDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="Religion" name="religion" initialValue={null}>
+      <Form.Item label="Religion" name="religion">
         <Select bordered className="">
           <Option value="Hindu">Hindu</Option>
           <Option value="Muslim">Muslim</Option>
@@ -38,7 +66,7 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Zodiac sign" name="zodiacSign" initialValue={null}>
+      <Form.Item label="Zodiac sign" name="zodiacSign">
         <Select bordered className="">
           <Option value="Aries">Aries</Option>
           <Option value="Taurus">Taurus</Option>
@@ -55,7 +83,7 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Gothram" name="gothram" initialValue={null}>
+      <Form.Item label="Gothram" name="gothram">
         <Select bordered className="">
           <Option value="Not Applicable">Not Applicable</Option>
           <Option value="Agastya">Agastya</Option>
@@ -158,15 +186,15 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Date of Birth" name="dateOfBirth" initialValue={null}>
+      <Form.Item label="Date of Birth" name="dateOfBirth">
         <DatePicker style={{ width: '100%' }} />
       </Form.Item>
 
-      <Form.Item label="Place of birth" name="placeOfBirth" initialValue={null}>
+      <Form.Item label="Place of birth" name="placeOfBirth">
         <SimpleInput placeholder="Please type your birth place." maxLength={MAX_LENGTH_OF_PLACE_OF_BIRTH} showCount />
       </Form.Item>
 
-      <Form.Item label="Time of Birth" name="timeOfBirth" initialValue={null}>
+      <Form.Item label="Time of Birth" name="timeOfBirth">
         <TimePicker use12Hours format="h:mm:ss A" style={{ width: '100%' }} />
       </Form.Item>
 

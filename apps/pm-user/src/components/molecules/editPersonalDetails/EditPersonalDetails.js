@@ -12,7 +12,13 @@ import {
 import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
 import { useState, useEffect } from 'react';
+import { useOktaAuth } from '@okta/okta-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../../../redux/actions/Actions";
+import _ from "lodash";
 import axios from 'axios';
+
+
 
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
 const COUNTRIES_API_TOKEN = 'UZXlBoEnsLp9p54HXkWSBMYYv0-BQ06V0AyH8VVO3VgVYPUZFOklqwegWta3iC742jA';
@@ -26,10 +32,20 @@ const MININUM_WEIGHT_IN_KG = 45;
 const MAXIMUM_WEIGHT_IN_KG = 120;
 const { Option } = SimpleSelect;
 
+
+
+
+
 const EditPersonalDetails = () => {
   const [authToken, setAuthToken] = useState(null);
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
+  const [ userProfileData, setUserProfileData ] = useState({});
+  const { oktaAuth, authState } = useOktaAuth();
+  const dispatch = useDispatch();
+
+  // getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
 
   useEffect(() => {
     axios
@@ -140,8 +156,20 @@ const EditPersonalDetails = () => {
     },
   };
 
+  useEffect(() => {
+    if(!_.isEmpty(userProfileData)){
+      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    }
+  }, [userProfileData]);
+
+
+  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  console.log(responseData);
+
+
   const onFinish = (value) => {
-    console.log(value);
+
+    setUserProfileData(value);
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -159,30 +187,31 @@ const EditPersonalDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="About Yourself" name="aboutMe" initialValue={null}>
+      <Form.Item label="About Yourself" name="aboutMe">
         <TextArea
           maxLength={MAX_TEXT_LENGTH}
           placeholder={`Please write a few words about yourself. Maximum ${MAX_TEXT_LENGTH} characters allowed.`}
         />
       </Form.Item>
-      <Form.Item label="Age" name="age" initialValue={[null]}>
+      <Form.Item label="Age" name="age">
         <Slider
-          range
+          // range
           min={MINIMUM_ALLOWED_AGE}
           max={MAXIMUM_ALLOWED_AGE}
-          marks={ageBoundaries}
+          // marks={ageBoundaries}
+          step={1}
           onChange={handleAgeSliderChange}
           style={{
             width: '100%',
           }}
         />
       </Form.Item>
-      <Form.Item label="Height" name="height" initialValue={[null]}>
+      <Form.Item label="Height" name="height" >
         <Slider
-          range
+          // range
           min={MININUM_HEIGHT_IN_CMS}
           max={MAXIMUM_HEIGHT_IN_CMS}
-          marks={heightBoundaries}
+          // marks={heightBoundaries}
           step={1}
           onChange={handleHeightSliderChange}
           style={{
@@ -190,12 +219,12 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Weight (in Kg)" name="weight" initialValue={[null]}>
+      <Form.Item label="Weight (in Kg)" name="weight">
         <Slider
-          range
+          // range
           min={MININUM_WEIGHT_IN_KG}
           max={MAXIMUM_WEIGHT_IN_KG}
-          marks={weightBoundaries}
+          // marks={weightBoundaries}
           step={1}
           onChange={handleWeightSliderChange}
           style={{
@@ -203,14 +232,14 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Physique" name="physique" initialValue={null}>
+      <Form.Item label="Physique" name="physique" >
         <Select bordered>
           <Option value="Athletic">Athletic</Option>
           <Option value="Average">Average</Option>
           <Option value="Slim">Slim</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Mother Tongue" name="motherTongue" initialValue={null}>
+      <Form.Item label="Mother Tongue" name="motherTongue" >
         <Select bordered>
           <Option value="Hindi">Hindi</Option>
           <Option value="Bengali">Bengali</Option>
@@ -236,7 +265,7 @@ const EditPersonalDetails = () => {
           <Option value="Others">Others</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Marriage Status" name="marriageStatus" initialValue={null}>
+      <Form.Item label="Marriage Status" name="marriageStatus" >
         <Select bordered>
           <Option value="Never Married">Never Married</Option>
           <Option value="Widowed">Widowed</Option>
@@ -245,7 +274,7 @@ const EditPersonalDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Citizenship" name="citizenship" initialValue={null}>
+      <Form.Item label="Citizenship" name="citizenship" >
         <Select bordered>
           <Option value="India">India</Option>
           <Option value="United States">USA</Option>
@@ -432,7 +461,7 @@ const EditPersonalDetails = () => {
           <Option value="Zimbabwe">Zimbabwe</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Current Country" name="country" initialValue={null}>
+      <Form.Item label="Current Country" name="country">
         <Select bordered onChange={handleCountryChange}>
           <Option value="India">India</Option>
           <Option value="United States">USA</Option>
@@ -619,8 +648,8 @@ const EditPersonalDetails = () => {
           <Option value="Zimbabwe">Zimbabwe</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Current State" name="state" initialValue={'Please select country first' || null}>
-        <Select bordered onChange={handleStateChange}>
+      <Form.Item label="Current State" name="state">
+        <Select bordered onChange={handleStateChange} placeholder="Please select country first">
           {statesList?.map((state) => (
             <Option value={state} key={Math.random()}>
               {state}
@@ -628,8 +657,8 @@ const EditPersonalDetails = () => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Current Location" name="location" initialValue={'Please select state first' || null}>
-        <Select bordered value="">
+      <Form.Item label="Current Location" name="location" >
+        <Select bordered value=""  placeholder="Please select state first" >
           {citiesList?.map((city) => (
             <Option value={city} key={Math.random()}>
               {city}
@@ -637,7 +666,7 @@ const EditPersonalDetails = () => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Eating Habits" name="eatingHabits" initialValue={null}>
+      <Form.Item label="Eating Habits" name="eatingHabits" >
         <Select bordered>
           <Option value="Vegetarian">Vegetarian</Option>
           <Option value="Eggetarian">Eggetarian</Option>
@@ -645,20 +674,20 @@ const EditPersonalDetails = () => {
           <Option value="Jain">Jain</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Smoking Habits" name="smokingHabits" initialValue={null}>
+      <Form.Item label="Smoking Habits" name="smokingHabits" >
         <Select bordered>
           <Option value="Smoker">Smoker</Option>
           <Option value="Non-Smoker">Non-Smoker</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Drinking Habits" name="drinkingHabits" initialValue={null}>
+      <Form.Item label="Drinking Habits" name="drinkingHabits" >
         <Select bordered>
           <Option value="Drinker">Drinker</Option>
           <Option value="Social Drinker">Social Drinker</Option>
           <Option value="Teetotallers">Teetotaller</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Hobbies" name="hobbies" initialValue={['Cooking', 'Painting']}>
+      <Form.Item label="Hobbies" name="hobbies" >
         <Select bordered mode="multiple" size="medium">
           <Option value="Cooking">Cooking</Option>
           <Option value="Dancing">Dancing</Option>
@@ -696,7 +725,7 @@ const EditPersonalDetails = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit" shape="round" size="middle" icon={<SaveOutlined />}>
+        <Button type="primary" htmlType="submit" shape="round" size="middle" icon={<SaveOutlined />} >
           Save
         </Button>
       </Form.Item>

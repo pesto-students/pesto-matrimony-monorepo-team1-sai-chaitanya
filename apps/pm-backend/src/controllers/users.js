@@ -21,7 +21,6 @@ exports.registerUserProfile = asyncHandler(async (req, res, next) => {
 //creating user inside mongodb with oktaInformation.
 const creteUserInMongoDb = async (mongoUser) => {
   const user = await User.create(mongoUser);
-  console.log(user);
   return user;
 };
 
@@ -31,9 +30,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
     orgUrl: 'https://dev-42684472.okta.com/',
     token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
   });
-
   const body = req.body;
-
   try {
     createUserInOkta();
     async function createUserInOkta() {
@@ -51,9 +48,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         gender,
         email,
       };
-
       const mongoReponse = await creteUserInMongoDb(mongoUser);
-
       res.send({
         res: response,
       });
@@ -65,22 +60,36 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   }
 });
 
+//find user in mongodb by oktaId
+async function findUserByOktaId(oktaId) {
+  const currentUser = await User.find({ oktaUserId: oktaId });
+  return currentUser;
+}
+
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
-
   const oktaId = params.id;
-
-  const user = await User.find({ oktaUserId: oktaId });
-
-  const UserMongoId = user._id;
-
-  console.log('UserMongoId', UserMongoId);
-
-  if (!user) {
+  const currentUser = await findUserByOktaId(oktaId);
+  if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
-  res.status(200).json({ user });
+  res.status(200).json({ currentUser });
 });
+
+//to upload image in mongodb
+exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
+  const imageUrl = req.body.imageUrlString;
+  const currentUserId = req.body.oktaUserId;
+  const currentUser = await findUserByOktaId(currentUserId);
+  // console.log(currentUser[0].images);
+  const imageUrls = currentUser[0].images;
+  if (!currentUser) {
+    return next(new CustomErrorResponse(`User not found!`, 404));
+  }
+  await User.updateOne({ oktaUserId: currentUserId }, { images: [...imageUrls, imageUrl] });
+  res.status(200).json({ status: 'success' });
+});
+
 /** ----------------------------------------- */
 
 // @desc   Update already existing Profile Data
@@ -92,19 +101,15 @@ exports.getUserProfile = asyncHandler(async (req, res, next) => {
 // This controller is used for that purpose.
 
 exports.updateUserProfile = asyncHandler(async (req, res, next) => {
-  console.log(req.params.userId);
-  let user = await User.findById(req.params.userId);
-  if (!user) {
+  const currentUserId = req.params.userId;
+  if (!currentUserId) {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
   }
-  user = await User.findByIdAndUpdate(req.params.userId, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
   res.status(200).json({
     success: true,
     message: 'Updated User successfully',
-    data: user,
+    data: 'user',
   });
 });
 /** ----------------------------------------- */
