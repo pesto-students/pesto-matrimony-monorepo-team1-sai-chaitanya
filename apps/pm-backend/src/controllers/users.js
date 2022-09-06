@@ -100,7 +100,7 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
   }
 
-  // Need to remove properties with 'undefined' values before storing in DB
+  // Remove properties with 'undefined' values before storing in DB
   const data = req.body;
   Object.keys(data).forEach((key) => {
     if (data[key] === undefined) {
