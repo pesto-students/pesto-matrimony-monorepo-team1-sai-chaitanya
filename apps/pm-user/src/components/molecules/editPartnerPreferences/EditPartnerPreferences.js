@@ -390,10 +390,10 @@ const EditPartnerPreferences = () => {
         </Form.Item>
         <Form.Item label="Income (Lakhs/Yr)" name="partnerIncomeRange">
           <Slider
-            // range={{ draggableTrack: true }}
+            range={{ draggableTrack: true }}
             min={MINIMUM_INCOME}
             max={MAXIMUM_INCOME}
-            // marks={incomeBoundaries}
+            marks={incomeBoundaries}
             step={1}
             onChange={handleIncomeSliderChange}
             style={{

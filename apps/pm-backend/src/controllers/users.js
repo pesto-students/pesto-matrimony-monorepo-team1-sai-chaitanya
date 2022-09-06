@@ -24,7 +24,6 @@ const creteUserInMongoDb = async (mongoUser) => {
   return user;
 };
 
-
 //signing up user into okta
 exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   const client = new okta.Client({
@@ -70,9 +69,7 @@ async function findUserByOktaId(oktaId) {
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
   const oktaId = params.id;
-
   const currentUser = await findUserByOktaId(oktaId);
-
   if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
