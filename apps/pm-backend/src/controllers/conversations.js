@@ -221,33 +221,3 @@ exports.getMessages = asyncHandler(async (req, res, next) => {
     interestsSent: [...user.interestsSent],
   });
 });
-
-exports.deleteMessage = asyncHandler(async (req, res, next) => {
-  const idOfMessageToBeDeleted = req.query.messageId;
-  const userId = req.params.userId;
-  const user = await User.findById(userId);
-
-  // Search For the Message to be marked as Read in both interestsReceived & interestsSent Arrays
-  user.interestsReceived = user.interestsReceived.map((interest) => {
-    interest.conversations = interest.conversations.filter((message) => {
-      return String(message.id) !== idOfMessageToBeDeleted;
-    });
-    return interest;
-  });
-
-  // Search For the Message to be marked as Read in interestsSent Array
-  user.interestsSent = user.interestsSent.map((interest) => {
-    interest.conversations = interest.conversations.filter((message) => {
-      return String(message.id) !== idOfMessageToBeDeleted;
-    });
-    return interest;
-  });
-
-  await user.save();
-
-  res.status(200).json({
-    success: true,
-    message: 'Message deleted !',
-    data: user,
-  });
-});
