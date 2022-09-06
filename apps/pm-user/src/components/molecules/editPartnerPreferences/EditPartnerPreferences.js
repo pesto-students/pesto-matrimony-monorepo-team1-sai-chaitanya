@@ -6,6 +6,7 @@ import _ from "lodash";
 import { Button, Form, SaveOutlined, Select, SimpleSelect, Slider } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
+
 // constants
 const MININUM_HEIGHT_IN_CMS = 122;
 const MAXIMUM_HEIGHT_IN_CMS = 214;
@@ -33,7 +34,6 @@ const EditPartnerPreferences = () => {
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
   console.log(responseData);
-
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);

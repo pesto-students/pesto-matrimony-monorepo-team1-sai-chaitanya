@@ -24,6 +24,7 @@ const creteUserInMongoDb = async (mongoUser) => {
   return user;
 };
 
+
 //signing up user into okta
 exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   const client = new okta.Client({
@@ -32,7 +33,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   });
   const body = req.body;
   try {
-    createUserInOkta();
+    await createUserInOkta();
     async function createUserInOkta() {
       const response = await client.createUser(body);
 
@@ -69,12 +70,15 @@ async function findUserByOktaId(oktaId) {
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
   const oktaId = params.id;
+
   const currentUser = await findUserByOktaId(oktaId);
+
   if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
   res.status(200).json({ currentUser });
 });
+
 
 //to upload image in mongodb
 exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
