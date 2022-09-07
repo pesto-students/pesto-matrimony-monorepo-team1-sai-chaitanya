@@ -1,12 +1,13 @@
 import { useOktaAuth } from '@okta/okta-react';
 import { FormWrapper, LoginForm } from '../../components';
-import { showNotification } from '@pm/pm-ui';
+// import { showNotification } from '@pm/pm-ui';
 import styles from './login.module.scss';
 
-function Login() {
+function AdminLogin() {
   const { oktaAuth, authState } = useOktaAuth();
 
-  // console.log(authState?.accessToken.claims);
+  console.log(authState);
+  console.log(oktaAuth);
 
   //login hander
   const loginHandler = (password, email) =>
@@ -19,14 +20,13 @@ function Login() {
             console.error('authentication process failed');
           }
           oktaAuth.signInWithRedirect({
-            originalUri: '/recommendations',
+            originalUri: '/admin-panel',
             sessionToken,
           });
         }
       })
-      .catch((err) => {
-        showNotification('error', 'email or password incorrect')
-      });
+      .catch((err) => console.log(err));
+      // showNotification('error', 'email or password incorrect')
 
   if (!authState) {
     return <div>Loading...</div>;
@@ -34,12 +34,9 @@ function Login() {
   if (!authState.isAuthenticated) {
     return (
       <FormWrapper
-        bottomText="Don't have an account? "
-        formTitle="Login"
+        bottomText="If have problem in login contact developer!"
+        formTitle="Admin Login"
         formDescription="Login to your account!"
-        pageToRedirect="signup"
-        pageToRedirectTitle="SignUp"
-        sideImage="loginPage"
       >
         <LoginForm onFormSubmit={loginHandler} />
       </FormWrapper>
@@ -47,4 +44,4 @@ function Login() {
   }
 }
 
-export default Login;
+export default AdminLogin;

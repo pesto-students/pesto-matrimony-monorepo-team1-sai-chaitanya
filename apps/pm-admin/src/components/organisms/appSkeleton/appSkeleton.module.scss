@@ -1,0 +1,49 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  // overflow: hidden;
+  overflow-x: hidden;
+  background-color: #f6f7ff;
+}
+
+.content {
+  width: 100%;
+  height: calc(100% - 60px);
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.sideBar {
+  height: 100%;
+  width: 18%;
+  background-color: white;
+  margin-right: 12px;
+  overflow: auto;
+}
+
+//hide scroll bar but keep funtionality
+.sideBar::-webkit-scrollbar {
+  display: none;
+}
+
+.children {
+  width: 57%;
+  overflow: auto;
+  padding: 1.2rem;
+  margin: 1.8rem 0;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+}
+
+.children::-webkit-scrollbar {
+  display: none;
+}
+
+.quickLinksCard {
+  padding: 12px;
+  width: 25%;
+}
