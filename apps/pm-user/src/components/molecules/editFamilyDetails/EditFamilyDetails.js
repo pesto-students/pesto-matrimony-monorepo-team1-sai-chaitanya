@@ -6,7 +6,14 @@ const { Option } = SimpleSelect;
 
 const EditFamilyDetails = () => {
   const onFinish = (value) => {
-    console.log(value);
+    Object.keys(value).forEach((key) => {
+      if (value[key] === undefined || value[key] === null) {
+        delete value[key];
+      }
+    });
+
+    console.log(JSON.stringify(value));
+
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -30,7 +37,7 @@ const EditFamilyDetails = () => {
           placeholder="Please write a few words about your family. Maximum 300 characters allowed."
         />
       </Form.Item>
-      <Form.Item label="Brother(s)" name="brothers" initialValue={0}>
+      <Form.Item label="Brother(s)" name="brothers" initialValue={null}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -40,7 +47,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Married Brother(s)" name="marriedBrothers" initialValue={0}>
+      <Form.Item label="Married Brother(s)" name="marriedBrothers" initialValue={null}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -50,7 +57,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Sister(s)" name="sisters" initialValue={0}>
+      <Form.Item label="Sister(s)" name="sisters" initialValue={null}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -60,7 +67,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Married Sister(s)" name="marriedSisters" initialValue={0}>
+      <Form.Item label="Married Sister(s)" name="marriedSisters" initialValue={null}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>

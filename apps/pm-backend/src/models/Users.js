@@ -63,34 +63,20 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
-  citizenship: {
-    type: String,
-    trim: true,
-    default: '',
-  },
-  drinkingHabits: {
-    type: String,
-    trim: true,
-    default: '',
-  },
-  eatingHabits: {
-    type: String,
-    trim: true,
-    default: '',
-  },
   height: {
     type: Number,
     trim: true,
   },
-  hobbies: {
-    type: [String],
-    default: [],
+  weight: {
+    type: Number,
+    trim: true,
   },
-  hobbies: {
-    type: [String],
-    default: [],
+  physique: {
+    type: String,
+    default: '',
+    trim: true,
   },
-  location: {
+  motherTongue: {
     type: String,
     trim: true,
     default: '',
@@ -100,32 +86,48 @@ const UserSchema = new mongoose.Schema({
     default: 'Never Married',
     enum: ['Never Married', 'Awaiting Divorce', 'Divorced', 'Widowed'],
   },
-  motherTongue: {
+  citizenship: {
     type: String,
     trim: true,
     default: '',
   },
-  physique: {
-    type: String,
-    default: '',
-    trim: true,
-  },
-  smokingHabits: {
+  country: {
     type: String,
     trim: true,
     default: '',
-  },
-  spokenLanguages: {
-    type: [String],
-    default: [],
   },
   state: {
     type: String,
     trim: true,
     default: '',
   },
-  weight: {
-    type: Number,
+  location: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  eatingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  smokingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  drinkingHabits: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  hobbies: {
+    type: [String],
+    default: [],
+  },
+  spokenLanguages: {
+    type: [String],
+    default: [],
   },
 
   // Education & Occupation Details
@@ -171,11 +173,6 @@ const UserSchema = new mongoose.Schema({
 
   // Religious Details
 
-  dateOfBirth: {
-    type: String,
-    trim: true,
-    default: '',
-  },
   gothram: {
     type: String,
     trim: true,
@@ -191,11 +188,7 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     default: '',
   },
-  timeOfBirth: {
-    type: String,
-    trim: true,
-    default: '',
-  },
+
   zodiacSign: {
     type: String,
     trim: true,
@@ -206,7 +199,7 @@ const UserSchema = new mongoose.Schema({
 
   partnerAgeRange: {
     type: [Number],
-    default: [21,50],
+    default: [21, 50],
   },
   partnerCountry: {
     type: String,
@@ -281,7 +274,6 @@ const UserSchema = new mongoose.Schema({
       interestReceiverName: { type: String },
       isAccepted: { type: Boolean, default: false },
       isRejected: { type: Boolean, default: false },
-
       conversations: [MessageSchema],
     },
   ],

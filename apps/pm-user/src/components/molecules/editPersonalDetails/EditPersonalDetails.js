@@ -141,7 +141,15 @@ const EditPersonalDetails = () => {
   };
 
   const onFinish = (value) => {
-    console.log(value);
+    value.age = value.age[0];
+    value.height = value.height[0];
+    value.weight = value.weight[0];
+    Object.keys(value).forEach((key) => {
+      if (value[key] === undefined || value[key] === null) {
+        delete value[key];
+      }
+    });
+    console.log(JSON.stringify(value));
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -619,7 +627,7 @@ const EditPersonalDetails = () => {
           <Option value="Zimbabwe">Zimbabwe</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Current State" name="state" initialValue={'Please select country first' || null}>
+      <Form.Item label="Current State" name="state" initialValue={null}>
         <Select bordered onChange={handleStateChange}>
           {statesList?.map((state) => (
             <Option value={state} key={Math.random()}>
@@ -628,7 +636,7 @@ const EditPersonalDetails = () => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Current Location" name="location" initialValue={'Please select state first' || null}>
+      <Form.Item label="Current Location" name="location" initialValue={null}>
         <Select bordered value="">
           {citiesList?.map((city) => (
             <Option value={city} key={Math.random()}>
@@ -658,7 +666,7 @@ const EditPersonalDetails = () => {
           <Option value="Teetotallers">Teetotaller</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Hobbies" name="hobbies" initialValue={['Cooking', 'Painting']}>
+      <Form.Item label="Hobbies" name="hobbies" initialValue={undefined}>
         <Select bordered mode="multiple" size="medium">
           <Option value="Cooking">Cooking</Option>
           <Option value="Dancing">Dancing</Option>
@@ -668,7 +676,7 @@ const EditPersonalDetails = () => {
           <Option value="Reading">Reading</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Spoken Languages" name="spokenLanguages">
+      <Form.Item label="Spoken Languages" name="spokenLanguages" initialValue={undefined}>
         <Select bordered mode="multiple" size="medium">
           <Option value="Hindi">Hindi</Option>
           <Option value="Bengali">Bengali</Option>

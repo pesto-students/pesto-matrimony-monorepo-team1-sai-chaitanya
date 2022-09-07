@@ -1,11 +1,11 @@
 const express = require('express');
 
 const {
-  deleteUserProfile,
   getUserProfile,
   registerUserProfile,
   updateUserProfile,
   oktaSignUp,
+  searchProfiles,
 } = require('../controllers/users');
 
 const router = express.Router();
@@ -14,14 +14,16 @@ const router = express.Router();
 
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
+
 // router.route('/').post(registerUserProfile);
 router.route('/userprofile/:id').get(getUserProfile);
 
 // Update / Delete
-router.route('/:userId').get(getUserProfile).put(updateUserProfile).delete(deleteUserProfile);
+router.route('/:userId').get(getUserProfile).put(updateUserProfile);
 
 // Fetch User Profiles
-// router.route("/").get(getProfilesByPreference);
+router.route('/search').get(searchProfiles);
+
 // Have to create another route & controller function for...
 // handling search and filters with pagination..
 // This route will have a lot of complex logic.
