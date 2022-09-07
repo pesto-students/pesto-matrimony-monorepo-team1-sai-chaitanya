@@ -28,10 +28,20 @@ function SideBar() {
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
-  const { images } = userProfileInfo;
+  const { images, gender } = userProfileInfo;
+  var emptyArrayHolder = images ||  [];
 
-  var coco = images ||  [];
-  const imageFromServer = coco?.length === 0 ? "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png" : images[0];
+  console.log(userProfileInfo);
+
+  var imageFromServer;
+
+  if(gender === "female"){
+    imageFromServer = emptyArrayHolder?.length === 0 ? "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png" : images[0];
+  }else{
+    imageFromServer = emptyArrayHolder?.length === 0 ? "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png" : images[0];
+  }
+ 
+  
 
 
   const handleMenuItemClick = ({ key }) => {

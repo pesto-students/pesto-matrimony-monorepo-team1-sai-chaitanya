@@ -25,7 +25,7 @@ const EditFamilyDetails = () => {
   }, [userProfileData]);
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
-  console.log(responseData);
+  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
   const onFinish = (value) => {
 
@@ -57,13 +57,13 @@ const EditFamilyDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="About Family" name="aboutFamily">
+      <Form.Item label="About Family" name="aboutFamily" initialValue={userProfileInfo?.aboutFamily}>
         <TextArea
           maxLength={MAX_TEXT_LENGTH}
           placeholder="Please write a few words about your family. Maximum 300 characters allowed."
         />
       </Form.Item>
-      <Form.Item label="Brother(s)" name="brothers" initialValue={null}>
+      <Form.Item label="Brother(s)" name="brothers" initialValue={userProfileInfo?.brothers}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -73,7 +73,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Married Brother(s)" name="marriedBrothers" initialValue={null}>
+      <Form.Item label="Married Brother(s)" name="marriedBrothers" initialValue={userProfileInfo?.marriedBrothers}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -83,7 +83,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Sister(s)" name="sisters" initialValue={null}>
+      <Form.Item label="Sister(s)" name="sisters" initialValue={userProfileInfo?.sisters}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -93,7 +93,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Married Sister(s)" name="marriedSisters" initialValue={null}>
+      <Form.Item label="Married Sister(s)" name="marriedSisters" initialValue={userProfileInfo?.marriedSisters}>
         <Select bordered>
           <Option value="0">0</Option>
           <Option value="1">1</Option>
@@ -103,7 +103,7 @@ const EditFamilyDetails = () => {
           <Option value="5">5</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Family Status" name="familyStatus">
+      <Form.Item label="Family Status" name="familyStatus" initialValue={userProfileInfo?.familyStatus}>
         <Select bordered>
           <Option value="Affluent">Affluent</Option>
           <Option value="Upper Middle Class">Upper Middle Class</Option>

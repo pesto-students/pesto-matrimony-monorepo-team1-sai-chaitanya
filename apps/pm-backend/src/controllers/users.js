@@ -17,7 +17,6 @@ exports.registerUserProfile = asyncHandler(async (req, res, next) => {
 //creating user inside mongodb with oktaInformation.
 const createUserInMongoDB = async (mongoUser) => {
   const user = await User.create(mongoUser);
-  console.log(user);
   return user;
 };
 
@@ -46,7 +45,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         email,
       };
 
-      const mongoReponse = await createUserInMongoDB(mongoUser);
+      await createUserInMongoDB(mongoUser);
 
       res.send({
         res: response,
@@ -56,10 +55,10 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
     // not using await will cause breakdown of express server
     // whenever there is any error while trying to create user in Okta.
   } catch (err) {
-    console.log(err);
-    res.send({
-      err: err,
-    });
+     return next(new CustomErrorResponse(err, 404));
+    // res.send({
+    //   err: err,
+    // });
   }
 });
 
@@ -107,46 +106,58 @@ exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
 
 /** ----------------------------------------- */
 
-// @desc   Update already existing Profile Data
-// @route  PUT /api/v1/users/:userId
-// @access Private
+//KARTHIKS CODE--------------------------------
+// exports.updateUserProfile = asyncHandler(async (req, res, next) => {
+//   const currentUserId = req.params.userId;
+//   if (!currentUserId) {
+//     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
+//   }
+//   await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
 
-// After initial signup where only mandatory fields are asked,
-// Whenever user logs in... and updates their profile data,
-// This controller is used for that purpose.
+//   // const user = await findUserByOktaId(currentUserId);
+//   // const mongoId = user[0]._id.toString()
+//   // console.log(mongoId);
+
+//   // Remove properties with 'undefined' & 'null' values before storing in DB
+//   // const data = req.body;
+
+//   // Object.keys(data).forEach((key) => {
+//   //   if (data[key] === undefined || data[key] === null) {
+//   //     delete data[key];
+//   //   }
+//   // });
+
+//   //  await User.findByIdAndUpdate(mongoId, data, {
+//   //   new: true,
+//   //   runValidators: true,
+//   // });
+
+//   res.status(200).json({
+//     success: true,
+//     message: 'Updated User successfully',
+//     data: 'user',
+//   });
+// });
 
 exports.updateUserProfile = asyncHandler(async (req, res, next) => {
   const currentUserId = req.params.userId;
-  if (!currentUserId) {
-    return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
-  }
-  await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
 
+  //getting mongodbId using oktaUserId
   // const user = await findUserByOktaId(currentUserId);
   // const mongoId = user[0]._id.toString()
   // console.log(mongoId);
 
-
-  // Remove properties with 'undefined' & 'null' values before storing in DB
-  // const data = req.body;
-
-  // Object.keys(data).forEach((key) => {
-  //   if (data[key] === undefined || data[key] === null) {
-  //     delete data[key];
-  //   }
-  // });
-
-  //  await User.findByIdAndUpdate(mongoId, data, {
-  //   new: true,
-  //   runValidators: true,
-  // });
-
+  if (!currentUserId) {
+    return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
+  }
+  await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
   res.status(200).json({
     success: true,
     message: 'Updated User successfully',
     data: 'user',
   });
 });
+
 /** ----------------------------------------- */
 
 // @desc   Search Profiles
@@ -167,7 +178,7 @@ exports.searchProfiles = asyncHandler(async (req, res, next) => {
 
   let matchingProfiles = await User.find({ name: 'john', age: { $gte: 18 } }).exec();
 
-  console.log(matchingProfiles);
+  // console.log(matchingProfiles);
 
   if (matchingProfiles.length < 1) {
     return next(new CustomErrorResponse(`Could not find matching profiles`, 400));

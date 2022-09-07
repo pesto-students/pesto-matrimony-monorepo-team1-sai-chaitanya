@@ -40,7 +40,7 @@ const EditEducationAndCareerDetails = () => {
   }, [userProfileData]);
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
-  console.log(responseData);
+  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
   
   const onFinish = (value) => {
     setUserProfileData(value);
@@ -71,7 +71,7 @@ const EditEducationAndCareerDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="Qualification" name="qualification" initialValue={null}>
+      <Form.Item label="Qualification" name="qualification" initialValue={userProfileInfo?.qualification}>
         <Select bordered>
           <Option value="Doctorate">Doctorate</Option>
           <Option value="Master's Degree">Master's Degree</Option>
@@ -81,7 +81,7 @@ const EditEducationAndCareerDetails = () => {
           <Option value="Less than High School">Less than High School</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Occupation" name="occupation" initialValue={null}>
+      <Form.Item label="Occupation" name="occupation" initialValue={userProfileInfo?.occupation}>
         <Select bordered>
           <OptGroup label="Accounting, Banking & Finance">
             <Option value="Banking Professional">Banking Professional</Option>
@@ -228,7 +228,7 @@ const EditEducationAndCareerDetails = () => {
           </OptGroup>
         </Select>
       </Form.Item>
-      <Form.Item label="Employed in" name="employer">
+      <Form.Item label="Employed in" name="employer" initialValue={userProfileInfo?.employer}>
         <Select bordered>
           <Option value="Private Company">Private Company</Option>
           <Option value="Government / Public Sector">Government / Public Sector</Option>
@@ -237,12 +237,12 @@ const EditEducationAndCareerDetails = () => {
           <Option value="Not Working">Not Working</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Income (Lakhs/Yr)" name="income">
+      <Form.Item label="Income (Lakhs/Yr)" name="income" initialValue={userProfileInfo?.income}>
         <Slider
-          // range
+          range
           min={MINIMUM_INCOME}
           max={MAXIMUM_INCOME}
-          // marks={incomeMark}
+          marks={incomeMark}
           step={1}
           onChange={handleIncomeSliderChange}
           style={{

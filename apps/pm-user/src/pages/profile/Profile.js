@@ -6,10 +6,12 @@ import _ from "lodash";
 import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
 import { EditProfilePage } from '..';
 
+
 const Profile = () => {
   const { oktaAuth, authState } = useOktaAuth();
   const dispatch = useDispatch();
   const [ fillData, setFillData ] = useState([]);
+
 
   // getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;

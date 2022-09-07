@@ -27,7 +27,7 @@ const EditReligionDetails = () => {
   console.log(userProfileData);
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
-  console.log(responseData);
+  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
 
   const onFinish = (value) => {
@@ -63,7 +63,7 @@ const EditReligionDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="Religion" name="religion">
+      <Form.Item label="Religion" name="religion" initialValue={userProfileInfo?.religion}>
         <Select bordered className="">
           <Option value="Hindu">Hindu</Option>
           <Option value="Muslim">Muslim</Option>
@@ -77,7 +77,7 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Zodiac sign" name="zodiacSign">
+      <Form.Item label="Zodiac sign" name="zodiacSign" initialValue={userProfileInfo?.zodiacSign}>
         <Select bordered className="">
           <Option value="Aries">Aries</Option>
           <Option value="Taurus">Taurus</Option>
@@ -94,7 +94,7 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Gothram" name="gothram">
+      <Form.Item label="Gothram" name="gothram" initialValue={userProfileInfo?.gothram}>
         <Select bordered className="">
           <Option value="Not Applicable">Not Applicable</Option>
           <Option value="Agastya">Agastya</Option>
@@ -197,7 +197,7 @@ const EditReligionDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Place of birth" name="placeOfBirth" initialValue={null}>
+      <Form.Item label="Place of birth" name="placeOfBirth" initialValue={userProfileInfo?.placeOfBirth}>
         <SimpleInput placeholder="Please type your birth place." maxLength={MAX_LENGTH_OF_PLACE_OF_BIRTH} showCount />
       </Form.Item>
 

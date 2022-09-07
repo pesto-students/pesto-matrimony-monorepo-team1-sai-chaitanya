@@ -67,6 +67,7 @@ const EditPersonalDetails = () => {
   }, []);
 
   const handleCountryChange = (value) => {
+    console.log(value)
     axios
       .get(`${COUNTRY_API_URL}/states/${value}`, {
         headers: {
@@ -164,10 +165,8 @@ const EditPersonalDetails = () => {
 
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
-  
-
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
-  console.log(userProfileInfo);
+  
 
   const onFinish = (value) => {
     console.log(value);
@@ -200,17 +199,16 @@ const EditPersonalDetails = () => {
     >
       <Form.Item label="About Yourself" name="aboutMe" initialValue={userProfileInfo?.aboutMe}>
         <TextArea
-        
           maxLength={MAX_TEXT_LENGTH}
           placeholder={`Please write a few words about yourself. Maximum ${MAX_TEXT_LENGTH} characters allowed.`}
         />
       </Form.Item>
       <Form.Item label="Age" name="age" initialValue={userProfileInfo?.age}>
         <Slider
-          // range
+          range
           min={MINIMUM_ALLOWED_AGE}
           max={MAXIMUM_ALLOWED_AGE}
-          // marks={ageBoundaries}
+          marks={ageBoundaries}
           step={1}
           onChange={handleAgeSliderChange}
           style={{
@@ -220,10 +218,10 @@ const EditPersonalDetails = () => {
       </Form.Item>
       <Form.Item label="Height" name="height" initialValue={userProfileInfo?.height} >
         <Slider
-          // range
+          range
           min={MININUM_HEIGHT_IN_CMS}
           max={MAXIMUM_HEIGHT_IN_CMS}
-          // marks={heightBoundaries}
+          marks={heightBoundaries}
           step={1}
           onChange={handleHeightSliderChange}
           style={{
@@ -233,10 +231,10 @@ const EditPersonalDetails = () => {
       </Form.Item>
       <Form.Item label="Weight (in Kg)" name="weight" initialValue={userProfileInfo?.weight}>
         <Slider
-          // range
+          range
           min={MININUM_WEIGHT_IN_KG}
           max={MAXIMUM_WEIGHT_IN_KG}
-          // marks={weightBoundaries}
+          marks={weightBoundaries}
           step={1}
           onChange={handleWeightSliderChange}
           style={{
