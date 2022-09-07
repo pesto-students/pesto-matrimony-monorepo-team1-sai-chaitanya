@@ -109,6 +109,13 @@ const EditPartnerPreferences = () => {
 
     setUserProfileData(value);
 
+    Object.keys(value).forEach((key) => {
+      if (value[key] === undefined || value[key] === null) {
+        delete value[key];
+      }
+    });
+
+    console.log(JSON.stringify(value));
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -154,7 +161,7 @@ const EditPartnerPreferences = () => {
             }}
           />
         </Form.Item>
-        <Form.Item label="Marital Status" name="partnerMaritalStatus">
+        <Form.Item label="Marital Status" name="partnerMaritalStatus" initialValue={null}>
           <Select bordered className="">
             <Option value="Never Married">Never Married</Option>
             <Option value="Widowed">Widowed</Option>
@@ -162,7 +169,7 @@ const EditPartnerPreferences = () => {
             <Option value="Awaiting Divorce">Awaiting Divorce</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Mother Tongue" name="partnerMotherTongue">
+        <Form.Item label="Mother Tongue" name="partnerMotherTongue" initialValue={null}>
           <Select bordered className="">
             <Option value="Hindi">Hindi</Option>
             <Option value="Bengali">Bengali</Option>
@@ -188,7 +195,7 @@ const EditPartnerPreferences = () => {
             <Option value="Others">Others</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Country Living In" name="partnerCountry">
+        <Form.Item label="Country Living In" name="partnerCountry" initialValue={null}>
           <Select bordered className="">
             <Option value="India">India</Option>
             <Option value="United States">USA</Option>
@@ -375,7 +382,7 @@ const EditPartnerPreferences = () => {
             <Option value="Zimbabwe">Zimbabwe</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Religion" name="partnerReligion">
+        <Form.Item label="Religion" name="partnerReligion" initialValue={null}>
           <Select bordered className="">
             <Option value="Hindu">Hindu</Option>
             <Option value="Muslim">Muslim</Option>
@@ -401,7 +408,7 @@ const EditPartnerPreferences = () => {
             }}
           />
         </Form.Item>
-        <Form.Item label="Eating Habits" name="partnerEating Habits">
+        <Form.Item label="Eating Habits" name="partnerEatingHabits" initialValue={null}>
           <Select bordered className="">
             <Option value="vegetarian">Vegetarian</Option>
             <Option value="eggetarian">Eggetarian</Option>

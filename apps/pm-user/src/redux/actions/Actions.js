@@ -4,7 +4,8 @@ import axios from 'axios';
 
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
-    const url = `http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`;
+    try{
+      const url = `http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`;
 
     const response = await axios.get(url);
     console.log(response);
@@ -13,19 +14,28 @@ export const getUserProfile = (oktaUserId) => {
       type: ActionTypes.GET_USER_PROFILE,
       payload: response.data.currentUser[0],
     });
+    }catch(err){
+      console.log(err);
+    }
+    
   };
 };
 
 //to update the user
 export const updateUserProfile = (oktaUserId, value) => {
-  return async (dispatch) => {
-    const url = `http://localhost:8000/api/v1/users/${oktaUserId}`;
-    const response = await axios.put(url, value);
-    dispatch({
-      type: ActionTypes.UPDATE_USER_PROFILE,
-      payload: response
-    });
-  };
+  try{
+    return async (dispatch) => {
+      const url = `http://localhost:8000/api/v1/users/${oktaUserId}`;
+      const response = await axios.put(url, value);
+      dispatch({
+        type: ActionTypes.UPDATE_USER_PROFILE,
+        payload: response
+      });
+    };
+  }catch(err){
+    console.log(err);
+  }
+  
 };
 
 export const updateUserImage = (oktaUserId, fileObj) => {

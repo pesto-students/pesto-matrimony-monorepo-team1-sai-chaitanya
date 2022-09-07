@@ -1,5 +1,5 @@
 const express = require('express');
-const { deleteMessage, getMessages, sendMessage, markMessageAsRead } = require('../controllers/conversations');
+const { getMessages, sendMessage, markMessagesAsRead } = require('../controllers/conversations');
 
 const router = express.Router();
 
@@ -7,8 +7,8 @@ const router = express.Router();
 
 // A message is an object in conversations array.
 // All of these controller functions are working on that conversations array.
-// router.route("/:userId").post(sendMessage).put(markMessageAsRead).get(getMessages).delete(deleteMessage);
-router.route('/').post(sendMessage);
+router.route('/').post(sendMessage).put(markMessagesAsRead);
 
-router.route('/:userId').get(getMessages).put(markMessageAsRead).delete(deleteMessage);
+router.route('/:userId').get(getMessages);
+
 module.exports = router;
