@@ -164,11 +164,13 @@ const EditPersonalDetails = () => {
 
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
-  console.log(responseData);
+  
 
+  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
+  console.log(userProfileInfo);
 
   const onFinish = (value) => {
-
+    console.log(value);
     setUserProfileData(value);
     value.age = value.age[0];
     value.height = value.height[0];
@@ -196,13 +198,14 @@ const EditPersonalDetails = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item label="About Yourself" name="aboutMe">
+      <Form.Item label="About Yourself" name="aboutMe" initialValue={userProfileInfo?.aboutMe}>
         <TextArea
+        
           maxLength={MAX_TEXT_LENGTH}
           placeholder={`Please write a few words about yourself. Maximum ${MAX_TEXT_LENGTH} characters allowed.`}
         />
       </Form.Item>
-      <Form.Item label="Age" name="age">
+      <Form.Item label="Age" name="age" initialValue={userProfileInfo?.age}>
         <Slider
           // range
           min={MINIMUM_ALLOWED_AGE}
@@ -215,7 +218,7 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Height" name="height" >
+      <Form.Item label="Height" name="height" initialValue={userProfileInfo?.height} >
         <Slider
           // range
           min={MININUM_HEIGHT_IN_CMS}
@@ -228,7 +231,7 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Weight (in Kg)" name="weight">
+      <Form.Item label="Weight (in Kg)" name="weight" initialValue={userProfileInfo?.weight}>
         <Slider
           // range
           min={MININUM_WEIGHT_IN_KG}
@@ -241,14 +244,14 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Physique" name="physique" >
+      <Form.Item label="Physique" name="physique" initialValue={userProfileInfo?.physique}>
         <Select bordered>
           <Option value="Athletic">Athletic</Option>
           <Option value="Average">Average</Option>
           <Option value="Slim">Slim</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Mother Tongue" name="motherTongue" >
+      <Form.Item label="Mother Tongue" name="motherTongue" initialValue={userProfileInfo?.motherTongue}>
         <Select bordered>
           <Option value="Hindi">Hindi</Option>
           <Option value="Bengali">Bengali</Option>
@@ -274,7 +277,7 @@ const EditPersonalDetails = () => {
           <Option value="Others">Others</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Marriage Status" name="marriageStatus" >
+      <Form.Item label="Marriage Status" name="marriageStatus" initialValue={userProfileInfo?.marriageStatus}>
         <Select bordered>
           <Option value="Never Married">Never Married</Option>
           <Option value="Widowed">Widowed</Option>
@@ -283,7 +286,7 @@ const EditPersonalDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Citizenship" name="citizenship" >
+      <Form.Item label="Citizenship" name="citizenship" initialValue={userProfileInfo?.citizenship} >
         <Select bordered>
           <Option value="India">India</Option>
           <Option value="United States">USA</Option>
@@ -470,7 +473,7 @@ const EditPersonalDetails = () => {
           <Option value="Zimbabwe">Zimbabwe</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Current Country" name="country">
+      <Form.Item label="Current Country" name="country" initialValue={userProfileInfo?.country}>
         <Select bordered onChange={handleCountryChange}>
           <Option value="India">India</Option>
           <Option value="United States">USA</Option>
@@ -657,7 +660,7 @@ const EditPersonalDetails = () => {
           <Option value="Zimbabwe">Zimbabwe</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Current State" name="state" initialValue={null}>
+      <Form.Item label="Current State" name="state" initialValue={userProfileInfo?.state}>
         <Select bordered onChange={handleStateChange}>
           {statesList?.map((state) => (
             <Option value={state} key={Math.random()}>
@@ -666,7 +669,7 @@ const EditPersonalDetails = () => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Current Location" name="location" initialValue={null}>
+      <Form.Item label="Current Location" name="location" initialValue={userProfileInfo?.location}>
         <Select bordered value="">
           {citiesList?.map((city) => (
             <Option value={city} key={Math.random()}>
@@ -675,7 +678,7 @@ const EditPersonalDetails = () => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Eating Habits" name="eatingHabits" >
+      <Form.Item label="Eating Habits" name="eatingHabits" initialValue={userProfileInfo?.eatingHabits}>
         <Select bordered>
           <Option value="Vegetarian">Vegetarian</Option>
           <Option value="Eggetarian">Eggetarian</Option>
@@ -683,20 +686,20 @@ const EditPersonalDetails = () => {
           <Option value="Jain">Jain</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Smoking Habits" name="smokingHabits" >
+      <Form.Item label="Smoking Habits" name="smokingHabits" initialValue={userProfileInfo?.smokingHabits}>
         <Select bordered>
           <Option value="Smoker">Smoker</Option>
           <Option value="Non-Smoker">Non-Smoker</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Drinking Habits" name="drinkingHabits" >
+      <Form.Item label="Drinking Habits" name="drinkingHabits" initialValue={userProfileInfo?.drinkingHabits}>
         <Select bordered>
           <Option value="Drinker">Drinker</Option>
           <Option value="Social Drinker">Social Drinker</Option>
           <Option value="Teetotallers">Teetotaller</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Hobbies" name="hobbies" initialValue={undefined}>
+      <Form.Item label="Hobbies" name="hobbies" initialValue={userProfileInfo?.hobbies}>
         <Select bordered mode="multiple" size="medium">
           <Option value="Cooking">Cooking</Option>
           <Option value="Dancing">Dancing</Option>
@@ -706,7 +709,7 @@ const EditPersonalDetails = () => {
           <Option value="Reading">Reading</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Spoken Languages" name="spokenLanguages" initialValue={undefined}>
+      <Form.Item label="Spoken Languages" name="spokenLanguages" initialValue={userProfileInfo?.spokenLanguages}>
         <Select bordered mode="multiple" size="medium">
           <Option value="Hindi">Hindi</Option>
           <Option value="Bengali">Bengali</Option>
