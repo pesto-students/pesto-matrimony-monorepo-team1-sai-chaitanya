@@ -32,6 +32,8 @@ app.use('/api/v1/conversations', conversations);
 // error Handler
 app.use(errorHandler);
 
+console.log(process.env.PORT)
+
 const server = app.listen(
   process.env.PORT || 8000,
   console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${process.env.NODE_ENV.toUpperCase()}`)

@@ -2,11 +2,11 @@ import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined, Select, 
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import styles from './signUpForm.module.scss';
+import { showNotification } from '@pm/pm-ui';
 
 const SignUpForm = () => {
   const history = useHistory();
 
-  const url1 = 'http://localhost:3333/api/v1/newuser';
   const url2 = 'http://localhost:8000/api/v1/users/oktasignup'
 
   async function signUpUser(firstName, lastName, email, gender, password) {
@@ -29,6 +29,7 @@ const SignUpForm = () => {
       history.push('/recommendations');
     } catch (err) {
       console.log('error:', err);
+      showNotification('error', 'please create strong password');
     }
   }
 
@@ -37,7 +38,7 @@ const SignUpForm = () => {
       console.log('Success:', values);
       signUpUser(values.firstName, values.lastName, values.email, values.gender, values.password);
     } else {
-      alert('password and confirmPassword should be same');
+      showNotification('error', 'password and confirmPassword should be same');
     }
   };
 
