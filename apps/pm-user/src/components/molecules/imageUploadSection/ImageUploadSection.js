@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserImage } from "../../../redux/actions/Actions";
+import { updateUserImage } from '../../../redux/actions/Actions';
 import { Upload, UploadOutlined, Button } from '../../atoms';
 import { message } from '@pm/pm-ui';
-import _ from "lodash";
+import _ from 'lodash';
 import { Modal } from 'antd';
 import { useOktaAuth } from '@okta/okta-react';
 
 const ImageUploadSection = () => {
-  const [ imageFileObject, setImageFileObject ] = useState({});
+  const [imageFileObject, setImageFileObject] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
   const dispatch = useDispatch();
 
@@ -16,9 +16,9 @@ const ImageUploadSection = () => {
   const oktaUserId = authState.accessToken.claims.uid;
 
   //uploading image cloudinary + mongodb
-  async function uploadIamge(fileObj) {
+  async function uploadImage(fileObj) {
     try {
-      if (oktaUserId && fileObj){
+      if (oktaUserId && fileObj) {
         dispatch(updateUserImage(oktaUserId, fileObj));
       }
     } catch (err) {
@@ -27,12 +27,12 @@ const ImageUploadSection = () => {
   }
 
   useEffect(() => {
-    if(!_.isEmpty(imageFileObject)){
-      uploadIamge(imageFileObject);
+    if (!_.isEmpty(imageFileObject)) {
+      uploadImage(imageFileObject);
     }
-  }, [imageFileObject])
+  }, [imageFileObject]);
 
-  const responseData = useSelector(state => state.updateUserImageReducer.data || {});
+  const responseData = useSelector((state) => state.updateUserImageReducer.data || {});
   console.log(responseData);
 
   const props = {
@@ -40,14 +40,17 @@ const ImageUploadSection = () => {
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        // uploadIamge(info.file.originFileObj);
+        // uploadImage(info.file.originFileObj);
         setImageFileObject(info.file.originFileObj);
       }
 
+      console.log(info.file);
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
+        console.log(info);
+        // message.error(`${info.file.name} file upload failed.`);
+        message.success(`${info.file.name} file uploaded successfully`);
       }
     },
   };

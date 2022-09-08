@@ -5,14 +5,14 @@
 *.local
 .prettierignore
 .prettierrc
+
 # compiled output
-/dist
+# /dist # need dist to deploy apps
 /tmp
 /out-tsc
 
 # dependencies
 node_modules
-libs
 tools
 
 # IDEs and editors

@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const MessageSchema = new mongoose.Schema({
   messageSenderId: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: String,
     trim: true,
   },
   messageReceiverId: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: String,
     trim: true,
   },
   message: {
@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: [true, 'Email is missing!'],
+    required: [true, 'Gender is missing!'],
     trim: true,
   },
   email: {
@@ -62,10 +62,12 @@ const UserSchema = new mongoose.Schema({
   age: {
     type: Number,
     trim: true,
+    default: 21,
   },
   height: {
     type: Number,
     trim: true,
+    default: 140,
   },
   weight: {
     type: Number,
@@ -83,8 +85,8 @@ const UserSchema = new mongoose.Schema({
   },
   marriageStatus: {
     type: String,
-    default: 'Never Married',
-    enum: ['Never Married', 'Awaiting Divorce', 'Divorced', 'Widowed'],
+    trim: true,
+    default: '',
   },
   citizenship: {
     type: String,
@@ -196,7 +198,6 @@ const UserSchema = new mongoose.Schema({
   religion: {
     type: String,
     trim: true,
-    default: '',
   },
 
   zodiacSign: {
@@ -266,7 +267,7 @@ const UserSchema = new mongoose.Schema({
 
   //store mongoDB Ids of all shortlisted users.
   shortlistedMatches: {
-    type: [mongoose.SchemaTypes.ObjectId],
+    type: [String],
     default: [],
   },
 
@@ -275,11 +276,11 @@ const UserSchema = new mongoose.Schema({
   interestsReceived: [
     {
       interestSenderAge: { type: Number },
-      interestSenderId: { type: mongoose.SchemaTypes.ObjectId },
+      interestSenderId: { type: String },
       interestSenderImage: { type: String },
       interestSenderName: { type: String },
       interestReceiverAge: { type: Number },
-      interestReceiverId: { type: mongoose.SchemaTypes.ObjectId },
+      interestReceiverId: { type: String },
       interestReceiverImage: { type: String },
       interestReceiverName: { type: String },
       isAccepted: { type: Boolean, default: false },
@@ -293,11 +294,11 @@ const UserSchema = new mongoose.Schema({
   interestsSent: [
     {
       interestSenderAge: { type: Number },
-      interestSenderId: { type: mongoose.SchemaTypes.ObjectId },
+      interestSenderId: { type: String },
       interestSenderImage: { type: String },
       interestSenderName: { type: String },
       interestReceiverAge: { type: Number },
-      interestReceiverId: { type: mongoose.SchemaTypes.ObjectId },
+      interestReceiverId: { type: String },
       interestReceiverImage: { type: String },
       interestReceiverName: { type: String },
       isAccepted: { type: Boolean, default: false },

@@ -20,14 +20,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // importing routes
-const users = require('./routes/users.js');
-const interests = require('./routes/interests.js');
 const conversations = require('./routes/conversations.js');
+const admin = require('./routes/admin.js');
+const interests = require('./routes/interests.js');
+const recommendations = require('./routes/recommendations.js');
+const search = require('./routes/search.js');
+const toggleShortlist = require('./routes/shortlist.js');
+const users = require('./routes/users.js');
 
 // mounting routes
-app.use('/api/v1/users', users);
-app.use('/api/v1/interests', interests);
 app.use('/api/v1/conversations', conversations);
+app.use('/api/v1/admin', admin);
+app.use('/api/v1/interests', interests);
+app.use('/api/v1/recommendations', recommendations);
+app.use('/api/v1/search', search);
+app.use('/api/v1/toggleShortlist', toggleShortlist);
+app.use('/api/v1/users', users);
 
 // error Handler
 app.use(errorHandler);

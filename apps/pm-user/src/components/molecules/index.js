@@ -11,7 +11,6 @@ export { default as MessagesBox } from './messagesBox';
 export { default as MyCard } from './myCard';
 export { default as NavBar } from './navBar';
 export { default as OldMessages } from './oldMessages';
-export { default as OwnProfileSummaryCard } from './ownProfileSummaryCard';
 export { default as ProfileSummary } from './profileSummary';
 export { default as QuickInfoBar } from './quickInfoBar';
 export { default as ResultSection } from './resultSection';

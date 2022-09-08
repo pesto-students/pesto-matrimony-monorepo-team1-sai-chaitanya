@@ -1,24 +1,12 @@
-import {
-  Button,
-  DatePicker,
-  Form,
-  SaveOutlined,
-  Select,
-  SimpleSelect,
-  Slider,
-  TextArea,
-  TimePicker,
-} from '../../atoms';
+import { Button, Form, SaveOutlined, Select, SimpleSelect, Slider, TextArea } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
 import { useState, useEffect } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from "../../../redux/actions/Actions";
-import _ from "lodash";
+import { updateUserProfile } from '../../../redux/actions/Actions';
+import _ from 'lodash';
 import axios from 'axios';
-
-
 
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
 const COUNTRIES_API_TOKEN = 'UZXlBoEnsLp9p54HXkWSBMYYv0-BQ06V0AyH8VVO3VgVYPUZFOklqwegWta3iC742jA';
@@ -32,15 +20,11 @@ const MININUM_WEIGHT_IN_KG = 45;
 const MAXIMUM_WEIGHT_IN_KG = 120;
 const { Option } = SimpleSelect;
 
-
-
-
-
 const EditPersonalDetails = () => {
   const [authToken, setAuthToken] = useState(null);
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
-  const [ userProfileData, setUserProfileData ] = useState({});
+  const [userProfileData, setUserProfileData] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
   const dispatch = useDispatch();
 
@@ -67,7 +51,7 @@ const EditPersonalDetails = () => {
   }, []);
 
   const handleCountryChange = (value) => {
-    console.log(value)
+    console.log(value);
     axios
       .get(`${COUNTRY_API_URL}/states/${value}`, {
         headers: {
@@ -127,7 +111,7 @@ const EditPersonalDetails = () => {
     setMinWeight(values[0]);
   };
 
-  const ageBoundaries = {
+  const ageMarker = {
     [`${minAge}`]: {
       label: `${minAge}`,
       style: {
@@ -137,7 +121,7 @@ const EditPersonalDetails = () => {
     },
   };
 
-  const heightBoundaries = {
+  const heightMarker = {
     [`${minHeight}`]: {
       label: `${cmToFeet(minHeight)}`,
       style: {
@@ -147,7 +131,7 @@ const EditPersonalDetails = () => {
     },
   };
 
-  const weightBoundaries = {
+  const weightMarker = {
     [`${minWeight}`]: {
       label: `${minWeight}`,
       style: {
@@ -158,15 +142,13 @@ const EditPersonalDetails = () => {
   };
 
   useEffect(() => {
-    if(!_.isEmpty(userProfileData)){
-      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    if (!_.isEmpty(userProfileData)) {
+      dispatch(updateUserProfile(oktaUserId, userProfileData));
     }
   }, [userProfileData]);
 
-
-  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  const responseData = useSelector((state) => state.updateUserProfileReducer.data || {});
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
-  
 
   const onFinish = (value) => {
     console.log(value);
@@ -203,12 +185,12 @@ const EditPersonalDetails = () => {
           placeholder={`Please write a few words about yourself. Maximum ${MAX_TEXT_LENGTH} characters allowed.`}
         />
       </Form.Item>
-      <Form.Item label="Age" name="age" initialValue={userProfileInfo?.age}>
+      <Form.Item label="Age" name="age" initialValue={[userProfileInfo?.age || MINIMUM_ALLOWED_AGE]}>
         <Slider
           range
           min={MINIMUM_ALLOWED_AGE}
           max={MAXIMUM_ALLOWED_AGE}
-          marks={ageBoundaries}
+          marks={ageMarker}
           step={1}
           onChange={handleAgeSliderChange}
           style={{
@@ -216,12 +198,12 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Height" name="height" initialValue={userProfileInfo?.height} >
+      <Form.Item label="Height" name="height" initialValue={[userProfileInfo?.height || MININUM_HEIGHT_IN_CMS]}>
         <Slider
           range
           min={MININUM_HEIGHT_IN_CMS}
           max={MAXIMUM_HEIGHT_IN_CMS}
-          marks={heightBoundaries}
+          marks={heightMarker}
           step={1}
           onChange={handleHeightSliderChange}
           style={{
@@ -229,12 +211,12 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Weight (in Kg)" name="weight" initialValue={userProfileInfo?.weight}>
+      <Form.Item label="Weight (in Kg)" name="weight" initialValue={[userProfileInfo?.weight || MININUM_WEIGHT_IN_KG]}>
         <Slider
           range
           min={MININUM_WEIGHT_IN_KG}
           max={MAXIMUM_WEIGHT_IN_KG}
-          marks={weightBoundaries}
+          marks={weightMarker}
           step={1}
           onChange={handleWeightSliderChange}
           style={{
@@ -284,7 +266,7 @@ const EditPersonalDetails = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Citizenship" name="citizenship" initialValue={userProfileInfo?.citizenship} >
+      <Form.Item label="Citizenship" name="citizenship" initialValue={userProfileInfo?.citizenship}>
         <Select bordered>
           <Option value="India">India</Option>
           <Option value="United States">USA</Option>
@@ -735,7 +717,7 @@ const EditPersonalDetails = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit" shape="round" size="middle" icon={<SaveOutlined />} >
+        <Button type="primary" htmlType="submit" shape="round" size="middle" icon={<SaveOutlined />}>
           Save
         </Button>
       </Form.Item>
