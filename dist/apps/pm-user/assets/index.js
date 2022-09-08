@@ -1,1 +1,0 @@
-export{loginBackground}from"./images";
