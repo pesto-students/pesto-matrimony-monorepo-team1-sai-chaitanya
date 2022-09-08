@@ -1,1 +1,1 @@
-web: node dist/apps/pm-backend/main.js
+web:npm run start

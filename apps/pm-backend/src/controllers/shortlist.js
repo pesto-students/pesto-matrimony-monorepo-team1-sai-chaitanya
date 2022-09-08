@@ -9,23 +9,30 @@ const okta = require('@okta/okta-sdk-nodejs');
 exports.toggleShortlist = asyncHandler(async (req, res, next) => {
   const shortlisterOktaId = req.query.shortlister;
   const shortlisteeOktaId = req.query.shortlistee;
+  console.log(shortlisterOktaId);
+  console.log(shortlisteeOktaId);
 
   try {
     // user who wants to shortlist
-    const shortlister = await User.find({ oktaUserId: shortlisterOktaId })[0];
+    let shortlister = await User.find({ oktaUserId: shortlisterOktaId });
+    shortlister = shortlister[0];
+
+    const { shortlistedMatches } = shortlister;
 
     // user who is being shortlisted
-    const shortlistee = await User.find({ oktaUserId: shortlisteeOktaId })[0];
+    let shortlistee = await User.find({ oktaUserId: shortlisteeOktaId });
+    shortlistee = shortlistee[0];
 
     // Did shortlister already shortlist shortlistee ?
     const wasAlreadyShortlisted = shortlister.shortlistedMatches.some((oktaId) => oktaId === shortlisteeOktaId);
+    // console.log(wasAlreadyShortlisted);
 
     if (wasAlreadyShortlisted) {
       // If Yes... then remove from shortlist
       shortlister.shortlistedMatches = shortlister.shortlistedMatches.filter((oktaId) => oktaId !== shortlisteeOktaId);
     } else {
       // If No, then shortlist
-      shortlister.shortlistedMatches.push(shortlisteeOktaId);
+      shortlister.shortlistedMatches = [...shortlistedMatches, shortlisteeOktaId];
     }
 
     await shortlister.save();
@@ -39,6 +46,7 @@ exports.toggleShortlist = asyncHandler(async (req, res, next) => {
       message,
     });
   } catch (error) {
-    return next(new CustomErrorResponse('Error!. Please try later!', 500));
+    console.log(error.name);
+    return next(new CustomErrorResponse('Please try later', 500));
   }
 });
