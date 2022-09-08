@@ -1,1 +1,2 @@
-export { default } from './MyCard'
+import MyCard from './MyCard';
+export default MyCard;
