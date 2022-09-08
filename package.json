@@ -73,7 +73,7 @@
     "node": "16.15.0"
   },
   "scripts": {
-    "postinstall": "if [ $CLIENT_ENV ]; then npm run postinstall-client; elif [ $SERVER_ENV ]; then npm run postinstall-server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
+    "postinstall": "if [ $SERVER_ENV ]; then npm run postinstall-pm-backend; else echo no environment detected, please set SERVER_ENV; fi",
     "postinstall-pm-backend": "cd apps/pm-backend && npm install --legacy-peer-deps"
   }
 }
