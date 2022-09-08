@@ -1,7 +1,6 @@
 import { Security } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter, useHistory } from 'react-router-dom';
-
 import Routes from '../routes';
 
 const oktaAuth = new OktaAuth({
