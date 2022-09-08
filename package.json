@@ -5,7 +5,9 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "postinstall": "if [ $SERVER_ENV ]; then npm run postinstall-pm-backend; else echo no environment detected, please set SERVER_ENV; fi",
+    "postinstall-pm-backend": "cd apps/pm-backend && npm install --legacy-peer-deps"
   },
   "private": true,
   "dependencies": {
@@ -71,9 +73,5 @@
   },
   "engines": {
     "node": "16.15.0"
-  },
-  "scripts": {
-    "postinstall": "if [ $SERVER_ENV ]; then npm run postinstall-pm-backend; else echo no environment detected, please set SERVER_ENV; fi",
-    "postinstall-pm-backend": "cd apps/pm-backend && npm install --legacy-peer-deps"
   }
 }
