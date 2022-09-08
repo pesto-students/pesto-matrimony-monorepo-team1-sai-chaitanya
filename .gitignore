@@ -5,6 +5,7 @@
 *.local
 .prettierignore
 .prettierrc
+
 # compiled output
 /dist
 /tmp

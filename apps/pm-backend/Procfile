@@ -1,1 +1,1 @@
-web: node apps/pm-backend/src/main.js
+web: cd apps/pm-backend/src && node main.js
