@@ -18,8 +18,10 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
-    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
+    let user1 = await User.find({ oktaUserId: oktaUserId1 });
+    user1 = user1[0];
+    let user2 = await User.find({ oktaUserId: oktaUserId2 });
+    user2 = user2[0];
 
     /**=============================================================== */
     // User1 wants to send Interest to User2
@@ -122,8 +124,10 @@ exports.acceptInterest = asyncHandler(async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
-    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
+    let user1 = await User.find({ oktaUserId: oktaUserId1 });
+    user1 = user1[0];
+    let user2 = await User.find({ oktaUserId: oktaUserId2 });
+    user2 = user2[0];
     /**=============================================================== */
 
     user2.interestsReceived = user2.interestsReceived.map((interest) => {

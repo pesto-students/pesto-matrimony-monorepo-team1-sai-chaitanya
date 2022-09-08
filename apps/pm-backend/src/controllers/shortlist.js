@@ -4,7 +4,7 @@ const CustomErrorResponse = require('../utilities/errorResponse');
 const okta = require('@okta/okta-sdk-nodejs');
 
 // @desc   Shortlist Profiles
-// @route  POST /api/v1/toggleShortlist?shortlister=oktaUserId1&shorlistee=oktaUserId2
+// @route  PUT /api/v1/toggleShortlist?shortlister=oktaUserId1&shorlistee=oktaUserId2
 // @access Private
 exports.toggleShortlist = asyncHandler(async (req, res, next) => {
   const shortlisterOktaId = req.query.shortlister;
@@ -46,7 +46,6 @@ exports.toggleShortlist = asyncHandler(async (req, res, next) => {
       message,
     });
   } catch (error) {
-    console.log(error.name);
     return next(new CustomErrorResponse('Please try later', 500));
   }
 });

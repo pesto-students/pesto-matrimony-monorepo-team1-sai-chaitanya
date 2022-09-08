@@ -29,8 +29,13 @@ const CustomErrorResponse = __webpack_require__("./apps/pm-backend/src/utilities
 const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 //getting all users profiles
 exports.getAllUsersProfiles = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    const allUsers = yield User.find();
-    res.status(200).json({ user: allUsers });
+    try {
+        const allUsers = yield User.find();
+        res.status(200).json({ user: allUsers });
+    }
+    catch (error) {
+        return next(new CustomErrorResponse('Error! Please try later', 500));
+    }
 }));
 
 
@@ -64,8 +69,10 @@ exports.sendMessage = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0,
     const session = yield User.startSession();
     try {
         session.startTransaction();
-        const user1 = yield User.find({ oktaUserId: oktaUserId1 })[0];
-        const user2 = yield User.find({ oktaUserId: oktaUserId2 })[0];
+        let user1 = yield User.find({ oktaUserId: oktaUserId1 });
+        user1 = user1[0];
+        let user2 = yield User.find({ oktaUserId: oktaUserId2 });
+        user2 = user2[0];
         /**=============================================================== */
         // User1 wants to send Message to User2
         // NOTE: Messages are stored in an interest object's conversations property(array).
@@ -143,8 +150,10 @@ exports.markMessagesAsRead = asyncHandler((req, res, next) => tslib_1.__awaiter(
     const session = yield User.startSession();
     try {
         session.startTransaction();
-        const user1 = yield User.findById(oktaUserId1);
-        const user2 = yield User.findById(oktaUserId2);
+        let user1 = yield User.find({ oktaUserId: oktaUserId1 });
+        user1 = user1[0];
+        let user2 = yield User.find({ oktaUserId: oktaUserId2 });
+        user2 = user2[0];
         // STEP 1
         // Determine if it is User1 who first sent the interest.
         const didUser1SendInterestToUser2 = user1.interestsSent.some((interest) => String(interest.interestReceiverId) === oktaUserId2);
@@ -232,20 +241,25 @@ exports.markMessagesAsRead = asyncHandler((req, res, next) => tslib_1.__awaiter(
     });
 }));
 // @desc   Get all messages between two users as "Read"
-// @route  GET /api/v1/conversations/:userId
+// @route  GET /api/v1/conversations/:oktaUserId
 // @access Private
 exports.getMessages = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    const userId = req.params.userId;
-    const user = yield User.findById(userId);
-    if (!user) {
-        return next(new CustomErrorResponse(`User not found!`, 404));
+    try {
+        let user = yield User.find({ oktaUserId: req.params.oktaUserId });
+        user = user[0];
+        if (!user) {
+            return next(new CustomErrorResponse(`User not found!`, 404));
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Data Retrieved Successfull !',
+            interestsReceived: [...user.interestsReceived],
+            interestsSent: [...user.interestsSent],
+        });
     }
-    res.status(200).json({
-        success: true,
-        message: 'Data Retrieved Successfull !',
-        interestsReceived: [...user.interestsReceived],
-        interestsSent: [...user.interestsSent],
-    });
+    catch (error) {
+        return next(new CustomErrorResponse(`Error! Please try later`, 500));
+    }
 }));
 
 
@@ -270,8 +284,10 @@ exports.sendInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0
     const session = yield User.startSession();
     try {
         session.startTransaction();
-        const user1 = yield User.find({ oktaUserId: oktaUserId1 })[0];
-        const user2 = yield User.find({ oktaUserId: oktaUserId2 })[0];
+        let user1 = yield User.find({ oktaUserId: oktaUserId1 });
+        user1 = user1[0];
+        let user2 = yield User.find({ oktaUserId: oktaUserId2 });
+        user2 = user2[0];
         /**=============================================================== */
         // User1 wants to send Interest to User2
         // NOTE: Interests are stored as objects in interestsSender array of Sender(User1)
@@ -355,8 +371,10 @@ exports.acceptInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void
     const session = yield User.startSession();
     try {
         session.startTransaction();
-        const user1 = yield User.find({ oktaUserId: oktaUserId1 })[0];
-        const user2 = yield User.find({ oktaUserId: oktaUserId2 })[0];
+        let user1 = yield User.find({ oktaUserId: oktaUserId1 });
+        user1 = user1[0];
+        let user2 = yield User.find({ oktaUserId: oktaUserId2 });
+        user2 = user2[0];
         /**=============================================================== */
         user2.interestsReceived = user2.interestsReceived.map((interest) => {
             // First identify the interest object which must be updated.
@@ -580,7 +598,7 @@ const User = __webpack_require__("./apps/pm-backend/src/models/Users.js");
 const CustomErrorResponse = __webpack_require__("./apps/pm-backend/src/utilities/errorResponse.js");
 const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 // @desc   Shortlist Profiles
-// @route  POST /api/v1/toggleShortlist?shortlister=oktaUserId1&shorlistee=oktaUserId2
+// @route  PUT /api/v1/toggleShortlist?shortlister=oktaUserId1&shorlistee=oktaUserId2
 // @access Private
 exports.toggleShortlist = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const shortlisterOktaId = req.query.shortlister;
@@ -616,7 +634,6 @@ exports.toggleShortlist = asyncHandler((req, res, next) => tslib_1.__awaiter(voi
         });
     }
     catch (error) {
-        console.log(error.name);
         return next(new CustomErrorResponse('Please try later', 500));
     }
 }));
@@ -831,11 +848,11 @@ module.exports = errorHandler;
 const mongoose = __webpack_require__("mongoose");
 const MessageSchema = new mongoose.Schema({
     messageSenderId: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String,
         trim: true,
     },
     messageReceiverId: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String,
         trim: true,
     },
     message: {

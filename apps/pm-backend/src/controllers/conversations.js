@@ -27,8 +27,10 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
-    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
+    let user1 = await User.find({ oktaUserId: oktaUserId1 });
+    user1 = user1[0];
+    let user2 = await User.find({ oktaUserId: oktaUserId2 });
+    user2 = user2[0];
 
     /**=============================================================== */
     // User1 wants to send Message to User2
@@ -115,8 +117,10 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const user1 = await User.findById(oktaUserId1);
-    const user2 = await User.findById(oktaUserId2);
+    let user1 = await User.find({ oktaUserId: oktaUserId1 });
+    user1 = user1[0];
+    let user2 = await User.find({ oktaUserId: oktaUserId2 });
+    user2 = user2[0];
 
     // STEP 1
     // Determine if it is User1 who first sent the interest.
@@ -212,19 +216,24 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Get all messages between two users as "Read"
-// @route  GET /api/v1/conversations/:userId
+// @route  GET /api/v1/conversations/:oktaUserId
 // @access Private
 
 exports.getMessages = asyncHandler(async (req, res, next) => {
-  const userId = req.params.userId;
-  const user = await User.findById(userId);
-  if (!user) {
-    return next(new CustomErrorResponse(`User not found!`, 404));
+  try {
+    let user = await User.find({ oktaUserId: req.params.oktaUserId });
+    user = user[0];
+
+    if (!user) {
+      return next(new CustomErrorResponse(`User not found!`, 404));
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Data Retrieved Successfull !',
+      interestsReceived: [...user.interestsReceived],
+      interestsSent: [...user.interestsSent],
+    });
+  } catch (error) {
+    return next(new CustomErrorResponse(`Error! Please try later`, 500));
   }
-  res.status(200).json({
-    success: true,
-    message: 'Data Retrieved Successfull !',
-    interestsReceived: [...user.interestsReceived],
-    interestsSent: [...user.interestsSent],
-  });
 });
