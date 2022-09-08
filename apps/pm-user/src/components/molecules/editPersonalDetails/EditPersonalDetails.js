@@ -185,7 +185,7 @@ const EditPersonalDetails = () => {
           placeholder={`Please write a few words about yourself. Maximum ${MAX_TEXT_LENGTH} characters allowed.`}
         />
       </Form.Item>
-      <Form.Item label="Age" name="age" initialValue={userProfileInfo?.age}>
+      <Form.Item label="Age" name="age" initialValue={[userProfileInfo?.age || MINIMUM_ALLOWED_AGE]}>
         <Slider
           range
           min={MINIMUM_ALLOWED_AGE}
@@ -198,7 +198,7 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Height" name="height" initialValue={userProfileInfo?.height}>
+      <Form.Item label="Height" name="height" initialValue={[userProfileInfo?.height || MININUM_HEIGHT_IN_CMS]}>
         <Slider
           range
           min={MININUM_HEIGHT_IN_CMS}
@@ -211,7 +211,7 @@ const EditPersonalDetails = () => {
           }}
         />
       </Form.Item>
-      <Form.Item label="Weight (in Kg)" name="weight" initialValue={userProfileInfo?.weight}>
+      <Form.Item label="Weight (in Kg)" name="weight" initialValue={[userProfileInfo?.weight || MININUM_WEIGHT_IN_KG]}>
         <Slider
           range
           min={MININUM_WEIGHT_IN_KG}

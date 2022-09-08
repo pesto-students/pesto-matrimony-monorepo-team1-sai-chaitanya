@@ -3,8 +3,8 @@ import { showNotification } from '@pm/pm-ui';
 import { useState, useEffect } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from "../../../redux/actions/Actions";
-import _ from "lodash";
+import { updateUserProfile } from '../../../redux/actions/Actions';
+import _ from 'lodash';
 
 const MINIMUM_INCOME = 0;
 const MAXIMUM_INCOME = 100;
@@ -14,7 +14,7 @@ const EditEducationAndCareerDetails = () => {
   const { oktaAuth, authState } = useOktaAuth();
   const dispatch = useDispatch();
   const [income, setIncome] = useState(0);
-  const [ userProfileData, setUserProfileData ] = useState({});
+  const [userProfileData, setUserProfileData] = useState({});
 
   // getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
@@ -34,14 +34,14 @@ const EditEducationAndCareerDetails = () => {
   };
 
   useEffect(() => {
-    if(!_.isEmpty(userProfileData)){
-      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    if (!_.isEmpty(userProfileData)) {
+      dispatch(updateUserProfile(oktaUserId, userProfileData));
     }
   }, [userProfileData]);
 
-  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  const responseData = useSelector((state) => state.updateUserProfileReducer.data || {});
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
-  
+
   const onFinish = (value) => {
     setUserProfileData(value);
     value.income = value.income[0];
@@ -237,7 +237,7 @@ const EditEducationAndCareerDetails = () => {
           <Option value="Not Working">Not Working</Option>
         </Select>
       </Form.Item>
-      <Form.Item label="Income (Lakhs/Yr)" name="income" initialValue={userProfileInfo?.income}>
+      <Form.Item label="Income (Lakhs/Yr)" name="income" initialValue={[userProfileInfo?.income || MINIMUM_INCOME]}>
         <Slider
           range
           min={MINIMUM_INCOME}
