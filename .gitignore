@@ -7,7 +7,7 @@
 .prettierrc
 
 # compiled output
-/dist
+# /dist # need dist to deploy apps
 /tmp
 /out-tsc
 
