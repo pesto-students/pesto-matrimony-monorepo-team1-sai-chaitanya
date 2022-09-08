@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useOktaAuth } from '@okta/okta-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../../../redux/actions/Actions";
+import _ from "lodash";
+import { useHistory } from "react-router-dom";
 import { Button, Form, SaveOutlined, Select, SimpleSelect, Slider } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
+
 // constants
 const MININUM_HEIGHT_IN_CMS = 122;
 const MAXIMUM_HEIGHT_IN_CMS = 214;
@@ -14,6 +20,23 @@ const { Option } = SimpleSelect;
 const EditPartnerPreferences = () => {
   const [minHeight, setMinHeight] = useState(MININUM_HEIGHT_IN_CMS);
   const [maxHeight, setMaxHeight] = useState(MAXIMUM_HEIGHT_IN_CMS);
+  const [ userProfileData, setUserProfileData ] = useState({});
+  const { oktaAuth, authState } = useOktaAuth();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  // getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
+
+  useEffect(() => {
+    if(!_.isEmpty(userProfileData)){
+      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    }
+  }, [userProfileData]);
+
+  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
+
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);
@@ -86,6 +109,9 @@ const EditPartnerPreferences = () => {
   };
 
   const onFinish = (value) => {
+
+    setUserProfileData(value);
+
     Object.keys(value).forEach((key) => {
       if (value[key] === undefined || value[key] === null) {
         delete value[key];
@@ -95,6 +121,8 @@ const EditPartnerPreferences = () => {
     console.log(JSON.stringify(value));
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
+    history.push("/profile");
+
   };
   const onFinishFailed = () => {
     showNotification('error', 'Error Saving Values...', 'Please Try again later.');
@@ -110,7 +138,7 @@ const EditPartnerPreferences = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item label="Age Range" name="partnerAgeRange" initialValue={[MINIMUM_ALLOWED_AGE, MAXIMUM_ALLOWED_AGE]}>
+        <Form.Item label="Age Range" name="partnerAgeRange" initialValue={userProfileInfo?.partnerAgeRange}>
           <Slider
             range={{ draggableTrack: true }}
             min={MINIMUM_ALLOWED_AGE}
@@ -125,7 +153,7 @@ const EditPartnerPreferences = () => {
         <Form.Item
           label="Height Range"
           name="partnerHeightRange"
-          initialValue={[MININUM_HEIGHT_IN_CMS, MAXIMUM_HEIGHT_IN_CMS]}
+          initialValue={userProfileInfo?.partnerHeightRange}
         >
           <Slider
             range={{ draggableTrack: true }}
@@ -139,7 +167,7 @@ const EditPartnerPreferences = () => {
             }}
           />
         </Form.Item>
-        <Form.Item label="Marital Status" name="partnerMaritalStatus" initialValue={null}>
+        <Form.Item label="Marital Status" name="partnerMaritalStatus" initialValue={userProfileInfo?.partnerMaritalStatus}>
           <Select bordered className="">
             <Option value="Never Married">Never Married</Option>
             <Option value="Widowed">Widowed</Option>
@@ -147,7 +175,7 @@ const EditPartnerPreferences = () => {
             <Option value="Awaiting Divorce">Awaiting Divorce</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Mother Tongue" name="partnerMotherTongue" initialValue={null}>
+        <Form.Item label="Mother Tongue" name="partnerMotherTongue" initialValue={userProfileInfo?.partnerMotherTongue}>
           <Select bordered className="">
             <Option value="Hindi">Hindi</Option>
             <Option value="Bengali">Bengali</Option>
@@ -173,7 +201,7 @@ const EditPartnerPreferences = () => {
             <Option value="Others">Others</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Country Living In" name="partnerCountry" initialValue={null}>
+        <Form.Item label="Country Living In" name="partnerCountry" initialValue={userProfileInfo?.partnerCountry}>
           <Select bordered className="">
             <Option value="India">India</Option>
             <Option value="United States">USA</Option>
@@ -360,7 +388,7 @@ const EditPartnerPreferences = () => {
             <Option value="Zimbabwe">Zimbabwe</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Religion" name="partnerReligion" initialValue={null}>
+        <Form.Item label="Religion" name="partnerReligion" initialValue={userProfileInfo?.partnerReligion}>
           <Select bordered className="">
             <Option value="Hindu">Hindu</Option>
             <Option value="Muslim">Muslim</Option>
@@ -373,7 +401,7 @@ const EditPartnerPreferences = () => {
             <Option value="Others">Others</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Income (Lakhs/Yr)" name="partnerIncomeRange" initialValue={[MINIMUM_INCOME, MAXIMUM_INCOME]}>
+        <Form.Item label="Income (Lakhs/Yr)" name="partnerIncomeRange" initialValue={userProfileInfo?.partnerIncomeRange}>
           <Slider
             range={{ draggableTrack: true }}
             min={MINIMUM_INCOME}
@@ -386,7 +414,7 @@ const EditPartnerPreferences = () => {
             }}
           />
         </Form.Item>
-        <Form.Item label="Eating Habits" name="partnerEatingHabits" initialValue={null}>
+        <Form.Item label="Eating Habits" name="partnerEatingHabits" initialValue={userProfileInfo?.partnerEatingHabits}>
           <Select bordered className="">
             <Option value="vegetarian">Vegetarian</Option>
             <Option value="eggetarian">Eggetarian</Option>

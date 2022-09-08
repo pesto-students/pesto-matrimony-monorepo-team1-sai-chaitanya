@@ -17,7 +17,6 @@ exports.registerUserProfile = asyncHandler(async (req, res, next) => {
 //creating user inside mongodb with oktaInformation.
 const createUserInMongoDB = async (mongoUser) => {
   const user = await User.create(mongoUser);
-  console.log(user);
   return user;
 };
 
@@ -27,10 +26,9 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
     orgUrl: 'https://dev-42684472.okta.com/',
     token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
   });
-
   const body = req.body;
-
   try {
+    await createUserInOkta();
     async function createUserInOkta() {
       const response = await client.createUser(body);
 
@@ -47,7 +45,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         email,
       };
 
-      const mongoReponse = await createUserInMongoDB(mongoUser);
+      await createUserInMongoDB(mongoUser);
 
       res.send({
         res: response,
@@ -57,68 +55,72 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
     // not using await will cause breakdown of express server
     // whenever there is any error while trying to create user in Okta.
   } catch (err) {
-    console.log(err);
-    res.send({
-      err: err,
-    });
+    return next(new CustomErrorResponse(err, 404));
+    // res.send({
+    //   err: err,
+    // });
   }
 });
+
+//find user in mongodb by oktaId
+async function findUserByOktaId(oktaId) {
+  const currentUser = await User.find({ oktaUserId: oktaId });
+  // console.log(currentUser);
+  // console.log(currentUser[0]._id.toString());
+  return currentUser;
+}
 
 // @desc   Retrieve a user Profile
 // @route  GET /api/v1/users/:id
 // @access Private
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
-  const oktaId = req.params.id;
-
-  const user = await User.find({ oktaUserId: oktaId });
-
-  const UserMongoId = user._id;
-
-  console.log('UserMongoId', UserMongoId);
-
-  if (!user) {
+  const params = req.params;
+  const oktaId = params.id;
+  const currentUser = await findUserByOktaId(oktaId);
+  if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
-  res.status(200).json({
-    success: true,
-    message: 'Retrieved User successfully',
-    user: user,
-  });
+  res.status(200).json({ currentUser });
 });
+
+//to upload image in mongodb
+exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
+  const imageUrl = req.body.imageUrlString;
+  const currentUserId = req.body.oktaUserId;
+  const currentUser = await findUserByOktaId(currentUserId);
+  // console.log(currentUser[0].images);
+  const imageUrls = currentUser[0].images;
+  if (!currentUser) {
+    return next(new CustomErrorResponse(`User not found!`, 404));
+  }
+  await User.updateOne({ oktaUserId: currentUserId }, { images: [...imageUrls, imageUrl] });
+  res.status(200).json({ status: 'success' });
+
+  // res.status(200).json({
+  //   success: true,
+  //   message: 'Retrieved User successfully',
+  //   user: user,
+  // });
+});
+
 /** ----------------------------------------- */
-
-// @desc   Update already existing Profile Data
-// @route  PUT /api/v1/users/:userId
-// @access Private
-
-// After initial signup where only mandatory fields are asked,
-// Whenever user logs in... and updates their profile data,
-// This controller is used for that purpose.
-
 exports.updateUserProfile = asyncHandler(async (req, res, next) => {
-  console.log(req.params.userId);
-  let user = await User.findById(req.params.userId);
-  if (!user) {
+  const currentUserId = req.params.userId;
+
+  //getting mongodbId using oktaUserId
+  // const user = await findUserByOktaId(currentUserId);
+  // const mongoId = user[0]._id.toString()
+  // console.log(mongoId);
+
+  if (!currentUserId) {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
   }
-
-  // Remove properties with 'undefined' & 'null' values before storing in DB
-  const data = req.body;
-  Object.keys(data).forEach((key) => {
-    if (data[key] === undefined || data[key] === null) {
-      delete data[key];
-    }
-  });
-
-  user = await User.findByIdAndUpdate(req.params.userId, data, {
-    new: true,
-    runValidators: true,
-  });
-
+  await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
   res.status(200).json({
     success: true,
     message: 'Updated User successfully',
-    data: user,
+    data: 'user',
   });
 });
+
 /** ----------------------------------------- */

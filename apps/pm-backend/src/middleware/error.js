@@ -12,6 +12,11 @@ const errorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message, 400); // 400 = bad request
   }
 
+  if (err.code === "E0000001") {
+    const message = `password: This password was found in a list of commonly used passwords. Please try another password.`;
+    error = new ErrorResponse(message, 400); // 400 = bad request
+  }
+
   // Mongoose validation error
   if (err.name === 'ValidationError') {
     const message = Object.values(err.errors).map((val) => val.message);

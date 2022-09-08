@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getUserProfile, updateUserProfile, oktaSignUp } = require('../controllers/users');
+const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp } = require('../controllers/users');
 
 const router = express.Router();
 
@@ -8,10 +8,10 @@ const router = express.Router();
 
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
-
 router.route('/userprofile/:id').get(getUserProfile);
+router.route('/imageupload/:id').post(uploadImageToMongoDb);
 
-// Update / Delete
-router.route('/:userId').get(getUserProfile).put(updateUserProfile);
+// Update
+router.route('/:userId').put(updateUserProfile);
 
 module.exports = router;

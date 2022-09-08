@@ -1,14 +1,17 @@
 import { Image } from '../../atoms';
 import PropTypes from 'prop-types';
 import styles from './profileSummary.module.scss';
+import { Link } from "react-router-dom";
 
 const ProfileSummary = ({ imageChangeLink, userDetails, userImageSrc, userName }) => {
   return (
     <div className={styles.profileSummary}>
       <Image src={userImageSrc} />
+      <Link to={imageChangeLink} className={styles.changeImage}>
       <div className={styles.changeImage}>
-        <a href={imageChangeLink}>Change Image</a>
+        Change Image
       </div>
+      </Link>  
       <div className={styles.userName}>{userName}</div>
       <div className={styles.userDetails}>{userDetails}</div>
     </div>

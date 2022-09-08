@@ -1,58 +1,126 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from "../../redux/actions/Actions";
+import { useOktaAuth } from '@okta/okta-react';
+import _ from "lodash";
 import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
 import { EditProfilePage } from '..';
+
+
 const Profile = () => {
+  const { oktaAuth, authState } = useOktaAuth();
+  const dispatch = useDispatch();
+  const [ fillData, setFillData ] = useState([]);
+
+
+  // getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
+
+  dispatch(updateUserProfile(oktaUserId));
+
+  //data from redux
+  const userProfileInfo = useSelector((state) =>  state.getUserProfileResponse.data || {});
+
+  const forHoobies =  userProfileInfo.hobbies || [];
+  const forSpokenLanguages =  userProfileInfo.spokenLanguages || [];
+
+
+  const { partnerAgeRange, partnerHeightRange, partnerIncomeRange } = userProfileInfo;
+
+  const forPartnerAge = partnerAgeRange || []
+  const showAgeRange = forPartnerAge.length !== 0 ? `${partnerAgeRange[0]} to ${partnerAgeRange[1]}` : "Not Specified";
+
+  const forPartnerHeight = partnerHeightRange || []
+  const showHeightRange = forPartnerHeight.length !== 0 ? `${partnerHeightRange[0]} to ${partnerHeightRange[1]}` : "Not Specified";
+
+  const forPartnerIncome = partnerHeightRange || []
+  const showIncomRange = forPartnerIncome.length !== 0 ? `${partnerIncomeRange[0]} to ${partnerIncomeRange[1]}` : "Not Specified";
+
+
+  console.log(userProfileInfo);
+
+
+  // let ageRange = 
+ 
+
+  // let heightRange = `${userProfileInfo?.partnerHeightRange[0]} to ${userProfileInfo?.partnerHeightRange[1]}`
+  // let showHeightRange = userProfileInfo?.partnerHeightRange.length !== 0 ? heightRange : "Not Specified";
+
+  // ['https://picsum.photos/700/500?random=1', 'https://picsum.photos/700/500?random=2']
+
   return (
     <>
       {/* Temporarily displaying EditProfile Page here */}
       {/* <EditProfilePage /> */}
       <UserInfoCard
+        profileLocation={userProfileInfo?.location || "Not Specified"}
         idOfLoggedInUser="abcd"
         profileAboutMe=""
-        profileAge="32"
-        profileName="Vinit Sharma"
+        profileAge={userProfileInfo?.age || "Not Specified"}
+        profileName={userProfileInfo?.name}
         profileId="abcd"
-        profileImages={['https://picsum.photos/700/500?random=1', 'https://picsum.photos/700/500?random=2']}
+        profileImages={userProfileInfo?.images}
       />
       <UserProfileCard className="userProfileCard" title="Description">
-        <UserProfileCardContent description="Glad you chose my profile and here's a quick introduction. Regarding my education, I have pursued Bachelors. At present, I am working as a Software Developer. By nature, I am a caring, kind and loving person. I am looking for someone who will compliment me on a beautiful journey called life. If you wish to take things forward, feel free to connect with us. " />
+        <UserProfileCardContent description={userProfileInfo?.aboutMe || "Not Specified"} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Lifestyle">
-        <UserProfileCardContent value="Vagitarian" />
+      <UserProfileCard className="userProfileCard" title="Personal Information">
+        <UserProfileCardContent field="Age" value={userProfileInfo?.age || "Not Specified"} />
+        <UserProfileCardContent field="Height" value={userProfileInfo?.height || "Not Specified"} />
+        <UserProfileCardContent field="Weight (in Kg)" value={userProfileInfo?.weight || "Not Specified"} />
+        <UserProfileCardContent field="Physique" value={userProfileInfo?.physique || "Not Specified"} />
+        <UserProfileCardContent field="Mother Tongue" value={userProfileInfo?.motherTongue || "Not Specified"} />
+        <UserProfileCardContent field="Marriage Status" value={userProfileInfo?.marriageStatus || "Not Specified"} />
+        <UserProfileCardContent field="Citizenship" value={userProfileInfo?.citizenship || "Not Specified"} />
+        <UserProfileCardContent field="Current Country" value="india" />
+        <UserProfileCardContent field="Current State" value="india" />
+        <UserProfileCardContent field="Current Location" value="india" />
+        <UserProfileCardContent field="Eating Habits" value="some value" />
+        <UserProfileCardContent field="Smoking Habits" value="some value" />
+        <UserProfileCardContent field="Drinking Habits" value="some value" />
+        <UserProfileCardContent field="Hobbies" value={forHoobies.map((hobby) => hobby)} />
+        <UserProfileCardContent field="Spoken Languages" value={forSpokenLanguages.map((language) => language)} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="BackGround">
-        <UserProfileCardContent field="Religion" value="Hindu" />
-        <UserProfileCardContent field="Cast" value="Brahmin" />
-        <UserProfileCardContent field="Location" value="Bhopal Madhyapradesh" />
+      <UserProfileCard className="userProfileCard" title="Education & Career Information">
+      <UserProfileCardContent field="Qualification" value={userProfileInfo?.qualification || "Not Specified"} />
+        <UserProfileCardContent field="Occupation" value={userProfileInfo?.occupation || "Not Specified"} />
+        <UserProfileCardContent field="Employed in" value={userProfileInfo?.employer || "Not Specified"} />
+        <UserProfileCardContent field="Income (Lakhs/Yr)" value={userProfileInfo?.income || "Not Specified"} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Horoscope">
-        <UserProfileCardContent field="Nadi" value="Antya" />
-        <UserProfileCardContent field="Manglik" value="No" />
-        <UserProfileCardContent field="Rashi" value="Leo" />
+      <UserProfileCard className="userProfileCard" title="Family Details">
+        <UserProfileCardContent field="About Family" value={userProfileInfo?.aboutFamily || "Not Specified"} />
+        <UserProfileCardContent field="Brother(s)" value={userProfileInfo?.brothers || "Not Specified"} />
+        <UserProfileCardContent field="Married Brother(s)" value={userProfileInfo?.marriedBrothers || "Not Specified"} />
+        <UserProfileCardContent field="Sister(s)" value={userProfileInfo?.sisters || "Not Specified"} />
+        <UserProfileCardContent field="Married Sister(s)" value={userProfileInfo?.marriedSisters || "Not Specified"} />
+        <UserProfileCardContent field="Family Status" value={userProfileInfo?.familyStatus || "Not Specified"} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Education / Career">
-        <UserProfileCardContent field="Degree" value="BCA - Bachelor of Computer Application" />
-        <UserProfileCardContent field="Sector" value="Software / IT" />
-        <UserProfileCardContent field="Occupation" value=": Software Developer / Programmer with PESTO." />
-        <UserProfileCardContent field="Income" value=": Earns INR 20 Lakh to 30 Lakh annually." />
+      <UserProfileCard className="userProfileCard" title="Religious and Horoscope Details">
+        <UserProfileCardContent field="Religion" value={userProfileInfo?.religion || "Not Specified"} />
+        <UserProfileCardContent field="Zodiac sign" value={userProfileInfo?.zodiacSign || "Not Specified"} />
+        <UserProfileCardContent field="Gothram" value={userProfileInfo?.gothram || "Not Specified"} />
+        <UserProfileCardContent field="Date of Birth" value={userProfileInfo?.dateOfBirth || "Not Specified"} />
+        <UserProfileCardContent field="Place of birth" value={userProfileInfo?.placeOfBirth || "Not Specified"} />
+        <UserProfileCardContent field="Time of Birth" value={userProfileInfo?.timeOfBirth || "Not Specified"} />
       </UserProfileCard>
 
       <UserProfileCard className="userProfileCard" title="Partner Preferences">
-        <UserProfileCardContent field="Age" value="29 to 33" />
-        <UserProfileCardContent field="Height" value="5'0(152cm) to 5'10(177cm)" />
-        <UserProfileCardContent field="Marital Status" value="Never Marreid" />
-        <UserProfileCardContent field="Region Community" value="Hindu" />
-        <UserProfileCardContent field="Mother Tongue" value="Hindi" />
-        <UserProfileCardContent field="Country Living in" value="India" />
-        <UserProfileCardContent field="State Living in" value="Madhya Pradesh" />
-        <UserProfileCardContent field="Annual Income" value="2 lakh" />
+        <UserProfileCardContent field="Age Range" value={showAgeRange} />
+        <UserProfileCardContent field="Height Range" value={showHeightRange} />
+        <UserProfileCardContent field="Marital Status" value={userProfileInfo?.partnerMaritalStatus || "Not Specified"} />
+        <UserProfileCardContent field="Mother Tongue" value={userProfileInfo?.partnerMotherTongue || "Not Specified"} />
+        <UserProfileCardContent field="Country Living In" value={userProfileInfo?.partnerCountry || "Not Specified"} />
+        <UserProfileCardContent field="Religion" value={userProfileInfo?.partnerReligion || "Not Specified"} />
+        <UserProfileCardContent field="Income (Lakhs/Yr)" value={userProfileInfo?.partnerIncomeRange || "Not Specified"} />
+        <UserProfileCardContent field="Eating Habits" value={userProfileInfo?.partnerEatingHabits || "Not Specified"} />
       </UserProfileCard>
     </>
   );
 };
 
 export default Profile;
+

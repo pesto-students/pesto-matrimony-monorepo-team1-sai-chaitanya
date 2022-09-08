@@ -175,6 +175,16 @@ const UserSchema = new mongoose.Schema({
 
   // Religious Details
 
+  dateOfBirth: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  timeOfBirth: {
+    type: String,
+    trim: true,
+    default: '',
+  },
   gothram: {
     type: String,
     trim: true,
