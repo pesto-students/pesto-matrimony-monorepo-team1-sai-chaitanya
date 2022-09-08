@@ -190,3 +190,11 @@ exports.searchProfiles = asyncHandler(async (req, res, next) => {
     data: matchingProfiles,
   });
 });
+
+//for the admin part
+exports.getAllUsersProfiles = asyncHandler(async (req, res, next) => {
+
+  const allUsers = await User.find();
+
+  res.status(200).json({ user: allUsers });
+})

@@ -23,11 +23,13 @@ app.use(bodyParser.json());
 const users = require('./routes/users.js');
 const interests = require('./routes/interests.js');
 const conversations = require('./routes/conversations.js');
+const admin = require('./routes/admin.js');
 
 // mounting routes
 app.use('/api/v1/users', users);
 app.use('/api/v1/interests', interests);
 app.use('/api/v1/conversations', conversations);
+app.use('/api/v1/admin', admin);
 
 // error Handler
 app.use(errorHandler);

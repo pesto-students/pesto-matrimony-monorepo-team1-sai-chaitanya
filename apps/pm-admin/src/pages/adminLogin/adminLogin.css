@@ -4,13 +4,6 @@
   width: 100%;
 }
 
-.leftContainer {
-  width: 60%;
-  background-size: cover; /* <------ */
-  background-repeat: no-repeat;
-  background-position: center center; /* optional, center the image */
-}
-
 .rightContainer {
   display: flex;
   width: 40%;
@@ -20,10 +13,8 @@
   justify-content: center;
 }
 
-.loginBox {
-  & p {
-    text-align: center;
-  }
+.loginBox > p {
+  text-align: center;
 }
 
 .logInLogo {
@@ -49,7 +40,5 @@
 .link {
   font-weight: bold;
   color: #222f81;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 }

@@ -1,24 +1,16 @@
-import styles from './formWrapper.module.scss';
+import './formWrapper.css';
 import PropTypes from 'prop-types';
-import { Logo } from '../../../../../../libs/pm-ui/src/lib/components';
+import { Logo } from '../../atoms';
 
-const FormWrapper = ({
-  bottomText,
-  children,
-  formDescription,
-  formTitle,
-}) => {
+const FormWrapper = ({ bottomText, children, formTitle }) => {
   return (
-    <div className={styles.superContainer}>
-        <div className={styles.loginBox}>
-          <Logo size="medium" />
-          <div className={styles.formTitle}>{formTitle}</div>
-          <div className={styles.formDescription}>{formDescription}</div>
-          {children}
-          <p className={styles.formBottomText}>
-            {bottomText}
-          </p>
-        </div>
+    <div className="superContainer">
+      <div className="loginBox">
+        <Logo size="medium" />
+        <div className="formTitle">{formTitle}</div>
+        {children}
+      </div>
+      <p className="formBottomText">{bottomText}</p>
     </div>
   );
 };
@@ -26,11 +18,11 @@ const FormWrapper = ({
 FormWrapper.propTypes = {
   bottomText: PropTypes.string,
   children: PropTypes.object,
-  formTitle: PropTypes.string,  
+  formTitle: PropTypes.string,
 };
 
 FormWrapper.defaultProps = {
-  bottomText: 'If have problem in login contact developer!',
+  bottomText: 'If you have problem in login or forget password, please contact to developer!',
   children: {},
   formTitle: 'Admin Login',
 };

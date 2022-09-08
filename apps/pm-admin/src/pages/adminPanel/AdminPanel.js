@@ -1,21 +1,14 @@
-import { UserInfoCard } from '../../components';
-import { useOktaAuth } from '@okta/okta-react';
+import react, { useState, useEffect } from 'react';
+import { UserItemsList } from '../../components';
 
 function AdminPanel() {
+  const heading = {
+    fontSize: '22px',
+    color: '#3f3f3f',
+    fontWeight: '700',
+  };
 
-  // const { oktaAuth, authState } = useOktaAuth();
-
-  // console.log(authState);
-  // console.log(oktaAuth);
-
-  // return <div>Recommendations</div>;
-  return (<>
-  <h1>Hi this is from vinit admin panel</h1>
-  {/* <UserInfoCard />
-  <UserInfoCard />
-  <UserInfoCard /> */}
-  </>
-  );
+  return <UserItemsList className="userItemsList" />;
 }
 
 export default AdminPanel;

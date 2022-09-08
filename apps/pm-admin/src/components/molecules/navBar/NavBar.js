@@ -1,4 +1,4 @@
-import { Logo } from '../../../../../../libs/pm-ui/src/lib/components';
+import { Logo } from '../../atoms';
 import styles from './navBar.module.scss';
 
 const NavBar = () => {

@@ -1,13 +1,10 @@
 import { useOktaAuth } from '@okta/okta-react';
 import { FormWrapper, LoginForm } from '../../components';
-// import { showNotification } from '@pm/pm-ui';
-import styles from './login.module.scss';
+import { showNotification } from '@pm/pm-ui';
+import './adminLogin.css';
 
 function AdminLogin() {
   const { oktaAuth, authState } = useOktaAuth();
-
-  console.log(authState);
-  console.log(oktaAuth);
 
   //login hander
   const loginHandler = (password, email) =>
@@ -25,8 +22,7 @@ function AdminLogin() {
           });
         }
       })
-      .catch((err) => console.log(err));
-      // showNotification('error', 'email or password incorrect')
+      .catch((err) => showNotification('error', 'email or password incorrect'));
 
   if (!authState) {
     return <div>Loading...</div>;
@@ -34,7 +30,7 @@ function AdminLogin() {
   if (!authState.isAuthenticated) {
     return (
       <FormWrapper
-        bottomText="If have problem in login contact developer!"
+        bottomText="If you have problem in login or forget password, please contact to developer!"
         formTitle="Admin Login"
         formDescription="Login to your account!"
       >

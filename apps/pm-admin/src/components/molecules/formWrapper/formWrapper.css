@@ -1,26 +1,20 @@
 .superContainer {
   display: flex;
-  justify-content: center;
   width: 100%;
-  height: 100vh;
-  overflow-y: hidden;
-  margin-top: 200px;
-
-  :global {
-    .ant-form-item-explain-error {
-      color: #1f1818;
-      font-size: 1.2rem;
-      padding: 0.4rem 0 0.4rem 0.8rem;
-      width: 256px;
-    }
-  }
-
+  flex-direction: column;
+  align-items: center;
+  margin-top: 180px;
 }
 
-.loginBox {
-  & p {
+.ant-form-item-explain-error {
+  color: #1f1818;
+  font-size: 1.2rem;
+  padding: 0.4rem 0 0.4rem 0.8rem;
+  width: 256px;
+}
+
+.loginBox > p{
     text-align: center;
-  }
 }
 
 .logInLogo {
@@ -35,7 +29,7 @@
 .formTitle {
   color: #5b63e6;
   font-weight: 600;
-  margin: 25px 0px 6px 0px;
+  margin: 10px 0px 14px 0px;
   font-size: 20px;
 }
 

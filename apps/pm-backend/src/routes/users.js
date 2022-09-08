@@ -7,6 +7,7 @@ const {
   updateUserProfile,
   oktaSignUp,
   searchProfiles,
+  getAllUsersProfiles
 } = require('../controllers/users');
 
 const router = express.Router();
@@ -19,6 +20,9 @@ router.route('/oktasignup').post(oktaSignUp);
 // router.route('/').post(registerUserProfile);
 router.route('/userprofile/:id').get(getUserProfile);
 router.route('/imageupload/:id').post(uploadImageToMongoDb);
+
+//it was running for the admin
+// router.route('/getallusers').get(getAllUsersProfiles)
 
 // Update / Delete
 router.route('/:userId').get(getUserProfile).put(updateUserProfile);
