@@ -55,7 +55,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
     // not using await will cause breakdown of express server
     // whenever there is any error while trying to create user in Okta.
   } catch (err) {
-     return next(new CustomErrorResponse(err, 404));
+    return next(new CustomErrorResponse(err, 404));
     // res.send({
     //   err: err,
     // });
@@ -71,7 +71,7 @@ async function findUserByOktaId(oktaId) {
 }
 
 // @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/:userId
+// @route  GET /api/v1/users/:id
 // @access Private
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
@@ -82,7 +82,6 @@ exports.getUserProfile = asyncHandler(async (req, res, next) => {
   }
   res.status(200).json({ currentUser });
 });
-
 
 //to upload image in mongodb
 exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
@@ -105,40 +104,6 @@ exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
 });
 
 /** ----------------------------------------- */
-
-//KARTHIKS CODE--------------------------------
-// exports.updateUserProfile = asyncHandler(async (req, res, next) => {
-//   const currentUserId = req.params.userId;
-//   if (!currentUserId) {
-//     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
-//   }
-//   await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
-
-//   // const user = await findUserByOktaId(currentUserId);
-//   // const mongoId = user[0]._id.toString()
-//   // console.log(mongoId);
-
-//   // Remove properties with 'undefined' & 'null' values before storing in DB
-//   // const data = req.body;
-
-//   // Object.keys(data).forEach((key) => {
-//   //   if (data[key] === undefined || data[key] === null) {
-//   //     delete data[key];
-//   //   }
-//   // });
-
-//   //  await User.findByIdAndUpdate(mongoId, data, {
-//   //   new: true,
-//   //   runValidators: true,
-//   // });
-
-//   res.status(200).json({
-//     success: true,
-//     message: 'Updated User successfully',
-//     data: 'user',
-//   });
-// });
-
 exports.updateUserProfile = asyncHandler(async (req, res, next) => {
   const currentUserId = req.params.userId;
 
@@ -192,9 +157,9 @@ exports.searchProfiles = asyncHandler(async (req, res, next) => {
 });
 
 //for the admin part
-exports.getAllUsersProfiles = asyncHandler(async (req, res, next) => {
+// exports.getAllUsersProfiles = asyncHandler(async (req, res, next) => {
 
-  const allUsers = await User.find();
+//   const allUsers = await User.find();
 
-  res.status(200).json({ user: allUsers });
-})
+//   res.status(200).json({ user: allUsers });
+// })

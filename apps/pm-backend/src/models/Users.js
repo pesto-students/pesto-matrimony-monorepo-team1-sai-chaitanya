@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: [true, 'Email is missing!'],
+    required: [true, 'Gender is missing!'],
     trim: true,
   },
   email: {
@@ -62,10 +62,12 @@ const UserSchema = new mongoose.Schema({
   age: {
     type: Number,
     trim: true,
+    default: 21,
   },
   height: {
     type: Number,
     trim: true,
+    default: 140,
   },
   weight: {
     type: Number,
@@ -83,8 +85,8 @@ const UserSchema = new mongoose.Schema({
   },
   marriageStatus: {
     type: String,
-    default: 'Never Married',
-    enum: ['Never Married', 'Awaiting Divorce', 'Divorced', 'Widowed'],
+    trim: true,
+    default: '',
   },
   citizenship: {
     type: String,
@@ -196,7 +198,6 @@ const UserSchema = new mongoose.Schema({
   religion: {
     type: String,
     trim: true,
-    default: '',
   },
 
   zodiacSign: {

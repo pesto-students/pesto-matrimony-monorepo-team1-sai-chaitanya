@@ -1,14 +1,7 @@
 const express = require('express');
 
-const {
-  getUserProfile,
-  registerUserProfile,
-  uploadImageToMongoDb,
-  updateUserProfile,
-  oktaSignUp,
-  searchProfiles,
-  getAllUsersProfiles
-} = require('../controllers/users');
+
+const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles } = require('../controllers/users');
 
 const router = express.Router();
 
@@ -16,8 +9,6 @@ const router = express.Router();
 
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
-
-// router.route('/').post(registerUserProfile);
 router.route('/userprofile/:id').get(getUserProfile);
 router.route('/imageupload/:id').post(uploadImageToMongoDb);
 
@@ -37,5 +28,7 @@ router.route('/search').get(searchProfiles);
 // updateUserProfile will only be used to update Profile details...
 // NOT messages... although it is possible...
 // For message flow... a separate route (conversations) is present
+// Update
+router.route('/:userId').put(updateUserProfile);
 
 module.exports = router;

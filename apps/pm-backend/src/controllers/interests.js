@@ -4,22 +4,23 @@ const CustomErrorResponse = require('../utilities/errorResponse');
 const mongoose = require('mongoose');
 
 // @desc   Send a New Interest
-// @route  POST /api/v1/interest?sender=userID1&receiver=userID2
+// @route  POST /api/v1/interests?sender=oktaUserId1&receiver=oktaUserId2
 // @access Private
 
 // In One go...the interest sent MUST be in "interestsSent" array of Sender and "interestsReceived" array of Receiver.
 // Otherwise, consider that attempt to send interest as failure. So a MongoDB/Mongoose Transaction must be used.
 
 exports.sendInterest = asyncHandler(async (req, res, next) => {
-  const userID1 = req.query.sender;
-  const userID2 = req.query.receiver;
+  const oktaUserId1 = req.query.sender;
+  const oktaUserId2 = req.query.receiver;
   const session = await User.startSession();
 
   try {
     session.startTransaction();
 
-    const user1 = await User.findById(userID1);
-    const user2 = await User.findById(userID2);
+    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
+    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
+
     /**=============================================================== */
     // User1 wants to send Interest to User2
 
@@ -31,7 +32,7 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
 
     // Checking interestsSent and interestsReceived array of User1
     const didUser1AlreadySendInterestToUser2 = user1.interestsSent.some(
-      (interest) => String(interest.interestReceiverId) === userID2
+      (interest) => String(interest.interestReceiverId) === oktaUserId2
     );
 
     if (didUser1AlreadySendInterestToUser2) {
@@ -41,7 +42,7 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
     }
 
     const didUser1AlreadyReceiveInterestFromUser2 = user1.interestsReceived.some(
-      (interest) => String(interest.interestSenderId) === userID2
+      (interest) => String(interest.interestSenderId) === oktaUserId2
     );
 
     if (didUser1AlreadyReceiveInterestFromUser2) {
@@ -104,7 +105,7 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Accept an Interest
-// @route  PUT /api/v1/interest?sender=userID1&receiver=userID2
+// @route  PUT /api/v1/interests/accept?sender=oktaUserId1&receiver=oktaUserId2
 // @access Private
 
 // In One go... isAccepted property in interest object must be updated to "true" for
@@ -114,15 +115,15 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
 // User2 can accept interest. Because User2 "received" the interest.
 // When he does that... update isAccepted to "true" for both
 exports.acceptInterest = asyncHandler(async (req, res, next) => {
-  const userID1 = req.query.sender;
-  const userID2 = req.query.receiver;
+  const oktaUserId1 = req.query.sender;
+  const oktaUserId2 = req.query.receiver;
   const session = await User.startSession();
 
   try {
     session.startTransaction();
 
-    const user1 = await User.findById(userID1);
-    const user2 = await User.findById(userID2);
+    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
+    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
     /**=============================================================== */
 
     user2.interestsReceived = user2.interestsReceived.map((interest) => {
@@ -165,8 +166,8 @@ exports.acceptInterest = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc   Accept an Interest
-// @route  PUT /api/v1/interest/decline?sender=userID1&receiver=userID2
+// @desc   Decline an Interest
+// @route  PUT /api/v1/interests/decline?sender=oktaUserId1&receiver=oktaUserId2
 // @access Private
 
 // Receiver of an interest can decline an interest.
@@ -174,15 +175,15 @@ exports.acceptInterest = asyncHandler(async (req, res, next) => {
 // So, update isRejected to "true" in interest object in interestsReceived array of User2
 // Also, update isRejected to "true" in interest object in interestsSent array of User1
 exports.declineInterest = asyncHandler(async (req, res, next) => {
-  const userID1 = req.query.sender;
-  const userID2 = req.query.receiver;
+  const oktaUserId1 = req.query.sender;
+  const oktaUserId2 = req.query.receiver;
   const session = await User.startSession();
 
   try {
     session.startTransaction();
 
-    const user1 = await User.findById(userID1);
-    const user2 = await User.findById(userID2);
+    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
+    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
     /**=============================================================== */
 
     user2.interestsReceived = user2.interestsReceived.map((interest) => {

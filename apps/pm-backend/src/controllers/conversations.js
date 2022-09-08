@@ -2,24 +2,23 @@ const asyncHandler = require('../middleware/async');
 const User = require('../models/Users');
 const CustomErrorResponse = require('../utilities/errorResponse');
 const mongoose = require('mongoose');
-// const updateConversations = require("../utilities/mongooseTransaction");
 
 // @desc   Send a New Message
 // @route  POST /api/v1/conversations?receiver="receiverID"&sender="senderID"
-// @access Public
+// @access Private
 // In One go...the message sent MUST be in "conversations" array of both user1 and user2.
 // Otherwise, consider that attempt to send message as failure. So a MongoDB/Mongoose Transaction must be used.
 exports.sendMessage = asyncHandler(async (req, res, next) => {
-  const userID1 = req.query.sender;
-  const userID2 = req.query.receiver;
+  const oktaUserId1 = req.query.sender;
+  const oktaUserId2 = req.query.receiver;
   // I want the message object to have SAME _id in both users
   // This will help me to enable read receipts
 
   const message = {
     _id: new mongoose.Types.ObjectId(),
     message: req.body.message,
-    messageSenderId: userID1,
-    messageReceiverId: userID2,
+    messageSenderId: oktaUserId1,
+    messageReceiverId: oktaUserId2,
     isRead: false,
   };
 
@@ -28,8 +27,8 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const user1 = await User.findById(userID1);
-    const user2 = await User.findById(userID2);
+    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
+    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
 
     /**=============================================================== */
     // User1 wants to send Message to User2
@@ -39,11 +38,11 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     // STEP 1
     // Determine if it is User1 who first sent the interest.
     const didUser1SendInterestToUser2 = user1.interestsSent.some(
-      (interest) => String(interest.interestReceiverId) === userID2
+      (interest) => String(interest.interestReceiverId) === oktaUserId2
     );
     // Determine if it is User1 who first received the interest.
     const didUser1ReceiveInterestFromUser2 = user1.interestsReceived.some((interest) =>
-      String(interest.interestSenderId === userID2)
+      String(interest.interestSenderId === oktaUserId2)
     );
     // If User1 is the first sender, then interest object will be in interestsSent Array
     // If User1 is the first receiver, then interest object will be in interestsReceived Array
@@ -51,7 +50,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     if (didUser1SendInterestToUser2) {
       // if user1 is the interest sender. So update interest object in interestsSent array of user 1
       user1.interestsSent = user1.interestsSent.map((interest) => {
-        if (String(interest.interestReceiverId) === userID2) {
+        if (String(interest.interestReceiverId) === oktaUserId2) {
           interest.conversations.push(message);
         }
         return interest;
@@ -59,7 +58,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
       // if user1 is the interest sender, then user2 is interest receiver.
       // so interest object will be in user2's interestsReceived array
       user2.interestsReceived = user2.interestsReceived.map((interest) => {
-        if (String(interest.interestSenderId) === userID1) {
+        if (String(interest.interestSenderId) === oktaUserId1) {
           interest.conversations.push(message);
         }
         return interest;
@@ -67,7 +66,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     } else if (didUser1ReceiveInterestFromUser2) {
       // user1 is interest receiver. Hence, update interest object in interestsReceived array of user1
       user1.interestsReceived = user1.interestsReceived.map((interest) => {
-        if (String(interest.interestSenderId) === userID2) {
+        if (String(interest.interestSenderId) === oktaUserId2) {
           interest.conversations.push(message);
         }
         return interest;
@@ -75,7 +74,7 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
       // if user1 is the interest receiver.
       // then user2 is the interest sender. So update interest object in interestsSent array of user2
       user2.interestsSent = user2.interestsSent.map((interest) => {
-        if (String(interest.interestReceiverId) === userID1) {
+        if (String(interest.interestReceiverId) === oktaUserId1) {
           interest.conversations.push(message);
         }
         return interest;
@@ -106,27 +105,27 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Mark all messages between two users as "Read"
-// @route  PUT /api/v1/conversations?user1="userID1"&user2="userID2"
+// @route  PUT /api/v1/conversations?user1="oktaUserId1"&user2="oktaUserId2"
 // @access Private
 exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
-  const userID1 = req.query.user1;
-  const userID2 = req.query.user2;
+  const oktaUserId1 = req.query.user1;
+  const oktaUserId2 = req.query.user2;
 
   const session = await User.startSession();
   try {
     session.startTransaction();
 
-    const user1 = await User.findById(userID1);
-    const user2 = await User.findById(userID2);
+    const user1 = await User.findById(oktaUserId1);
+    const user2 = await User.findById(oktaUserId2);
 
     // STEP 1
     // Determine if it is User1 who first sent the interest.
     const didUser1SendInterestToUser2 = user1.interestsSent.some(
-      (interest) => String(interest.interestReceiverId) === userID2
+      (interest) => String(interest.interestReceiverId) === oktaUserId2
     );
     // Determine if it is User1 who first received the interest.
     const didUser1ReceiveInterestFromUser2 = user1.interestsReceived.some((interest) =>
-      String(interest.interestSenderId === userID2)
+      String(interest.interestSenderId === oktaUserId2)
     );
 
     if (didUser1SendInterestToUser2) {
