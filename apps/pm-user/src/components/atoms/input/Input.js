@@ -1,7 +1,7 @@
 import { Input as AntdInput } from 'antd';
 const InputPassword = AntdInput.Password;
 import PropTypes from 'prop-types';
-import styles from './input.module.scss';
+import styles from './Input.module.scss';
 
 const Input = ({ className, placeholder, prefix, size, type, ...restProps }) => {
   return (

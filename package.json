@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/apps/pm-backend/main.js"
+    "start": "node dist/apps/pm-backend/main.js",
+    "build:pm-user": "npx nx build pm-user",
+    "build:pm-admin": "npx nx build pm-admin"
   },
   "private": true,
   "dependencies": {
