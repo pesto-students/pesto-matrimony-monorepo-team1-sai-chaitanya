@@ -22,7 +22,6 @@ router.route('/userprofile/:id').get(getUserProfile);
 router.route('/:userId').get(getUserProfile).put(updateUserProfile);
 
 // Fetch User Profiles
-router.route('/search').get(searchProfiles);
 
 // Have to create another route & controller function for...
 // handling search and filters with pagination..

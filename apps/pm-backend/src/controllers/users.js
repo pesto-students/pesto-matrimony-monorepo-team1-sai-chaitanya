@@ -65,12 +65,10 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/:userId
+// @route  GET /api/v1/users/:id
 // @access Private
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
-  const params = req.params;
-
-  const oktaId = params.id;
+  const oktaId = req.params.id;
 
   const user = await User.find({ oktaUserId: oktaId });
 
@@ -124,34 +122,3 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
   });
 });
 /** ----------------------------------------- */
-
-// @desc   Search Profiles
-// @route  GET /api/v1/users/search/
-// @access Private
-
-exports.searchProfiles = asyncHandler(async (req, res, next) => {
-  const searchCriteria = req.body;
-
-  // NOTE : WORK IN PROGRESS....
-
-  // Remove properties with 'undefined' values before perfmorming search in DB
-  Object.keys(searchCriteria).forEach((key) => {
-    if (searchCriteria[key] === undefined) {
-      delete searchCriteria[key];
-    }
-  });
-
-  let matchingProfiles = await User.find({ name: 'john', age: { $gte: 18 } }).exec();
-
-  console.log(matchingProfiles);
-
-  if (matchingProfiles.length < 1) {
-    return next(new CustomErrorResponse(`Could not find matching profiles`, 400));
-  }
-
-  res.status(200).json({
-    success: true,
-    message: 'Updated User successfully',
-    data: matchingProfiles,
-  });
-});

@@ -141,7 +141,7 @@ const EditPersonalDetails = () => {
   };
 
   const onFinish = (value) => {
-    value.age = value.age[0];
+    value.age = value.age[0];  
     value.height = value.height[0];
     value.weight = value.weight[0];
     Object.keys(value).forEach((key) => {

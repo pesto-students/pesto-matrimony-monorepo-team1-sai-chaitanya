@@ -90,7 +90,9 @@ const SearchProfiles = () => {
   };
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log('Success:');
+    console.log(values);
+    console.log(JSON.stringify(values));
     setDisplayText('Loading... Please wait...');
     // Send this values to DB and get response....
     /// Save those  matching profiles (matchesData) in an array.
@@ -188,7 +190,7 @@ const SearchProfiles = () => {
                   }}
                 />
               </Form.Item>
-              <Form.Item label="Status" name="maritalStatus">
+              <Form.Item label="Status" name="marriageStatus">
                 <Select bordered className="" defaultValue="Any">
                   <Option value="Never Married">Never Married</Option>
                   <Option value="Widowed">Widowed</Option>
@@ -251,7 +253,7 @@ const SearchProfiles = () => {
                   }}
                 />
               </Form.Item>
-              <Form.Item label="Country" name="Country">
+              <Form.Item label="Country" name="country">
                 <Select bordered className="" defaultValue="Any" onChange={handleCountryChange}>
                   <Option value="India">India</Option>
                   <Option value="United States">USA</Option>
