@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from "../../../redux/actions/Actions";
-import _ from "lodash";
-import { useHistory } from "react-router-dom";
+import { updateUserProfile } from '../../../redux/actions/Actions';
+import _ from 'lodash';
+import { useHistory } from 'react-router-dom';
 import { Button, Form, SaveOutlined, Select, SimpleSelect, Slider } from '../../atoms';
 import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
@@ -20,23 +20,24 @@ const { Option } = SimpleSelect;
 const EditPartnerPreferences = () => {
   const [minHeight, setMinHeight] = useState(MININUM_HEIGHT_IN_CMS);
   const [maxHeight, setMaxHeight] = useState(MAXIMUM_HEIGHT_IN_CMS);
-  const [ userProfileData, setUserProfileData ] = useState({});
+  const [userProfileData, setUserProfileData] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   // getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
 
   useEffect(() => {
-    if(!_.isEmpty(userProfileData)){
-      dispatch(updateUserProfile(oktaUserId, userProfileData))
+    if (!_.isEmpty(userProfileData)) {
+      dispatch(updateUserProfile(oktaUserId, userProfileData));
     }
   }, [userProfileData]);
 
-  const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
+  const responseData = useSelector((state) => state.updateUserProfileReducer.data || {});
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
+  console.log(userProfileInfo);
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);
@@ -109,7 +110,6 @@ const EditPartnerPreferences = () => {
   };
 
   const onFinish = (value) => {
-
     setUserProfileData(value);
 
     Object.keys(value).forEach((key) => {
@@ -121,8 +121,7 @@ const EditPartnerPreferences = () => {
     console.log(JSON.stringify(value));
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
-    history.push("/profile");
-
+    history.push('/profile');
   };
   const onFinishFailed = () => {
     showNotification('error', 'Error Saving Values...', 'Please Try again later.');
@@ -138,7 +137,14 @@ const EditPartnerPreferences = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item label="Age Range" name="partnerAgeRange" initialValue={userProfileInfo?.partnerAgeRange}>
+        <Form.Item
+          label="Age Range"
+          name="partnerAgeRange"
+          initialValue={[
+            userProfileInfo?.partnerAgeRange?.[0] || MINIMUM_ALLOWED_AGE,
+            userProfileInfo?.partnerAgeRange?.[1] || MAXIMUM_ALLOWED_AGE,
+          ]}
+        >
           <Slider
             range={{ draggableTrack: true }}
             min={MINIMUM_ALLOWED_AGE}
@@ -153,7 +159,10 @@ const EditPartnerPreferences = () => {
         <Form.Item
           label="Height Range"
           name="partnerHeightRange"
-          initialValue={userProfileInfo?.partnerHeightRange}
+          initialValue={[
+            userProfileInfo?.heightRange?.[0] || MININUM_HEIGHT_IN_CMS,
+            userProfileInfo?.heightRange?.[1] || MAXIMUM_HEIGHT_IN_CMS,
+          ]}
         >
           <Slider
             range={{ draggableTrack: true }}
@@ -167,7 +176,11 @@ const EditPartnerPreferences = () => {
             }}
           />
         </Form.Item>
-        <Form.Item label="Marital Status" name="partnerMaritalStatus" initialValue={userProfileInfo?.partnerMaritalStatus}>
+        <Form.Item
+          label="Marital Status"
+          name="partnerMaritalStatus"
+          initialValue={userProfileInfo?.partnerMaritalStatus}
+        >
           <Select bordered className="">
             <Option value="Never Married">Never Married</Option>
             <Option value="Widowed">Widowed</Option>
@@ -401,7 +414,14 @@ const EditPartnerPreferences = () => {
             <Option value="Others">Others</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Income (Lakhs/Yr)" name="partnerIncomeRange" initialValue={userProfileInfo?.partnerIncomeRange}>
+        <Form.Item
+          label="Income (Lakhs/Yr)"
+          name="partnerIncomeRange"
+          initialValue={[
+            userProfileInfo?.partnerIncomeRange?.[0] || MINIMUM_INCOME,
+            userProfileInfo?.partnerIncomeRange?.[1] || MAXIMUM_INCOME,
+          ]}
+        >
           <Slider
             range={{ draggableTrack: true }}
             min={MINIMUM_INCOME}
