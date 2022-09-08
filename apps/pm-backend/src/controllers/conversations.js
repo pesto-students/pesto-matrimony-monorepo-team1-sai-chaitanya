@@ -2,11 +2,10 @@ const asyncHandler = require('../middleware/async');
 const User = require('../models/Users');
 const CustomErrorResponse = require('../utilities/errorResponse');
 const mongoose = require('mongoose');
-// const updateConversations = require("../utilities/mongooseTransaction");
 
 // @desc   Send a New Message
 // @route  POST /api/v1/conversations?receiver="receiverID"&sender="senderID"
-// @access Public
+// @access Private
 // In One go...the message sent MUST be in "conversations" array of both user1 and user2.
 // Otherwise, consider that attempt to send message as failure. So a MongoDB/Mongoose Transaction must be used.
 exports.sendMessage = asyncHandler(async (req, res, next) => {

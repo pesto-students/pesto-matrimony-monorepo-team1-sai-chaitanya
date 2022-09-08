@@ -1,7 +1,6 @@
 const asyncHandler = require('../middleware/async');
 const User = require('../models/Users');
 const CustomErrorResponse = require('../utilities/errorResponse');
-const okta = require('@okta/okta-sdk-nodejs');
 
 const MINIMUM_HEIGHT_IN_CMS = 122;
 const MAXIMUM_HEIGHT_IN_CMS = 214;

@@ -4,7 +4,7 @@ const CustomErrorResponse = require('../utilities/errorResponse');
 const mongoose = require('mongoose');
 
 // @desc   Send a New Interest
-// @route  POST /api/v1/interest?sender=oktaUserId1&receiver=oktaUserId2
+// @route  POST /api/v1/interests?sender=oktaUserId1&receiver=oktaUserId2
 // @access Private
 
 // In One go...the interest sent MUST be in "interestsSent" array of Sender and "interestsReceived" array of Receiver.
@@ -105,7 +105,7 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Accept an Interest
-// @route  PUT /api/v1/interest?sender=oktaUserId1&receiver=oktaUserId2
+// @route  PUT /api/v1/interests/accept?sender=oktaUserId1&receiver=oktaUserId2
 // @access Private
 
 // In One go... isAccepted property in interest object must be updated to "true" for
@@ -167,7 +167,7 @@ exports.acceptInterest = asyncHandler(async (req, res, next) => {
 });
 
 // @desc   Decline an Interest
-// @route  PUT /api/v1/interest/decline?sender=oktaUserId1&receiver=oktaUserId2
+// @route  PUT /api/v1/interests/decline?sender=oktaUserId1&receiver=oktaUserId2
 // @access Private
 
 // Receiver of an interest can decline an interest.

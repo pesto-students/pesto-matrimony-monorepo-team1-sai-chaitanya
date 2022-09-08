@@ -3,8 +3,8 @@ const router = express.Router();
 
 const { toggleShortlist } = require('../controllers/shortlist');
 
-// '/' in this router is equivalent to  '/api/v1/search'
+// '/' in this router is equivalent to  '/api/v1/toggleShortlist'
 
-router.route('/').post(toggleShortlist);
+router.route('/').put(toggleShortlist);
 
 module.exports = router;
