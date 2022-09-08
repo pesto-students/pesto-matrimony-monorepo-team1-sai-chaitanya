@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/apps/pm-backend/main.js"
+    "start": "node dist/apps/pm-backend/main.js",
+    "build:pm-user": "npm --prefix pm-user run build",
+    "build:pm-admin": "npm --prefix pm-admin run build"
   },
   "private": true,
   "dependencies": {
