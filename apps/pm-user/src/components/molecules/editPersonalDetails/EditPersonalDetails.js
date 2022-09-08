@@ -111,7 +111,7 @@ const EditPersonalDetails = () => {
     setMinWeight(values[0]);
   };
 
-  const ageBoundaries = {
+  const ageMarker = {
     [`${minAge}`]: {
       label: `${minAge}`,
       style: {
@@ -121,7 +121,7 @@ const EditPersonalDetails = () => {
     },
   };
 
-  const heightBoundaries = {
+  const heightMarker = {
     [`${minHeight}`]: {
       label: `${cmToFeet(minHeight)}`,
       style: {
@@ -131,7 +131,7 @@ const EditPersonalDetails = () => {
     },
   };
 
-  const weightBoundaries = {
+  const weightMarker = {
     [`${minWeight}`]: {
       label: `${minWeight}`,
       style: {
@@ -190,7 +190,7 @@ const EditPersonalDetails = () => {
           range
           min={MINIMUM_ALLOWED_AGE}
           max={MAXIMUM_ALLOWED_AGE}
-          marks={ageBoundaries}
+          marks={ageMarker}
           step={1}
           onChange={handleAgeSliderChange}
           style={{
@@ -203,7 +203,7 @@ const EditPersonalDetails = () => {
           range
           min={MININUM_HEIGHT_IN_CMS}
           max={MAXIMUM_HEIGHT_IN_CMS}
-          marks={heightBoundaries}
+          marks={heightMarker}
           step={1}
           onChange={handleHeightSliderChange}
           style={{
@@ -216,7 +216,7 @@ const EditPersonalDetails = () => {
           range
           min={MININUM_WEIGHT_IN_KG}
           max={MAXIMUM_WEIGHT_IN_KG}
-          marks={weightBoundaries}
+          marks={weightMarker}
           step={1}
           onChange={handleWeightSliderChange}
           style={{
