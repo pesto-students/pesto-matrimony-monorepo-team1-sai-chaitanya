@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/apps/pm-backend/main",
-    "test": "nx test"
+    "start": "node dist/apps/pm-backend/main"
   },
   "private": true,
   "dependencies": {
