@@ -7,7 +7,7 @@
     "build": "nx build",
     "test": "nx test",
     "postinstall": "if [ $SERVER_ENV ]; then npm run postinstall-pm-backend; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
-    "postinstall-pm-backend": "cd packages/server && npm install"
+    "postinstall-pm-backend": "cd apps/pm-backend && npm install --force"
   },
   "private": true,
   "dependencies": {
