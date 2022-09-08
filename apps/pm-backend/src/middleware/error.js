@@ -12,7 +12,7 @@ const errorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message, 400); // 400 = bad request
   }
 
-  if (err.code === "E0000001") {
+  if (err.code === 'E0000001') {
     const message = `password: This password was found in a list of commonly used passwords. Please try another password.`;
     error = new ErrorResponse(message, 400); // 400 = bad request
   }
@@ -24,7 +24,7 @@ const errorHandler = (err, req, res, next) => {
     error = new ErrorResponse(message.join(' & '), 400);
   }
 
-  res.status(error.statusCode || 500).json({
+  res.json({
     success: false,
     error: error.message || 'Server Error',
   });
