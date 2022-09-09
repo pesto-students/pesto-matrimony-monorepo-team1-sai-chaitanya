@@ -15,7 +15,7 @@
         "main": "apps/pm-user/src/main.js",
         "polyfills": "apps/pm-user/src/polyfills.js",
         "tsConfig": "apps/pm-user/tsconfig.app.json",
-        "assets": ["apps/pm-user/src/favicon.ico", "apps/pm-user/src/assets"],
+        "assets": ["apps/pm-user/src/favicon.ico", "apps/pm-user/src/assets", "apps/pm-user/src/netlify.toml"],
         "styles": ["apps/pm-user/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
