@@ -83,7 +83,7 @@ Following system requirements need to be met in order for this application to ru
  
  ---
  
- ## Tech Stack
+ ## Developers
  
   + Sai Karthik
   + Vinit Sharma
