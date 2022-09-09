@@ -1,7 +1,7 @@
 import { Input as AntdInput } from 'antd';
 const InputPassword = AntdInput.Password;
 import PropTypes from 'prop-types';
-import './input.css';
+import './Input.css';
 
 const Input = ({ className, placeholder, prefix, size, type, ...restProps }) => {
   return (
@@ -9,8 +9,8 @@ const Input = ({ className, placeholder, prefix, size, type, ...restProps }) => 
       {...restProps}
       className="antdInput"
       style={{
-        width: "300px",
-        borderRadius: "15px"
+        width: '300px',
+        borderRadius: '15px',
       }}
       placeholder={placeholder}
       type={type}
@@ -36,5 +36,4 @@ Input.defaultProps = {
   type: 'text',
 };
 
-export default  Input ;
-
+export default Input;

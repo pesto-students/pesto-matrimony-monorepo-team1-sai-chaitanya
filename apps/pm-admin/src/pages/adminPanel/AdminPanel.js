@@ -2,6 +2,8 @@ import react, { useState, useEffect } from 'react';
 import { UserItemsList } from '../../components';
 
 function AdminPanel() {
+
+  console.log("hi");
   const heading = {
     fontSize: '22px',
     color: '#3f3f3f',
