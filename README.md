@@ -1,104 +1,94 @@
-## Notes:
+# Pesto Matrimony:
 
-#### To run all apps at once, use any ONE command shown below (during development)
+## In one line,
 
-`nx run-many --target=serve --projects=pm-admin,pm-user,pm-backend --parallel=true`
+Pesto Matrimony is a match-making service. A user registered with us can search for a life partner based on personal preferences.
 
-`npx nx run pm-user:runAllApps`
+## Who is this for? (Persona)
 
-`nx run pm-user:runAllApps`
+| Roles | Who are they? | Primary Goal(s) |
+|     :---:    |     :---      |     :---     |
+| End User     | (a) A Prospective Bride/ Groom </br> (b)Parent(s) </br> (c) Friend/Relative </br> (d) Client of Bride/Groom     | (a) To register the profile of a bride/groom. </br> (b) To search for prospects based on preferences. </br> (c) To interact (message/live chat)with prospects. </br> (d) Seek alliance. </br> (e) Contact Admin for any service-related problems. |
+| Admin    | A management-level employee of our organization. | An admin addresses problems faced by end-users. | 
 
-pm-user (React App) runs on port 3331 <br/>
-pm-admin (React App) runs on port 3332 <br/>
-pm-backend (Express App) runs on port 3333
+## How do they Benefit?
+There are many matchmaking services in the market. Superficially, it may appear that a central matchmaking service having prospective brides & grooms from all nationalities, religions/communities is enough, but this one-size fits all approach is over-optimistic and impractical. It would work only for a small percentage who are seeking alliances without restrictions on mother tongue, religion, nationality, etc. This is not the case for the majority.
 
-# Pesto Matrimony
+## How is this different?
+Indian society is multi-cultural and is heavily influenced by traditions. Choosing a partner outside one’s own religion… or even from a different sect of the same community is uncommon. Hence, every major matchmaking service created separate portals based on the mother tongue, religion, sect, etc of users. To serve the current demands of Indian society is paramount for any matchmaking service to succeed.
 
-This project was generated using [Nx](https://nx.dev).
+---
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## Live Links
+ 
++ [User Module](https://pestomatrimony.netlify.app/login) </br>
++ [Admin Module](https://pestomatrimony-admin.netlify.app/admin-login)
 
-🔎 **Smart, Fast and Extensible Build System**
+---
 
-## Adding capabilities to your workspace
+## Usage
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+This Project has two modules accompanied by backend at https://github.com/pesto-students/pesto-matrimony-monorepo-team1-sai-chaitanya.
+1. User Module</br>
+2. Admin Module</br>
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+Running this project should be very easy, quick and automatic using monorepo.
++ Run **npm i** to install all dependencies.</br>
++ Please ensure to run backend server first.</br>
++ To run backend server use command "nx run pm-backend:serve" in the respected folder.</br>
++ To run pm-user server use command "nx run pm-user:serve" in the respected folder.</br>
++ To run pm-admin server use command "nx run pm-admin:serve" in the respected folder.</br>
++ Open http://localhost:3000 with your browser to see the result.</br>
 
-Below are our core plugins:
+***NOTE:*** *Please checkout dev-work branch to run locally.*
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+---
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+## System Requirements
+Following system requirements need to be met in order for this application to run
 
-## Generate an application
++ Node.js 12.0 or later
++ MacOS, Windows, and Linux are supported
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+---
 
-> You can use any of the plugins above to generate applications as well.
+## Environment
+ + `REACT_APP_NODE_ENV` : Node Environment development | staging | production. </br>
+ + `REACT_APP_CLOUDINARY_CLOUD_NAME` : Cloudinary Name and Presets. </br>
+ + `OKTA_DEV_ACCOUNT` : Okta developer account key and token. </br>
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+---
 
-## Generate a library
+## Designs
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+### Wireframes v1.0:
+ + User Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
+ + Admin Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
+###  Wireframes v2.0: </br>
+ + User Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
+ + Admin Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
+### HLD </br>
+ + Design Link v1.0: [HLD](https://miro.com/app/board/uXjVOjzZcjw=/) </br>
+ + Design Link v2.0: [HLD](https://miro.com/app/board/uXjVOjzZcjw=/) </br>
+ 
+ ---
+ 
+## Tech Stack
+ + Frontend- React, Redux. </br>
+ + Backend- NodeJS, Express. </br>
+ + Deployment- Netlify, Heroku, CI/CD. </br>
+ + Database- Mongo DB </br>
+ + Authentication- Okta. </br>
+ + Tools- Version Control System (GIT), Github, Cloudinary. </br>
+ 
+ ---
+ 
+ ## Tech Stack
+ 
+  + Sai Karthik
+  + Vinit Sharma
+ 
 
-> You can also use any of the plugins above to generate libraries as well.
 
-Libraries are shareable across libraries and applications. They can be imported from `@pm/mylib`.
 
-## Development server
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
