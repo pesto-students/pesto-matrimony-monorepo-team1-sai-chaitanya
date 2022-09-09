@@ -2,6 +2,7 @@ import { ActionTypes } from '../constants';
 import axios from 'axios';
 // import Apis from "../../apis";
 let mongoIdOfLoggedInUser = '';
+
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
     try {

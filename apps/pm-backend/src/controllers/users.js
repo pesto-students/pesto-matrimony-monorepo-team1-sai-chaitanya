@@ -64,7 +64,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
 
 //find user in mongodb by oktaId
 async function findUserByOktaId(oktaId) {
-  const currentUser = await User.find({ oktaUserId: oktaId });
+  const currentUser = await User.find({ oktaUserId: oktaId })
   // console.log(currentUser);
   // console.log(currentUser[0]._id.toString());
   return currentUser;
