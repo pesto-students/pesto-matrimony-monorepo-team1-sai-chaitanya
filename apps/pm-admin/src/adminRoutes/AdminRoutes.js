@@ -37,7 +37,6 @@ console.log(AdminPanel);
     <Switch>
       <Route  path={PATHS.ADMIN_LOGIN} component={AdminLogin} />
       <Route  path={PATHS.LOGIN_CALLBACK} component={LoginCallback} />
-      
       <SecureRoute path="*" component={AdminSecureRoutes} />
     </Switch>
     </Security>

@@ -652,11 +652,11 @@ const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 // @desc   Register a new Profile
 // @route  POST /api/v1/users/
 // @access Public
-exports.registerUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    // connect with okta here ?!
-    const user = yield User.create(req.body);
-    res.status(201).json({ success: true, message: 'New user is created.', data: user });
-}));
+// exports.registerUserProfile = asyncHandler(async (req, res, next) => {
+//   // connect with okta here ?!
+//   const user = await User.create(req.body);
+//   res.status(201).json({ success: true, message: 'New user is created.', data: user });
+// });
 /** ----------------------------------------- */
 //creating user inside mongodb with oktaInformation.
 const createUserInMongoDB = (mongoUser) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
@@ -671,7 +671,7 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
     });
     const body = req.body;
     try {
-        yield createUserInOkta();
+        // await createUserInOkta();
         function createUserInOkta() {
             return tslib_1.__awaiter(this, void 0, void 0, function* () {
                 const response = yield client.createUser(body);
@@ -693,14 +693,13 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
             });
         }
         yield createUserInOkta();
-        // not using await will cause breakdown of express server
-        // whenever there is any error while trying to create user in Okta.
     }
     catch (err) {
-        return next(new CustomErrorResponse(err, 404));
-        // res.send({
-        //   err: err,
-        // });
+        console.log(err);
+        // return next(new CustomErrorResponse(err, 404));
+        res.send({
+            err: err,
+        });
     }
 }));
 //find user in mongodb by oktaId
@@ -1381,7 +1380,6 @@ app.use('/api/v1/toggleShortlist', toggleShortlist);
 app.use('/api/v1/users', users);
 // error Handler
 app.use(errorHandler);
-console.log(process.env.PORT);
 const server = app.listen(process.env.PORT || 8000, console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${"development".toUpperCase()}`));
 // Error in connecting to MongoDB triggers unhandledRejection at global level
 // That is being handled here. This stops server if MongoDB is NOT connected.

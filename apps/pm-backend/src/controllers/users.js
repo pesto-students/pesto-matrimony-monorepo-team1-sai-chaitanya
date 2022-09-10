@@ -7,11 +7,11 @@ const okta = require('@okta/okta-sdk-nodejs');
 // @route  POST /api/v1/users/
 // @access Public
 
-exports.registerUserProfile = asyncHandler(async (req, res, next) => {
-  // connect with okta here ?!
-  const user = await User.create(req.body);
-  res.status(201).json({ success: true, message: 'New user is created.', data: user });
-});
+// exports.registerUserProfile = asyncHandler(async (req, res, next) => {
+//   // connect with okta here ?!
+//   const user = await User.create(req.body);
+//   res.status(201).json({ success: true, message: 'New user is created.', data: user });
+// });
 /** ----------------------------------------- */
 
 //creating user inside mongodb with oktaInformation.
@@ -28,7 +28,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   });
   const body = req.body;
   try {
-    await createUserInOkta();
+    // await createUserInOkta();
     async function createUserInOkta() {
       const response = await client.createUser(body);
 
@@ -51,14 +51,16 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         res: response,
       });
     }
+    
     await createUserInOkta();
-    // not using await will cause breakdown of express server
-    // whenever there is any error while trying to create user in Okta.
+    
   } catch (err) {
-    return next(new CustomErrorResponse(err, 404));
-    // res.send({
-    //   err: err,
-    // });
+    console.log(err);
+    // return next(new CustomErrorResponse(err, 404));
+
+    res.send({
+      err: err,
+    });
   }
 });
 
