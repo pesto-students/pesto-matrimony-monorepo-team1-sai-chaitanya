@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { PATHS } from '../constants';
 import { AppSkeleton } from '../components';
 import {
   AdminPanel,
 } from '../pages';
 
-console.log(PATHS);
 
-function SecureRoutes() { 
+
+function AdminSecureRoutes() { 
   return (
     <AppSkeleton>
       <Switch>
@@ -20,4 +20,4 @@ function SecureRoutes() {
   );
 }
 
-export default SecureRoutes;
+export default AdminSecureRoutes;

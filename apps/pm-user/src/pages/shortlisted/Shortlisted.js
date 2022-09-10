@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { UserInfoCardsList } from '../../components';
 import { useOktaAuth } from '@okta/okta-react';
 import axios from 'axios';
+import styles from './shortlisted.module.scss';
 
 const Shortlisted = () => {
   const { authState } = useOktaAuth();
@@ -10,33 +11,30 @@ const Shortlisted = () => {
   //getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
 
-  let actualShortlistedMatcheshData = [];
+  // let actualShortlistedMatcheshData = [];
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`)
-      .then((res) => {
-        const idsOfShortlistedUsers = res.data.currentUser[0].shortlistedMatches;
-        idsOfShortlistedUsers.forEach((id) => {
-          axios
-            .get(`http://localhost:8000/api/v1/users/userprofile/${id}`)
-            .then((res) => {
-              actualShortlistedMatcheshData.push(res.data.currentUser[0]);
-            })
-            .catch((err) => console.log(err));
-        });
-      })
-      .then(() => {
-        console.log('finally... ', actualShortlistedMatcheshData);
-        setShortlistedMatchesData(actualShortlistedMatcheshData);
-      })
-      .catch((err) => console.log(err));
+    async function fetchProfilesData() {
+      const res = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`);
+      const shortlistedUserIds = res.data.currentUser[0].shortlistedMatches;
+      const userProfiles = await Promise.all(
+        shortlistedUserIds.map(async (id) => {
+          const response = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${id}`);
+          return response.data.currentUser[0];
+        })
+      );
+      setShortlistedMatchesData(userProfiles);
+    }
+    fetchProfilesData();
   }, []);
 
-  console.log(shortlistedMatchesData);
   return (
-    <div>
+    <div className={styles.shortlistedPage}>
       <h2>Shortlisted Profiles</h2>
-      <UserInfoCardsList matchesData={shortlistedMatchesData} />
+      {shortlistedMatchesData.length < 1 ? (
+        <p>There are no shortlisted matches.</p>
+      ) : (
+        <UserInfoCardsList matchesData={shortlistedMatchesData} />
+      )}
     </div>
   );
 };

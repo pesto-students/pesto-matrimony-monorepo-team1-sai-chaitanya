@@ -712,11 +712,11 @@ const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 // @desc   Register a new Profile
 // @route  POST /api/v1/users/
 // @access Public
-exports.registerUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    // connect with okta here ?!
-    const user = yield User.create(req.body);
-    res.status(201).json({ success: true, message: 'New user is created.', data: user });
-}));
+// exports.registerUserProfile = asyncHandler(async (req, res, next) => {
+//   // connect with okta here ?!
+//   const user = await User.create(req.body);
+//   res.status(201).json({ success: true, message: 'New user is created.', data: user });
+// });
 /** ----------------------------------------- */
 //creating user inside mongodb with oktaInformation.
 const createUserInMongoDB = (mongoUser) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
@@ -745,27 +745,27 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
                     gender,
                     email,
                 };
-                yield createUserInMongoDB(mongoUser);
-                res.send({
-                    res: response,
+                const resp = yield createUserInMongoDB(mongoUser);
+                res.status(200).send({
+                    res: resp,
                 });
             });
         }
         yield createUserInOkta();
-        // not using await will cause breakdown of express server
-        // whenever there is any error while trying to create user in Okta.
     }
     catch (err) {
-        return next(new CustomErrorResponse(err, 404));
-        // res.send({
-        //   err: err,
-        // });
+        // return next(new CustomErrorResponse(err, 404));
+        res.status(400).send({
+            err: err,
+        });
     }
 }));
 //find user in mongodb by oktaId
 function findUserByOktaId(oktaId) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const currentUser = yield User.find({ oktaUserId: oktaId });
+        // console.log(currentUser);
+        // console.log(currentUser[0]._id.toString());
         return currentUser;
     });
 }
@@ -807,10 +807,14 @@ exports.updateUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(v
     // const user = await findUserByOktaId(currentUserId);
     // const mongoId = user[0]._id.toString()
     // console.log(mongoId);
+    const body = req.body;
+    if (!body) {
+        return next(new CustomErrorResponse(`req.body is empty`, 400));
+    }
     if (!currentUserId) {
         return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
     }
-    yield User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
+    yield User.updateOne({ oktaUserId: currentUserId }, { $set: body });
     res.status(200).json({
         success: true,
         message: 'Updated User successfully',
@@ -1441,7 +1445,6 @@ app.use('/api/v1/users', users);
 console.log('mounting routes completed...');
 // error Handler
 app.use(errorHandler);
-console.log(process.env.PORT);
 const server = app.listen(process.env.PORT || 8000, console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${"development".toUpperCase()}`));
 // Error in connecting to MongoDB triggers unhandledRejection at global level
 // That is being handled here. This stops server if MongoDB is NOT connected.

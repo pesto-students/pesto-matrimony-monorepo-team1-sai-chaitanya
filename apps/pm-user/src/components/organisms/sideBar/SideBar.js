@@ -32,7 +32,7 @@ function SideBar() {
 
   console.log(userProfileInfo);
 
-  var imageFromServer;
+  var imageFromServer;          
 
   if(gender === "female"){
     imageFromServer = emptyArrayHolder?.length === 0 ? "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png" : images[0];

@@ -5,14 +5,16 @@ const UserInfoCardsList = ({ matchesData }) => {
   console.log(matchesData);
   const renderUserInfoCardsList = matchesData?.map((match) => {
     return (
-      <UserInfoCard
-        profileAboutMe={match.aboutMe}
-        profileAge={match.age}
-        profileId={match.oktaUserId}
-        profileLocation={match.location}
-        profileImages={match.images}
-        profileName={match.name}
-      />
+      <div key={Math.random()}>
+        <UserInfoCard
+          profileAboutMe={match.aboutMe}
+          profileAge={match.age}
+          profileId={match.oktaUserId}
+          profileLocation={match.location}
+          profileImages={match.images}
+          profileName={match.name}
+        />
+      </div>
     );
   });
   return <>{renderUserInfoCardsList}</>;

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../../redux/actions/Actions';
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
 const MINIMUM_INCOME = 0;
@@ -15,6 +16,7 @@ const EditEducationAndCareerDetails = () => {
   const dispatch = useDispatch();
   const [income, setIncome] = useState(0);
   const [userProfileData, setUserProfileData] = useState({});
+  const history = useHistory();
 
   // getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
@@ -43,7 +45,9 @@ const EditEducationAndCareerDetails = () => {
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
   const onFinish = (value) => {
-    setUserProfileData(value);
+
+    // console.log(value);
+    
     value.income = value.income[0];
     Object.keys(value).forEach((key) => {
       if (value[key] === undefined || value[key] === null) {
@@ -51,10 +55,12 @@ const EditEducationAndCareerDetails = () => {
       }
     });
 
-    console.log(JSON.stringify(value));
+    setUserProfileData(value);
+    // console.log(JSON.stringify(value));
 
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
+    // history.push('/profile');
   };
   const onFinishFailed = () => {
     showNotification('error', 'Error Saving Values...', 'Please Try again later.');

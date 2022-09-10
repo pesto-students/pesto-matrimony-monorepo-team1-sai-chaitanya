@@ -7,11 +7,11 @@ const okta = require('@okta/okta-sdk-nodejs');
 // @route  POST /api/v1/users/
 // @access Public
 
-exports.registerUserProfile = asyncHandler(async (req, res, next) => {
-  // connect with okta here ?!
-  const user = await User.create(req.body);
-  res.status(201).json({ success: true, message: 'New user is created.', data: user });
-});
+// exports.registerUserProfile = asyncHandler(async (req, res, next) => {
+//   // connect with okta here ?!
+//   const user = await User.create(req.body);
+//   res.status(201).json({ success: true, message: 'New user is created.', data: user });
+// });
 /** ----------------------------------------- */
 
 //creating user inside mongodb with oktaInformation.
@@ -27,6 +27,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
     token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
   });
   const body = req.body;
+  
   try {
     async function createUserInOkta() {
       const response = await client.createUser(body);
@@ -44,26 +45,26 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         email,
       };
 
-      await createUserInMongoDB(mongoUser);
+      const resp = await createUserInMongoDB(mongoUser);
 
-      res.send({
-        res: response,
+      res.status(200).send({
+        res: resp,
       });
     }
     await createUserInOkta();
-    // not using await will cause breakdown of express server
-    // whenever there is any error while trying to create user in Okta.
   } catch (err) {
-    return next(new CustomErrorResponse(err, 404));
-    // res.send({
-    //   err: err,
-    // });
+    // return next(new CustomErrorResponse(err, 404));
+    res.status(400).send({
+      err: err,
+    });
   }
 });
 
 //find user in mongodb by oktaId
 async function findUserByOktaId(oktaId) {
-  const currentUser = await User.find({ oktaUserId: oktaId });
+  const currentUser = await User.find({ oktaUserId: oktaId })
+  // console.log(currentUser);
+  // console.log(currentUser[0]._id.toString());
   return currentUser;
 }
 
@@ -110,10 +111,17 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
   // const mongoId = user[0]._id.toString()
   // console.log(mongoId);
 
+  const body = req.body;
+
+  if(!body){
+    return next(new CustomErrorResponse(`req.body is empty`, 400));
+  }
+
+
   if (!currentUserId) {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
   }
-  await User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
+  await User.updateOne({ oktaUserId: currentUserId }, { $set: body });
   res.status(200).json({
     success: true,
     message: 'Updated User successfully',

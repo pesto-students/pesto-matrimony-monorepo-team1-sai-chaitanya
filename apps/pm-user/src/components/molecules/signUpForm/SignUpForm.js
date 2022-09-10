@@ -26,9 +26,9 @@ const SignUpForm = () => {
         },
       });
       console.log("response", response);
-      history.push('/recommendations');
+      history.push('/login');
     } catch (err) {
-      console.log('error:', err);
+      console.log('errornav:', err);
       showNotification('error', 'please create strong password');
     }
   }
