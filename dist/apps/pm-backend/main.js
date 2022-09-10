@@ -60,12 +60,12 @@ exports.sendMessage = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0,
     // I want the message object to have SAME _id in both users
     // This will help me to enable read receipts
     const message = {
-        _id: new mongoose.Types.ObjectId(),
         message: req.body.message,
         messageSenderId: oktaUserId1,
         messageReceiverId: oktaUserId2,
         isRead: false,
     };
+    console.log(message);
     const session = yield User.startSession();
     try {
         session.startTransaction();
@@ -166,7 +166,7 @@ exports.markMessagesAsRead = asyncHandler((req, res, next) => tslib_1.__awaiter(
             // 3. Also, find the interest object specific to user 1 in interestsReceived array of user2
             // 4. Update conversations array of that object by marking all messages as read.
             user1.interestsSent = user1.interestsSent.map((interest) => {
-                if (String(interest.interestReceiverId) === user2.id) {
+                if (String(interest.interestReceiverId) === user2.oktaUserId) {
                     // marking all unread messages as read.
                     interest.conversations = interest.conversations.map((message) => {
                         if (!message.isRead) {
@@ -178,7 +178,7 @@ exports.markMessagesAsRead = asyncHandler((req, res, next) => tslib_1.__awaiter(
                 return interest;
             });
             user2.interestsReceived = user2.interestsReceived.map((interest) => {
-                if (String(interest.interestSenderId) === user1.id) {
+                if (String(interest.interestSenderId) === user1.oktaUserId) {
                     // marking all messages as read.
                     interest.conversations = interest.conversations.map((message) => {
                         if (!message.isRead) {
@@ -197,7 +197,7 @@ exports.markMessagesAsRead = asyncHandler((req, res, next) => tslib_1.__awaiter(
             // 3. Also, find the interest object specific to user 1 in interestsSent array of user2
             // 4. Update conversations array of that object by marking all messages as read.
             user1.interestsReceived = user1.interestsReceived.map((interest) => {
-                if (String(interest.interestSenderId) === user2.id) {
+                if (String(interest.interestSenderId) === user2.oktaUserId) {
                     // marking all messages as read.
                     interest.conversations = interest.conversations.map((message) => {
                         if (!message.isRead) {
@@ -209,7 +209,7 @@ exports.markMessagesAsRead = asyncHandler((req, res, next) => tslib_1.__awaiter(
                 return interest;
             });
             user2.interestsSent = user2.interestsSent.map((interest) => {
-                if (String(interest.interestReceiverId) === user1.id) {
+                if (String(interest.interestReceiverId) === user1.oktaUserId) {
                     interest.conversations = interest.conversations.map((message) => {
                         // marking all messages as read.
                         if (!message.isRead) {
@@ -247,6 +247,7 @@ exports.getMessages = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0,
     try {
         let user = yield User.find({ oktaUserId: req.params.oktaUserId });
         user = user[0];
+        console.log(user);
         if (!user) {
             return next(new CustomErrorResponse(`User not found!`, 404));
         }
@@ -282,6 +283,8 @@ exports.sendInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0
     const oktaUserId1 = req.query.sender;
     const oktaUserId2 = req.query.receiver;
     const session = yield User.startSession();
+    console.log('oktaUserId1 ', oktaUserId1);
+    console.log('oktaUserId2 ', oktaUserId2);
     try {
         session.startTransaction();
         let user1 = yield User.find({ oktaUserId: oktaUserId1 });
@@ -295,29 +298,33 @@ exports.sendInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0
         // Step 1: Determine if User1 already send or received interest to/from User 2 ?
         // If Yes, then throw error that You've already sent/received interest to User 2
         // Checking interestsSent and interestsReceived array of User1
-        const didUser1AlreadySendInterestToUser2 = user1.interestsSent.some((interest) => String(interest.interestReceiverId) === oktaUserId2);
+        const didUser1AlreadySendInterestToUser2 = user1.interestsSent.some((interest) => interest.interestReceiverId === oktaUserId2);
+        console.log('didUser1AlreadySendInterestToUser2', didUser1AlreadySendInterestToUser2);
         if (didUser1AlreadySendInterestToUser2) {
             yield session.abortTransaction();
             session.endSession();
             return next(new CustomErrorResponse(`Interest already sent to ${user2.name}. Please wait for response.`, 400));
         }
-        const didUser1AlreadyReceiveInterestFromUser2 = user1.interestsReceived.some((interest) => String(interest.interestSenderId) === oktaUserId2);
+        const didUser1AlreadyReceiveInterestFromUser2 = user1.interestsReceived.some((interest) => interest.interestSenderId === oktaUserId2);
+        console.log('didUser1AlreadyReceiveInterestFromUser2', didUser1AlreadyReceiveInterestFromUser2);
         if (didUser1AlreadyReceiveInterestFromUser2) {
             yield session.abortTransaction();
             session.endSession();
             return next(new CustomErrorResponse(`Interest already received from ${user2.name}. Please respond to it.`, 400));
         }
+        const maleImagePlaceholder = `https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png`;
+        const femaleImagePlaceholder = `https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png`;
         // If Not sent Interest before, then...
         // put the interest object in interestsSent array of User1
         user1.interestsSent.push({
             conversations: [],
             interestSenderAge: user1.age,
-            interestSenderId: user1.id,
-            interestSenderImage: user1.images[0] || 'link to placeholder image',
+            interestSenderId: user1.oktaUserId,
+            interestSenderImage: user1.images[0] || user1.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
             interestSenderName: user1.name,
             interestReceiverAge: user2.age,
-            interestReceiverId: user2.id,
-            interestReceiverImage: user2.images[0] || 'link to placeholder image',
+            interestReceiverId: user2.oktaUserId,
+            interestReceiverImage: user2.images[0] || user2.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
             interestReceiverName: user2.name,
             isAccepted: false,
             isRejected: false,
@@ -327,12 +334,12 @@ exports.sendInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0
         user2.interestsReceived.push({
             conversations: [],
             interestSenderAge: user1.age,
-            interestSenderId: user1.id,
-            interestSenderImage: user1.images[0] || 'link to placeholder image',
+            interestSenderId: user1.oktaUserId,
+            interestSenderImage: user1.images[0] || user1.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
             interestSenderName: user1.name,
             interestReceiverAge: user2.age,
-            interestReceiverId: user2.id,
-            interestReceiverImage: user2.images[0] || 'link to placeholder image',
+            interestReceiverId: user2.oktaUserId,
+            interestReceiverImage: user2.images[0] || user2.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
             interestReceiverName: user2.name,
             isAccepted: false,
             isRejected: false,
@@ -378,7 +385,7 @@ exports.acceptInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void
         /**=============================================================== */
         user2.interestsReceived = user2.interestsReceived.map((interest) => {
             // First identify the interest object which must be updated.
-            if (String(interest.interestSenderId) === user1.id) {
+            if (String(interest.interestSenderId) === user1.oktaUserId) {
                 interest.isAccepted = true;
             }
             return interest;
@@ -387,7 +394,7 @@ exports.acceptInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void
         // Put update same interest object in interestsSent array of User1
         user1.interestsSent = user1.interestsSent.map((interest) => {
             // First identify the interest object to be updated.
-            if (String(interest.interestReceiverId) === user2.id) {
+            if (String(interest.interestReceiverId) === user2.oktaUserId) {
                 interest.isAccepted = true;
             }
             return interest;
@@ -424,12 +431,14 @@ exports.declineInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(voi
     const session = yield User.startSession();
     try {
         session.startTransaction();
-        const user1 = yield User.find({ oktaUserId: oktaUserId1 })[0];
-        const user2 = yield User.find({ oktaUserId: oktaUserId2 })[0];
+        let user1 = yield User.find({ oktaUserId: oktaUserId1 });
+        user1 = user1[0];
+        let user2 = yield User.find({ oktaUserId: oktaUserId2 });
+        user2 = user2[0];
         /**=============================================================== */
         user2.interestsReceived = user2.interestsReceived.map((interest) => {
             // First identify the interest object which must be updated.
-            if (String(interest.interestSenderId) === user1.id) {
+            if (String(interest.interestSenderId) === user1.oktaUserId) {
                 interest.isRejected = true;
             }
             return interest;
@@ -438,7 +447,7 @@ exports.declineInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(voi
         // Put update same interest object in interestsSent array of User1
         user1.interestsSent = user1.interestsSent.map((interest) => {
             // First identify the interest object to be updated.
-            if (String(interest.interestReceiverId) === user2.id) {
+            if (String(interest.interestReceiverId) === user2.oktaUserId) {
                 interest.isRejected = true;
             }
             return interest;
@@ -462,6 +471,54 @@ exports.declineInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(voi
         return next(new CustomErrorResponse('Error rejecting interest. Please try later!', 500));
     }
 }));
+// @desc   Cancel an Interest
+// @route  PUT /api/v1/interests/cancel?sender=oktaUserId1&receiver=oktaUserId2
+// @access Private
+exports.cancelInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const oktaUserId1 = req.query.sender;
+    const oktaUserId2 = req.query.receiver;
+    const session = yield User.startSession();
+    try {
+        session.startTransaction();
+        let user1 = yield User.find({ oktaUserId: oktaUserId1 });
+        user1 = user1[0];
+        let user2 = yield User.find({ oktaUserId: oktaUserId2 });
+        user2 = user2[0];
+        /**=============================================================== */
+        // Remove sent interest from user1's interestsSent array and
+        // Remove received interest from user2's interestsReceived array
+        // Only an unaccepted interest can be cancelled.
+        user1.interestsSent = user1.interestsSent.filter((interest) => {
+            if (interest.isAccepted === false && interest.interestReceiverId === oktaUserId2) {
+                return false;
+            }
+            return true;
+        });
+        user2.interestsReceived = user2.interestsReceived.filter((interest) => {
+            if (interest.isAccepted === false && interest.interestSenderId === oktaUserId1) {
+                return false;
+            }
+            return true;
+        });
+        /**=============================================================== */
+        yield user1.save();
+        yield user2.save();
+        yield session.commitTransaction();
+        session.endSession();
+        res.status(200).json({
+            success: true,
+            message: 'Interest Cancelled!',
+        });
+    }
+    catch (error) {
+        // If an error occurred, abort the whole transaction and
+        // undo any changes that might have happened
+        // console.log(error);
+        yield session.abortTransaction();
+        session.endSession();
+        return next(new CustomErrorResponse('Could not cancel interest. Please try later!', 500));
+    }
+}));
 
 
 /***/ }),
@@ -474,7 +531,7 @@ const asyncHandler = __webpack_require__("./apps/pm-backend/src/middleware/async
 const User = __webpack_require__("./apps/pm-backend/src/models/Users.js");
 const CustomErrorResponse = __webpack_require__("./apps/pm-backend/src/utilities/errorResponse.js");
 // @desc   Get Recommendations
-// @route  GET /api/v1/recommendations?oktaUserId=oktaUserId
+// @route  GET /api/v1/recommendations/:oktaUserId
 // @access Private
 exports.getRecommendations = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -532,12 +589,15 @@ const MAXIMUM_ALLOWED_AGE = 50;
 // @access Private
 exports.searchProfiles = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log('search route has been hit...');
         const currentUser = yield User.find({ oktaUserId: req.params.oktaUserId });
+        console.log(req.body);
         if (!currentUser) {
             return next(new CustomErrorResponse(`User not found!`, 404));
         }
         const currentUserGender = currentUser[0].gender;
         const searchCriteria = req.body;
+        console.log(searchCriteria);
         // Remove properties with 'undefined' & "null" values before perfmorming search in DB
         Object.keys(searchCriteria).forEach((key) => {
             if (searchCriteria[key] === undefined || searchCriteria[key] === null) {
@@ -671,7 +731,6 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
     });
     const body = req.body;
     try {
-        yield createUserInOkta();
         function createUserInOkta() {
             return tslib_1.__awaiter(this, void 0, void 0, function* () {
                 const response = yield client.createUser(body);
@@ -707,18 +766,17 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
 function findUserByOktaId(oktaId) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const currentUser = yield User.find({ oktaUserId: oktaId });
-        // console.log(currentUser);
-        // console.log(currentUser[0]._id.toString());
         return currentUser;
     });
 }
 // @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/:id
+// @route  GET /api/v1/users/userprofile/:id
 // @access Private
 exports.getUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const params = req.params;
     const oktaId = params.id;
     const currentUser = yield findUserByOktaId(oktaId);
+    // const currentUser = await User.find({ oktaUserId: oktaId });
     if (!currentUser) {
         return next(new CustomErrorResponse(`User not found!`, 404));
     }
@@ -1097,7 +1155,7 @@ const UserSchema = new mongoose.Schema({
         default: 'User',
         enum: ['User', 'Admin'],
     },
-    //store mongoDB Ids of all shortlisted users.
+    //store Ids of all shortlisted users.
     shortlistedMatches: {
         type: [String],
         default: [],
@@ -1166,7 +1224,7 @@ const router = express.Router();
 // A message is an object in conversations array.
 // All of these controller functions are working on that conversations array.
 router.route('/').post(sendMessage).put(markMessagesAsRead);
-router.route('/:userId').get(getMessages);
+router.route('/:oktaUserId').get(getMessages);
 module.exports = router;
 
 
@@ -1176,11 +1234,12 @@ module.exports = router;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const express = __webpack_require__("express");
-const { acceptInterest, declineInterest, sendInterest } = __webpack_require__("./apps/pm-backend/src/controllers/interests.js");
+const { acceptInterest, cancelInterest, declineInterest, sendInterest } = __webpack_require__("./apps/pm-backend/src/controllers/interests.js");
 const router = express.Router();
 // '/' in this router is equivalent to  '/api/v1/interests'
 router.route('/').post(sendInterest);
 router.route('/accept').put(acceptInterest);
+router.route('/cancel').put(cancelInterest);
 router.route('/decline').put(declineInterest);
 module.exports = router;
 
@@ -1194,7 +1253,7 @@ const express = __webpack_require__("express");
 const router = express.Router();
 const { getRecommendations } = __webpack_require__("./apps/pm-backend/src/controllers/recommendations.js");
 // '/' in this router is equivalent to  '/api/v1/recommendations'
-router.route('/').get(getRecommendations);
+router.route('/:oktaUserId').get(getRecommendations);
 module.exports = router;
 
 
@@ -1207,7 +1266,7 @@ const express = __webpack_require__("express");
 const router = express.Router();
 const { searchProfiles } = __webpack_require__("./apps/pm-backend/src/controllers/search.js");
 // '/' in this router is equivalent to  '/api/v1/search'
-router.route('/').post(searchProfiles);
+router.route('/:oktaUserId').post(searchProfiles);
 module.exports = router;
 
 
@@ -1230,7 +1289,7 @@ module.exports = router;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const express = __webpack_require__("express");
-const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles } = __webpack_require__("./apps/pm-backend/src/controllers/users.js");
+const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles, } = __webpack_require__("./apps/pm-backend/src/controllers/users.js");
 const router = express.Router();
 // '/' in this router is equivalent to  '/api/v1/users'
 // Signup
@@ -1240,7 +1299,7 @@ router.route('/imageupload/:id').post(uploadImageToMongoDb);
 //it was running for the admin
 // router.route('/getallusers').get(getAllUsersProfiles)
 // Update / Delete
-router.route('/:userId').get(getUserProfile).put(updateUserProfile);
+router.route('/:userId').put(updateUserProfile);
 // Fetch User Profiles
 router.route('/search').get(searchProfiles);
 // Have to create another route & controller function for...
@@ -1379,6 +1438,7 @@ app.use('/api/v1/recommendations', recommendations);
 app.use('/api/v1/search', search);
 app.use('/api/v1/toggleShortlist', toggleShortlist);
 app.use('/api/v1/users', users);
+console.log('mounting routes completed...');
 // error Handler
 app.use(errorHandler);
 console.log(process.env.PORT);

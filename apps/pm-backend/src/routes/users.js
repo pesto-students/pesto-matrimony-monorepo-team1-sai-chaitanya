@@ -1,7 +1,12 @@
 const express = require('express');
 
-
-const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles } = require('../controllers/users');
+const {
+  getUserProfile,
+  uploadImageToMongoDb,
+  updateUserProfile,
+  oktaSignUp,
+  searchProfiles,
+} = require('../controllers/users');
 
 const router = express.Router();
 
@@ -16,7 +21,7 @@ router.route('/imageupload/:id').post(uploadImageToMongoDb);
 // router.route('/getallusers').get(getAllUsersProfiles)
 
 // Update / Delete
-router.route('/:userId').get(getUserProfile).put(updateUserProfile);
+router.route('/:userId').put(updateUserProfile);
 
 // Fetch User Profiles
 router.route('/search').get(searchProfiles);

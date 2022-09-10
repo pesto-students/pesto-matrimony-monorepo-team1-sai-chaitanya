@@ -7,7 +7,6 @@ import { useOktaAuth } from '@okta/okta-react';
 import { QuickInfoBar } from '../../molecules';
 import { getUserProfile } from '../../../redux/actions/Actions';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import styles from './sideBar.module.scss';
 
 function SideBar() {

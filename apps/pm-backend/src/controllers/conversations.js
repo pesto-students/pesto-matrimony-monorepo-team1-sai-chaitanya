@@ -15,12 +15,13 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   // This will help me to enable read receipts
 
   const message = {
-    _id: new mongoose.Types.ObjectId(),
     message: req.body.message,
     messageSenderId: oktaUserId1,
     messageReceiverId: oktaUserId2,
     isRead: false,
   };
+
+  console.log(message);
 
   const session = await User.startSession();
 
@@ -139,7 +140,7 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
       // 3. Also, find the interest object specific to user 1 in interestsReceived array of user2
       // 4. Update conversations array of that object by marking all messages as read.
       user1.interestsSent = user1.interestsSent.map((interest) => {
-        if (String(interest.interestReceiverId) === user2.id) {
+        if (String(interest.interestReceiverId) === user2.oktaUserId) {
           // marking all unread messages as read.
           interest.conversations = interest.conversations.map((message) => {
             if (!message.isRead) {
@@ -152,7 +153,7 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
       });
 
       user2.interestsReceived = user2.interestsReceived.map((interest) => {
-        if (String(interest.interestSenderId) === user1.id) {
+        if (String(interest.interestSenderId) === user1.oktaUserId) {
           // marking all messages as read.
           interest.conversations = interest.conversations.map((message) => {
             if (!message.isRead) {
@@ -170,7 +171,7 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
       // 3. Also, find the interest object specific to user 1 in interestsSent array of user2
       // 4. Update conversations array of that object by marking all messages as read.
       user1.interestsReceived = user1.interestsReceived.map((interest) => {
-        if (String(interest.interestSenderId) === user2.id) {
+        if (String(interest.interestSenderId) === user2.oktaUserId) {
           // marking all messages as read.
           interest.conversations = interest.conversations.map((message) => {
             if (!message.isRead) {
@@ -183,7 +184,7 @@ exports.markMessagesAsRead = asyncHandler(async (req, res, next) => {
       });
 
       user2.interestsSent = user2.interestsSent.map((interest) => {
-        if (String(interest.interestReceiverId) === user1.id) {
+        if (String(interest.interestReceiverId) === user1.oktaUserId) {
           interest.conversations = interest.conversations.map((message) => {
             // marking all messages as read.
             if (!message.isRead) {
@@ -224,6 +225,7 @@ exports.getMessages = asyncHandler(async (req, res, next) => {
     let user = await User.find({ oktaUserId: req.params.oktaUserId });
     user = user[0];
 
+    console.log(user);
     if (!user) {
       return next(new CustomErrorResponse(`User not found!`, 404));
     }

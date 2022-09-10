@@ -265,7 +265,7 @@ const UserSchema = new mongoose.Schema({
     enum: ['User', 'Admin'],
   },
 
-  //store mongoDB Ids of all shortlisted users.
+  //store Ids of all shortlisted users.
   shortlistedMatches: {
     type: [String],
     default: [],

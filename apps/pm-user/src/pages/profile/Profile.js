@@ -52,7 +52,7 @@ const Profile = () => {
       {/* <EditProfilePage /> */}
       <UserInfoCard
         profileLocation={userProfileInfo?.location || 'Not Specified'}
-        idOfLoggedInUser="abcd"
+        idOfLoggedInUser={oktaUserId}
         profileAboutMe=""
         profileAge={userProfileInfo?.age || 'Not Specified'}
         profileName={userProfileInfo?.name}

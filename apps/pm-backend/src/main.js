@@ -37,10 +37,12 @@ app.use('/api/v1/search', search);
 app.use('/api/v1/toggleShortlist', toggleShortlist);
 app.use('/api/v1/users', users);
 
+console.log('mounting routes completed...');
+
 // error Handler
 app.use(errorHandler);
 
-console.log(process.env.PORT)
+console.log(process.env.PORT);
 
 const server = app.listen(
   process.env.PORT || 8000,

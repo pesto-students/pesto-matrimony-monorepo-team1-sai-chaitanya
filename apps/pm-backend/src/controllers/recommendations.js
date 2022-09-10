@@ -3,7 +3,7 @@ const User = require('../models/Users');
 const CustomErrorResponse = require('../utilities/errorResponse');
 
 // @desc   Get Recommendations
-// @route  GET /api/v1/recommendations?oktaUserId=oktaUserId
+// @route  GET /api/v1/recommendations/:oktaUserId
 // @access Private
 exports.getRecommendations = asyncHandler(async (req, res, next) => {
   try {

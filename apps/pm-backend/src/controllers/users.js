@@ -28,7 +28,6 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   });
   const body = req.body;
   try {
-    await createUserInOkta();
     async function createUserInOkta() {
       const response = await client.createUser(body);
 
@@ -65,18 +64,17 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
 //find user in mongodb by oktaId
 async function findUserByOktaId(oktaId) {
   const currentUser = await User.find({ oktaUserId: oktaId });
-  // console.log(currentUser);
-  // console.log(currentUser[0]._id.toString());
   return currentUser;
 }
 
 // @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/:id
+// @route  GET /api/v1/users/userprofile/:id
 // @access Private
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
   const oktaId = params.id;
   const currentUser = await findUserByOktaId(oktaId);
+  // const currentUser = await User.find({ oktaUserId: oktaId });
   if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
