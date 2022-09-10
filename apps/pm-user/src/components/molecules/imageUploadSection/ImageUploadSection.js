@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserImage } from '../../../redux/actions/Actions';
 import { Upload, UploadOutlined, Button } from '../../atoms';
-import { message } from '@pm/pm-ui';
+import { message, showNotification } from '@pm/pm-ui';
 import _ from 'lodash';
 import { Modal } from 'antd';
 import { useOktaAuth } from '@okta/okta-react';
@@ -10,6 +10,7 @@ import { useOktaAuth } from '@okta/okta-react';
 const ImageUploadSection = () => {
   const [imageFileObject, setImageFileObject] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
+  const [ disabledButton, setDisabledButton ] = useState();
   const dispatch = useDispatch();
 
   //getting current user's oktaId
@@ -33,18 +34,24 @@ const ImageUploadSection = () => {
   }, [imageFileObject]);
 
   const responseData = useSelector((state) => state.updateUserImageReducer.data || {});
-  console.log(responseData);
+  // console.log(responseData);
+
+  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
+  console.log(userProfileInfo);
+
+  const testArray = new Array(12)
+
+  let imageArray = userProfileInfo?.images || [];
+  let arrayLength = imageArray.length;
 
   const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        // uploadImage(info.file.originFileObj);
-        setImageFileObject(info.file.originFileObj);
+        uploadImage(info.file.originFileObj);
       }
 
-      console.log(info.file);
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === 'error') {
@@ -58,7 +65,7 @@ const ImageUploadSection = () => {
   return (
     <>
       <Upload {...props}>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      <Button icon={<UploadOutlined />}>Click to Upload</Button> 
       </Upload>
     </>
   );

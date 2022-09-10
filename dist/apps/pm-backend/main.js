@@ -671,7 +671,6 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
     });
     const body = req.body;
     try {
-        // await createUserInOkta();
         function createUserInOkta() {
             return tslib_1.__awaiter(this, void 0, void 0, function* () {
                 const response = yield client.createUser(body);
@@ -686,18 +685,17 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
                     gender,
                     email,
                 };
-                yield createUserInMongoDB(mongoUser);
-                res.send({
-                    res: response,
+                const resp = yield createUserInMongoDB(mongoUser);
+                res.status(200).send({
+                    res: resp,
                 });
             });
         }
         yield createUserInOkta();
     }
     catch (err) {
-        console.log(err);
         // return next(new CustomErrorResponse(err, 404));
-        res.send({
+        res.status(400).send({
             err: err,
         });
     }
@@ -748,10 +746,14 @@ exports.updateUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(v
     // const user = await findUserByOktaId(currentUserId);
     // const mongoId = user[0]._id.toString()
     // console.log(mongoId);
+    const body = req.body;
+    if (!body) {
+        return next(new CustomErrorResponse(`req.body is empty`, 400));
+    }
     if (!currentUserId) {
         return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
     }
-    yield User.updateOne({ oktaUserId: currentUserId }, { $set: req.body });
+    yield User.updateOne({ oktaUserId: currentUserId }, { $set: body });
     res.status(200).json({
         success: true,
         message: 'Updated User successfully',

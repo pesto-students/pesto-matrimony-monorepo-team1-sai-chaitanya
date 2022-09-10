@@ -9,7 +9,6 @@ export const getUserProfile = (oktaUserId) => {
       const url = `http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`;
 
       const response = await axios.get(url);
-      console.log(response);
 
       dispatch({
         type: ActionTypes.GET_USER_PROFILE,

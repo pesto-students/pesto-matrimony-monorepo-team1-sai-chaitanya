@@ -157,7 +157,7 @@ const UserInfoCard = ({ idOfLoggedInUser, profileAboutMe, profileAge, profileId,
 UserInfoCard.propTypes = {
   idOfLoggedInUser: PropTypes.string,
   profileAboutMe: PropTypes.string,
-  profileAge: PropTypes.number,
+  profileAge: PropTypes.string,
   profileId: PropTypes.string,
   profileImages: PropTypes.array,
   profileLocation: PropTypes.string,
@@ -167,7 +167,7 @@ UserInfoCard.propTypes = {
 UserInfoCard.defaultProps = {
   idOfLoggedInUser: 'abcd',
   profileAboutMe: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum reiciendis deserunt esse harum impedit non beatae sequi facilis officiis consequuntur possimus porro minima maxime inventore sed, error unde perferendis? Laboriosam?`,
-  profileAge: 29,
+  profileAge: "29",
   profileId: 'xyz',
   profileImages: [
     'https://picsum.photos/700/500?random=1',
@@ -176,8 +176,8 @@ UserInfoCard.defaultProps = {
     'https://picsum.photos/700/500?random=4',
     'https://picsum.photos/700/500?random=5',
   ],
-  profileLocation: 'Bhopal',
-  profileName: 'Payal Singh',
+  profileLocation: 'Location',
+  profileName: 'User Name',
 };
 
 export default UserInfoCard;

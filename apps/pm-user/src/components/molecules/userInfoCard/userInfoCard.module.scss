@@ -16,6 +16,10 @@
       }
     }
 
+    .carouselImageClass{
+      color: grey
+    }
+
     button.ant-btn.ant-btn-primary {
       margin-top: 2.4rem;
       border-color: #5c5fee;
@@ -52,7 +56,7 @@
     height: 300px;
     border-top-left-radius: 2.4rem;
     border-top-right-radius: 2.4rem;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .briefIntro {

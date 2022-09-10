@@ -110,7 +110,8 @@ const EditPartnerPreferences = () => {
   };
 
   const onFinish = (value) => {
-    setUserProfileData(value);
+    
+    console.log(value);
 
     Object.keys(value).forEach((key) => {
       if (value[key] === undefined || value[key] === null) {
@@ -119,9 +120,12 @@ const EditPartnerPreferences = () => {
     });
 
     console.log(JSON.stringify(value));
+
+    setUserProfileData(value);
+    
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
-    history.push('/profile');
+    // history.push('/profile');
   };
   const onFinishFailed = () => {
     showNotification('error', 'Error Saving Values...', 'Please Try again later.');

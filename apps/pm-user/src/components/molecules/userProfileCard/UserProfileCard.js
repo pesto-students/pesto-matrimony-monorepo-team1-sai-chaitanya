@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../atoms';
 import { Link } from "react-router-dom";
+import _ from "lodash"
 import styles from './userProfileCard.module.scss';
 
 const UserProfileCard = ({ children, title }) => {
@@ -21,12 +22,12 @@ const UserProfileCard = ({ children, title }) => {
 };
 
 UserProfileCard.propTypes = {
-  children: PropTypes.obj,
+  children: PropTypes.func,
   title: PropTypes.string,
 };
 
 UserProfileCard.defaultProps = {
-  children: {},
+  children: _.noop(),
   title: 'Card Title',
 };
 
