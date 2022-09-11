@@ -83,7 +83,6 @@ const Profile = () => {
   console.log(userProfileInfo?.images);
 
   // let ageRange =
-
   // let heightRange = `${userProfileInfo?.partnerHeightRange[0]} to ${userProfileInfo?.partnerHeightRange[1]}`
   // let showHeightRange = userProfileInfo?.partnerHeightRange.length !== 0 ? heightRange : "Not Specified";
 
