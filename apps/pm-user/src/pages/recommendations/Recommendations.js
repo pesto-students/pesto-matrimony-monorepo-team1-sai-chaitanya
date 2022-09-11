@@ -13,7 +13,7 @@ function Recommendations() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/v1/recommendations/${oktaUserId}`)
+      .get(`https://pmapi-pesto.herokuapp.com/api/v1/recommendations/${oktaUserId}`)
       .then((res) => {
         setRecommendations(res.data.data);
       })

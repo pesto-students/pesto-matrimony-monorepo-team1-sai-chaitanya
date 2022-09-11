@@ -14,17 +14,21 @@ const Shortlisted = () => {
   // let actualShortlistedMatcheshData = [];
   useEffect(() => {
     async function fetchProfilesData() {
-      const res = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`);
+      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaUserId}`);
       const shortlistedUserIds = res.data.currentUser[0].shortlistedMatches;
       const userProfiles = await Promise.all(
         shortlistedUserIds.map(async (id) => {
-          const response = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${id}`);
+          const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
           return response.data.currentUser[0];
         })
       );
       setShortlistedMatchesData(userProfiles);
     }
-    fetchProfilesData();
+    try {
+      fetchProfilesData();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (

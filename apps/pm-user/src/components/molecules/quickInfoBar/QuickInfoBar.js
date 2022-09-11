@@ -14,7 +14,7 @@ const QuickInfoBar = ({ onClick }) => {
   const [receivedProfilesNumber, setReceivedProfilesNumber] = useState(0);
   useEffect(() => {
     async function getAllTypesOfProfiles() {
-      const res = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
+      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
       const userData = res.data.currentUser[0];
       const allInterests = [...userData.interestsSent, ...userData.interestsReceived];
       const acceptedProfiles = [];
@@ -45,7 +45,11 @@ const QuickInfoBar = ({ onClick }) => {
       setSentProfilesNumber(sentProfiles.length);
       setReceivedProfilesNumber(receivedProfiles.length);
     }
-    getAllTypesOfProfiles();
+    try {
+      getAllTypesOfProfiles();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
   const SEGMENT_OPTIONS = [
     {

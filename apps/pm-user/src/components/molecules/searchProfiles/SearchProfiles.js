@@ -104,7 +104,7 @@ const SearchProfiles = () => {
       10
     );
     axios
-      .post(`http://localhost:8000/api/v1/search/${oktaUserId}`, { ...values })
+      .post(`https://pmapi-pesto.herokuapp.com/api/v1/search/${oktaUserId}`, { ...values })
       .then((res) => {
         showNotification('success', 'Success', `Found ${res.data.number} matche(s) based on your search criteria.`);
         setMatchesData(res.data.data);

@@ -4,19 +4,22 @@
       border-top-left-radius: 2.4rem;
       border-top-right-radius: 2.4rem;
     }
+
     .ant-modal-content {
       border-radius: 2.4rem;
     }
+
     button.ant-btn {
       border-radius: 2.4rem;
       margin-right: 1rem;
+
       &:hover {
         border-color: #5c5fee;
         border-radius: 2.4rem;
       }
     }
 
-    .carouselImageClass{
+    .carouselImageClass {
       color: grey
     }
 
@@ -33,11 +36,13 @@
       }
     }
   }
+
   .ant-notification-notice {
     border-radius: 2.4rem;
     background: #ffffff;
     color: #5c5fee;
   }
+
   .ant-notification-notice-message {
     color: #5c5fee;
     font-weight: bold;
@@ -56,7 +61,7 @@
     height: 300px;
     border-top-left-radius: 2.4rem;
     border-top-right-radius: 2.4rem;
-    object-fit: contain;
+    object-fit: none;
   }
 
   .briefIntro {
@@ -66,11 +71,13 @@
       font-weight: 600;
       padding: 1rem 1rem 0.5rem 1rem;
     }
+
     h4 {
       padding: 0 1rem;
       color: #5a5b7f;
       font-size: 1.4rem;
     }
+
     p {
       font-size: 1.4rem;
       padding: 1rem;
@@ -93,13 +100,16 @@
     .ant-carousel .slick-dots li button {
       height: 4px;
     }
+
     button.ant-btn.ant-btn-round {
       margin: 0.4rem 0.4rem;
     }
+
     .ant-btn-primary {
       border-color: #5c5fee;
       background: #5c5fee;
     }
+
     .ant-btn-round {
       height: 36px;
     }

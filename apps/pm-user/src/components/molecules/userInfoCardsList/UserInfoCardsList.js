@@ -7,12 +7,12 @@ const UserInfoCardsList = ({ matchesData }) => {
     return (
       <div key={Math.random()}>
         <UserInfoCard
-          profileAboutMe={match.aboutMe}
-          profileAge={match.age}
-          profileId={match.oktaUserId}
-          profileLocation={match.location}
-          profileImages={match.images}
-          profileName={match.name}
+          profileAboutMe={match?.aboutMe}
+          profileAge={match?.age}
+          profileId={match?.oktaUserId}
+          profileLocation={match?.location}
+          profileImages={match?.images}
+          profileName={match?.name}
         />
       </div>
     );
