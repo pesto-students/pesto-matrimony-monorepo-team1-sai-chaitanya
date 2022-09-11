@@ -16,7 +16,7 @@
 
 .sideBar {
   height: 100%;
-  width: 18%;
+  width: 24%;
   background-color: white;
   margin-right: 12px;
   overflow: auto;
@@ -28,7 +28,7 @@
 }
 
 .children {
-  width: 57%;
+  width: 76%;
   overflow: auto;
   padding: 1.2rem;
   margin: 1.8rem 0;
@@ -45,5 +45,5 @@
 
 .quickLinksCard {
   padding: 12px;
-  width: 25%;
+  // width: 25%;
 }

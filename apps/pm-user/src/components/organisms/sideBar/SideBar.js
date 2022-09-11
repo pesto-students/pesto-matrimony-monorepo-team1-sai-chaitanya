@@ -8,6 +8,7 @@ import { QuickInfoBar } from '../../molecules';
 import { getUserProfile } from '../../../redux/actions/Actions';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './sideBar.module.scss';
+import { HomeOutlined, MailOutlined, SearchOutlined, UnorderedListOutlined, UserOutlined } from '../../atoms';
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -22,26 +23,27 @@ function SideBar() {
     dispatch(getUserProfile(oktaUserId));
   }, []);
 
-  
-
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
   const { images, gender } = userProfileInfo;
-  var emptyArrayHolder = images ||  [];
+  var emptyArrayHolder = images || [];
 
   console.log(userProfileInfo);
 
-  var imageFromServer;          
+  var imageFromServer;
 
-  if(gender === "female"){
-    imageFromServer = emptyArrayHolder?.length === 0 ? "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png" : images[0];
-  }else{
-    imageFromServer = emptyArrayHolder?.length === 0 ? "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png" : images[0];
+  if (gender === 'female') {
+    imageFromServer =
+      emptyArrayHolder?.length === 0
+        ? 'https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png'
+        : images[0];
+  } else {
+    imageFromServer =
+      emptyArrayHolder?.length === 0
+        ? 'https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png'
+        : images[0];
   }
- 
-  
-
 
   const handleMenuItemClick = ({ key }) => {
     history.push(`/${key}`);
@@ -62,6 +64,34 @@ function SideBar() {
 
   // "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
 
+  const MENU_ITEMS = [
+    {
+      key: 'recommendations',
+      icon: <HomeOutlined />,
+      label: 'Recommendations',
+    },
+    {
+      key: `profile/${oktaUserId}`,
+      icon: <UserOutlined />,
+      label: 'MyProfile',
+    },
+    {
+      key: 'shortlisted',
+      icon: <UnorderedListOutlined />,
+      label: 'Shortlisted',
+    },
+    {
+      key: 'search',
+      icon: <SearchOutlined />,
+      label: 'Search',
+    },
+
+    {
+      key: 'mailbox',
+      icon: <MailOutlined />,
+      label: 'MailBox',
+    },
+  ];
   return (
     <div className={styles.container}>
       <div className={styles.profileSummary}>

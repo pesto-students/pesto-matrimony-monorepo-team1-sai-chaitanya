@@ -8,7 +8,7 @@ const PATHS = {
   MAILBOX: '/mailbox',
   SEARCH: '/search',
   MATCHES: '/matches/:matchStatus',
-  PROFILE: '/profile',
+  PROFILE: '/profile/:profileId',
   EDIT_PROFILE: '/edit-profile',
   RECOMMENDATIONS: '/recommendations',
   SIGNUP: '/signup',

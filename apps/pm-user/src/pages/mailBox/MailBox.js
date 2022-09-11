@@ -12,7 +12,7 @@ const MailBox = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/v1/conversations/${oktaIdOfLoggedInUser}`)
+      .get(`https://pmapi-pesto.herokuapp.com/api/v1/conversations/${oktaIdOfLoggedInUser}`)
       .then((res) => {
         setInterestsSentAndReceived([...res.data.interestsReceived, ...res.data.interestsSent]);
       })

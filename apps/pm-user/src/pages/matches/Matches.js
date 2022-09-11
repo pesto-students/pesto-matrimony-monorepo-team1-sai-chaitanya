@@ -20,7 +20,7 @@ const Matches = () => {
 
   useEffect(() => {
     async function getAllTypesOfProfiles() {
-      const res = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
+      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
       const userData = res.data.currentUser[0];
       const allInterests = [...userData.interestsSent, ...userData.interestsReceived];
       const acceptedProfiles = [];
@@ -51,29 +51,41 @@ const Matches = () => {
       setSentProfilesOktaIds(sentProfiles);
       setReceivedProfilesOktaIds(receivedProfiles);
     }
-    getAllTypesOfProfiles();
+    try {
+      getAllTypesOfProfiles();
+    } catch (err) {
+      console.log(err);
+    }
 
     if (matchStatus === 'received') {
       async function fetchReceivedProfilesData() {
         const profilesData = await Promise.all(
           receivedProfilesOktaIds.map(async (id) => {
-            const response = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${id}`);
+            const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
             return response.data.currentUser[0];
           })
         );
         setProfilesToDisplay(profilesData);
       }
       // calling the function
-      fetchReceivedProfilesData();
+      try {
+        fetchReceivedProfilesData();
+      } catch (err) {
+        console.log(err);
+      }
     } else if (matchStatus === 'sent') {
       async function fetchSentProfilesData() {
         const profilesData = await Promise.all(
           sentProfilesOktaIds.map(async (id) => {
-            const response = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${id}`);
+            const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
             return response.data.currentUser[0];
           })
         );
-        setProfilesToDisplay(profilesData);
+        try {
+          setProfilesToDisplay(profilesData);
+        } catch (err) {
+          console.log(err);
+        }
       }
       // calling the function
       fetchSentProfilesData();
@@ -81,14 +93,22 @@ const Matches = () => {
       async function fetchAcceptedProfilesData() {
         const profilesData = await Promise.all(
           acceptedProfilesOktaIds.map(async (id) => {
-            const response = await axios.get(`http://localhost:8000/api/v1/users/userprofile/${id}`);
+            const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
             return response.data.currentUser[0];
           })
         );
-        setProfilesToDisplay(profilesData);
+        try {
+          setProfilesToDisplay(profilesData);
+        } catch (err) {
+          console.log(err);
+        }
       }
       // calling the function
-      fetchAcceptedProfilesData();
+      try {
+        fetchAcceptedProfilesData();
+      } catch (err) {
+        console.log(err);
+      }
     }
   }, [matchStatus]);
 

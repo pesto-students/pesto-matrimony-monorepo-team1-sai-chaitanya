@@ -15,9 +15,7 @@ function AppSkeleton({ children }) {
           <SideBar />
         </div>
         <div className={styles.children}>{children}</div>
-        <div className={styles.quickLinksCard}>
-          <QuickLinksCard />
-        </div>
+        <div className={styles.quickLinksCard}>{/* <QuickLinksCard /> */}</div>
       </div>
     </div>
   );

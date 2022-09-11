@@ -45,9 +45,12 @@ const MessagesBox = ({
     const messageReceiverId = idOfLoggedInUser === interestSenderId ? interestReceiverId : interestSenderId;
     if (message.trim().length > 0) {
       axios
-        .post(`http://localhost:8000/api/v1/conversations?sender=${idOfLoggedInUser}&receiver=${messageReceiverId}`, {
-          message,
-        })
+        .post(
+          `https://pmapi-pesto.herokuapp.com/api/v1/conversations?sender=${idOfLoggedInUser}&receiver=${messageReceiverId}`,
+          {
+            message,
+          }
+        )
         .then((res) => {
           console.log(res);
           showNotification('success', 'Success!', `Your message has been sent to ${messageReceiverName}`);
