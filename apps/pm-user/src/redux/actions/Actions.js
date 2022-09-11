@@ -46,7 +46,7 @@ export const updateUserImage = (oktaUserId, fileObj) => {
 
     //submiting image on cloudinary
     const responseClodinary = await axios.post(
-      'https://pmapi-pesto.herokuapp.com/v1_1/pesto-matrimony/image/upload',
+      'https://api.cloudinary.com/v1_1/pesto-matrimony/image/upload',
       formData
     );
     const imageUrlString = responseClodinary.data.url;
