@@ -69,12 +69,13 @@ async function findUserByOktaId(oktaId) {
 }
 
 // @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/:id
+// @route  GET /api/v1/users/userprofile/:id
 // @access Private
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
   const oktaId = params.id;
   const currentUser = await findUserByOktaId(oktaId);
+  // const currentUser = await User.find({ oktaUserId: oktaId });
   if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }

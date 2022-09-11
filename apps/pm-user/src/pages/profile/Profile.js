@@ -21,7 +21,7 @@ const Profile = () => {
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
-  const forHoobies = userProfileInfo.hobbies || ['Not Specified'];
+  const forHobbies = userProfileInfo.hobbies || ['Not Specified'];
   const forSpokenLanguages = userProfileInfo.spokenLanguages || ['Not Specified'];
 
   const { partnerAgeRange, partnerHeightRange, partnerIncomeRange } = userProfileInfo;
@@ -37,33 +37,31 @@ const Profile = () => {
   const showIncomRange =
     forPartnerIncome.length !== 0 ? `${partnerIncomeRange[0]} to ${partnerIncomeRange[1]}` : 'Not Specified';
 
+  const sisters = String(userProfileInfo?.sisters);
 
-    const sisters = String(userProfileInfo?.sisters);
-
-    console.log(sisters);
-    
+  console.log(sisters);
 
   console.log(userProfileInfo);
 
   let defaultImageArray = [];
-  let imageArray = []
+  let imageArray = [];
   let userImagesArray = userProfileInfo?.images || [];
 
-  if(userProfileInfo?.gender === "female"){
-    defaultImageArray[0] = "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png";
-  }else {
-    defaultImageArray[0] = "https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png";
+  if (userProfileInfo?.gender === 'female') {
+    defaultImageArray[0] =
+      'https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png';
+  } else {
+    defaultImageArray[0] =
+      'https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png';
   }
 
-  if(userImagesArray.length === 0){
+  if (userImagesArray.length === 0) {
     imageArray = defaultImageArray;
-  }else{
-    imageArray = userProfileInfo?.images; 
+  } else {
+    imageArray = userProfileInfo?.images;
   }
 
-
-
-  console.log(userProfileInfo?.images)
+  console.log(userProfileInfo?.images);
 
   // let ageRange =
 
@@ -78,7 +76,7 @@ const Profile = () => {
       {/* <EditProfilePage /> */}
       <UserInfoCard
         profileLocation={userProfileInfo?.location || 'Not Specified'}
-        idOfLoggedInUser="abcd"
+        idOfLoggedInUser={oktaUserId}
         profileAboutMe=""
         profileAge={userProfileInfo?.age || 'Not Specified'}
         profileName={userProfileInfo?.name}
@@ -103,8 +101,11 @@ const Profile = () => {
         <UserProfileCardContent field="Eating Habits" value={userProfileInfo?.eatingHabits || 'Not Specified'} />
         <UserProfileCardContent field="Smoking Habits" value={userProfileInfo?.smokingHabits || 'Not Specified'} />
         <UserProfileCardContent field="Drinking Habits" value={userProfileInfo?.drinkingHabits || 'Not Specified'} />
-        <UserProfileCardContent field="Hobbies" value={forHoobies.map((hobby) => `${hobby},   ` )} />
-        <UserProfileCardContent field="Spoken Languages" value={forSpokenLanguages.map((language) => `${language},  `)} />
+        <UserProfileCardContent field="Hobbies" value={forHobbies.map((hobby) => `${hobby},   `)} />
+        <UserProfileCardContent
+          field="Spoken Languages"
+          value={forSpokenLanguages.map((language) => `${language},  `)}
+        />
       </UserProfileCard>
 
       <UserProfileCard className="userProfileCard" title="Education & Career Information">
@@ -122,7 +123,10 @@ const Profile = () => {
           value={String(userProfileInfo?.marriedBrothers) || 'Not Specified'}
         />
         <UserProfileCardContent field="Sister(s)" value={String(userProfileInfo?.sisters) || 'Not Specified'} />
-        <UserProfileCardContent field="Married Sister(s)" value={String(userProfileInfo?.marriedSisters) || 'Not Specified'} />
+        <UserProfileCardContent
+          field="Married Sister(s)"
+          value={String(userProfileInfo?.marriedSisters) || 'Not Specified'}
+        />
         <UserProfileCardContent field="Family Status" value={userProfileInfo?.familyStatus || 'Not Specified'} />
       </UserProfileCard>
 

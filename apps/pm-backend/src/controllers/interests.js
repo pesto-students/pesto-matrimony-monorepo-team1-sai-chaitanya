@@ -15,6 +15,8 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
   const oktaUserId2 = req.query.receiver;
   const session = await User.startSession();
 
+  console.log('oktaUserId1 ', oktaUserId1);
+  console.log('oktaUserId2 ', oktaUserId2);
   try {
     session.startTransaction();
 
@@ -34,9 +36,10 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
 
     // Checking interestsSent and interestsReceived array of User1
     const didUser1AlreadySendInterestToUser2 = user1.interestsSent.some(
-      (interest) => String(interest.interestReceiverId) === oktaUserId2
+      (interest) => interest.interestReceiverId === oktaUserId2
     );
 
+    console.log('didUser1AlreadySendInterestToUser2', didUser1AlreadySendInterestToUser2);
     if (didUser1AlreadySendInterestToUser2) {
       await session.abortTransaction();
       session.endSession();
@@ -44,26 +47,30 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
     }
 
     const didUser1AlreadyReceiveInterestFromUser2 = user1.interestsReceived.some(
-      (interest) => String(interest.interestSenderId) === oktaUserId2
+      (interest) => interest.interestSenderId === oktaUserId2
     );
 
+    console.log('didUser1AlreadyReceiveInterestFromUser2', didUser1AlreadyReceiveInterestFromUser2);
     if (didUser1AlreadyReceiveInterestFromUser2) {
       await session.abortTransaction();
       session.endSession();
       return next(new CustomErrorResponse(`Interest already received from ${user2.name}. Please respond to it.`, 400));
     }
 
+    const maleImagePlaceholder = `https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png`;
+    const femaleImagePlaceholder = `https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png`;
+
     // If Not sent Interest before, then...
     // put the interest object in interestsSent array of User1
     user1.interestsSent.push({
       conversations: [],
       interestSenderAge: user1.age,
-      interestSenderId: user1.id,
-      interestSenderImage: user1.images[0] || 'link to placeholder image',
+      interestSenderId: user1.oktaUserId,
+      interestSenderImage: user1.images[0] || user1.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
       interestSenderName: user1.name,
       interestReceiverAge: user2.age,
-      interestReceiverId: user2.id,
-      interestReceiverImage: user2.images[0] || 'link to placeholder image',
+      interestReceiverId: user2.oktaUserId,
+      interestReceiverImage: user2.images[0] || user2.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
       interestReceiverName: user2.name,
       isAccepted: false,
       isRejected: false,
@@ -74,12 +81,12 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
     user2.interestsReceived.push({
       conversations: [],
       interestSenderAge: user1.age,
-      interestSenderId: user1.id,
-      interestSenderImage: user1.images[0] || 'link to placeholder image',
+      interestSenderId: user1.oktaUserId,
+      interestSenderImage: user1.images[0] || user1.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
       interestSenderName: user1.name,
       interestReceiverAge: user2.age,
-      interestReceiverId: user2.id,
-      interestReceiverImage: user2.images[0] || 'link to placeholder image',
+      interestReceiverId: user2.oktaUserId,
+      interestReceiverImage: user2.images[0] || user2.gender === 'male' ? maleImagePlaceholder : femaleImagePlaceholder,
       interestReceiverName: user2.name,
       isAccepted: false,
       isRejected: false,
@@ -132,7 +139,7 @@ exports.acceptInterest = asyncHandler(async (req, res, next) => {
 
     user2.interestsReceived = user2.interestsReceived.map((interest) => {
       // First identify the interest object which must be updated.
-      if (String(interest.interestSenderId) === user1.id) {
+      if (String(interest.interestSenderId) === user1.oktaUserId) {
         interest.isAccepted = true;
       }
       return interest;
@@ -143,7 +150,7 @@ exports.acceptInterest = asyncHandler(async (req, res, next) => {
 
     user1.interestsSent = user1.interestsSent.map((interest) => {
       // First identify the interest object to be updated.
-      if (String(interest.interestReceiverId) === user2.id) {
+      if (String(interest.interestReceiverId) === user2.oktaUserId) {
         interest.isAccepted = true;
       }
       return interest;
@@ -186,13 +193,15 @@ exports.declineInterest = asyncHandler(async (req, res, next) => {
   try {
     session.startTransaction();
 
-    const user1 = await User.find({ oktaUserId: oktaUserId1 })[0];
-    const user2 = await User.find({ oktaUserId: oktaUserId2 })[0];
+    let user1 = await User.find({ oktaUserId: oktaUserId1 });
+    user1 = user1[0];
+    let user2 = await User.find({ oktaUserId: oktaUserId2 });
+    user2 = user2[0];
     /**=============================================================== */
 
     user2.interestsReceived = user2.interestsReceived.map((interest) => {
       // First identify the interest object which must be updated.
-      if (String(interest.interestSenderId) === user1.id) {
+      if (String(interest.interestSenderId) === user1.oktaUserId) {
         interest.isRejected = true;
       }
       return interest;
@@ -203,7 +212,7 @@ exports.declineInterest = asyncHandler(async (req, res, next) => {
 
     user1.interestsSent = user1.interestsSent.map((interest) => {
       // First identify the interest object to be updated.
-      if (String(interest.interestReceiverId) === user2.id) {
+      if (String(interest.interestReceiverId) === user2.oktaUserId) {
         interest.isRejected = true;
       }
       return interest;
@@ -227,5 +236,63 @@ exports.declineInterest = asyncHandler(async (req, res, next) => {
     await session.abortTransaction();
     session.endSession();
     return next(new CustomErrorResponse('Error rejecting interest. Please try later!', 500));
+  }
+});
+
+// @desc   Cancel an Interest
+// @route  PUT /api/v1/interests/cancel?sender=oktaUserId1&receiver=oktaUserId2
+// @access Private
+exports.cancelInterest = asyncHandler(async (req, res, next) => {
+  const oktaUserId1 = req.query.sender;
+  const oktaUserId2 = req.query.receiver;
+  const session = await User.startSession();
+
+  try {
+    session.startTransaction();
+
+    let user1 = await User.find({ oktaUserId: oktaUserId1 });
+    user1 = user1[0];
+    let user2 = await User.find({ oktaUserId: oktaUserId2 });
+    user2 = user2[0];
+
+    /**=============================================================== */
+
+    // Remove sent interest from user1's interestsSent array and
+    // Remove received interest from user2's interestsReceived array
+
+    // Only an unaccepted interest can be cancelled.
+    user1.interestsSent = user1.interestsSent.filter((interest) => {
+      if (interest.isAccepted === false && interest.interestReceiverId === oktaUserId2) {
+        return false;
+      }
+      return true;
+    });
+
+    user2.interestsReceived = user2.interestsReceived.filter((interest) => {
+      if (interest.isAccepted === false && interest.interestSenderId === oktaUserId1) {
+        return false;
+      }
+      return true;
+    });
+
+    /**=============================================================== */
+
+    await user1.save();
+    await user2.save();
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({
+      success: true,
+      message: 'Interest Cancelled!',
+    });
+  } catch (error) {
+    // If an error occurred, abort the whole transaction and
+    // undo any changes that might have happened
+    // console.log(error);
+    await session.abortTransaction();
+    session.endSession();
+    return next(new CustomErrorResponse('Could not cancel interest. Please try later!', 500));
   }
 });

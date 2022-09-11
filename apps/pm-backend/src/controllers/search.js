@@ -13,8 +13,9 @@ const MAXIMUM_ALLOWED_AGE = 50;
 
 exports.searchProfiles = asyncHandler(async (req, res, next) => {
   try {
+    console.log('search route has been hit...');
     const currentUser = await User.find({ oktaUserId: req.params.oktaUserId });
-
+    console.log(req.body);
     if (!currentUser) {
       return next(new CustomErrorResponse(`User not found!`, 404));
     }
@@ -22,6 +23,7 @@ exports.searchProfiles = asyncHandler(async (req, res, next) => {
     const currentUserGender = currentUser[0].gender;
 
     const searchCriteria = req.body;
+    console.log(searchCriteria);
     // Remove properties with 'undefined' & "null" values before perfmorming search in DB
     Object.keys(searchCriteria).forEach((key) => {
       if (searchCriteria[key] === undefined || searchCriteria[key] === null) {

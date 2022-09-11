@@ -37,6 +37,8 @@ app.use('/api/v1/search', search);
 app.use('/api/v1/toggleShortlist', toggleShortlist);
 app.use('/api/v1/users', users);
 
+console.log('mounting routes completed...');
+
 // error Handler
 app.use(errorHandler);
 

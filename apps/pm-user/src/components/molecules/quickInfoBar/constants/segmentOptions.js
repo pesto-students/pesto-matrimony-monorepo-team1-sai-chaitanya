@@ -1,12 +1,12 @@
-import { Tooltip  } from "../../../atoms";
+import { Tooltip } from '../../../atoms';
 
 const RECEIVED = {
   label: (
-    <Tooltip title="Interests Recived" color="#5c5fee">
-    <div>
-      <p>42</p>
-      <div style={{ fontSize: 12, color: '#a9aab9' }}>Received</div>
-    </div>
+    <Tooltip title="Interests Received" color="#5c5fee">
+      <div>
+        <p>42</p>
+        <div style={{ fontSize: 12, color: '#a9aab9' }}>Received</div>
+      </div>
     </Tooltip>
   ),
   key: 'received',
@@ -16,10 +16,10 @@ const RECEIVED = {
 const SENT = {
   label: (
     <Tooltip title="Interests Sent" color="#5c5fee">
-    <div>
-      <p>80</p>
-      <div style={{ fontSize: 12, color: '#a9aab9' }}>Sent</div>
-    </div>
+      <div>
+        <p>80</p>
+        <div style={{ fontSize: 12, color: '#a9aab9' }}>Sent</div>
+      </div>
     </Tooltip>
   ),
   key: 'sent',
@@ -28,11 +28,11 @@ const SENT = {
 
 const ACCEPTED = {
   label: (
-    <Tooltip title="Interests accepted" color="#5c5fee">
-    <div>
-      <p>8</p>
-      <div style={{ fontSize: 12, color: '#a9aab9' }}>Accepted</div>
-    </div>
+    <Tooltip title="Interests Accepted" color="#5c5fee">
+      <div>
+        <p>8</p>
+        <div style={{ fontSize: 12, color: '#a9aab9' }}>Accepted</div>
+      </div>
     </Tooltip>
   ),
   key: 'accepted',

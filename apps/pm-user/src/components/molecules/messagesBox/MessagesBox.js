@@ -4,6 +4,7 @@ import { OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
+import axios from 'axios';
 
 // idOfLoggedInUser is the _id of the loggedin user.
 const MessagesBox = ({
@@ -36,16 +37,26 @@ const MessagesBox = ({
   }
 
   function sendMessageHandler() {
-    const message = messageRef.current.resizableTextArea.props.value;
+    const message = messageRef.current.resizableTextArea.props.value.trim();
     console.log(message);
     // Connect with Backend and save this message inside both users.
 
     const messageReceiverName = idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName;
+    const messageReceiverId = idOfLoggedInUser === interestSenderId ? interestReceiverId : interestSenderId;
     if (message.trim().length > 0) {
-      setTimeout(() => {
-        handleNewMessageCancel();
-        showNotification('success', 'Message Sent', `Relax! Your message has been sent to ${messageReceiverName}`, 0);
-      }, 1500);
+      axios
+        .post(`http://localhost:8000/api/v1/conversations?sender=${idOfLoggedInUser}&receiver=${messageReceiverId}`, {
+          message,
+        })
+        .then((res) => {
+          console.log(res);
+          showNotification('success', 'Success!', `Your message has been sent to ${messageReceiverName}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          showNotification('error', 'Error!', "Couldn't send your message. Please try later.");
+        });
+      handleNewMessageCancel();
     } else {
       showNotification('warn', 'Error!', "Message can't be empty.");
     }

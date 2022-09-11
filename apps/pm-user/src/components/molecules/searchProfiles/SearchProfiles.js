@@ -5,6 +5,7 @@ import { cmToFeet } from '@pm/pm-business';
 import styles from './searchProfiles.module.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useOktaAuth } from '@okta/okta-react';
 
 // constants
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
@@ -21,6 +22,11 @@ const SearchProfiles = () => {
   const [statesList, setStatesList] = useState([]);
   const [citiesList, setCitiesList] = useState([]);
   const [matchesData, setMatchesData] = useState([]);
+  const { authState } = useOktaAuth();
+
+  //getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
+  console.log('oktaUserId: ', oktaUserId);
 
   useEffect(() => {
     axios
@@ -90,21 +96,28 @@ const SearchProfiles = () => {
   };
 
   const onFinish = (values) => {
-    console.log('Success:');
-    console.log(values);
-    console.log(JSON.stringify(values));
     setDisplayText('Loading... Please wait...');
-    // Send this values to DB and get response....
-    /// Save those  matching profiles (matchesData) in an array.
-    // setMatchesData(searchResults);
-    // That's all. It will automatically display search results.
-
     showNotification(
       'success',
       'Searching...',
       'Please wait while we search for profiles based on your criteria...',
       10
     );
+    axios
+      .post(`http://localhost:8000/api/v1/search/${oktaUserId}`, { ...values })
+      .then((res) => {
+        showNotification('success', 'Success', `Found ${res.data.number} matche(s) based on your search criteria.`);
+        setMatchesData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        showNotification('error', 'Error!', err.error);
+      });
+
+    // Send this values to DB and get response....
+    /// Save those  matching profiles (matchesData) in an array.
+    // setMatchesData(searchResults);
+    // That's all. It will automatically display search results.
   };
 
   const onFinishFailed = (errorInfo) => {
