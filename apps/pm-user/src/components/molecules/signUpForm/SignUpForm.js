@@ -7,7 +7,7 @@ import { showNotification } from '@pm/pm-ui';
 const SignUpForm = () => {
   const history = useHistory();
 
-  const url2 = 'http://localhost:8000/api/v1/users/oktasignup'
+  const url2 = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup'
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {

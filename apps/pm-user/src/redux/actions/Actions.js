@@ -1,12 +1,13 @@
 import { ActionTypes } from '../constants';
 import axios from 'axios';
 // import Apis from "../../apis";
-let mongoIdOfLoggedInUser = '';
+let mongoIdOfLoggedInUser = 'https://pmapi-pesto.herokuapp.com/';
+
 
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`;
+      const url = `https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaUserId}`;
 
       const response = await axios.get(url);
 
@@ -24,7 +25,7 @@ export const getUserProfile = (oktaUserId) => {
 export const updateUserProfile = (oktaUserId, value) => {
   try {
     return async (dispatch) => {
-      const url = `http://localhost:8000/api/v1/users/${oktaUserId}`;
+      const url = `https://pmapi-pesto.herokuapp.com/api/v1/users/${oktaUserId}`;
       const response = await axios.put(url, value);
       dispatch({
         type: ActionTypes.UPDATE_USER_PROFILE,
@@ -45,7 +46,7 @@ export const updateUserImage = (oktaUserId, fileObj) => {
 
     //submiting image on cloudinary
     const responseClodinary = await axios.post(
-      'https://api.cloudinary.com/v1_1/pesto-matrimony/image/upload',
+      'https://pmapi-pesto.herokuapp.com/v1_1/pesto-matrimony/image/upload',
       formData
     );
     const imageUrlString = responseClodinary.data.url;
@@ -55,7 +56,7 @@ export const updateUserImage = (oktaUserId, fileObj) => {
       imageUrlString,
     };
 
-    const url = `http://localhost:8000/api/v1/users/imageupload/${oktaUserId}`;
+    const url = `https://pmapi-pesto.herokuapp.com/v1/users/imageupload/${oktaUserId}`;
     const response = await axios.post(url, payload);
     console.log(response);
     dispatch({

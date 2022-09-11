@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { showNotification } from '@pm/pm-ui';
 import { UserInfoCardButtons } from '../';
 import { useOktaAuth } from '@okta/okta-react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import styles from './userInfoCard.module.scss';
 import { Button, Carousel, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
@@ -15,6 +16,7 @@ const UserInfoCard = ({
   profileLocation,
   profileImages,
   profileName,
+  cardSelfUserIdHandle
 }) => {
   const { authState } = useOktaAuth();
   //getting current user's oktaId
@@ -122,13 +124,15 @@ const UserInfoCard = ({
       });
   }
 
+  console.log(cardSelfUserIdHandle);
+
   const carouselImages = profileImages?.map((image, i) => {
     return (
       <div key={i}>
         <div className={styles.carousel}>
-          <a href={`/profile/${profileId}`} target="_blank">
+          <Link to={`/userprofile/undefined`} target="_blank">
             <img src={image} className={styles.img} />
-          </a>
+          </Link>
         </div>
       </div>
     );
