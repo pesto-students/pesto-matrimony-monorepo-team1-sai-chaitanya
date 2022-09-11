@@ -6,10 +6,8 @@ import { useParams } from 'react-router-dom';
 import _ from 'lodash';
 import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
 import { EditProfilePage } from '..';
-import axios from 'axios';
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState([]);
   const { oktaAuth, authState } = useOktaAuth();
   const { profileId } = useParams();
   console.log('profileId : ', profileId);
@@ -21,21 +19,8 @@ const Profile = () => {
   const oktaUserId = authState.accessToken.claims.uid;
 
   useEffect(() => {
-    // dispatch(updateUserProfile(oktaUserId));
-    async function fetchProfileData() {
-      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${profileId}`);
-      const userData = res.data.currentUser[0];
-      setProfileData(userData);
-      console.log('from use effect: ', userData);
-    }
-    try {
-      fetchProfileData();
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(updateUserProfile(oktaUserId));
   }, []);
-
-  console.log('profileData: ', profileData);
 
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
@@ -83,6 +68,7 @@ const Profile = () => {
   console.log(userProfileInfo?.images);
 
   // let ageRange =
+
   // let heightRange = `${userProfileInfo?.partnerHeightRange[0]} to ${userProfileInfo?.partnerHeightRange[1]}`
   // let showHeightRange = userProfileInfo?.partnerHeightRange.length !== 0 ? heightRange : "Not Specified";
 
