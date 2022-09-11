@@ -1,16 +1,19 @@
 import { Input as AntdInput } from 'antd';
 const InputPassword = AntdInput.Password;
 import PropTypes from 'prop-types';
-import './Input.css';
+import  './input.css';
 
-const Input = ({ className, placeholder, prefix, size, type, ...restProps }) => {
+const Input = ({ placeholder, prefix, size, type, ...restProps }) => {
   return (
     <AntdInput
       {...restProps}
-      className="antdInput"
       style={{
-        width: '300px',
-        borderRadius: '15px',
+        border: "2px solid #bababa",
+        padding: "4px 12px",
+        width: "250px",
+        borderRadius: "13px",
+        marginBottom: "-10px",
+        fontFamily: "Lato"
       }}
       placeholder={placeholder}
       type={type}
@@ -21,7 +24,6 @@ const Input = ({ className, placeholder, prefix, size, type, ...restProps }) => 
 };
 
 Input.propTypes = {
-  className: PropTypes.string,
   placeholder: PropTypes.string,
   prefix: PropTypes.object,
   size: PropTypes.string,
@@ -29,11 +31,11 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  className: 'antdInput',
   placeholder: 'input',
   prefix: '<UserOutlined className={styles.inputIcon} />',
   size: 'large',
   type: 'text',
 };
 
-export default Input;
+export { Input, InputPassword };
+

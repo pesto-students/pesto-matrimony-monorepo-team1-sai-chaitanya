@@ -3,7 +3,6 @@
   width: 100%;
   flex-direction: column;
   align-items: center;
-  margin-top: 180px;
 }
 
 .ant-form-item-explain-error {
@@ -29,7 +28,6 @@
 .formTitle {
   color: #5b63e6;
   font-weight: 600;
-  margin: 10px 0px 14px 0px;
   font-size: 20px;
 }
 
@@ -44,10 +42,10 @@
   font-size: 14px;
 }
 
-.redirectLink {
-  font-weight: bold;
-  color: #5b63e6;
-  font-size: 15px;
-  margin-left: 2px;
-  cursor: pointer;
+.rightContainer{
+  display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
 }

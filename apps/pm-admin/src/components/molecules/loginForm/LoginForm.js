@@ -1,4 +1,4 @@
-import { Button, Form, InputPassword, KeyOutlined, MailOutlined, Input } from '../../atoms';
+import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined } from '../../atoms';
 import PropTypes from 'prop-types';
 import _noop from 'lodash';
 import { useHistory, Link } from 'react-router-dom';
@@ -43,10 +43,9 @@ const LoginForm = ({ onFormSubmit }) => {
           ]}
         >
           <Input
-            className="antdInput"
             type="email"
             placeholder="Email"
-            prefix={<MailOutlined className="inputIcon" />}
+            prefix={<MailOutlined className="inputIcon"/>}
             size="large"
           />
         </Form.Item>
@@ -62,7 +61,6 @@ const LoginForm = ({ onFormSubmit }) => {
         >
           <Input
             type="password"
-            className="antdInput"
             placeholder="Password"
             prefix={<KeyOutlined rotate="45" className="inputIcon" size="large" />}
           />
@@ -74,7 +72,14 @@ const LoginForm = ({ onFormSubmit }) => {
             span: 24,
           }}
         >
-          <Button type="primary" htmlType="submit" block shape="round" size="medium" className="buttonStyle">
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            shape="round"
+            size="medium"
+            className="buttonStyle"
+          >
             Submit
           </Button>
         </Form.Item>

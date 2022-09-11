@@ -1,30 +1,5 @@
 @import 'antd/dist/antd.css';
 
-/* .userItemsList {
-  :global {
-    .ant-list-items > li {
-      border: none;
-    }
-    .ant-avatar.ant-avatar-circle.ant-avatar-image {
-      border-radius: 8px;
-      width: 45px;
-      height: 45px;
-      background: #0000000d;
-    }
-    .ant-list-item-meta-title {
-      font-weight: 700;
-    }
-
-    .ant-list-item-meta-title > a {
-      color: #5a5b7f;
-    }
-  }
-}
-
-.itemListStyle{
-  color:grey
-} */
-
 .statsContaner {
   display: flex;
 }
@@ -68,3 +43,4 @@
   margin-right: 10px;
   height: 54px;
 }
+
