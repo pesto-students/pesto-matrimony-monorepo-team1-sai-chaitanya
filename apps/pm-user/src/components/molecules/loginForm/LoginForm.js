@@ -90,10 +90,14 @@ const LoginForm = ({ onFormSubmit }) => {
           </Button>
         </Form.Item>
       </Form>
-      <Link className={styles.forgotPassword} to="/forgot-password"><p>Forgot Password?</p></Link>
+      {/* <Link className={styles.forgotPassword} to="/forgot-password"><p>Forgot Password?</p></Link> */}
     </>
   );
 };
+
+// "E0000001"
+// "E0000001"
+
 
 LoginForm.propTypes = {
   onFormSubmit: PropTypes.func,

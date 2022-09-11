@@ -26,7 +26,7 @@ MyCard.propTypes = {
 
 MyCard.defaultProps = {
   cardLink: '#',
-  cardTitle: 'Masseges',
+  cardTitle: 'Messages',
   children: {},
   className: 'avatarList',
 };

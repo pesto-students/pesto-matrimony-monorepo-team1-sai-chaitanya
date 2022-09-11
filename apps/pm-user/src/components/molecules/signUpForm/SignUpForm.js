@@ -7,7 +7,7 @@ import { showNotification } from '@pm/pm-ui';
 const SignUpForm = () => {
   const history = useHistory();
 
-  const url2 = 'http://localhost:8000/api/v1/users/oktasignup'
+  const url2 = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup'
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
@@ -28,8 +28,17 @@ const SignUpForm = () => {
       console.log("response", response);
       history.push('/login');
     } catch (err) {
-      console.log('errornav:', err);
-      showNotification('error', 'please create strong password');
+
+      const errorMassage = err.response.data.err.message;
+      const passwordErrorString = errorMassage.match("password");
+
+      if(passwordErrorString){
+        showNotification('error', 'Please create strong password');
+      }else{
+        showNotification('error', 'This user already exist in the Pesto Matrimony');
+      }
+
+      
     }
   }
 
