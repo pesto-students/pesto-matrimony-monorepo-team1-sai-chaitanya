@@ -28,8 +28,17 @@ const SignUpForm = () => {
       console.log("response", response);
       history.push('/login');
     } catch (err) {
-      console.log('errornav:', err);
-      showNotification('error', 'please create strong password');
+
+      const errorMassage = err.response.data.err.message;
+      const passwordErrorString = errorMassage.match("password");
+
+      if(passwordErrorString){
+        showNotification('error', 'Please create strong password');
+      }else{
+        showNotification('error', 'This user already exist in the Pesto Matrimony');
+      }
+
+      
     }
   }
 
