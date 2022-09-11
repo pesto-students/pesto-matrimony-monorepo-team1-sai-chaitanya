@@ -22,13 +22,13 @@ function Recommendations() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(userInfo.oktaUserId);
+  // console.log(userInfo.oktaUserId);
 
-  const userId = userInfo.oktaUserId;
+  // const userId = userInfo.oktaUserId;
 
-  function sendUserId(userId) {
-    return userId;
-  }
+  // function sendUserId(userId) {
+  //   return userId;
+  // }
 
   return (
     <div className={styles.recommendationsPage}>
@@ -37,7 +37,8 @@ function Recommendations() {
         <p>No Recommendations found. Please update your profile to start getting recommendations</p>
       ) : (
         <>
-          <UserInfoCardsList matchesData={recommendations} cardSelfUserIdHandle={() => sendUserId(userId)} />
+          <UserInfoCardsList matchesData={recommendations} />
+          {/* <UserInfoCardsList matchesData={recommendations} cardSelfUserIdHandle={() => sendUserId(userId)} /> */}
         </>
       )}
     </div>

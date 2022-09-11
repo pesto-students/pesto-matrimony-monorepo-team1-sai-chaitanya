@@ -2,7 +2,6 @@ import { UserInfoCard } from '../';
 import PropTypes from 'prop-types';
 
 const UserInfoCardsList = ({ matchesData }) => {
-  console.log(matchesData);
   const renderUserInfoCardsList = matchesData?.map((match) => {
     return (
       <div key={Math.random()}>
