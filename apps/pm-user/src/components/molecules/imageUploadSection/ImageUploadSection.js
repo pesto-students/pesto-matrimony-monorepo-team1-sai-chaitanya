@@ -40,8 +40,10 @@ const ImageUploadSection = () => {
     }
   }, [imageFileObject]);
 
+  
 
-  //to delete image
+
+  // to delete image
   useEffect(() => {
     if(indexForDeleteImage.bool){
       deleteImage(indexForDeleteImage.index);
@@ -70,24 +72,27 @@ const ImageUploadSection = () => {
   let imageArray = userProfileInfo?.images || [];
   let arrayLength = imageArray.length;
 
-  console.log(arrayLength);
-
   const props = {
     name: 'file',
     onChange(info) {
-      if (info.file.status !== 'uploading') {
-        // uploadImage(info.file.originFileObj);
-        setImageFileObject(info.file.originFileObj);
-        console.log(info);
-      }
-      
-
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        console.log(info);
-        // message.error(`${info.file.name} file upload failed.`);
-        message.success(`${info.file.name} file uploaded successfully`);
+      if(arrayLength < 8){
+        if (info.file.status !== 'uploading') {
+          // uploadImage(info.file.originFileObj);
+          setImageFileObject(info.file.originFileObj);
+        } 
+        
+  
+        if (info.file.status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+          console.log(info);
+          // message.error(`${info.file.name} file upload failed.`);
+          message.success(`${info.file.name} file uploaded successfully`);
+        }
+  
+      }else {
+        showNotification('error', 'Images, more then 8 can not be uploaded', '');
+        console.log("checkhere");
       }
     },
   };

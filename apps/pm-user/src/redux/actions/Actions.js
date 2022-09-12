@@ -6,10 +6,12 @@ let mongoIdOfLoggedInUser = 'https://pmapi-pesto.herokuapp.com/';
 const localHost = "http://localhost:8000";
 const herokuHost = "https://pmapi-pesto.herokuapp.com";
 
+const baseUrl = herokuHost;
+
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
     try {
-      const url = `${localHost}/api/v1/users/userprofile/${oktaUserId}`;
+      const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;
 
       const response = await axios.get(url);
 
@@ -27,7 +29,7 @@ export const getUserProfile = (oktaUserId) => {
 export const updateUserProfile = (oktaUserId, value) => {
   try {
     return async (dispatch) => {
-      const url = `${localHost}/api/v1/users/${oktaUserId}`;
+      const url = `${baseUrl}/api/v1/users/${oktaUserId}`;
       const response = await axios.put(url, value);
       dispatch({
         type: ActionTypes.UPDATE_USER_PROFILE,
@@ -60,9 +62,8 @@ export const updateUserImage = (oktaUserId, fileObj) => {
       imageUrlString,
     };
 
-    console.log(oktaUserId);
-
-    const url = `${localHost}/api/v1/users/imageupload`;
+    //submitting image on mongodb
+    const url = `${baseUrl}/api/v1/users/imageupload`;
     const response = await axios.post(url, payload);
     console.log(response);
     dispatch({
