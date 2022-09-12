@@ -10,7 +10,7 @@ import { EditProfilePage } from '..';
 const Profile = () => {
   const { oktaAuth, authState } = useOktaAuth();
   const { profileId } = useParams();
-  console.log('profileId : ', profileId);
+  // console.log('profileId : ', profileId);
 
   const dispatch = useDispatch();
   const [fillData, setFillData] = useState([]);
@@ -43,9 +43,9 @@ const Profile = () => {
 
   const sisters = String(userProfileInfo?.sisters);
 
-  console.log(sisters);
+  // console.log(sisters);
 
-  console.log(userProfileInfo);
+  // console.log(userProfileInfo);
 
   let defaultImageArray = [];
   let imageArray = [];
@@ -65,7 +65,7 @@ const Profile = () => {
     imageArray = userProfileInfo?.images;
   }
 
-  console.log(userProfileInfo?.images);
+  // console.log(userProfileInfo?.images);
 
   // let ageRange =
 

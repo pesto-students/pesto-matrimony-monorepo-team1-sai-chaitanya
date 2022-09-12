@@ -3,11 +3,13 @@ import axios from 'axios';
 // import Apis from "../../apis";
 let mongoIdOfLoggedInUser = 'https://pmapi-pesto.herokuapp.com/';
 
+const localHost = "http://localhost:8000";
+const herokuHost = "https://pmapi-pesto.herokuapp.com";
 
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
     try {
-      const url = `https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaUserId}`;
+      const url = `${localHost}/api/v1/users/userprofile/${oktaUserId}`;
 
       const response = await axios.get(url);
 
@@ -25,7 +27,7 @@ export const getUserProfile = (oktaUserId) => {
 export const updateUserProfile = (oktaUserId, value) => {
   try {
     return async (dispatch) => {
-      const url = `https://pmapi-pesto.herokuapp.com/api/v1/users/${oktaUserId}`;
+      const url = `${localHost}/api/v1/users/${oktaUserId}`;
       const response = await axios.put(url, value);
       dispatch({
         type: ActionTypes.UPDATE_USER_PROFILE,
@@ -39,7 +41,9 @@ export const updateUserProfile = (oktaUserId, value) => {
 
 export const updateUserImage = (oktaUserId, fileObj) => {
   return async (dispatch) => {
-    const formData = new FormData();
+
+    try{
+      const formData = new FormData();
     // console.log(uploadImage);
     formData.append('file', fileObj);
     formData.append('upload_preset', 'lb3xedsh');
@@ -56,12 +60,18 @@ export const updateUserImage = (oktaUserId, fileObj) => {
       imageUrlString,
     };
 
-    const url = `https://pmapi-pesto.herokuapp.com/v1/users/imageupload/${oktaUserId}`;
+    console.log(oktaUserId);
+
+    const url = `${localHost}/api/v1/users/imageupload`;
     const response = await axios.post(url, payload);
     console.log(response);
     dispatch({
       type: ActionTypes.UPDATE_USER_IMAGE,
       payload: response,
     });
+    }catch(err){
+      console.log(err)
+    }
+    
   };
 };

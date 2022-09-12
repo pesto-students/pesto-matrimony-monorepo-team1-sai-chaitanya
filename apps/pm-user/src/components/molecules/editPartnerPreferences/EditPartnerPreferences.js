@@ -37,7 +37,7 @@ const EditPartnerPreferences = () => {
   const responseData = useSelector((state) => state.updateUserProfileReducer.data || {});
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
-  console.log(userProfileInfo);
+  // console.log(userProfileInfo);
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);

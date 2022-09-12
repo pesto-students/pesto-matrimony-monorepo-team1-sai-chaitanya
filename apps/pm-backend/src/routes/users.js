@@ -6,6 +6,7 @@ const {
   updateUserProfile,
   oktaSignUp,
   searchProfiles,
+  deleteImage
 } = require('../controllers/users');
 
 const router = express.Router();
@@ -15,7 +16,7 @@ const router = express.Router();
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
 router.route('/userprofile/:id').get(getUserProfile);
-router.route('/imageupload/:id').post(uploadImageToMongoDb);
+router.route('/imageupload').post(uploadImageToMongoDb);
 
 //it was running for the admin
 // router.route('/getallusers').get(getAllUsersProfiles)
@@ -25,6 +26,8 @@ router.route('/:userId').put(updateUserProfile);
 
 // Fetch User Profiles
 router.route('/search').get(searchProfiles);
+
+router.route('/delete-image/:userId/:index').delete(deleteImage);
 
 // Have to create another route & controller function for...
 // handling search and filters with pagination..

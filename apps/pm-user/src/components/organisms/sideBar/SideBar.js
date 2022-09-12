@@ -29,8 +29,6 @@ function SideBar() {
   const { images, gender } = userProfileInfo;
   var emptyArrayHolder = images || [];
 
-  console.log(userProfileInfo);
-
   var imageFromServer;
 
   if (gender === 'female') {

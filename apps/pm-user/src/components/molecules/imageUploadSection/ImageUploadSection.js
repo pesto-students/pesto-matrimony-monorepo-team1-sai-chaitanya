@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserImage } from '../../../redux/actions/Actions';
-import { Upload, UploadOutlined, Button } from '../../atoms';
+import { Upload, UploadOutlined, DeleteOutlined, Button } from '../../atoms';
 import { message, showNotification } from '@pm/pm-ui';
+import ImgCrop from 'antd-img-crop'; // put into atom
+import { Image } from 'antd'; // put into atom
+import axios from "axios"; 
 import _ from 'lodash';
 import { Modal } from 'antd';
 import { useOktaAuth } from '@okta/okta-react';
+import styles from "./imageUploadSection.module.scss";
 
 const ImageUploadSection = () => {
   const [imageFileObject, setImageFileObject] = useState({});
+  const [ indexForDeleteImage, setIndexForDeleteImage ] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
   const [ disabledButton, setDisabledButton ] = useState();
   const dispatch = useDispatch();
@@ -27,30 +32,54 @@ const ImageUploadSection = () => {
     }
   }
 
+  //to upload image
   useEffect(() => {
     if (!_.isEmpty(imageFileObject)) {
       uploadImage(imageFileObject);
+      setIndexForDeleteImage({});
     }
   }, [imageFileObject]);
 
+
+  //to delete image
+  useEffect(() => {
+    if(indexForDeleteImage.bool){
+      deleteImage(indexForDeleteImage.index);
+    }
+  }, [indexForDeleteImage]);
+
+
   const responseData = useSelector((state) => state.updateUserImageReducer.data || {});
   // console.log(responseData);
-
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
-  console.log(userProfileInfo);
+  // console.log(userProfileInfo);
 
-  const testArray = new Array(12)
+  //funtion to delete image
+  const deleteImage = async (index) => {
+    if(oktaUserId){
+      const response = await axios.delete(`http://localhost:8000/api/v1/users/delete-image/${oktaUserId}/${index}`);
+
+      if(response.data.success){
+        showNotification('success', 'Image is deleted', 'Please refresh the page');
+        
+      }
+    }
+  }
+
 
   let imageArray = userProfileInfo?.images || [];
   let arrayLength = imageArray.length;
 
+  console.log(arrayLength);
+
   const props = {
     name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        uploadImage(info.file.originFileObj);
+        // uploadImage(info.file.originFileObj);
+        setImageFileObject(info.file.originFileObj);
       }
+      
 
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -64,9 +93,22 @@ const ImageUploadSection = () => {
 
   return (
     <>
-      <Upload {...props}>
+    <ImgCrop rotate={true} >
+      <Upload {...props} className={styles.imgCropSection}>
       <Button icon={<UploadOutlined />}>Click to Upload</Button> 
       </Upload>
+    </ImgCrop>
+
+    {/* <ImgCrop rotate={true} >
+      <input type="file" className={styles.imgCropSection}
+      <Button icon={<UploadOutlined />}>Click to Upload</Button> 
+      />
+    </ImgCrop> */}
+    
+    <ul className={styles.imgCover}>
+       {arrayLength ? imageArray.map((image, index) => <li key={index} id={index}><Image src={image} /><diV  className={styles.deleteBtn} onClick={() => setIndexForDeleteImage({index: index, bool: true})}>{<DeleteOutlined />}</diV></li>) : ""}
+    </ul>
+  
     </>
   );
 };

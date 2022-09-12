@@ -89,6 +89,7 @@ exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
   const currentUser = await findUserByOktaId(currentUserId);
   // console.log(currentUser[0].images);
   const imageUrls = currentUser[0].images;
+
   if (!currentUser) {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
@@ -162,10 +163,44 @@ exports.searchProfiles = asyncHandler(async (req, res, next) => {
   });
 });
 
-//for the admin part
-// exports.getAllUsersProfiles = asyncHandler(async (req, res, next) => {
+exports.deleteImage = asyncHandler(async (req, res, next) => {
 
-//   const allUsers = await User.find();
+  const currentUserOktaId = req.params.userId;
+  const imageArrayIndex = req.params.index;
 
-//   res.status(200).json({ user: allUsers });
-// })
+  try{
+  //geting currentUserData by OktaUserId
+  const currentUserProfile = await findUserByOktaId(currentUserOktaId);
+
+  //image deleting logic
+  currentUserProfile[0].images.splice(imageArrayIndex, 1);
+
+  await User.updateOne({ oktaUserId: currentUserOktaId }, { images: currentUserProfile[0].images });
+
+  res.status(200).json({
+    success: true,
+    message: 'Deleted user successfully',
+    data: 'user'
+  });
+  }catch(err){
+    res.status(400).json({
+      success: false,
+      message: 'Image is not deleted',
+      error: err
+    });
+  }
+  // //geting currentUserData by OktaUserId
+  // const currentUserProfile = await findUserByOktaId(currentUserOktaId);
+
+  // //image deleting logic
+  // currentUserProfile[0].images.splice(imageArrayIndex, 1);
+
+  // await User.updateOne({ oktaUserId: currentUserOktaId }, { images: currentUserProfile[0].images });
+
+  // res.status(200).json({
+  //   success: true,
+  //   message: 'Deleted user successfully',
+  //   data: 'user'
+  // });
+
+})

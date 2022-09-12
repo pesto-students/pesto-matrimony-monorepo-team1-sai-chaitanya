@@ -7,6 +7,7 @@ import './userItemsList.css';
 const UserItemsList = () => {
   const [userdata, setUserData] = useState([]);
 
+  const  herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/admin/getallusers';
   const url = 'http://localhost:8000/api/v1/admin/getallusers';
 
   const getAllUsersData = async () => {

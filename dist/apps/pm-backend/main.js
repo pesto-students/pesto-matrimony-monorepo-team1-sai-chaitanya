@@ -845,11 +845,39 @@ exports.searchProfiles = asyncHandler((req, res, next) => tslib_1.__awaiter(void
         data: matchingProfiles,
     });
 }));
-//for the admin part
-// exports.getAllUsersProfiles = asyncHandler(async (req, res, next) => {
-//   const allUsers = await User.find();
-//   res.status(200).json({ user: allUsers });
-// })
+exports.deleteImage = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const currentUserOktaId = req.params.userId;
+    const imageArrayIndex = req.params.index;
+    try {
+        //geting currentUserData by OktaUserId
+        const currentUserProfile = yield findUserByOktaId(currentUserOktaId);
+        //image deleting logic
+        currentUserProfile[0].images.splice(imageArrayIndex, 1);
+        yield User.updateOne({ oktaUserId: currentUserOktaId }, { images: currentUserProfile[0].images });
+        res.status(200).json({
+            success: true,
+            message: 'Deleted user successfully',
+            data: 'user'
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            success: false,
+            message: 'Image is not deleted',
+            error: err
+        });
+    }
+    // //geting currentUserData by OktaUserId
+    // const currentUserProfile = await findUserByOktaId(currentUserOktaId);
+    // //image deleting logic
+    // currentUserProfile[0].images.splice(imageArrayIndex, 1);
+    // await User.updateOne({ oktaUserId: currentUserOktaId }, { images: currentUserProfile[0].images });
+    // res.status(200).json({
+    //   success: true,
+    //   message: 'Deleted user successfully',
+    //   data: 'user'
+    // });
+}));
 
 
 /***/ }),
@@ -1293,19 +1321,20 @@ module.exports = router;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const express = __webpack_require__("express");
-const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles, } = __webpack_require__("./apps/pm-backend/src/controllers/users.js");
+const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles, deleteImage } = __webpack_require__("./apps/pm-backend/src/controllers/users.js");
 const router = express.Router();
 // '/' in this router is equivalent to  '/api/v1/users'
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
 router.route('/userprofile/:id').get(getUserProfile);
-router.route('/imageupload/:id').post(uploadImageToMongoDb);
+router.route('/imageupload').post(uploadImageToMongoDb);
 //it was running for the admin
 // router.route('/getallusers').get(getAllUsersProfiles)
 // Update / Delete
 router.route('/:userId').put(updateUserProfile);
 // Fetch User Profiles
 router.route('/search').get(searchProfiles);
+router.route('/delete-image/:userId/:index').delete(deleteImage);
 // Have to create another route & controller function for...
 // handling search and filters with pagination..
 // This route will have a lot of complex logic.
