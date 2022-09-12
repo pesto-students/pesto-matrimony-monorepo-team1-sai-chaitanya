@@ -1,4 +1,4 @@
-import { Image } from '../../atoms';
+import { Image, PlusCircleOutlined } from '../../atoms';
 import PropTypes from 'prop-types';
 import styles from './profileSummary.module.scss';
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ const ProfileSummary = ({ imageChangeLink, userDetails, userImageSrc, userName }
       <Image src={userImageSrc} />
       <Link to={imageChangeLink} className={styles.changeImage}>
       <div className={styles.changeImage}>
-        Change Image
+      <PlusCircleOutlined style={{ fontSize: "26px" }} />
       </div>
       </Link>  
       <div className={styles.userName}>{userName}</div>

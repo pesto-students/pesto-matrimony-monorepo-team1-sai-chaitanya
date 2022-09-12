@@ -25,7 +25,6 @@ const SignUpForm = () => {
           },
         },
       });
-      console.log("response", response);
       history.push('/login');
     } catch (err) {
 
@@ -44,7 +43,6 @@ const SignUpForm = () => {
 
   const onFinish = (values) => {
     if (values.confirmPassword === values.password) {
-      console.log('Success:', values);
       signUpUser(values.firstName, values.lastName, values.email, values.gender, values.password);
     } else {
       showNotification('error', 'password and confirmPassword should be same');
