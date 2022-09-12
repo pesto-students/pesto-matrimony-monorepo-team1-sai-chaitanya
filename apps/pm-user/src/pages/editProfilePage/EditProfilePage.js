@@ -4,7 +4,9 @@ import styles from './editProfilePage.module.scss';
 const EditProfilePage = () => {
   return (
     <div className={styles.editProfilePage}>
-      <h2>Edit Personal Details</h2>
+    <div className={styles.headingWraper}>
+    <h1 className={styles.editProfilePageHeading}>Edit Personal Details Page</h1>
+    </div>
       <EditProfile />
     </div>
   );
