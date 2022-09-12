@@ -78,6 +78,7 @@ const ImageUploadSection = () => {
       if (info.file.status !== 'uploading') {
         // uploadImage(info.file.originFileObj);
         setImageFileObject(info.file.originFileObj);
+        console.log(info);
       }
       
 
@@ -91,13 +92,20 @@ const ImageUploadSection = () => {
     },
   };
 
+  //this is just to stop showing error on image upload
+  const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
+
   return (
     <>
     <ImgCrop rotate={true} >
-      <Upload {...props} className={styles.imgCropSection}>
+      <Upload {...props} className={styles.imgCropSection} customRequest={dummyRequest}>
       <Button icon={<UploadOutlined />}>Click to Upload</Button> 
       </Upload>
-    </ImgCrop>
+    </ImgCrop>    
 
     {/* <ImgCrop rotate={true} >
       <input type="file" className={styles.imgCropSection}
