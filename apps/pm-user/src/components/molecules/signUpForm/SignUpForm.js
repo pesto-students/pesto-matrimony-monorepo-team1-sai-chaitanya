@@ -25,23 +25,26 @@ const SignUpForm = () => {
           },
         },
       });
+      console.log("responseReact", response);
       history.push('/login');
     } catch (err) {
 
-      const errorMassage = err.response.data.err.message;
-      const passwordErrorString = errorMassage.match("password");
+      console.log("errReact", err);
+      // const errorMassage = err.response.data.err.message;
+      // const passwordErrorString = errorMassage.match("password");
 
-      if(passwordErrorString){
-        showNotification('error', 'Please create strong password');
-      }else{
-        showNotification('error', 'This user already exist in the Pesto Matrimony');
-      }
+      // if(passwordErrorString){
+      //   showNotification('error', 'Please create strong password');
+      // }else{
+      //   showNotification('error', 'This user already exist in the Pesto Matrimony');
+      // }
 
       
     }
   }
 
   const onFinish = (values) => {
+    console.log(values);
     if (values.confirmPassword === values.password) {
       signUpUser(values.firstName, values.lastName, values.email, values.gender, values.password);
     } else {

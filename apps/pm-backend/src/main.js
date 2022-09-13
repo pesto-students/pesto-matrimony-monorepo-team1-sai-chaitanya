@@ -39,8 +39,6 @@ app.use('/api/v1/users', users);
 
 console.log('mounting routes completed...');
 
-// error Handler
-app.use(errorHandler);
 
 //Handling Unhandled routes. it should be placed after the routes.
 app.all( '*',( req , res , next ) => {
@@ -49,6 +47,9 @@ app.all( '*',( req , res , next ) => {
     message : `Can't find $ { req.originalUrl ) on this server !`
  })
 });
+
+// error Handling middlewre.
+app.use(errorHandler);
 
 const server = app.listen(
   process.env.PORT || 8000,

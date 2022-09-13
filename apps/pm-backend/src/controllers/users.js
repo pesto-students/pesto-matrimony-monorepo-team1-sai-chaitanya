@@ -7,18 +7,8 @@ const okta = require('@okta/okta-sdk-nodejs');
 // @route  POST /api/v1/users/
 // @access Public
 
-// exports.registerUserProfile = asyncHandler(async (req, res, next) => {
-//   // connect with okta here ?!
-//   const user = await User.create(req.body);
-//   res.status(201).json({ success: true, message: 'New user is created.', data: user });
-// });
 /** ----------------------------------------- */
 
-//creating user inside mongodb with oktaInformation.
-const createUserInMongoDB = async (mongoUser) => {
-  const user = await User.create(mongoUser);
-  return user;
-};
 
 //signing up user into okta
 exports.oktaSignUp = asyncHandler(async (req, res, next) => {
@@ -28,8 +18,7 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
   });
   const body = req.body;
   
-  try {
-    async function createUserInOkta() {
+    // async function createUserInOkta() {
       const response = await client.createUser(body);
 
       //will update it with destructure
@@ -45,32 +34,21 @@ exports.oktaSignUp = asyncHandler(async (req, res, next) => {
         email,
       };
 
-      const resp = await createUserInMongoDB(mongoUser);
+      //creting user in mongo db with data from the okta
+      const user = await User.create(mongoUser);
 
-      res.status(200).send({
-        res: resp,
-      });
-    }
-    await createUserInOkta();
-  } catch (err) {
-    // return next(new CustomErrorResponse(err, 404));
-    res.status(400).send({
-      err: err,
+    res.status(200).send({
+      res: user,
     });
-  }
 });
 
 //find user in mongodb by oktaId
 async function findUserByOktaId(oktaId) {
   const currentUser = await User.find({ oktaUserId: oktaId })
-  // console.log(currentUser);
-  // console.log(currentUser[0]._id.toString());
   return currentUser;
 }
 
-// @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/userprofile/:id
-// @access Private
+//getting userPrifileData
 exports.getUserProfile = asyncHandler(async (req, res, next) => {
   const params = req.params;
   const oktaId = params.id;
@@ -94,13 +72,8 @@ exports.uploadImageToMongoDb = asyncHandler(async (req, res, next) => {
     return next(new CustomErrorResponse(`User not found!`, 404));
   }
   await User.updateOne({ oktaUserId: currentUserId }, { images: [...imageUrls, imageUrl] });
-  res.status(200).json({ status: 'success' });
 
-  // res.status(200).json({
-  //   success: true,
-  //   message: 'Retrieved User successfully',
-  //   user: user,
-  // });
+  res.status(200).json({ status: 'success' });
 });
 
 /** ----------------------------------------- */
@@ -117,7 +90,6 @@ exports.updateUserProfile = asyncHandler(async (req, res, next) => {
   if(!body){
     return next(new CustomErrorResponse(`req.body is empty`, 400));
   }
-
 
   if (!currentUserId) {
     return next(new CustomErrorResponse(`Can't update data of non-existent user`, 400));
@@ -168,7 +140,6 @@ exports.deleteImage = asyncHandler(async (req, res, next) => {
   const currentUserOktaId = req.params.userId;
   const imageArrayIndex = req.params.index;
 
-  try{
   //geting currentUserData by OktaUserId
   const currentUserProfile = await findUserByOktaId(currentUserOktaId);
 
@@ -182,13 +153,13 @@ exports.deleteImage = asyncHandler(async (req, res, next) => {
     message: 'Deleted user successfully',
     data: 'user'
   });
-  }catch(err){
+  
     res.status(400).json({
       success: false,
       message: 'Image is not deleted',
       error: err
     });
-  }
+  
   // //geting currentUserData by OktaUserId
   // const currentUserProfile = await findUserByOktaId(currentUserOktaId);
 
