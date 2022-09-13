@@ -44,7 +44,6 @@ const App = () => {
 const AppWithRouterAccess = () => (
   <BrowserRouter>
     <App />
-    <button onClick={methodDoesNotExist}>Break the world</button>;
   </BrowserRouter>
 );
 

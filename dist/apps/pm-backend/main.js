@@ -1472,9 +1472,6 @@ const recommendations = __webpack_require__("./apps/pm-backend/src/routes/recomm
 const search = __webpack_require__("./apps/pm-backend/src/routes/search.js");
 const toggleShortlist = __webpack_require__("./apps/pm-backend/src/routes/shortlist.js");
 const users = __webpack_require__("./apps/pm-backend/src/routes/users.js");
-app.get('/debug-sentry', function mainHandler(req, res) {
-    throw new Error('My first Sentry error!');
-});
 // mounting routes
 app.use('/api/v1/admin', admin);
 app.use('/api/v1/conversations', conversations);
