@@ -1474,6 +1474,13 @@ app.use('/api/v1/users', users);
 console.log('mounting routes completed...');
 // error Handler
 app.use(errorHandler);
+//Handling Unhandled routes. it should be placed after the routes.
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        status: ' fail ',
+        message: `Can't find $ { req.originalUrl ) on this server !`
+    });
+});
 const server = app.listen(process.env.PORT || 8000, console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${"development".toUpperCase()}`));
 // Error in connecting to MongoDB triggers unhandledRejection at global level
 // That is being handled here. This stops server if MongoDB is NOT connected.
