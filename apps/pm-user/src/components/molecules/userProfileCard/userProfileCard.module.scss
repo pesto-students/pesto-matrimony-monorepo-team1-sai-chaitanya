@@ -1,9 +1,10 @@
 .userProfileCard{
+    width: 600px;
     padding: 2rem;
-    border-bottom: 1px solid #5c5fee;
+    background-color: white;
     border-radius: 1.5rem;
-    margin: 1.5rem;
-    box-shadow: rgb(125 125 125 / 35%) 0px 1px 9px 1px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
 }
 
 .cardTitleWrpper{

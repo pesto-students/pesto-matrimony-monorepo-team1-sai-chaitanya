@@ -50,11 +50,12 @@
 }
 
 .userInfoCard {
-  padding: 0.8rem;
-  border-bottom: 1px solid #5c5fee;
-  border-radius: 2.4rem;
-  margin: 1rem;
-  box-shadow: rgb(125 125 125 / 35%) 0px 1px 9px 1px;
+    width: 600px;
+    padding: 0.8rem;
+    border-radius: 0.8rem;
+    background-color: white;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
 
   .img {
     width: 100%;

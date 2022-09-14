@@ -80,13 +80,9 @@ const LoginForm = ({ onFormSubmit }) => {
             block
             shape="round"
             size="medium"
-            style={{
-              backgroundColor: '#5b63e6',
-              border: 'none',
-              marginTop: '8px',
-            }}
+            className={styles.logInButton}
           >
-            Submit
+          Login
           </Button>
         </Form.Item>
       </Form>

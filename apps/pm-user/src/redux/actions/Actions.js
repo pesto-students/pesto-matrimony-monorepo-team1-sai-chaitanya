@@ -3,11 +3,12 @@ import axios from 'axios';
 // import Apis from "../../apis";
 let mongoIdOfLoggedInUser = 'https://pmapi-pesto.herokuapp.com/';
 
-const localHost = "http://localhost:8000";
-const herokuHost = "https://pmapi-pesto.herokuapp.com";
-
+const localHost = 'http://localhost:8000';
+const herokuHost = 'https://pmapi-pesto.herokuapp.com';
 const baseUrl = localHost;
 
+
+//to get user's profile data
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
     try {
@@ -25,7 +26,7 @@ export const getUserProfile = (oktaUserId) => {
   };
 };
 
-//to update the user
+//to update the user data
 export const updateUserProfile = (oktaUserId, value) => {
   try {
     return async (dispatch) => {
@@ -41,38 +42,37 @@ export const updateUserProfile = (oktaUserId, value) => {
   }
 };
 
+//to update user's image
 export const updateUserImage = (oktaUserId, fileObj) => {
   return async (dispatch) => {
-
-    try{
+    try {
       const formData = new FormData();
-    // console.log(uploadImage);
-    formData.append('file', fileObj);
-    formData.append('upload_preset', 'lb3xedsh');
+      // console.log(uploadImage);
+      formData.append('file', fileObj);
+      formData.append('upload_preset', 'lb3xedsh');
 
-    //submiting image on cloudinary
-    const responseClodinary = await axios.post(
-      'https://api.cloudinary.com/v1_1/pesto-matrimony/image/upload',
-      formData
-    );
-    const imageUrlString = responseClodinary.data.url;
+      //submiting image on cloudinary
+      const responseClodinary = await axios.post(
+        'https://api.cloudinary.com/v1_1/pesto-matrimony/image/upload',
+        formData
+      );
+      const imageUrlString = responseClodinary.data.url;
 
-    const payload = {
-      oktaUserId,
-      imageUrlString,
-    };
+      const payload = {
+        oktaUserId,
+        imageUrlString,
+      };
 
-    //submitting image on mongodb
-    const url = `${baseUrl}/api/v1/users/imageupload`;
-    const response = await axios.post(url, payload);
-    console.log(response);
-    dispatch({
-      type: ActionTypes.UPDATE_USER_IMAGE,
-      payload: response,
-    });
-    }catch(err){
-      console.log(err)
+      //submitting image on mongodb
+      const url = `${baseUrl}/api/v1/users/imageupload`;
+      const response = await axios.post(url, payload);
+      console.log(response);
+      dispatch({
+        type: ActionTypes.UPDATE_USER_IMAGE,
+        payload: response,
+      });
+    } catch (err) {
+      console.log(err);
     }
-    
   };
 };
