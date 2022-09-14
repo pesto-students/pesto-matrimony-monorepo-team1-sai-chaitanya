@@ -4,6 +4,7 @@ import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
 import styles from './searchProfiles.module.scss';
 import { useEffect, useState } from 'react';
+import { Empty, Spin } from 'antd';
 import axios from 'axios';
 import { useOktaAuth } from '@okta/okta-react';
 
@@ -96,7 +97,7 @@ const SearchProfiles = () => {
   };
 
   const onFinish = (values) => {
-    setDisplayText('Loading... Please wait...');
+    setDisplayText(<Spin />);
     showNotification(
       'success',
       'Searching...',
@@ -107,6 +108,7 @@ const SearchProfiles = () => {
       .post(`https://pmapi-pesto.herokuapp.com/api/v1/search/${oktaUserId}`, { ...values })
       .then((res) => {
         showNotification('success', 'Success', `Found ${res.data.number} matche(s) based on your search criteria.`);
+        console.log(res);
         setMatchesData(res.data.data);
       })
       .catch((err) => {

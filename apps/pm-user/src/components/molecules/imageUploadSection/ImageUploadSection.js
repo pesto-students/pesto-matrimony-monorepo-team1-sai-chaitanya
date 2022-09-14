@@ -6,14 +6,15 @@ import { message, showNotification } from '@pm/pm-ui';
 import ImgCrop from 'antd-img-crop'; // put into atom
 import { Image } from 'antd'; // put into atom
 import axios from "axios"; 
+import { Empty, Spin } from 'antd';
 import _ from 'lodash';
-import { Modal } from 'antd';
 import { useOktaAuth } from '@okta/okta-react';
 import styles from "./imageUploadSection.module.scss";
 
 const ImageUploadSection = () => {
   const [imageFileObject, setImageFileObject] = useState({});
   const [ indexForDeleteImage, setIndexForDeleteImage ] = useState({});
+  const [ responseForLoader, setResponseForLoader ] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
   const [ disabledButton, setDisabledButton ] = useState();
   const dispatch = useDispatch();
@@ -39,8 +40,6 @@ const ImageUploadSection = () => {
       setIndexForDeleteImage({});
     }
   }, [imageFileObject]);
-
-  
 
 
   // to delete image
@@ -104,9 +103,15 @@ const ImageUploadSection = () => {
     }, 0);
   };
 
+  if(_.isEmpty(userProfileInfo)){
+    return (<div>
+      <Spin className={styles.pageLoaderSpin} size="large" />
+    </div>)
+  }
+
   return (
     <>
-    <ImgCrop rotate={true} >
+    <ImgCrop rotate={true} shape='rect' aspect={16/9} >
       <Upload {...props} className={styles.imgCropSection} customRequest={dummyRequest}>
       <Button icon={<UploadOutlined />}>Click to Upload your Image</Button> 
       </Upload>

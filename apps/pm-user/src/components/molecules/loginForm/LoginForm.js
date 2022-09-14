@@ -91,10 +91,6 @@ const LoginForm = ({ onFormSubmit }) => {
   );
 };
 
-// "E0000001"
-// "E0000001"
-
-
 LoginForm.propTypes = {
   onFormSubmit: PropTypes.func,
 };

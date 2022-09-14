@@ -27,10 +27,13 @@ function Login() {
       .catch((err) => {
         showNotification('error', 'email or password incorrect')
       });
-
+ 
   if (!authState) {
     return <div>Loading...</div>;
   }
+
+  console.log(authState);
+
   if (!authState.isAuthenticated) {
     return (
       <FormWrapper

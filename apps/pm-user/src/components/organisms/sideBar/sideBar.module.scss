@@ -39,3 +39,28 @@
     color: #a6a7b2;
   }
 }
+
+.loadSkeletonWraper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadSkeletonWraper > {
+  margin-bottom: 5px;
+}
+
+.loadSkeleton{
+  margin-top: 8px;
+}
+
+.loadSkeletonForSegmentedWraper{
+  margin: 40px 0px;
+}
+
+.loadSkeletonForSegmented{
+  margin-right: 12px;
+  margin-left: 12px;
+  margin: 0px 12px;
+}
+

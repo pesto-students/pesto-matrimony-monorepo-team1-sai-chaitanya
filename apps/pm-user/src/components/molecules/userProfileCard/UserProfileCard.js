@@ -11,7 +11,7 @@ const UserProfileCard = ({ children, title }) => {
       <div className={styles.cardTitleWrpper}>
         <span>{title} </span>
         <Link to="/edit-profile">
-        <Button shape="round" size="middle" type="primary">
+        <Button className={styles.profileCardButton} size="middle" type="primary">
           Edit
         </Button>
         </Link>

@@ -7,6 +7,8 @@ import { useOktaAuth } from '@okta/okta-react';
 import { QuickInfoBar } from '../../molecules';
 import { getUserProfile } from '../../../redux/actions/Actions';
 import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
+import { Spin, Skeleton } from 'antd';
 import styles from './sideBar.module.scss';
 import { HomeOutlined, MailOutlined, SearchOutlined, UnorderedListOutlined, UserOutlined } from '../../atoms';
 
@@ -25,6 +27,9 @@ function SideBar() {
 
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
+  // const userProfileInfo = {}; //to check load skelaton
+
+  console.log(_.isEmpty(userProfileInfo));
 
   const { images, gender } = userProfileInfo;
   var emptyArrayHolder = images || [];
@@ -60,7 +65,7 @@ function SideBar() {
     }
   };
 
-  // "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+  
 
   const MENU_ITEMS = [
     {
