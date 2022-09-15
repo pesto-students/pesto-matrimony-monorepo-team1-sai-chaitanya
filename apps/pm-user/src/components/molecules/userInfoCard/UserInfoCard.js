@@ -139,7 +139,7 @@ const UserInfoCard = ({
     return (
       <div key={i}>
         <div className={styles.carousel}>
-          <Link to={`/profile/${profileId}`} >
+          <Link to={`/profile-others/${profileId}`} target="_blank" >
             <img src={image} className={styles.img} />
           </Link>
         </div>

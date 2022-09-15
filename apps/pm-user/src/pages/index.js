@@ -6,6 +6,7 @@ export { default as MailBox } from './mailBox';
 export { default as Matches } from './matches';
 export { default as PageNotFound } from './pageNotFound';
 export { default as Profile } from './profile';
+export { default as ProfileOthers } from './profileOthers';
 export { default as SignUp } from './signUp';
 export { default as Recommendations } from './recommendations';
 export { default as Search } from './search';

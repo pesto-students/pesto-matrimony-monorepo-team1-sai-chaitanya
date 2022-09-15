@@ -25,6 +25,15 @@ const Profile = () => {
   //condition when userId comes from pramams.
   let userIdToGetData = profileId || oktaUserId;
 
+  console.log(profileId);
+
+  var bool;
+  if(profileId === oktaUserId){
+    bool = true
+  }else if(profileId !== oktaUserId){
+    bool = false
+  }
+
   useEffect(() => {
     dispatch(getUserProfile(userIdToGetData));
   }, []);
@@ -94,11 +103,11 @@ const Profile = () => {
         profileId={profileId}
         profileImages={imageArray}
       />
-      <UserProfileCard className="userProfileCard" title="Description" button={true}>
+      <UserProfileCard className="userProfileCard" title="Description" button={bool}>
         <UserProfileCardContent description={userProfileInfo?.aboutMe || 'Not Specified'} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Personal Information" button={true}>
+      <UserProfileCard className="userProfileCard" title="Personal Information" button={bool}>
         <UserProfileCardContent field="Age" value={userProfileInfo?.age || 'Not Specified'} />
         <UserProfileCardContent field="Height" value={userProfileInfo?.height || 'Not Specified'} />
         <UserProfileCardContent field="Weight (in Kg)" value={userProfileInfo?.weight || 'Not Specified'} />
@@ -119,14 +128,14 @@ const Profile = () => {
         />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Education & Career Information" button={true}>
+      <UserProfileCard className="userProfileCard" title="Education & Career Information" button={bool}>
         <UserProfileCardContent field="Qualification" value={userProfileInfo?.qualification || 'Not Specified'} />
         <UserProfileCardContent field="Occupation" value={userProfileInfo?.occupation || 'Not Specified'} />
         <UserProfileCardContent field="Employed in" value={userProfileInfo?.employer || 'Not Specified'} />
         <UserProfileCardContent field="Income (Lakhs/Yr)" value={userProfileInfo?.income || 'Not Specified'} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Family Details" button={true}>
+      <UserProfileCard className="userProfileCard" title="Family Details" button={bool}>
         <UserProfileCardContent field="About Family" value={userProfileInfo?.aboutFamily || 'Not Specified'} />
         <UserProfileCardContent field="Brother(s)" value={String(userProfileInfo?.brothers) || 'Not Specified'} />
         <UserProfileCardContent
@@ -141,7 +150,7 @@ const Profile = () => {
         <UserProfileCardContent field="Family Status" value={userProfileInfo?.familyStatus || 'Not Specified'} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Religious and Horoscope Details" button={true}>
+      <UserProfileCard className="userProfileCard" title="Religious and Horoscope Details" button={bool}>
         <UserProfileCardContent field="Religion" value={userProfileInfo?.religion || 'Not Specified'} />
         <UserProfileCardContent field="Zodiac sign" value={userProfileInfo?.zodiacSign || 'Not Specified'} />
         <UserProfileCardContent field="Gothram" value={userProfileInfo?.gothram || 'Not Specified'} />
@@ -150,7 +159,7 @@ const Profile = () => {
         {/* <UserProfileCardContent field="Time of Birth" value={userProfileInfo?.timeOfBirth || 'Not Specified'} /> */}
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Partner Preferences" button={true}>
+      <UserProfileCard className="userProfileCard" title="Partner Preferences" button={bool}>
         <UserProfileCardContent field="Age Range" value={showAgeRange} />
         <UserProfileCardContent field="Height Range" value={showHeightRange} />
         <UserProfileCardContent
