@@ -59,7 +59,7 @@ const MailBox = () => {
 
   return (
     <div className={styles.mailBox}>
-      <h2 className={styles.pageHeading}>MailBox</h2>
+      <h2 className={styles.maiBoxPageHeading}>MailBox</h2>
       {renderMailBox.length < 1 ? (
         <Empty
           description={

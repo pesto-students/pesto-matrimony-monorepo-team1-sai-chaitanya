@@ -3,7 +3,7 @@ import styles from './search.module.scss';
 const Search = () => {
   return (
     <div className={styles.searchPage}>
-      <h2>Search Profiles based on Criteria</h2>
+      <h1 className={styles.searchPageHeading}>Personal Details Page</h1>
       <SearchProfiles />
     </div>
   );

@@ -5,6 +5,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { useParams } from 'react-router-dom';
 import _ from 'lodash';
 import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
+import styles from "./profileOthers.module.scss";
 import { EditProfilePage } from '..';
 
 const Profile = () => {
@@ -94,6 +95,7 @@ const Profile = () => {
     <>
       {/* Temporarily displaying EditProfile Page here */}
       {/* <EditProfilePage /> */}
+      <h1 className={styles.viewOthersProfilePageHeading}>View <span className={styles.userName}>{userProfileInfo?.name}</span> Profile</h1>
       <UserInfoCard
         profileLocation={userProfileInfo?.location || 'Not Specified'}
         idOfLoggedInUser={oktaUserId}

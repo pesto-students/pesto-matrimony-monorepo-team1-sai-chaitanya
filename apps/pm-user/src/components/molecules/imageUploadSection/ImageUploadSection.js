@@ -59,10 +59,14 @@ const ImageUploadSection = () => {
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
   // console.log(userProfileInfo);
 
+  const localHost = 'http://localhost:8000';
+  const herokuHost = 'https://pmapi-pesto.herokuapp.com';
+  const baseUrl = herokuHost;
+
   //funtion to delete image
   const deleteImage = async (index) => {
     if(oktaUserId){
-      const response = await axios.delete(`http://localhost:8000/api/v1/users/delete-image/${oktaUserId}/${index}`);
+      const response = await axios.delete(`${baseUrl}/api/v1/users/delete-image/${oktaUserId}/${index}`);
       console.log(response);
 
       if(response.data.success){
@@ -120,7 +124,11 @@ const ImageUploadSection = () => {
       <Upload {...props} className={styles.imgCropSection} customRequest={dummyRequest}>
       <Button icon={<UploadOutlined />}>Click to Upload your Image</Button> 
       </Upload>
-    </ImgCrop>    
+    </ImgCrop>
+    <div className={styles.imgInfoWraper}>
+    <p>you can not upload more then 8 images</p>
+    <p>Image expect ratio is 16:9</p> 
+    </div>
     <ul className={styles.imgCover}>
        {arrayLength ? imageArray.map((image, index) => <li key={index} id={index}><Image src={image} /><diV  className={styles.deleteBtn} onClick={() => setIndexForDeleteImage({index: index, bool: true})}>{<DeleteOutlined />}</diV></li>) : ""}
     </ul>
