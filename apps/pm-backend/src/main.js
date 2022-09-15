@@ -37,16 +37,6 @@ app.use('/api/v1/search', search);
 app.use('/api/v1/toggleShortlist', toggleShortlist);
 app.use('/api/v1/users', users);
 
-console.log('mounting routes completed...');
-
-
-// Handling Unhandled routes. it should be placed after the routes.
-// app.all( '*',( req , res , next ) => {
-//   res.status ( 404 ).json({
-//     status : ' fail ',
-//     message : `Can't find $ { req.originalUrl ) on this server !`
-//  })
-// }); 
 
 // error Handling middlewre.
 app.use(errorHandler);
