@@ -16,7 +16,7 @@ const UserInfoCard = ({
   profileLocation,
   profileImages,
   profileName,
-  cardSelfUserIdHandle
+  // cardSelfUserIdHandle
 }) => {
   const { authState } = useOktaAuth();
   //getting current user's oktaId
@@ -135,13 +135,11 @@ const UserInfoCard = ({
       });
   }
 
-  console.log(cardSelfUserIdHandle);
-
   const carouselImages = profileImages?.map((image, i) => {
     return (
       <div key={i}>
         <div className={styles.carousel}>
-          <Link to={`/userprofile/undefined`} target="_blank">
+          <Link to={`/profile/${profileId}`} >
             <img src={image} className={styles.img} />
           </Link>
         </div>

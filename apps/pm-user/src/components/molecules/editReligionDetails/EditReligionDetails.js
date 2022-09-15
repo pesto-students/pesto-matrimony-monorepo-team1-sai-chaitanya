@@ -24,7 +24,7 @@ const EditReligionDetails = () => {
     }
   }, [userProfileData]);
 
-  console.log(userProfileData);
+  // console.log(userProfileData);
 
   const responseData = useSelector(state => state.updateUserProfileReducer.data || {});
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});

@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react';
 import { UserInfoCardsList } from '../../components';
 import { useOktaAuth } from '@okta/okta-react';
 import axios from 'axios';
+import { Empty, Spin } from 'antd';
 import styles from './shortlisted.module.scss';
 
 const Shortlisted = () => {
   const { authState } = useOktaAuth();
   const [shortlistedMatchesData, setShortlistedMatchesData] = useState([]);
+  const [responseToCheck, setResponseToCheck] = useState({});
+
 
   //getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
+
+
 
   // let actualShortlistedMatcheshData = [];
   useEffect(() => {
@@ -19,10 +24,12 @@ const Shortlisted = () => {
       const userProfiles = await Promise.all(
         shortlistedUserIds.map(async (id) => {
           const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
+         
           return response.data.currentUser[0];
         })
       );
-      setShortlistedMatchesData(userProfiles);
+      setResponseToCheck(userProfiles); //v
+      setShortlistedMatchesData(userProfiles); 
     }
     try {
       fetchProfilesData();
@@ -30,6 +37,12 @@ const Shortlisted = () => {
       console.log(err);
     }
   }, []);
+
+  console.log(responseToCheck);
+
+  // if (_.isEmpty(responseToCheck)) {
+  //   return <Spin />;
+  // }
 
   return (
     <div className={styles.shortlistedPage}>

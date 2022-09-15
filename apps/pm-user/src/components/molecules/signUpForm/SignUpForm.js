@@ -25,7 +25,6 @@ const SignUpForm = () => {
           },
         },
       });
-      console.log("response", response);
       history.push('/login');
     } catch (err) {
 
@@ -36,15 +35,12 @@ const SignUpForm = () => {
         showNotification('error', 'Please create strong password');
       }else{
         showNotification('error', 'This user already exist in the Pesto Matrimony');
-      }
-
-      
+      } 
     }
   }
 
   const onFinish = (values) => {
     if (values.confirmPassword === values.password) {
-      console.log('Success:', values);
       signUpUser(values.firstName, values.lastName, values.email, values.gender, values.password);
     } else {
       showNotification('error', 'password and confirmPassword should be same');
@@ -52,7 +48,7 @@ const SignUpForm = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    // console.log('Failed:', errorInfo);
   };
 
   return (
@@ -186,13 +182,9 @@ const SignUpForm = () => {
             block
             shape="round"
             size="medium"
-            style={{
-              backgroundColor: '#5b63e6',
-              border: 'none',
-              marginTop: '8px',
-            }}
+            className={styles.signUpButton}
           >
-            Submit
+            SignUp
           </Button>
         </Form.Item>
       </Form>

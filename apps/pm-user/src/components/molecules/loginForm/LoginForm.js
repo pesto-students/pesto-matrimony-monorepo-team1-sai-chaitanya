@@ -1,10 +1,12 @@
 import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined } from '../../atoms';
+import { useOktaAuth } from '@okta/okta-react';
 import PropTypes from 'prop-types';
 import _noop from 'lodash';
 import { useHistory, Link } from 'react-router-dom';
 import styles from './loginForm.module.scss';
 
 const LoginForm = ({ onFormSubmit }) => {
+  const { oktaAuth, authState } = useOktaAuth();
   const history = useHistory();
 
   const onFinish = (values) => {
@@ -15,6 +17,8 @@ const LoginForm = ({ onFormSubmit }) => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  console.log(authState);
 
   return (
     <>
@@ -74,30 +78,27 @@ const LoginForm = ({ onFormSubmit }) => {
             span: 24,
           }}
         >
-          <Button
+        {!authState ? (<Button type="primary" loading>
+          Loading
+        </Button>) : (
+          <Button 
             type="primary"
             htmlType="submit"
             block
             shape="round"
             size="medium"
-            style={{
-              backgroundColor: '#5b63e6',
-              border: 'none',
-              marginTop: '8px',
-            }}
+            className={styles.logInButton}
           >
-            Submit
+          Login
           </Button>
+        )}
+          
         </Form.Item>
       </Form>
       {/* <Link className={styles.forgotPassword} to="/forgot-password"><p>Forgot Password?</p></Link> */}
     </>
   );
 };
-
-// "E0000001"
-// "E0000001"
-
 
 LoginForm.propTypes = {
   onFormSubmit: PropTypes.func,

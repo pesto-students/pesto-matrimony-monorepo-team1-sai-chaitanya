@@ -1,9 +1,9 @@
 import { Input as AntdInput } from 'antd';
 const InputPassword = AntdInput.Password;
-import PropTypes from 'prop-types';
-import  './input.css';
+import PropTypes from 'prop-types'; 
 
 const Input = ({ placeholder, prefix, size, type, ...restProps }) => {
+  "hi"
   return (
     <AntdInput
       {...restProps}

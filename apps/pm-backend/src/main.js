@@ -73,6 +73,16 @@ app.use(Sentry.Handlers.errorHandler());
 // *****************Sentry Related*****************
 
 // Custom Error Handler
+
+//Handling Unhandled routes. it should be placed after the routes.
+// app.all('*', (req, res, next) => {
+//   res.status(404).json({
+//     status: 'fail',
+//     message: `Can't find ${req.originalUrl} on this server !`,
+//   });
+// });
+
+// error Handling middlewre.
 app.use(errorHandler);
 
 const server = app.listen(

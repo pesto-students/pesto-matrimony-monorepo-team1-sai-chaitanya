@@ -1,4 +1,5 @@
 .messagesBox {
+  width: 600px;
   border-bottom: 1px dotted #5c5fee;
   border-radius: 2.4rem;
   margin: 1.2rem 1.8rem;
@@ -9,23 +10,36 @@
   font-size: 1.4rem;
   background-color: white;
 
-  img {
-    border-radius: 50%;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   :global {
     .ant-btn.ant-btn-primary {
       border-color: #5c5fee;
       background: #5c5fee;
       margin: 0 0.4rem;
+
+      &:hover {
+        background-color: #2d30d2;
+        box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+      }
     }
     .ant-modal {
       top: 2.4rem;
     }
   }
+}
+
+.profileImage {
+  width: 7rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profileImage > img {
+  width: 100%;
+}
+
+.profileBrief {
+  color: #5a5b87;
+  font-size: 20px;
 }
 
 .message {

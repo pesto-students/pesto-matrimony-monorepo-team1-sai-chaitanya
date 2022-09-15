@@ -2,6 +2,8 @@ import { MessagesBox } from '../../components';
 import styles from './mailBox.module.scss';
 import { useEffect, useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
+import _ from "lodash";
+import { Empty, Spin } from 'antd';
 import axios from 'axios';
 
 const MailBox = () => {
@@ -9,15 +11,20 @@ const MailBox = () => {
   const oktaIdOfLoggedInUser = authState.accessToken.claims.uid;
 
   const [interestsSentAndReceived, setInterestsSentAndReceived] = useState([]);
+  const [responseForLoader, setResponseForLoader] = useState({});
 
   useEffect(() => {
     axios
       .get(`https://pmapi-pesto.herokuapp.com/api/v1/conversations/${oktaIdOfLoggedInUser}`)
       .then((res) => {
+        console.log(res);
+        setResponseForLoader(res);
         setInterestsSentAndReceived([...res.data.interestsReceived, ...res.data.interestsSent]);
       })
       .catch((error) => console.log(error));
   }, []);
+
+  console.log(interestsSentAndReceived)
 
   const renderMailBox = interestsSentAndReceived?.map((interest, i) => {
     if (interest.conversations.length > 0) {
@@ -42,12 +49,29 @@ const MailBox = () => {
     }
   });
 
+  if(_.isEmpty(responseForLoader)){
+    return (<div>
+     <h2 className={styles.pageHeading}>MailBox</h2>
+      <Spin className={styles.pageLoaderSpin} size="large" />
+    </div>)
+  }
+
+
   return (
     <div className={styles.mailBox}>
-      <div className={styles.header}>
-        <h2>MailBox</h2>
-      </div>
-      <div className={styles.content}>{renderMailBox}</div>
+      <h2 className={styles.pageHeading}>MailBox</h2>
+      {renderMailBox.length < 1 ? (
+        <Empty
+          description={
+            <span>
+              No Messages Found.
+            </span>
+          }
+        ></Empty>
+      ) : (
+        <div className={styles.content}>{renderMailBox}</div>
+      )}
+      
     </div>
   );
 };

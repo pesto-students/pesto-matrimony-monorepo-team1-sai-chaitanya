@@ -153,7 +153,6 @@ const EditPersonalDetails = () => {
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
   const onFinish = (value) => {
-
     value.age = value.age[0];
     value.height = value.height[0];
     value.weight = value.weight[0];
@@ -162,7 +161,7 @@ const EditPersonalDetails = () => {
         delete value[key];
       }
     });
-    console.log("value", value);
+    console.log('value', value);
     console.log(JSON.stringify(value));
     setUserProfileData(value);
 
@@ -683,7 +682,7 @@ const EditPersonalDetails = () => {
         <Select bordered>
           <Option value="Drinker">Drinker</Option>
           <Option value="Social Drinker">Social Drinker</Option>
-          <Option value="Teetotallers">Teetotaller</Option>
+          <Option value="Teetotaller">Teetotaller</Option>
         </Select>
       </Form.Item>
       <Form.Item label="Hobbies" name="hobbies" initialValue={userProfileInfo?.hobbies}>

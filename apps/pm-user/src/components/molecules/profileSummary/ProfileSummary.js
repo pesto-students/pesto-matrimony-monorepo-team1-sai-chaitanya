@@ -1,7 +1,8 @@
-import { Image } from '../../atoms';
+import { Image, PlusCircleOutlined } from '../../atoms';
 import PropTypes from 'prop-types';
 import styles from './profileSummary.module.scss';
 import { Link } from "react-router-dom";
+import { Spin, Skeleton } from 'antd';
 
 const ProfileSummary = ({ imageChangeLink, userDetails, userImageSrc, userName }) => {
   return (
@@ -9,7 +10,7 @@ const ProfileSummary = ({ imageChangeLink, userDetails, userImageSrc, userName }
       <Image src={userImageSrc} />
       <Link to={imageChangeLink} className={styles.changeImage}>
       <div className={styles.changeImage}>
-        Change Image
+      <PlusCircleOutlined style={{ fontSize: "26px" }} />
       </div>
       </Link>  
       <div className={styles.userName}>{userName}</div>
@@ -25,11 +26,12 @@ ProfileSummary.propTypes = {
   userDetails: PropTypes.string,
 };
 
+
 ProfileSummary.defaultProps = {
   imageChangeLink: '#',
-  userImageSrc: '#',
-  userName: 'Your Name',
-  userDetails: 'Your Pesonal details',
+  userImageSrc: <Skeleton.Image active size="large" />,
+  userName: <Skeleton.Input active/>,
+  userDetails: <Skeleton.Input active/>,
 };
 
 export default ProfileSummary;

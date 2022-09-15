@@ -5,8 +5,10 @@ import { Menu, Button } from '../../atoms';
 import { ProfileSummary } from '../../molecules';
 import { useOktaAuth } from '@okta/okta-react';
 import { QuickInfoBar } from '../../molecules';
-import { getUserProfile } from '../../../redux/actions/Actions';
+import { getUserProfileForSideBar } from '../../../redux/actions/Actions';
 import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
+import { Spin, Skeleton } from 'antd';
 import styles from './sideBar.module.scss';
 import { HomeOutlined, MailOutlined, SearchOutlined, UnorderedListOutlined, UserOutlined } from '../../atoms';
 
@@ -20,16 +22,16 @@ function SideBar() {
   const oktaUserId = authState.accessToken.claims.uid;
 
   useEffect(() => {
-    dispatch(getUserProfile(oktaUserId));
+    dispatch(getUserProfileForSideBar(oktaUserId));
   }, []);
 
   //data from redux
-  const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
+  const userProfileInfo = useSelector((state) => state.getUserProfileForSideBarReducer.data || {});
+  // const userProfileInfo = {}; //to check load skelaton
+
 
   const { images, gender } = userProfileInfo;
   var emptyArrayHolder = images || [];
-
-  console.log(userProfileInfo);
 
   var imageFromServer;
 
@@ -62,7 +64,7 @@ function SideBar() {
     }
   };
 
-  // "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+  
 
   const MENU_ITEMS = [
     {

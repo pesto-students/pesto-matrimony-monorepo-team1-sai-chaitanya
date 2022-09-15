@@ -712,17 +712,7 @@ const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 // @desc   Register a new Profile
 // @route  POST /api/v1/users/
 // @access Public
-// exports.registerUserProfile = asyncHandler(async (req, res, next) => {
-//   // connect with okta here ?!
-//   const user = await User.create(req.body);
-//   res.status(201).json({ success: true, message: 'New user is created.', data: user });
-// });
 /** ----------------------------------------- */
-//creating user inside mongodb with oktaInformation.
-const createUserInMongoDB = (mongoUser) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User.create(mongoUser);
-    return user;
-});
 //signing up user into okta
 exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const client = new okta.Client({
@@ -730,48 +720,33 @@ exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, 
         token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
     });
     const body = req.body;
-    try {
-        function createUserInOkta() {
-            return tslib_1.__awaiter(this, void 0, void 0, function* () {
-                const response = yield client.createUser(body);
-                //will update it with destructure
-                const oktaId = response.id;
-                const name = `${response.profile.firstName} ${response.profile.lastName}`;
-                const gender = response.profile.gender;
-                const email = response.profile.email;
-                const mongoUser = {
-                    oktaUserId: oktaId,
-                    name,
-                    gender,
-                    email,
-                };
-                const resp = yield createUserInMongoDB(mongoUser);
-                res.status(200).send({
-                    res: resp,
-                });
-            });
-        }
-        yield createUserInOkta();
-    }
-    catch (err) {
-        // return next(new CustomErrorResponse(err, 404));
-        res.status(400).send({
-            err: err,
-        });
-    }
+    // async function createUserInOkta() {
+    const response = yield client.createUser(body);
+    //will update it with destructure
+    const oktaId = response.id;
+    const name = `${response.profile.firstName} ${response.profile.lastName}`;
+    const gender = response.profile.gender;
+    const email = response.profile.email;
+    const mongoUser = {
+        oktaUserId: oktaId,
+        name,
+        gender,
+        email,
+    };
+    //creting user in mongo db with data from the okta
+    const user = yield User.create(mongoUser);
+    res.status(200).send({
+        res: user,
+    });
 }));
 //find user in mongodb by oktaId
 function findUserByOktaId(oktaId) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const currentUser = yield User.find({ oktaUserId: oktaId });
-        // console.log(currentUser);
-        // console.log(currentUser[0]._id.toString());
         return currentUser;
     });
 }
-// @desc   Retrieve a user Profile
-// @route  GET /api/v1/users/userprofile/:id
-// @access Private
+//getting userPrifileData
 exports.getUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const params = req.params;
     const oktaId = params.id;
@@ -794,11 +769,6 @@ exports.uploadImageToMongoDb = asyncHandler((req, res, next) => tslib_1.__awaite
     }
     yield User.updateOne({ oktaUserId: currentUserId }, { images: [...imageUrls, imageUrl] });
     res.status(200).json({ status: 'success' });
-    // res.status(200).json({
-    //   success: true,
-    //   message: 'Retrieved User successfully',
-    //   user: user,
-    // });
 }));
 /** ----------------------------------------- */
 exports.updateUserProfile = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
@@ -845,11 +815,35 @@ exports.searchProfiles = asyncHandler((req, res, next) => tslib_1.__awaiter(void
         data: matchingProfiles,
     });
 }));
-//for the admin part
-// exports.getAllUsersProfiles = asyncHandler(async (req, res, next) => {
-//   const allUsers = await User.find();
-//   res.status(200).json({ user: allUsers });
-// })
+exports.deleteImage = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const currentUserOktaId = req.params.userId;
+    const imageArrayIndex = req.params.index;
+    //geting currentUserData by OktaUserId
+    const currentUserProfile = yield findUserByOktaId(currentUserOktaId);
+    //image deleting logic
+    currentUserProfile[0].images.splice(imageArrayIndex, 1);
+    yield User.updateOne({ oktaUserId: currentUserOktaId }, { images: currentUserProfile[0].images });
+    res.status(200).json({
+        success: true,
+        message: 'Deleted user successfully',
+        data: 'user'
+    });
+    res.status(400).json({
+        success: false,
+        message: 'Image is not deleted',
+        error: err
+    });
+    // //geting currentUserData by OktaUserId
+    // const currentUserProfile = await findUserByOktaId(currentUserOktaId);
+    // //image deleting logic
+    // currentUserProfile[0].images.splice(imageArrayIndex, 1);
+    // await User.updateOne({ oktaUserId: currentUserOktaId }, { images: currentUserProfile[0].images });
+    // res.status(200).json({
+    //   success: true,
+    //   message: 'Deleted user successfully',
+    //   data: 'user'
+    // });
+}));
 
 
 /***/ }),
@@ -879,6 +873,7 @@ const ErrorResponse = __webpack_require__("./apps/pm-backend/src/utilities/error
 const errorHandler = (err, req, res, next) => {
     let error = Object.assign({}, err);
     error.message = err.message;
+    console.log(error);
     // Duplicate Phone/Email Used while Registration
     if (err.code === 11000) {
         const message = `Email / Phone already used for registration.`;
@@ -1293,19 +1288,20 @@ module.exports = router;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 const express = __webpack_require__("express");
-const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles, } = __webpack_require__("./apps/pm-backend/src/controllers/users.js");
+const { getUserProfile, uploadImageToMongoDb, updateUserProfile, oktaSignUp, searchProfiles, deleteImage } = __webpack_require__("./apps/pm-backend/src/controllers/users.js");
 const router = express.Router();
 // '/' in this router is equivalent to  '/api/v1/users'
 // Signup
 router.route('/oktasignup').post(oktaSignUp);
 router.route('/userprofile/:id').get(getUserProfile);
-router.route('/imageupload/:id').post(uploadImageToMongoDb);
+router.route('/imageupload').post(uploadImageToMongoDb);
 //it was running for the admin
 // router.route('/getallusers').get(getAllUsersProfiles)
 // Update / Delete
 router.route('/:userId').put(updateUserProfile);
 // Fetch User Profiles
 router.route('/search').get(searchProfiles);
+router.route('/delete-image/:userId/:index').delete(deleteImage);
 // Have to create another route & controller function for...
 // handling search and filters with pagination..
 // This route will have a lot of complex logic.
@@ -1487,6 +1483,14 @@ console.log('mounting routes completed...');
 app.use(Sentry.Handlers.errorHandler());
 // *****************Sentry Related*****************
 // Custom Error Handler
+//Handling Unhandled routes. it should be placed after the routes.
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        status: ' fail ',
+        message: `Can't find $ { req.originalUrl } on this server !`
+    });
+});
+// error Handling middlewre.
 app.use(errorHandler);
 const server = app.listen(process.env.PORT || 8000, console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${"development".toUpperCase()}`));
 // Error in connecting to MongoDB triggers unhandledRejection at global level
