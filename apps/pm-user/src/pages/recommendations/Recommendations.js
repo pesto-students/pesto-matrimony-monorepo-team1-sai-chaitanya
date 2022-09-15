@@ -20,7 +20,6 @@ function Recommendations() {
       .get(`https://pmapi-pesto.herokuapp.com/api/v1/recommendations/${oktaUserId}`)
       .then((res) => {
         setRecommendations(res.data.data);
-        console.log(res);
         setResponse(res);
         setuserInfo(res.data.data[0]);
       })

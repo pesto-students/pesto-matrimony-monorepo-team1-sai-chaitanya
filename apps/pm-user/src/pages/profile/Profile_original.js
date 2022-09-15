@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../../redux/actions/Actions';
+import { updateUserProfile, getUserProfile } from '../../redux/actions/Actions';
 import { useOktaAuth } from '@okta/okta-react';
 import { useParams } from 'react-router-dom';
 import _ from 'lodash';
@@ -10,7 +10,6 @@ import { EditProfilePage } from '..';
 const Profile = () => {
   const { oktaAuth, authState } = useOktaAuth();
   const { profileId } = useParams();
-  // console.log('profileId : ', profileId);
 
   const dispatch = useDispatch();
   const [fillData, setFillData] = useState([]);
@@ -20,6 +19,20 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(updateUserProfile(oktaUserId));
+  }, []);
+
+  //condition when userId comes from pramams.
+  let userIdToGetData = profileId || oktaUserId;
+
+  var bool;
+  if(profileId === oktaUserId){
+    bool = true
+  }else if(profileId !== oktaUserId){
+    bool = false
+  }
+
+  useEffect(() => {
+    dispatch(getUserProfile(userIdToGetData));
   }, []);
 
   //data from redux
@@ -87,11 +100,11 @@ const Profile = () => {
         profileId={profileId}
         profileImages={imageArray}
       />
-      <UserProfileCard className="userProfileCard" title="Description">
+      <UserProfileCard className="userProfileCard" title="Description" button={bool}>
         <UserProfileCardContent description={userProfileInfo?.aboutMe || 'Not Specified'} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Personal Information">
+      <UserProfileCard className="userProfileCard" title="Personal Information" button={bool}>
         <UserProfileCardContent field="Age" value={userProfileInfo?.age || 'Not Specified'} />
         <UserProfileCardContent field="Height" value={userProfileInfo?.height || 'Not Specified'} />
         <UserProfileCardContent field="Weight (in Kg)" value={userProfileInfo?.weight || 'Not Specified'} />
@@ -112,14 +125,14 @@ const Profile = () => {
         />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Education & Career Information">
+      <UserProfileCard className="userProfileCard" title="Education & Career Information" button={bool}>
         <UserProfileCardContent field="Qualification" value={userProfileInfo?.qualification || 'Not Specified'} />
         <UserProfileCardContent field="Occupation" value={userProfileInfo?.occupation || 'Not Specified'} />
         <UserProfileCardContent field="Employed in" value={userProfileInfo?.employer || 'Not Specified'} />
         <UserProfileCardContent field="Income (Lakhs/Yr)" value={userProfileInfo?.income || 'Not Specified'} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Family Details">
+      <UserProfileCard className="userProfileCard" title="Family Details" button={bool}>
         <UserProfileCardContent field="About Family" value={userProfileInfo?.aboutFamily || 'Not Specified'} />
         <UserProfileCardContent field="Brother(s)" value={String(userProfileInfo?.brothers) || 'Not Specified'} />
         <UserProfileCardContent
@@ -134,7 +147,7 @@ const Profile = () => {
         <UserProfileCardContent field="Family Status" value={userProfileInfo?.familyStatus || 'Not Specified'} />
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Religious and Horoscope Details">
+      <UserProfileCard className="userProfileCard" title="Religious and Horoscope Details" button={bool}>
         <UserProfileCardContent field="Religion" value={userProfileInfo?.religion || 'Not Specified'} />
         <UserProfileCardContent field="Zodiac sign" value={userProfileInfo?.zodiacSign || 'Not Specified'} />
         <UserProfileCardContent field="Gothram" value={userProfileInfo?.gothram || 'Not Specified'} />
@@ -143,7 +156,7 @@ const Profile = () => {
         {/* <UserProfileCardContent field="Time of Birth" value={userProfileInfo?.timeOfBirth || 'Not Specified'} /> */}
       </UserProfileCard>
 
-      <UserProfileCard className="userProfileCard" title="Partner Preferences">
+      <UserProfileCard className="userProfileCard" title="Partner Preferences" button={bool}>
         <UserProfileCardContent field="Age Range" value={showAgeRange} />
         <UserProfileCardContent field="Height Range" value={showHeightRange} />
         <UserProfileCardContent

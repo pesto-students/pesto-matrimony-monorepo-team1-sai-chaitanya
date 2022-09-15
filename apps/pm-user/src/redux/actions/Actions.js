@@ -7,9 +7,30 @@ const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
 const baseUrl = localHost;
 
+// GET_USER_PROFILE_SIDEBAR
+
+//to get user's profile data
+export const getUserProfileForSideBar = (oktaUserId) => {
+  // console.log(oktaUserId); 
+  return async (dispatch) => {
+    try {
+      const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;
+
+      const response = await axios.get(url);
+
+      dispatch({
+        type: ActionTypes.GET_USER_PROFILE_SIDEBAR,
+        payload: response.data.currentUser[0],
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 //to get user's profile data
 export const getUserProfile = (oktaUserId) => {
+  
   return async (dispatch) => {
     try {
       const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;

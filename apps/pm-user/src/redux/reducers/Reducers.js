@@ -5,6 +5,16 @@ const initialState = {
   userData: [],
 };
 
+
+export const getUserProfileForSideBarReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case ActionTypes.GET_USER_PROFILE_SIDEBAR:
+      return { data: payload };
+    default:
+      return state;
+  }
+};
+
 export const getUserProfileReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ActionTypes.GET_USER_PROFILE:

@@ -13,6 +13,7 @@ const Matches = () => {
   const { matchStatus } = useParams();
   const [profilesToDisplay, setProfilesToDisplay] = useState([]);
   const [responseToCheck, setResponseToCheck] = useState({});
+  // const [emptyMassage, setEmptyMassage] = useState("");
   const [acceptedProfilesOktaIds, setAcceptedProfilesOktaIds] = useState([]);
   const [sentProfilesOktaIds, setSentProfilesOktaIds] = useState([]);
   const [receivedProfilesOktaIds, setReceivedProfilesOktaIds] = useState([]);
@@ -66,6 +67,7 @@ const Matches = () => {
           receivedProfilesOktaIds.map(async (id) => {
             const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
             setResponseToCheck(response);
+
             return response.data.currentUser[0];
           })
         );
@@ -120,7 +122,22 @@ const Matches = () => {
   }, [matchStatus]);
 
   if (_.isEmpty(responseToCheck)) {
-    return <Spin />;
+    return (<div>
+    <h2 className={styles.pageHeading}>Matches Page - Interests {startCase(matchStatus)}</h2>
+    <Spin className={styles.pageLoaderSpin} />
+    </div>)
+  }
+
+  var emptyMassage = "";
+
+  if (matchStatus === 'received'){
+    emptyMassage = "You have not recieved any interest yet";
+  }else if(matchStatus === 'sent') {
+    emptyMassage = "You did not send any interest yet";
+
+  }else if(matchStatus === 'accepted') {
+    emptyMassage = "You have not accepted any interest yet";
+
   }
 
   return (
@@ -131,7 +148,7 @@ const Matches = () => {
           <Empty
             description={
               <span>
-                <p>No Profiles to display.</p>
+                <p>{emptyMassage}</p>
               </span>
             }
           />

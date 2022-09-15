@@ -1,6 +1,7 @@
 import { useOktaAuth } from '@okta/okta-react';
 import { FormWrapper, LoginForm } from '../../components';
 import { showNotification } from '@pm/pm-ui';
+import { Spin } from 'antd';
 import styles from './login.module.scss';
 
 function Login() {
@@ -27,13 +28,10 @@ function Login() {
       .catch((err) => {
         showNotification('error', 'email or password incorrect')
       });
- 
+
   if (!authState) {
-    return <div>Loading...</div>;
+    return <div><Spin className={styles.pageLoaderSpin} /></div>;
   }
-
-  console.log(authState);
-
   if (!authState.isAuthenticated) {
     return (
       <FormWrapper
