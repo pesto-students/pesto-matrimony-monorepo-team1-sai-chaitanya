@@ -28,6 +28,7 @@ export const getUserProfileForSideBar = (oktaUserId) => {
   };
 };
 
+
 //to get user's profile data
 export const getUserProfile = (oktaUserId) => {
   
