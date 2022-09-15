@@ -29,9 +29,9 @@ ProfileSummary.propTypes = {
 
 ProfileSummary.defaultProps = {
   imageChangeLink: '#',
-  userImageSrc: <Skeleton.Image active size="large" />,
-  userName: <Skeleton.Input active/>,
-  userDetails: <Skeleton.Input active/>,
+  userImageSrc: "",
+  userName: "Your Name",
+  userDetails: "Your Details",
 };
 
 export default ProfileSummary;
