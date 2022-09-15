@@ -126,8 +126,8 @@ const ImageUploadSection = () => {
       </Upload>
     </ImgCrop>
     <div className={styles.imgInfoWraper}>
-    <p>you can not upload more then 8 images</p>
-    <p>Image expect ratio is 16:9</p> 
+    <p>You cannot upload more than 8 images</p>
+    <p>Images with 16:9 aspect ratio are recommended.</p> 
     </div>
     <ul className={styles.imgCover}>
        {arrayLength ? imageArray.map((image, index) => <li key={index} id={index}><Image src={image} /><diV  className={styles.deleteBtn} onClick={() => setIndexForDeleteImage({index: index, bool: true})}>{<DeleteOutlined />}</diV></li>) : ""}

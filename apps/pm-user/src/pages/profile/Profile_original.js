@@ -165,7 +165,7 @@ const Profile = () => {
         <UserProfileCardContent field="Religion" value={userProfileInfo?.partnerReligion || 'Not Specified'} />
         <UserProfileCardContent
           field="Income (Lakhs/Yr)"
-          value={userProfileInfo?.partnerIncomeRange || 'Not Specified'}
+          value={showIncomRange}
         />
         <UserProfileCardContent field="Eating Habits" value={userProfileInfo?.partnerEatingHabits || 'Not Specified'} />
       </UserProfileCard>
