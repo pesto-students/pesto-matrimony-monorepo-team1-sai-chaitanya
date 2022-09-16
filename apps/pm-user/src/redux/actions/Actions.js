@@ -7,9 +7,7 @@ const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
 const baseUrl = localHost;
 
-// GET_USER_PROFILE_SIDEBAR
-
-//to get user's profile data
+// to get user's profile data in sidebar
 export const getUserProfileForSideBar = (oktaUserId) => {
   // console.log(oktaUserId); 
   return async (dispatch) => {

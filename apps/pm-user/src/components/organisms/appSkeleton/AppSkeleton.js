@@ -12,7 +12,6 @@ function AppSkeleton({ children }) {
     console.log("hi");
     setResClass(block);
   }
-  console.log(resClass);
 
   return (
     <div className={styles.container}>
