@@ -13,7 +13,7 @@ const Matches = () => {
   const { matchStatus } = useParams();
   const [profilesToDisplay, setProfilesToDisplay] = useState([]);
   const [responseToCheck, setResponseToCheck] = useState({});
-  // const [emptyMassage, setEmptyMassage] = useState("");
+  // const [emptyMessage, setemptyMessage] = useState("");
   const [acceptedProfilesOktaIds, setAcceptedProfilesOktaIds] = useState([]);
   const [sentProfilesOktaIds, setSentProfilesOktaIds] = useState([]);
   const [receivedProfilesOktaIds, setReceivedProfilesOktaIds] = useState([]);
@@ -60,7 +60,9 @@ const Matches = () => {
     } catch (err) {
       console.log(err);
     }
+  }, []);
 
+  useEffect(() => {
     if (matchStatus === 'received') {
       async function fetchReceivedProfilesData() {
         const profilesData = await Promise.all(
@@ -80,7 +82,8 @@ const Matches = () => {
       } catch (err) {
         console.log(err);
       }
-    } else if (matchStatus === 'sent') {
+    }
+    if (matchStatus === 'sent') {
       async function fetchSentProfilesData() {
         const profilesData = await Promise.all(
           sentProfilesOktaIds.map(async (id) => {
@@ -97,7 +100,8 @@ const Matches = () => {
       }
       // calling the function
       fetchSentProfilesData();
-    } else if (matchStatus === 'accepted') {
+    }
+    if (matchStatus === 'accepted') {
       async function fetchAcceptedProfilesData() {
         const profilesData = await Promise.all(
           acceptedProfilesOktaIds.map(async (id) => {
@@ -119,40 +123,41 @@ const Matches = () => {
         console.log(err);
       }
     }
-  }, [matchStatus]);
+  }, [matchStatus, acceptedProfilesOktaIds, sentProfilesOktaIds, receivedProfilesOktaIds]);
 
   if (_.isEmpty(responseToCheck)) {
-    return (<div>
-    <h2 className={styles.pageHeading}>Matches Page - Interests {startCase(matchStatus)}</h2>
-    <Spin className={styles.pageLoaderSpin} />
-    </div>)
+    return (
+      <div>
+        <h2 className={styles.pageHeading}>Matches Page - Interests {startCase(matchStatus)}</h2>
+        <Spin className={styles.pageLoaderSpin} />
+      </div>
+    );
   }
 
-  var emptyMassage = "";
+  var emptyMessage = '';
 
-  if (matchStatus === 'received'){
-    emptyMassage = "You have not recieved any interest yet";
-  }else if(matchStatus === 'sent') {
-    emptyMassage = "You did not send any interest yet";
-
-  }else if(matchStatus === 'accepted') {
-    emptyMassage = "You have not accepted any interest yet";
-
+  if (matchStatus === 'received') {
+    emptyMessage = 'You have not recieved any interest yet';
+  } else if (matchStatus === 'sent') {
+    emptyMessage = 'You did not send any interest yet';
+  } else if (matchStatus === 'accepted') {
+    emptyMessage = 'You have not accepted any interest yet';
   }
 
   return (
     <div className={styles.matchesPage}>
-      <h2 className={styles.pageHeading}>Matches Page - Interests <span className={styles.changableText}>{startCase(matchStatus)}</span></h2>
+      <h2 className={styles.pageHeading}>
+        Matches Page - Interests <span className={styles.changableText}>{startCase(matchStatus)}</span>
+      </h2>
       {profilesToDisplay.length < 1 ? (
         <>
           <Empty
             description={
               <span>
-                <p>{emptyMassage}</p>
+                <p>{emptyMessage}</p>
               </span>
             }
           />
-          
         </>
       ) : (
         <UserInfoCardsList matchesData={profilesToDisplay} />
