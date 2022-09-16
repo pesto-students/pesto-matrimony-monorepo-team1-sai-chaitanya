@@ -14,6 +14,7 @@
       border-color: #5c5fee;
       background: #5c5fee;
       margin: 0 0.4rem;
+      font-size: 12px;
 
       &:hover {
         background-color: #2d30d2;
@@ -27,7 +28,7 @@
 }
 
 .profileImage {
-  width: 7rem;
+  width: 5rem;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -38,7 +39,8 @@
 
 .profileBrief {
   color: #5a5b87;
-  font-size: 20px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .message {
@@ -61,7 +63,53 @@
   }
 }
 
+
 .heading {
   font-size: 1.55rem;
   margin-bottom: 0.8rem;
+}
+
+.messagesBoxUserList {
+  display: flex;
+  width: 318px;
+  background-color: #f6f7ff;
+  margin-bottom: 6px;
+  padding: 2px;
+  box-shadow: 0 0px 2px 0px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(225 225 225 / 21%);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profileImageUserList {
+  width: 3rem;
+}
+
+.profileImageUserList > img {
+  width: 100%;
+}
+
+.profileBriefUserList {
+  font-size: 10px;
+  font-weight: 600;
+  color: #5a5b7f;
+}
+
+.buttonsUserList > button {
+  border-radius: 0.6rem;
+  height: 27px;
+  padding: 4px 10px 4px 10px;
+  background-color: #5c5fee;
+
+  &:hover {
+    background-color: #2d30d2;
+    box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+  }
+}
+
+.buttonsUserList > button > span {
+  font-size: 10px;
+}
+
+.headingUserList {
+  color: black;
 }

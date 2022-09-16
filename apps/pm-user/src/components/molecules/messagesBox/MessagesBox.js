@@ -8,6 +8,8 @@ import axios from 'axios';
 
 // idOfLoggedInUser is the _id of the loggedin user.
 const MessagesBox = ({
+  buttonForMailBox,
+  classNamesObject,
   conversations,
   idOfLoggedInUser,
   interestSenderAge,
@@ -74,24 +76,33 @@ const MessagesBox = ({
     // open profile in new tab
     window.open(`/profile/${interestSenderId}`, '_blank');
   }
+
+  // console.log(classNamesObject?.messagesBox);
+
+  // const { messagesBox } = classNamesObject;
+
+  // console.log(messagesBox);
+
+
   return (
     <>
-      <div className={styles.messagesBox}>
-        <div className={styles.profileImage}>
+      <div className={styles[`${classNamesObject?.messagesBox}`]}>
+        <div className={styles[`${classNamesObject?.profileImage}`]}>
+        
           <img
             src={idOfLoggedInUser === interestSenderId ? interestReceiverImage : interestSenderImage}
             alt={idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName}
             onClick={() => imageClickHandler(idOfLoggedInUser, interestSenderId, interestReceiverId)}
           />
-        </div>
-        <div className={styles.profileBrief}>
+        </div> 
+        <div className={styles[`${classNamesObject?.profileBrief}`]}>
           {idOfLoggedInUser === interestSenderId
             ? `${interestReceiverName}, ${interestReceiverAge}`
             : `${interestSenderName}, ${interestSenderAge}`}
-        </div>
-        <div className={styles.buttons}>
+        </div> 
+        <div className={styles[`${classNamesObject?.buttons}`]}>
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
-            View & Send Messages
+            {buttonForMailBox ? "View & Send Messages" : ""}
           </Button>
         </div>
       </div>
@@ -105,16 +116,16 @@ const MessagesBox = ({
           onCancel={handleNewMessageCancel}
           destroyOnClose={true}
           footer={null}
-        >
-          <h2 className={styles.heading}>Previous Messages:</h2>
+        > 
+          <h2 className={styles[`${classNamesObject?.heading}`]}>Previous Messages:</h2>
           <OldMessages
             conversations={conversations}
             idOfLoggedInUser={idOfLoggedInUser}
             interestSenderImage={interestSenderImage}
             interestReceiverImage={interestReceiverImage}
           />
-          <br />
-          <h2 className={styles.heading}>Type your message below : </h2>
+          <br /> 
+          <h2 className={styles[`${classNamesObject?.heading}`]}>Type your message below : </h2>
           <TextArea showCount maxLength={300} ref={messageRef} allowClear />
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageHandler}>
             Send Message

@@ -26,11 +26,22 @@ const MailBox = () => {
 
   console.log(interestsSentAndReceived)
 
+  //object to send classNames for mailBox-design
+  const classNamesObject = {
+    messagesBox: "messagesBox", 
+    profileImage: "profileImage",
+    profileBrief: "profileBrief",
+    buttons: "buttons",
+    heading: "heading"
+  }
+
   const renderMailBox = interestsSentAndReceived?.map((interest, i) => {
     if (interest.conversations.length > 0) {
       return (
         <div key={Math.random()}>
           <MessagesBox
+            buttonForMailBox={true}
+            classNamesObject={classNamesObject}
             idOfLoggedInUser={oktaIdOfLoggedInUser}
             interestSenderName={interest.interestSenderName}
             interestSenderId={interest.interestSenderId}
