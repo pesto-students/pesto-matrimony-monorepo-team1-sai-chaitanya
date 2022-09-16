@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
-const baseUrl = herokuHost;
+const baseUrl = localHost;
 
 // to get user's profile data in sidebar
 export const getUserProfileForSideBar = (oktaUserId) => {

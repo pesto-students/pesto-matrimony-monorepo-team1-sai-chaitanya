@@ -8,12 +8,16 @@ import { QuickInfoBar } from '../../molecules';
 import { getUserProfileForSideBar } from '../../../redux/actions/Actions';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
+import { useParams, useLocation } from 'react-router-dom';
 import { Spin, Skeleton } from 'antd';
 import styles from './sideBar.module.scss';
 import { HomeOutlined, MailOutlined, SearchOutlined, UnorderedListOutlined, UserOutlined } from '../../atoms';
 
 function SideBar() {
   const dispatch = useDispatch();
+  const  location  = useParams();
+
+  console.log(location.pathname);
 
   const history = useHistory();
   const { oktaAuth, authState } = useOktaAuth();

@@ -7,7 +7,7 @@ import {
   ProfileOutlined,
   SendOutlined,
 } from '../../atoms';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { noop as _noop } from 'lodash';
 
@@ -22,6 +22,11 @@ const UserInfoCardButtons = ({
   toggleShortlistHandler,
 }) => {
   const { matchStatus } = useParams();
+  const  location  = useLocation();
+
+  const currentPathName = location.pathname;
+
+  console.log(currentPathName);
 
   let buttonsToDisplay = (
     <>
@@ -29,7 +34,7 @@ const UserInfoCardButtons = ({
         Send Interest
       </Button>
       <Button onClick={toggleShortlistHandler} type="primary" shape="round" size="middle" icon={<ProfileOutlined />}>
-        Shortlist
+        {currentPathName === "/shortlisted" ? "Remove" : "Shortlist"} 
       </Button>
     </>
   );
