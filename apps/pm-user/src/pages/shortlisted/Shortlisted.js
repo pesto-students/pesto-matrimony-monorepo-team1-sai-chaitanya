@@ -46,9 +46,13 @@ const Shortlisted = () => {
 
   return (
     <div className={styles.shortlistedPage}>
-      <h2>Shortlisted Profiles</h2>
+    <h1 className={styles.shortlistedProfilePageHeading}>Shortlisted Profiles Page</h1>
       {shortlistedMatchesData.length < 1 ? (
-        <p>There are no shortlisted matches.</p>
+        <Empty description={
+      <span>
+        You have not shortlisted any profile yet
+      </span>
+    } />
       ) : (
         <UserInfoCardsList matchesData={shortlistedMatchesData} />
       )}

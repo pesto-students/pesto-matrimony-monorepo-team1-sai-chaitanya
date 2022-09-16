@@ -1476,6 +1476,7 @@ app.use('/api/v1/recommendations', recommendations);
 app.use('/api/v1/search', search);
 app.use('/api/v1/toggleShortlist', toggleShortlist);
 app.use('/api/v1/users', users);
+<<<<<<< HEAD
 console.log('mounting routes completed...');
 // *****************Sentry Related*****************
 // Sentry Error Handler
@@ -1490,6 +1491,8 @@ app.all('*', (req, res, next) => {
         message: `Can't find $ { req.originalUrl } on this server !`
     });
 });
+=======
+>>>>>>> e69a1add813d3fe19cdf5cdff18ed251f0e7fd56
 // error Handling middlewre.
 app.use(errorHandler);
 const server = app.listen(process.env.PORT || 8000, console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${"development".toUpperCase()}`));

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserImage } from '../../../redux/actions/Actions';
+import { updateUserImage, getUserProfile } from '../../../redux/actions/Actions';
 import { Upload, UploadOutlined, DeleteOutlined, Button } from '../../atoms';
 import { message, showNotification } from '@pm/pm-ui';
 import ImgCrop from 'antd-img-crop'; // put into atom
@@ -48,15 +48,24 @@ const ImageUploadSection = () => {
     }
   }, [indexForDeleteImage]);
 
+  useEffect(() => {
+    dispatch(getUserProfile(oktaUserId));
+  }, [imageFileObject]);
+
   const responseData = useSelector((state) => state.updateUserImageReducer.data || {});
   // console.log(responseData);
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
   // console.log(userProfileInfo);
 
+  const localHost = 'http://localhost:8000';
+  const herokuHost = 'https://pmapi-pesto.herokuapp.com';
+  const baseUrl = herokuHost;
+
   //funtion to delete image
   const deleteImage = async (index) => {
     if (oktaUserId) {
-      const response = await axios.delete(`http://localhost:8000/api/v1/users/delete-image/${oktaUserId}/${index}`);
+      const response = await axios.delete(`${baseUrl}/api/v1/users/delete-image/${oktaUserId}/${index}`);
+      console.log(response);
 
       if (response.data.success) {
         showNotification('success', 'Image is deleted', 'Please refresh the page');
@@ -66,6 +75,8 @@ const ImageUploadSection = () => {
 
   let imageArray = userProfileInfo?.images || [];
   let arrayLength = imageArray.length;
+
+  console.log(arrayLength);
 
   const props = {
     name: 'file',
@@ -112,6 +123,10 @@ const ImageUploadSection = () => {
           <Button icon={<UploadOutlined />}>Click to Upload your Image</Button>
         </Upload>
       </ImgCrop>
+      <div className={styles.imgInfoWraper}>
+        <p>You cannot upload more than 8 images</p>
+        <p>Images with 16:9 aspect ratio are recommended.</p>
+      </div>
       <ul className={styles.imgCover}>
         {arrayLength
           ? imageArray.map((image, index) => (

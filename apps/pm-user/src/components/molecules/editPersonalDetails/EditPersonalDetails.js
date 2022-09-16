@@ -252,6 +252,7 @@ const EditPersonalDetails = () => {
           <Option value="Assamese">Assamese</Option>
           <Option value="Bodo">Bodo</Option>
           <Option value="Dogri">Dogri</Option>
+          <Option value="English">English</Option>
           <Option value="Kashmiri">Kashmiri</Option>
           <Option value="Konkani">Konkani</Option>
           <Option value="Maithili">Maithili</Option>
@@ -710,6 +711,7 @@ const EditPersonalDetails = () => {
           <Option value="Assamese">Assamese</Option>
           <Option value="Bodo">Bodo</Option>
           <Option value="Dogri">Dogri</Option>
+          <Option value="English">English</Option>
           <Option value="Kashmiri">Kashmiri</Option>
           <Option value="Konkani">Konkani</Option>
           <Option value="Maithili">Maithili</Option>

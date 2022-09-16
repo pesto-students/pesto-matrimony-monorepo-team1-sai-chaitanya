@@ -1,5 +1,6 @@
 const PATHS = {
   FAQ: '/faq',
+  PROFILE_OTHERS: '/profile-others/:profileId',
   SHORTLISTED: '/shortlisted',
   FORGOT_PASSWORD: '/forgot-password',
   HOME: '/home',

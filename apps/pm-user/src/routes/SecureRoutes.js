@@ -8,6 +8,7 @@ import {
   Matches,
   MailBox,
   PageNotFound,
+  ProfileOthers,
   Profile,
   Recommendations,
   Search,
@@ -20,6 +21,7 @@ function SecureRoutes() {
     <AppSkeleton>
       <Switch>
         <Route exact path={PATHS.PROFILE} component={Profile} />
+        <Route exact path={PATHS.PROFILE_OTHERS} component={ProfileOthers} />
         <Route exact path={PATHS.EDIT_PROFILE} component={EditProfilePage} />
         <Route exact path={PATHS.SHORTLISTED} component={Shortlisted} />
         <Route exact path={PATHS.HOME} component={Home} />

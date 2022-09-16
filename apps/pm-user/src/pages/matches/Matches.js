@@ -142,7 +142,7 @@ const Matches = () => {
 
   return (
     <div className={styles.matchesPage}>
-      <h2 className={styles.pageHeading}>Matches Page - Interests {startCase(matchStatus)}</h2>
+      <h2 className={styles.pageHeading}>Matches Page - Interests <span className={styles.changableText}>{startCase(matchStatus)}</span></h2>
       {profilesToDisplay.length < 1 ? (
         <>
           <Empty

@@ -25,9 +25,13 @@ const SignUpForm = () => {
           },
         },
       });
-      history.push('/login');
+      if(response){
+        history.push('/login');
+      }
+      
     } catch (err) {
 
+      console.log(err);
       const errorMassage = err.response.data.err.message;
       const passwordErrorString = errorMassage.match("password");
 

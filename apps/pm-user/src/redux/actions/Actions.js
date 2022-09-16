@@ -1,11 +1,11 @@
 import { ActionTypes } from '../constants';
 import axios from 'axios';
 // import Apis from "../../apis";
-let mongoIdOfLoggedInUser = 'https://pmapi-pesto.herokuapp.com/';
+
 
 const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
-const baseUrl = localHost;
+const baseUrl = herokuHost;
 
 // GET_USER_PROFILE_SIDEBAR
 
@@ -27,6 +27,7 @@ export const getUserProfileForSideBar = (oktaUserId) => {
     }
   };
 };
+
 
 //to get user's profile data
 export const getUserProfile = (oktaUserId) => {
