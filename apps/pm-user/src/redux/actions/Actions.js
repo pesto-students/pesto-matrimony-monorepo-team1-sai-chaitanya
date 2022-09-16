@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
-const baseUrl = herokuHost;
+const baseUrl = localHost;
 
 // GET_USER_PROFILE_SIDEBAR
 
