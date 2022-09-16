@@ -5,18 +5,18 @@ import { Upload, UploadOutlined, DeleteOutlined, Button } from '../../atoms';
 import { message, showNotification } from '@pm/pm-ui';
 import ImgCrop from 'antd-img-crop'; // put into atom
 import { Image } from 'antd'; // put into atom
-import axios from "axios"; 
+import axios from 'axios';
 import { Empty, Spin } from 'antd';
 import _ from 'lodash';
 import { useOktaAuth } from '@okta/okta-react';
-import styles from "./imageUploadSection.module.scss";
+import styles from './imageUploadSection.module.scss';
 
 const ImageUploadSection = () => {
   const [imageFileObject, setImageFileObject] = useState({});
-  const [ indexForDeleteImage, setIndexForDeleteImage ] = useState({});
-  const [ responseForLoader, setResponseForLoader ] = useState({});
+  const [indexForDeleteImage, setIndexForDeleteImage] = useState({});
+  const [responseForLoader, setResponseForLoader] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
-  const [ disabledButton, setDisabledButton ] = useState();
+  const [disabledButton, setDisabledButton] = useState();
   const dispatch = useDispatch();
 
   //getting current user's oktaId
@@ -41,10 +41,9 @@ const ImageUploadSection = () => {
     }
   }, [imageFileObject]);
 
-
   // to delete image
   useEffect(() => {
-    if(indexForDeleteImage.bool){
+    if (indexForDeleteImage.bool) {
       deleteImage(indexForDeleteImage.index);
     }
   }, [indexForDeleteImage]);
@@ -52,7 +51,6 @@ const ImageUploadSection = () => {
   useEffect(() => {
     dispatch(getUserProfile(oktaUserId));
   }, [imageFileObject]);
-
 
   const responseData = useSelector((state) => state.updateUserImageReducer.data || {});
   // console.log(responseData);
@@ -65,15 +63,15 @@ const ImageUploadSection = () => {
 
   //funtion to delete image
   const deleteImage = async (index) => {
-    if(oktaUserId){
+    if (oktaUserId) {
       const response = await axios.delete(`${baseUrl}/api/v1/users/delete-image/${oktaUserId}/${index}`);
       console.log(response);
 
-      if(response.data.success){
+      if (response.data.success) {
         showNotification('success', 'Image is deleted', 'Please refresh the page');
       }
     }
-  }
+  };
 
   let imageArray = userProfileInfo?.images || [];
   let arrayLength = imageArray.length;
@@ -83,13 +81,12 @@ const ImageUploadSection = () => {
   const props = {
     name: 'file',
     onChange(info) {
-      if(arrayLength < 8){
+      if (arrayLength < 8) {
         if (info.file.status !== 'uploading') {
           // uploadImage(info.file.originFileObj);
           setImageFileObject(info.file.originFileObj);
-        } 
-        
-  
+        }
+
         if (info.file.status === 'done') {
           message.success(`${info.file.name} file uploaded successfully`);
         } else if (info.file.status === 'error') {
@@ -97,10 +94,9 @@ const ImageUploadSection = () => {
           // message.error(`${info.file.name} file upload failed.`);
           message.success(`${info.file.name} file uploaded successfully`);
         }
-  
-      }else {
+      } else {
         showNotification('error', 'Images, more then 8 can not be uploaded', '');
-        console.log("checkhere");
+        console.log('checkhere');
       }
     },
   };
@@ -108,30 +104,41 @@ const ImageUploadSection = () => {
   //this is just to stop showing error on image upload
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
-      onSuccess("ok");
+      onSuccess('ok');
     }, 0);
   };
 
-  if(_.isEmpty(userProfileInfo)){
-    return (<div>
-      <Spin className={styles.pageLoaderSpin} size="large" />
-    </div>)
+  if (_.isEmpty(userProfileInfo)) {
+    return (
+      <div>
+        <Spin className={styles.pageLoaderSpin} size="large" />
+      </div>
+    );
   }
 
   return (
     <>
-    <ImgCrop rotate={true} shape='rect' aspect={16/9} >
-      <Upload {...props} className={styles.imgCropSection} customRequest={dummyRequest}>
-      <Button icon={<UploadOutlined />}>Click to Upload your Image</Button> 
-      </Upload>
-    </ImgCrop>
-    <div className={styles.imgInfoWraper}>
-    <p>You cannot upload more than 8 images</p>
-    <p>Images with 16:9 aspect ratio are recommended.</p> 
-    </div>
-    <ul className={styles.imgCover}>
-       {arrayLength ? imageArray.map((image, index) => <li key={index} id={index}><Image src={image} /><diV  className={styles.deleteBtn} onClick={() => setIndexForDeleteImage({index: index, bool: true})}>{<DeleteOutlined />}</diV></li>) : ""}
-    </ul>
+      <ImgCrop rotate={true} shape="rect" aspect={16 / 9}>
+        <Upload {...props} className={styles.imgCropSection} customRequest={dummyRequest}>
+          <Button icon={<UploadOutlined />}>Click to Upload your Image</Button>
+        </Upload>
+      </ImgCrop>
+      <div className={styles.imgInfoWraper}>
+        <p>You cannot upload more than 8 images</p>
+        <p>Images with 16:9 aspect ratio are recommended.</p>
+      </div>
+      <ul className={styles.imgCover}>
+        {arrayLength
+          ? imageArray.map((image, index) => (
+              <li key={index} id={index}>
+                <Image src={image} />
+                <diV className={styles.deleteBtn} onClick={() => setIndexForDeleteImage({ index: index, bool: true })}>
+                  {<DeleteOutlined />}
+                </diV>
+              </li>
+            ))
+          : ''}
+      </ul>
     </>
   );
 };

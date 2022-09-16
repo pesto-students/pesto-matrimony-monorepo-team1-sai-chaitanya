@@ -110,7 +110,6 @@ const EditPartnerPreferences = () => {
   };
 
   const onFinish = (value) => {
-    
     console.log(value);
 
     Object.keys(value).forEach((key) => {
@@ -122,7 +121,7 @@ const EditPartnerPreferences = () => {
     console.log(JSON.stringify(value));
 
     setUserProfileData(value);
-    
+
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
     // history.push('/profile');
@@ -207,6 +206,7 @@ const EditPartnerPreferences = () => {
             <Option value="Assamese">Assamese</Option>
             <Option value="Bodo">Bodo</Option>
             <Option value="Dogri">Dogri</Option>
+            <Option value="English">English</Option>
             <Option value="Kashmiri">Kashmiri</Option>
             <Option value="Konkani">Konkani</Option>
             <Option value="Maithili">Maithili</Option>
@@ -440,10 +440,10 @@ const EditPartnerPreferences = () => {
         </Form.Item>
         <Form.Item label="Eating Habits" name="partnerEatingHabits" initialValue={userProfileInfo?.partnerEatingHabits}>
           <Select bordered className="">
-            <Option value="vegetarian">Vegetarian</Option>
-            <Option value="eggetarian">Eggetarian</Option>
-            <Option value="non_vegetarian">Non-Vegetarian</Option>
-            <Option value="jain">Jain</Option>
+            <Option value="Vegetarian">Vegetarian</Option>
+            <Option value="Eggetarian">Eggetarian</Option>
+            <Option value="Non Vegetarian">Non-Vegetarian</Option>
+            <Option value="Jain">Jain</Option>
           </Select>
         </Form.Item>
 
