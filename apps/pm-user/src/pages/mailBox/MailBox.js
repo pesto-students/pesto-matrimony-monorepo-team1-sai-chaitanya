@@ -17,14 +17,11 @@ const MailBox = () => {
     axios
       .get(`https://pmapi-pesto.herokuapp.com/api/v1/conversations/${oktaIdOfLoggedInUser}`)
       .then((res) => {
-        console.log(res);
         setResponseForLoader(res);
         setInterestsSentAndReceived([...res.data.interestsReceived, ...res.data.interestsSent]);
       })
       .catch((error) => console.log(error));
   }, []);
-
-  console.log(interestsSentAndReceived)
 
   //object to send classNames for mailBox-design
   const classNamesObject = {
@@ -58,7 +55,7 @@ const MailBox = () => {
         </div>
       );
     }
-  });
+  }).filter(notUndefined => notUndefined !== undefined); //filter method is to remove undefined in renderMailBox.
 
   if(_.isEmpty(responseForLoader)){
     return (<div>
@@ -66,7 +63,6 @@ const MailBox = () => {
       <Spin className={styles.pageLoaderSpin} size="large" />
     </div>)
   }
-
 
   return (
     <div className={styles.mailBox}>
@@ -89,25 +85,3 @@ const MailBox = () => {
 
 export default MailBox;
 
-// const DUMMY_INTERESTS_ARRAY = [
-//   {
-//     interestSenderAge: 23,
-//     interestSenderId: 'vishal',
-//     interestSenderImage: 'http://placehold.jp/12/5c5fee/ffffff/40x40.png',
-//     interestSenderName: 'Vishal',
-//     interestReceiverAge: 22,
-//     interestReceiverId: 'shivani',
-//     interestReceiverImage: 'http://placehold.jp/12/573527/ffffff/40x40.png',
-//     interestReceiverName: 'Shivani',
-//     isAccepted: false,
-//     isRejected: false,
-//     conversations: [
-//       { messageSenderId: 'vishal', messageReceiverId: 'shivani', message: 'Hello, Shivani.' },
-//       { messageSenderId: 'shivani', messageReceiverId: 'vishal', message: 'Hello, Vishal.' },
-//       { messageSenderId: 'vishal', messageReceiverId: 'shivani', message: 'Dummy message from Vishal.' },
-//       { messageSenderId: 'vishal', messageReceiverId: 'shivani', message: 'Dummy message from Vishal.' },
-//       { messageSenderId: 'shivani', messageReceiverId: 'vishal', message: 'Dummy message from Shivani.' },
-//       { messageSenderId: 'shivani', messageReceiverId: 'vishal', message: 'Dummy message from Shivani.' },
-//     ],
-//   },
-// ];
