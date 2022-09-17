@@ -82,7 +82,6 @@ export const updateUserImage = (oktaUserId, fileObj) => {
       //submitting image on mongodb
       const url = `${baseUrl}/api/v1/users/imageupload`;
       const response = await axios.post(url, payload);
-      console.log(response);
       dispatch({
         type: ActionTypes.UPDATE_USER_IMAGE,
         payload: response,

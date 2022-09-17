@@ -21,7 +21,6 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(updateUserProfile(oktaUserId));
-    console.log("hi");
   }, []);  
 
   //condition when userId comes from pramams.
