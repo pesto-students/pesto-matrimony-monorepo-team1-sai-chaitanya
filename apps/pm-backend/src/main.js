@@ -13,26 +13,26 @@ dbConnection();
 const app = express();
 
 // *****************Sentry Code Start*****************
-Sentry.init({
-  dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Tracing.Integrations.Express({ app }),
-  ],
+// Sentry.init({
+//   dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
+//   integrations: [
+//     // enable HTTP calls tracing
+//     new Sentry.Integrations.Http({ tracing: true }),
+//     // enable Express.js middleware tracing
+//     new Tracing.Integrations.Express({ app }),
+//   ],
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+// });
 
-// RequestHandler creates a separate execution context using domains, so that every
-// transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler());
+// // RequestHandler creates a separate execution context using domains, so that every
+// // transaction/span/breadcrumb is attached to its own Hub instance
+// app.use(Sentry.Handlers.requestHandler());
+// // TracingHandler creates a trace for every incoming request
+// app.use(Sentry.Handlers.tracingHandler());
 
 // *****************Sentry Code End*****************
 
@@ -68,7 +68,7 @@ console.log('mounting routes completed...');
 // *****************Sentry Related*****************
 // Sentry Error Handler
 // The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 
 // *****************Sentry Related*****************
 

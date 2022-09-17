@@ -6,15 +6,15 @@ import { BrowserTracing } from '@sentry/tracing';
 import Routes from '../routes';
 
 // *****************Sentry Code Start*****************
-Sentry.init({
-  dsn: 'https://8421c57f8e414c5db7b180e319d44e12@o1408574.ingest.sentry.io/6744247',
-  integrations: [new BrowserTracing()],
+// Sentry.init({
+//   dsn: 'https://8421c57f8e414c5db7b180e319d44e12@o1408574.ingest.sentry.io/6744247',
+//   integrations: [new BrowserTracing()],
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+// });
 
 // *****************Sentry Code End*****************
 
