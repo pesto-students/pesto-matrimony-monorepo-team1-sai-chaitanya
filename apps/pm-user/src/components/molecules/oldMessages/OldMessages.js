@@ -35,10 +35,10 @@ const OldMessages = ({
   }, []);
   const renderOldMessages = conversations.map(({ message, messageSenderId }) => {
     const thisClassName = idOfLoggedInUser === messageSenderId ? 'sender' : 'receiver';
-    if (imageOfReceiver.length === 0) {
+    if (imageOfReceiver === '') {
       setImageofReceiver(interestReceiverImage);
     }
-    if (imageOfSender.length === 0) {
+    if (imageOfSender === '') {
       setImageOfSender(interestSenderImage);
     }
     return (
