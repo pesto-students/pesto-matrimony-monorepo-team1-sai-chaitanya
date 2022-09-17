@@ -1,7 +1,8 @@
 const cors = require('cors');
 const express = require('express');
 const dbConnection = require('./config/database');
-const errorHandler = require('./middleware/error');
+// const errorHandler = require('./middleware/error');
+const errMiddleware = require('./middleware/errMiddleware');
 const bodyParser = require('body-parser');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
@@ -12,29 +13,32 @@ dbConnection();
 // Start Express Server
 const app = express();
 
-// *****************Sentry Code Start*****************
-Sentry.init({
-  dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Tracing.Integrations.Express({ app }),
-  ],
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
+// *****************Sentry Code Start*****************
+// Sentry.init({
+//   dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
+//   integrations: [
+//     // enable HTTP calls tracing
+//     new Sentry.Integrations.Http({ tracing: true }),
+//     // enable Express.js middleware tracing
+//     new Tracing.Integrations.Express({ app }),
+//   ],
+
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+// });
 
 // RequestHandler creates a separate execution context using domains, so that every
 // transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler());
+// app.use(Sentry.Handlers.requestHandler());
+// // TracingHandler creates a trace for every incoming request
+// app.use(Sentry.Handlers.tracingHandler());
 
 // *****************Sentry Code End*****************
+
+
 
 app.use(cors());
 
@@ -68,12 +72,12 @@ console.log('mounting routes completed...');
 // *****************Sentry Related*****************
 // Sentry Error Handler
 // The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 
 // *****************Sentry Related*****************
 
-// Custom Error Handler
 
+// Custom Error Handler
 //Handling Unhandled routes. it should be placed after the routes.
 // app.all('*', (req, res, next) => {
 //   res.status(404).json({
@@ -82,8 +86,11 @@ app.use(Sentry.Handlers.errorHandler());
 //   });
 // });
 
+
 // error Handling middlewre.
-app.use(errorHandler);
+// app.use(errMiddleware);
+app.use(errMiddleware);
+
 
 const server = app.listen(
   process.env.PORT || 8000,

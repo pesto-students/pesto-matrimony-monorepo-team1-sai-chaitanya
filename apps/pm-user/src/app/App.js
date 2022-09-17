@@ -6,16 +6,15 @@ import { BrowserTracing } from '@sentry/tracing';
 import Routes from '../routes';
 
 // *****************Sentry Code Start*****************
-Sentry.init({
-  dsn: 'https://fd2308d07fca4c688c954fe1451c7e33@o1408574.ingest.sentry.io/6744195',
-  integrations: [new BrowserTracing()],
+// Sentry.init({
+//   dsn: 'https://fd2308d07fca4c688c954fe1451c7e33@o1408574.ingest.sentry.io/6744195',
+//   integrations: [new BrowserTracing()],
 
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
-
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+// });
 // *****************Sentry Code End*****************
 
 const oktaAuth = new OktaAuth({

@@ -714,31 +714,36 @@ const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 // @access Public
 /** ----------------------------------------- */
 //signing up user into okta
-exports.oktaSignUp = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    const client = new okta.Client({
-        orgUrl: 'https://dev-42684472.okta.com/',
-        token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
-    });
-    const body = req.body;
-    // async function createUserInOkta() {
-    const response = yield client.createUser(body);
-    //will update it with destructure
-    const oktaId = response.id;
-    const name = `${response.profile.firstName} ${response.profile.lastName}`;
-    const gender = response.profile.gender;
-    const email = response.profile.email;
-    const mongoUser = {
-        oktaUserId: oktaId,
-        name,
-        gender,
-        email,
-    };
-    //creting user in mongo db with data from the okta
-    const user = yield User.create(mongoUser);
-    res.status(200).send({
-        res: user,
-    });
-}));
+exports.oktaSignUp = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const client = new okta.Client({
+            orgUrl: 'https://dev-42684472.okta.com/',
+            token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
+        });
+        const body = req.body;
+        // async function createUserInOkta() {
+        const response = yield client.createUser(body);
+        //will update it with destructure
+        const oktaId = response.id;
+        const name = `${response.profile.firstName} ${response.profile.lastName}`;
+        const gender = response.profile.gender;
+        const email = response.profile.email;
+        const mongoUser = {
+            oktaUserId: oktaId,
+            name,
+            gender,
+            email,
+        };
+        //creting user in mongo db with data from the okta
+        const user = yield User.create(mongoUser);
+        res.status(200).send({
+            res: user,
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
 //find user in mongodb by oktaId
 function findUserByOktaId(oktaId) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
@@ -863,38 +868,29 @@ module.exports = asyncHandler;
 
 /***/ }),
 
-/***/ "./apps/pm-backend/src/middleware/error.js":
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "./apps/pm-backend/src/middleware/errMiddleware.js":
+/***/ ((module) => {
 
-// All Errors in this Express Application come here...
-// as errorHandler() is middleware function...
-// This helps send a customized response after identifying the error.
-const ErrorResponse = __webpack_require__("./apps/pm-backend/src/utilities/errorResponse.js");
-const errorHandler = (err, req, res, next) => {
-    let error = Object.assign({}, err);
-    error.message = err.message;
-    console.log(error);
-    // Duplicate Phone/Email Used while Registration
-    if (err.code === 11000) {
-        const message = `Email / Phone already used for registration.`;
-        error = new ErrorResponse(message, 400); // 400 = bad request
+module.exports = (err, req, res, next) => {
+    if (err.errorCode === "E0000001") {
+        handleDuplicateKeyError(err, res);
+        return next();
     }
-    if (err.code === 'E0000001') {
-        const message = `password: This password was found in a list of commonly used passwords. Please try another password.`;
-        error = new ErrorResponse(message, 400); // 400 = bad request
-    }
-    // Mongoose validation error
-    if (err.name === 'ValidationError') {
-        const message = Object.values(err.errors).map((val) => val.message);
-        console.log(message);
-        error = new ErrorResponse(message.join(' & '), 400);
-    }
-    res.json({
-        success: false,
-        error: error.message || 'Server Error',
-    });
 };
-module.exports = errorHandler;
+const handleDuplicateKeyError = (err, res) => {
+    if (err.errorSummary === "Api validation failed: login") {
+        res.status(409).json({
+            field: "login",
+            message: `this user already exists in pesto matrimony.`
+        });
+    }
+    else if (err.errorSummary === "Api validation failed: password") {
+        res.status(409).json({
+            field: "password",
+            message: `this user already exists in pesto matrimony.`
+        });
+    }
+};
 
 
 /***/ }),
@@ -1426,7 +1422,8 @@ var __webpack_exports__ = {};
 const cors = __webpack_require__("cors");
 const express = __webpack_require__("express");
 const dbConnection = __webpack_require__("./apps/pm-backend/src/config/database.js");
-const errorHandler = __webpack_require__("./apps/pm-backend/src/middleware/error.js");
+// const errorHandler = require('./middleware/error');
+const errMiddleware = __webpack_require__("./apps/pm-backend/src/middleware/errMiddleware.js");
 const bodyParser = __webpack_require__("body-parser");
 const Sentry = __webpack_require__("@sentry/node");
 const Tracing = __webpack_require__("@sentry/tracing");
@@ -1435,24 +1432,24 @@ dbConnection();
 // Start Express Server
 const app = express();
 // *****************Sentry Code Start*****************
-Sentry.init({
-    dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
-    integrations: [
-        // enable HTTP calls tracing
-        new Sentry.Integrations.Http({ tracing: true }),
-        // enable Express.js middleware tracing
-        new Tracing.Integrations.Express({ app }),
-    ],
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
-    tracesSampleRate: 1.0,
-});
+// Sentry.init({
+//   dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
+//   integrations: [
+//     // enable HTTP calls tracing
+//     new Sentry.Integrations.Http({ tracing: true }),
+//     // enable Express.js middleware tracing
+//     new Tracing.Integrations.Express({ app }),
+//   ],
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for performance monitoring.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+// });
 // RequestHandler creates a separate execution context using domains, so that every
 // transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler());
-// TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler());
+// app.use(Sentry.Handlers.requestHandler());
+// // TracingHandler creates a trace for every incoming request
+// app.use(Sentry.Handlers.tracingHandler());
 // *****************Sentry Code End*****************
 app.use(cors());
 app.use(express.json());
@@ -1480,7 +1477,7 @@ console.log('mounting routes completed...');
 // *****************Sentry Related*****************
 // Sentry Error Handler
 // The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
+// app.use(Sentry.Handlers.errorHandler());
 // *****************Sentry Related*****************
 // Custom Error Handler
 //Handling Unhandled routes. it should be placed after the routes.
@@ -1491,7 +1488,8 @@ app.use(Sentry.Handlers.errorHandler());
 //   });
 // });
 // error Handling middlewre.
-app.use(errorHandler);
+// app.use(errMiddleware);
+app.use(errMiddleware);
 const server = app.listen(process.env.PORT || 8000, console.log(`Server is listening on port : ${process.env.PORT || 8000}\nMode: ${"development".toUpperCase()}`));
 // Error in connecting to MongoDB triggers unhandledRejection at global level
 // That is being handled here. This stops server if MongoDB is NOT connected.
