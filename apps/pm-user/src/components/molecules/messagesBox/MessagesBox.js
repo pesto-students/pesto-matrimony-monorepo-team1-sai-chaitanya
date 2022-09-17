@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
 import axios from 'axios';
 
-// idOfLoggedInUser is the _id of the loggedin user.
 const MessagesBox = ({
   buttonForMailBox,
   classNamesObject,
@@ -100,7 +99,7 @@ const MessagesBox = ({
         </div>
         <div className={styles[`${classNamesObject?.buttons}`]}>
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
-            {buttonForMailBox ? "View & Send" : ""}
+            {buttonForMailBox ? 'View & Send' : ''}
           </Button>
         </div>
       </div>
