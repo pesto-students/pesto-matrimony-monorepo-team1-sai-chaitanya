@@ -11,7 +11,7 @@ const Input = ({ placeholder, prefix, size, type, ...restProps }) => {
         border: "2px solid #bababa",
         padding: "4px 12px",
         width: "250px",
-        borderRadius: "13px",
+        borderRadius: "0.5rem",
         marginBottom: "-10px",
         fontFamily: "Lato"
       }}

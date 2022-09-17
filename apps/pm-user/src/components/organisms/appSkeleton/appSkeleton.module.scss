@@ -16,9 +16,9 @@
 
 .sideBar {
   height: 100%;
-  width: 18%;
+  // width: 18%;
   background-color: white;
-  margin-right: 12px;
+  // margin-right: 12px;
   overflow: auto;
 }
 
@@ -50,8 +50,13 @@
 .quickLinksCard {
   padding: 12px;
   width: 28%;
+
+.sideBarInAppSkelaton{
+  z-index: 1000;
+}  
 }
 
+// css for website responsiveness
 @media only screen and (max-width: 768px){
   .children {
     display: flex;
@@ -71,7 +76,7 @@
   .sideBar {
     position: absolute;
     height: 100%;
-    width: 80%;
+    width: 100%;
     background-color: white;
     margin-right: 12px;
     overflow: auto;

@@ -10,15 +10,12 @@ const LoginForm = ({ onFormSubmit }) => {
   const history = useHistory();
 
   const onFinish = (values) => {
-    console.log('Success:', values);
     onFormSubmit(values.password, values.email);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
-  console.log(authState);
 
   return (
     <>

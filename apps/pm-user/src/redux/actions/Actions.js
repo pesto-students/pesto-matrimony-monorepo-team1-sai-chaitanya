@@ -8,7 +8,6 @@ const baseUrl = herokuHost;
 
 // to get user's profile data in sidebar
 export const getUserProfileForSideBar = (oktaUserId) => {
-  // console.log(oktaUserId);
   return async (dispatch) => {
     try {
       const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;

@@ -42,12 +42,7 @@ const LoginForm = ({ onFormSubmit }) => {
             },
           ]}
         >
-          <Input
-            type="email"
-            placeholder="Email"
-            prefix={<MailOutlined className="inputIcon"/>}
-            size="large"
-          />
+          <Input type="email" placeholder="Email" prefix={<MailOutlined className="inputIcon" />} size="large" />
         </Form.Item>
 
         <Form.Item
@@ -78,9 +73,16 @@ const LoginForm = ({ onFormSubmit }) => {
             block
             shape="round"
             size="medium"
-            className="buttonStyle"
+            style={{
+              backgroundColor: 'rgb(91, 99, 230)',
+              border: 'none',
+              marginTop: '8px',
+              fontSize: '18px',
+              height: '38px',
+              borderRadius: '0.8rem',
+            }}
           >
-            Submit
+            Login
           </Button>
         </Form.Item>
       </Form>

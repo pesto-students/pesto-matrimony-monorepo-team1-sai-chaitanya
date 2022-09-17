@@ -6,41 +6,46 @@ const okta = require('@okta/okta-sdk-nodejs');
 // @desc   Register a new Profile
 // @route  POST /api/v1/users/
 // @access Public
-
 /** ----------------------------------------- */
 
 
 //signing up user into okta
-exports.oktaSignUp = asyncHandler(async (req, res, next) => {
-  const client = new okta.Client({
-    orgUrl: 'https://dev-42684472.okta.com/',
-    token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
-  });
-  const body = req.body;
-  
-    // async function createUserInOkta() {
-      const response = await client.createUser(body);
+exports.oktaSignUp = async (req, res, next) => {
 
-      //will update it with destructure
-      const oktaId = response.id;
-      const name = `${response.profile.firstName} ${response.profile.lastName}`;
-      const gender = response.profile.gender;
-      const email = response.profile.email;
-
-      const mongoUser = {
-        oktaUserId: oktaId,
-        name,
-        gender,
-        email,
-      };
-
-      //creting user in mongo db with data from the okta
-      const user = await User.create(mongoUser);
-
-    res.status(200).send({
-      res: user,
+  try{
+    const client = new okta.Client({
+      orgUrl: 'https://dev-42684472.okta.com/',
+      token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
     });
-});
+    const body = req.body;
+    
+      // async function createUserInOkta() {
+        const response = await client.createUser(body);
+  
+        //will update it with destructure
+        const oktaId = response.id;
+        const name = `${response.profile.firstName} ${response.profile.lastName}`;
+        const gender = response.profile.gender;
+        const email = response.profile.email;
+  
+        const mongoUser = {
+          oktaUserId: oktaId,
+          name,
+          gender,
+          email,
+        };
+  
+        //creting user in mongo db with data from the okta
+        const user = await User.create(mongoUser);
+  
+      res.status(200).send({
+        res: user,
+      });
+  }catch(err){
+   next(err);
+  }
+  
+};
 
 //find user in mongodb by oktaId
 async function findUserByOktaId(oktaId) {

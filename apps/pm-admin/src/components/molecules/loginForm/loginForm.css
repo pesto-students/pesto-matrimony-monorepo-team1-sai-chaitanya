@@ -2,18 +2,20 @@
     color: #cccccc;
   }
   
-  .forgotPassword > p {
-    margin-bottom: 5px;
-    font-size: 12px;
-  }
-  
-  .buttonStyle {
+.buttonStyle {
     background-color: rgb(91, 99, 230);
     border: none;
-    margin-top: 22px;
-    width: 214px;
-    font-size: 16px;
-    color: white;
-    padding: 6px 0px;
-    border-radius: 12px;
-  }
+    margin-top: 8px;
+    font-size: 18px;
+    height: 38px;
+    border-radius: 0.8rem;
+}
+
+/* .buttonStyle:hover{
+  background-color: #4143db;
+  box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+} */
+
+  
+
+    

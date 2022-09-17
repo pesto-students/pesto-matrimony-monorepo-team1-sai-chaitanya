@@ -100,7 +100,7 @@ const MessagesBox = ({
         </div>
         <div className={styles[`${classNamesObject?.buttons}`]}>
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
-            {buttonForMailBox ? 'View & Send Messages' : ''}
+            {buttonForMailBox ? "View & Send" : ""}
           </Button>
         </div>
       </div>

@@ -134,3 +134,10 @@
     flex-wrap: wrap;
   }
 }
+
+// css for website responsiveness
+@media only screen and (max-width: 768px){
+  .userInfoCard {
+    width: 340px;
+  }
+}

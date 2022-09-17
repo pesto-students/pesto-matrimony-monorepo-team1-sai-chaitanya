@@ -36,3 +36,10 @@
 .changableText{
   color: rgb(93, 96, 238);
 }
+
+// css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .pageHeading {
+    width: 340px;
+  }
+}

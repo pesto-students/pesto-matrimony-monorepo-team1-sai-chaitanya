@@ -15,3 +15,10 @@
   .userName{
     color: #5c5fee;
   }
+
+  // css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .viewOthersProfilePageHeading {
+    width: 340px;
+  }
+}

@@ -1,7 +1,8 @@
 const cors = require('cors');
 const express = require('express');
 const dbConnection = require('./config/database');
-const errorHandler = require('./middleware/error');
+// const errorHandler = require('./middleware/error');
+const errMiddleware = require('./middleware/errMiddleware');
 const bodyParser = require('body-parser');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
@@ -28,8 +29,8 @@ const app = express();
 //   tracesSampleRate: 1.0,
 // });
 
-// // RequestHandler creates a separate execution context using domains, so that every
-// // transaction/span/breadcrumb is attached to its own Hub instance
+// RequestHandler creates a separate execution context using domains, so that every
+// transaction/span/breadcrumb is attached to its own Hub instance
 // app.use(Sentry.Handlers.requestHandler());
 // // TracingHandler creates a trace for every incoming request
 // app.use(Sentry.Handlers.tracingHandler());
@@ -73,7 +74,6 @@ console.log('mounting routes completed...');
 // *****************Sentry Related*****************
 
 // Custom Error Handler
-
 //Handling Unhandled routes. it should be placed after the routes.
 // app.all('*', (req, res, next) => {
 //   res.status(404).json({
@@ -83,7 +83,8 @@ console.log('mounting routes completed...');
 // });
 
 // error Handling middlewre.
-app.use(errorHandler);
+// app.use(errMiddleware);
+app.use(errMiddleware);
 
 const server = app.listen(
   process.env.PORT || 8000,

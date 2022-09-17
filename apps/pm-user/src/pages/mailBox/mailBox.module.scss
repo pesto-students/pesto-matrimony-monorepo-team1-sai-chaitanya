@@ -33,3 +33,10 @@
   background-color: white;
   border-radius: 0.4rem;
 }
+
+//css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .maiBoxPageHeading {
+    width: 340px;
+  }
+}

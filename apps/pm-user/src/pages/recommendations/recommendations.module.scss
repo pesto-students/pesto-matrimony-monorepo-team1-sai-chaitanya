@@ -31,3 +31,15 @@
     background-color: white;
     border-radius: 0.4rem;
 }
+
+// css for website responsiveness
+@media only screen and (max-width: 768px){
+  
+  .recommendationsPage {
+    padding: 1.2rem;
+  
+    h2 {
+      width: 340px;
+    }
+  }
+}

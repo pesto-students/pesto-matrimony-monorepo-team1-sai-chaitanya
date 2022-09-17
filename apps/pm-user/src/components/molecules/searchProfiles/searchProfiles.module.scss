@@ -150,3 +150,20 @@
     }
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .searchProfiles {
+    margin-top: 2.4rem;
+    margin-left: -2.4rem;
+    display: flex;
+    gap: 2.4rem;
+    flex-direction: column;
+  
+    .col1,
+    .col2 {
+      flex: 1 1 0;
+      padding: 1.6rem;
+      margin: 0.2rem;
+    }
+  }
+}
