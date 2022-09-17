@@ -161,8 +161,6 @@ const EditPersonalDetails = () => {
         delete value[key];
       }
     });
-    console.log('value', value);
-    console.log(JSON.stringify(value));
     setUserProfileData(value);
 
     // save this value in DB and display success/failure notification!!

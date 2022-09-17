@@ -31,14 +31,11 @@ const EditFamilyDetails = () => {
 
     setUserProfileData(value);
 
-    console.log(value);
     Object.keys(value).forEach((key) => {
       if (value[key] === undefined || value[key] === null) {
         delete value[key];
       }
     });
-
-    console.log(JSON.stringify(value));
 
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');

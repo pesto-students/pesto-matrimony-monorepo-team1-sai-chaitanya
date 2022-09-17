@@ -34,7 +34,6 @@ const EditReligionDetails = () => {
 
     setUserProfileData(value);
 
-    console.log(value);
     if (value.placeOfBirth !== null) {
       value.placeOfBirth = value.placeOfBirth.trim();
     }
@@ -43,8 +42,6 @@ const EditReligionDetails = () => {
         delete value[key];
       }
     });
-
-    console.log(JSON.stringify(value));
     
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');

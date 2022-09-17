@@ -39,7 +39,7 @@ const MessagesBox = ({
 
   function sendMessageHandler() {
     const message = messageRef.current.resizableTextArea.props.value.trim();
-    console.log(message);
+    
     // Connect with Backend and save this message inside both users.
 
     const messageReceiverName = idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName;
@@ -53,7 +53,7 @@ const MessagesBox = ({
           }
         )
         .then((res) => {
-          console.log(res);
+          
           showNotification('success', 'Success!', `Your message has been sent to ${messageReceiverName}`);
         })
         .catch((error) => {

@@ -65,7 +65,6 @@ const ImageUploadSection = () => {
   const deleteImage = async (index) => {
     if (oktaUserId) {
       const response = await axios.delete(`${baseUrl}/api/v1/users/delete-image/${oktaUserId}/${index}`);
-      console.log(response);
 
       if (response.data.success) {
         showNotification('success', 'Image is deleted', 'Please refresh the page');
@@ -75,8 +74,6 @@ const ImageUploadSection = () => {
 
   let imageArray = userProfileInfo?.images || [];
   let arrayLength = imageArray.length;
-
-  console.log(arrayLength);
 
   const props = {
     name: 'file',

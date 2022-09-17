@@ -110,15 +110,11 @@ const EditPartnerPreferences = () => {
   };
 
   const onFinish = (value) => {
-    console.log(value);
-
     Object.keys(value).forEach((key) => {
       if (value[key] === undefined || value[key] === null) {
         delete value[key];
       }
     });
-
-    console.log(JSON.stringify(value));
 
     setUserProfileData(value);
 

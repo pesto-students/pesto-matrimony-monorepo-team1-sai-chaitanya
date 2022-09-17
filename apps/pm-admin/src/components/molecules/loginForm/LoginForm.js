@@ -2,14 +2,20 @@ import { Button, Form, Input, InputPassword, KeyOutlined, MailOutlined } from '.
 import PropTypes from 'prop-types';
 import _noop from 'lodash';
 import { useHistory, Link } from 'react-router-dom';
+import { showNotification } from '@pm/pm-ui';
 import './loginForm.css';
 
 const LoginForm = ({ onFormSubmit }) => {
   const history = useHistory();
 
+  //jay@yopmail.com id the admin
   const onFinish = (values) => {
-    console.log('Success:', values);
-    onFormSubmit(values.password, values.email);
+    if(values.email === "jay@yopmail.com"){
+      onFormSubmit(values.password, values.email);
+    }else{
+      showNotification('error', 'Only admin can login');
+    }  
+    
   };
 
   const onFinishFailed = (errorInfo) => {

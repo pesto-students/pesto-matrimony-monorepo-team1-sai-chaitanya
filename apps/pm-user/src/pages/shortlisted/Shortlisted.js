@@ -38,8 +38,6 @@ const Shortlisted = () => {
     }
   }, []);
 
-  console.log(responseToCheck);
-
   // if (_.isEmpty(responseToCheck)) {
   //   return <Spin />;
   // }
