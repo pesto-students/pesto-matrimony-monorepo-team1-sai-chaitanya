@@ -43,6 +43,7 @@ exports.sendInterest = asyncHandler(async (req, res, next) => {
     if (didUser1AlreadySendInterestToUser2) {
       await session.abortTransaction();
       session.endSession();
+      console.log("sending error message to frontend....")
       return next(
         new CustomErrorResponse(
           `Interest already sent to ${user2.name}. Please wait for response. If your interest was accepted before, this profile is already in "Accepted" list. Please check.`,
