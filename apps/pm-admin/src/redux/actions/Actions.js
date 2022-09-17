@@ -13,8 +13,6 @@ export const getUserProfile = (oktaUserId) => {
 
       const response = await axios.get(url);
 
-      console.log(response)
-
       dispatch({
         type: ActionTypes.GET_USER_PROFILE,
         payload: response.data.currentUser[0],

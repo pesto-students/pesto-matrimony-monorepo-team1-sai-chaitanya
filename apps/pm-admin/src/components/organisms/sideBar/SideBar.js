@@ -6,6 +6,7 @@ import { ProfileSummary } from '../../molecules';
 import { useOktaAuth } from '@okta/okta-react';
 // import { QuickInfoBar } from '../../molecules';
 import { getUserProfile } from '../../../redux/actions/Actions';
+import { showNotification } from '@pm/pm-ui';
 import { useDispatch, useSelector } from 'react-redux';
 // import axios from 'axios';
 import styles from './sideBar.module.scss';
@@ -15,6 +16,8 @@ function SideBar() {
 
   const history = useHistory();
   const { oktaAuth, authState } = useOktaAuth();
+
+  // console.log(authState.idToken.claims.email.jay@yopmail.com);
 
   //getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
@@ -26,10 +29,14 @@ function SideBar() {
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
+
+  //logic for user logout and admin login.
+  if(userProfileInfo.role === "User") {
+    oktaAuth.signOut('/login');
+  }
+
   const { images, gender } = userProfileInfo;
   var emptyArrayHolder = images ||  [];
-
-  console.log(userProfileInfo);
 
   var imageFromServer;          
 

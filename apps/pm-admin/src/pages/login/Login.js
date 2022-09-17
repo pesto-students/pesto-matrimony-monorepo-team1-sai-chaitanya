@@ -18,6 +18,7 @@ function Login() {
           if (!sessionToken) {
             console.error('authentication process failed');
           }
+          console.log(authState);
           oktaAuth.signInWithRedirect({
             originalUri: '/adminpanel',
             sessionToken,
