@@ -13,7 +13,6 @@ dbConnection();
 // Start Express Server
 const app = express();
 
-
 // *****************Sentry Code Start*****************
 // Sentry.init({
 //   dsn: 'https://e1d7d0bf5be74e7b99f42b24a991095a@o1408574.ingest.sentry.io/6744194',
@@ -37,8 +36,6 @@ const app = express();
 // app.use(Sentry.Handlers.tracingHandler());
 
 // *****************Sentry Code End*****************
-
-
 
 app.use(cors());
 
@@ -76,7 +73,6 @@ console.log('mounting routes completed...');
 
 // *****************Sentry Related*****************
 
-
 // Custom Error Handler
 //Handling Unhandled routes. it should be placed after the routes.
 // app.all('*', (req, res, next) => {
@@ -86,11 +82,9 @@ console.log('mounting routes completed...');
 //   });
 // });
 
-
 // error Handling middlewre.
 // app.use(errMiddleware);
 app.use(errMiddleware);
-
 
 const server = app.listen(
   process.env.PORT || 8000,

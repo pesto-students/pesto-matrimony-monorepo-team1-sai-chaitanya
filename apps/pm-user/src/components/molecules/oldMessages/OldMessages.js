@@ -1,14 +1,50 @@
+import axios from 'axios';
 import { noop as _noop } from 'lodash';
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 import styles from './oldMessages.module.scss';
 
-const OldMessages = ({ conversations, idOfLoggedInUser, interestReceiverImage, interestSenderImage }) => {
+const OldMessages = ({
+  conversations,
+  idOfLoggedInUser,
+  interestReceiverId,
+  interestSenderId,
+  interestSenderImage,
+  interestReceiverImage,
+}) => {
+  const [imageOfSender, setImageOfSender] = useState('');
+  const [imageOfReceiver, setImageofReceiver] = useState('');
+  useEffect(() => {
+    async function fetchImages() {
+      const response1 = await axios.get(
+        `https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${interestSenderId}`
+      );
+
+      const response2 = await axios.get(
+        `https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${interestReceiverId}`
+      );
+
+      setImageOfSender(response1.data.currentUser[0].images[0]);
+      setImageofReceiver(response2.data.currentUser[0].images[0]);
+    }
+    try {
+      fetchImages();
+    } catch (err) {
+      console.log('failed to fetch images');
+    }
+  }, []);
   const renderOldMessages = conversations.map(({ message, messageSenderId }) => {
     const thisClassName = idOfLoggedInUser === messageSenderId ? 'sender' : 'receiver';
+    if (imageOfReceiver.length === 0) {
+      setImageofReceiver(interestReceiverImage);
+    }
+    if (imageOfSender.length === 0) {
+      setImageOfSender(interestSenderImage);
+    }
     return (
       <div className={styles[thisClassName]} key={Math.random()}>
         <div className={styles.image}>
-          <img src={messageSenderId === idOfLoggedInUser ? interestReceiverImage : interestSenderImage} />
+          <img src={messageSenderId === idOfLoggedInUser ? imageOfSender : imageOfReceiver} />
         </div>
         <div className={styles.messageText}>{message}</div>
       </div>
@@ -20,15 +56,15 @@ const OldMessages = ({ conversations, idOfLoggedInUser, interestReceiverImage, i
 OldMessages.propTypes = {
   conversations: PropTypes.array,
   idOfLoggedInUser: PropTypes.string,
-  interestReceiverImage: PropTypes.string,
-  interestSenderImage: PropTypes.string,
+  interestReceiverId: PropTypes.string,
+  interestSenderId: PropTypes.string,
 };
 
 OldMessages.defaultProps = {
   conversations: [],
   idOfLoggedInUser: 'idOfLoggedInUser',
-  interestReceiverImage: 'http://placehold.jp/12/573527/ffffff/40x40.png',
-  interestSenderImage: 'http://placehold.jp/12/5c5fee/ffffff/40x40.png',
+  interestReceiverId: 'http://placehold.jp/12/573527/ffffff/40x40.png',
+  interestSenderId: 'http://placehold.jp/12/5c5fee/ffffff/40x40.png',
 };
 
 export default OldMessages;

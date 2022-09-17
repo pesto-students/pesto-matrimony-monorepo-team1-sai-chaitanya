@@ -83,23 +83,21 @@ const MessagesBox = ({
 
   // console.log(messagesBox);
 
-
   return (
     <>
       <div className={styles[`${classNamesObject?.messagesBox}`]}>
         <div className={styles[`${classNamesObject?.profileImage}`]}>
-        
           <img
             src={idOfLoggedInUser === interestSenderId ? interestReceiverImage : interestSenderImage}
             alt={idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName}
             onClick={() => imageClickHandler(idOfLoggedInUser, interestSenderId, interestReceiverId)}
           />
-        </div> 
+        </div>
         <div className={styles[`${classNamesObject?.profileBrief}`]}>
           {idOfLoggedInUser === interestSenderId
             ? `${interestReceiverName}, ${interestReceiverAge}`
             : `${interestSenderName}, ${interestSenderAge}`}
-        </div> 
+        </div>
         <div className={styles[`${classNamesObject?.buttons}`]}>
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
             {buttonForMailBox ? "View & Send" : ""}
@@ -116,15 +114,17 @@ const MessagesBox = ({
           onCancel={handleNewMessageCancel}
           destroyOnClose={true}
           footer={null}
-        > 
+        >
           <h2 className={styles[`${classNamesObject?.heading}`]}>Previous Messages:</h2>
           <OldMessages
             conversations={conversations}
             idOfLoggedInUser={idOfLoggedInUser}
+            interestSenderId={interestSenderId}
+            interestReceiverId={interestReceiverId}
             interestSenderImage={interestSenderImage}
             interestReceiverImage={interestReceiverImage}
           />
-          <br /> 
+          <br />
           <h2 className={styles[`${classNamesObject?.heading}`]}>Type your message below : </h2>
           <TextArea showCount maxLength={300} ref={messageRef} allowClear />
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageHandler}>

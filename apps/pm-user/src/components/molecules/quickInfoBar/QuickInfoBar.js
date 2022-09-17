@@ -32,11 +32,11 @@ const QuickInfoBar = ({ onClick }) => {
           }
         } else {
           // Profiles to which I sent interest and not yet accepted.
-          if (interest.interestSenderId === oktaIdOfLoggedInUser) {
+          if (interest.interestSenderId === oktaIdOfLoggedInUser && interest.isRejected === false) {
             sentProfiles.push(interest.interestReceiverId);
           }
           // profiles from which I received interest and not yet accepted.
-          if (interest.interestReceiverId === oktaIdOfLoggedInUser) {
+          if (interest.interestReceiverId === oktaIdOfLoggedInUser && interest.isRejected === false) {
             receivedProfiles.push(interest.interestSenderId);
           }
         }

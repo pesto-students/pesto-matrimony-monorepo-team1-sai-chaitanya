@@ -13,6 +13,7 @@ const Matches = () => {
   const { matchStatus } = useParams();
   const [profilesToDisplay, setProfilesToDisplay] = useState([]);
   const [responseToCheck, setResponseToCheck] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   // const [emptyMessage, setemptyMessage] = useState("");
   const [acceptedProfilesOktaIds, setAcceptedProfilesOktaIds] = useState([]);
   const [sentProfilesOktaIds, setSentProfilesOktaIds] = useState([]);
@@ -42,11 +43,11 @@ const Matches = () => {
           }
         } else {
           // Profiles to which I sent interest and not yet accepted.
-          if (interest.interestSenderId === oktaIdOfLoggedInUser) {
+          if (interest.interestSenderId === oktaIdOfLoggedInUser && interest.isRejected === false) {
             sentProfiles.push(interest.interestReceiverId);
           }
           // profiles from which I received interest and not yet accepted.
-          if (interest.interestReceiverId === oktaIdOfLoggedInUser) {
+          if (interest.interestReceiverId === oktaIdOfLoggedInUser && interest.isRejected === false) {
             receivedProfiles.push(interest.interestSenderId);
           }
         }
@@ -73,7 +74,6 @@ const Matches = () => {
             return response.data.currentUser[0];
           })
         );
-
         setProfilesToDisplay(profilesData);
       }
       // calling the function
@@ -92,14 +92,14 @@ const Matches = () => {
             return response.data.currentUser[0];
           })
         );
-        try {
-          setProfilesToDisplay(profilesData);
-        } catch (err) {
-          console.log(err);
-        }
+        setProfilesToDisplay(profilesData);
       }
       // calling the function
-      fetchSentProfilesData();
+      try {
+        fetchSentProfilesData();
+      } catch (err) {
+        console.log(err);
+      }
     }
     if (matchStatus === 'accepted') {
       async function fetchAcceptedProfilesData() {
@@ -110,11 +110,7 @@ const Matches = () => {
             return response.data.currentUser[0];
           })
         );
-        try {
-          setProfilesToDisplay(profilesData);
-        } catch (err) {
-          console.log(err);
-        }
+        setProfilesToDisplay(profilesData);
       }
       // calling the function
       try {
@@ -125,14 +121,14 @@ const Matches = () => {
     }
   }, [matchStatus, acceptedProfilesOktaIds, sentProfilesOktaIds, receivedProfilesOktaIds]);
 
-  if (_.isEmpty(responseToCheck)) {
-    return (
-      <div>
-        <h2 className={styles.pageHeading}>Matches Page - Interests {startCase(matchStatus)}</h2>
-        <Spin className={styles.pageLoaderSpin} />
-      </div>
-    );
-  }
+  // if (_.isEmpty(responseToCheck)) {
+  //   return (
+  //     <div>
+  //       <h2 className={styles.pageHeading}>Matches Page - Interests {startCase(matchStatus)}</h2>
+  //       <Spin className={styles.pageLoaderSpin} />
+  //     </div>
+  //   );
+  // }
 
   var emptyMessage = '';
 
