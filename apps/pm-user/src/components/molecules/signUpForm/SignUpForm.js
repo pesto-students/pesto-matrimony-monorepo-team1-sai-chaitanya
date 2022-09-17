@@ -37,7 +37,7 @@ const SignUpForm = () => {
         showNotification('error', 'Please create strong password');
       }else if(errField === "login"){
         showNotification('error', 'This user already exist in the Pesto Matrimony');
-      } 
+      }
     }
   }
 
@@ -178,14 +178,7 @@ const SignUpForm = () => {
             span: 24,
           }}
         >
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            shape="round"
-            size="medium"
-            className={styles.signUpButton}
-          >
+          <Button type="primary" htmlType="submit" block shape="round" size="medium" className={styles.signUpButton}>
             SignUp
           </Button>
         </Form.Item>

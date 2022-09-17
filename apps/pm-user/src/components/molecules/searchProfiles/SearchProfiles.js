@@ -5,7 +5,7 @@ import { cmToFeet } from '@pm/pm-business';
 import styles from './searchProfiles.module.scss';
 import { useEffect, useState } from 'react';
 import { Empty, Spin } from 'antd';
-import _ from "lodash";
+import _ from 'lodash';
 import axios from 'axios';
 import { useOktaAuth } from '@okta/okta-react';
 
@@ -22,7 +22,7 @@ const SearchProfiles = () => {
   const [displayText, setDisplayText] = useState('Start your search...');
   const [authToken, setAuthToken] = useState(null);
   const [statesList, setStatesList] = useState([]);
-  const [responseForLoader, setResponseForLoader] = useState("noloading");
+  const [responseForLoader, setResponseForLoader] = useState('noloading');
   const [citiesList, setCitiesList] = useState([]);
   const [matchesData, setMatchesData] = useState([]);
   const { authState } = useOktaAuth();
@@ -45,7 +45,7 @@ const SearchProfiles = () => {
         setAuthToken(res.data.auth_token);
       })
       .catch((err) => {
-        showNotification('error', 'Country API Error!', 'Please refresh the page or try again after 30 seconds.');
+        showNotification('error', 'Country API Error!', 'Please refresh the page or try again after 10 seconds.');
         // console.log(err);
       });
   }, []);
@@ -99,12 +99,8 @@ const SearchProfiles = () => {
   };
 
   const onFinish = (values) => {
-    setResponseForLoader("loading");
-    setDisplayText(<Empty description={
-      <span>
-        Found 0 matche(s) based on your search criteria.
-      </span>
-    } />);
+    setResponseForLoader('loading');
+    setDisplayText(<Empty description={<span>Found 0 matche(s) based on your search criteria.</span>} />);
     showNotification(
       'success',
       'Searching...',
@@ -116,7 +112,7 @@ const SearchProfiles = () => {
       .then((res) => {
         showNotification('success', 'Success', `Found ${res.data.number} matche(s) based on your search criteria.`);
         // console.log(res);
-        setResponseForLoader("response");
+        setResponseForLoader('response');
         setMatchesData(res.data.data);
       })
       .catch((err) => {
@@ -152,7 +148,7 @@ const SearchProfiles = () => {
         showNotification(
           'error',
           'Country API Error!',
-          'Unable to fetch States... Please refresh the page or try again after 30 seconds.'
+          'Unable to fetch States... Please refresh the page or try again after 10 seconds.'
         );
         // console.log(err);
       });
@@ -174,7 +170,7 @@ const SearchProfiles = () => {
         showNotification(
           'error',
           'Country API Error!',
-          'Unable to fetch Cities... Please refresh the page or try again after 30 seconds.'
+          'Unable to fetch Cities... Please refresh the page or try again after 10 seconds.'
         );
         // console.log(err);
       });
@@ -234,7 +230,7 @@ const SearchProfiles = () => {
                   <Option value="Others">Others</Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Language" name="language">
+              <Form.Item label="Language" name="motherTongue">
                 <Select bordered className="" defaultValue="Any">
                   <Option value="Hindi">Hindi</Option>
                   <Option value="Bengali">Bengali</Option>
@@ -493,14 +489,19 @@ const SearchProfiles = () => {
         </div>
       </Form>
 
-      {responseForLoader === "noloading" ? (<div className={styles.searchResults}>
-        {matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
-      </div>) : responseForLoader === "loading" ? <Spin /> : (<div className={styles.searchResults}>{matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
-      </div>)}
+      {responseForLoader === 'noloading' ? (
+        <div className={styles.searchResults}>
+          {matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
+        </div>
+      ) : responseForLoader === 'loading' ? (
+        <Spin />
+      ) : (
+        <div className={styles.searchResults}>
+          {matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
+        </div>
+      )}
     </div>
   );
 };
-
-
 
 export default SearchProfiles;

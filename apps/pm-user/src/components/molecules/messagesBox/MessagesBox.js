@@ -156,11 +156,11 @@ MessagesBox.propTypes = {
 MessagesBox.defaultProps = {
   conversations: [],
   idOfLoggedInUser: 'idOfLoggedInUser',
-  interestSenderAge: 99,
+  interestSenderAge: 21,
   interestSenderId: 'interstSenderId',
   interestSenderImage: 'https://placehold.jp/40x40.png',
   interestSenderName: 'interestSenderName',
-  interestReceiverAge: 99,
+  interestReceiverAge: 21,
   interestReceiverId: 'interestReceiverId',
   interestReceiverImage: 'https://placehold.jp/40x40.png',
   interestReceiverName: 'interestReceiverName',

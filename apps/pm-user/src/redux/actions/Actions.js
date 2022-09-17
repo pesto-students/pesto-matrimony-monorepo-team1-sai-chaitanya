@@ -2,14 +2,12 @@ import { ActionTypes } from '../constants';
 import axios from 'axios';
 // import Apis from "../../apis";
 
-
 const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
 const baseUrl = herokuHost;
 
 // to get user's profile data in sidebar
 export const getUserProfileForSideBar = (oktaUserId) => {
-  // console.log(oktaUserId); 
   return async (dispatch) => {
     try {
       const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;
@@ -26,10 +24,8 @@ export const getUserProfileForSideBar = (oktaUserId) => {
   };
 };
 
-
 //to get user's profile data
 export const getUserProfile = (oktaUserId) => {
-  
   return async (dispatch) => {
     try {
       const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;

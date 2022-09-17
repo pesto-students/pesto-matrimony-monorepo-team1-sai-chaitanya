@@ -303,14 +303,14 @@ exports.sendInterest = asyncHandler((req, res, next) => tslib_1.__awaiter(void 0
         if (didUser1AlreadySendInterestToUser2) {
             yield session.abortTransaction();
             session.endSession();
-            return next(new CustomErrorResponse(`Interest already sent to ${user2.name}. Please wait for response.`, 400));
+            return next(new CustomErrorResponse(`Interest already sent to ${user2.name}. Please wait for response. If your interest was accepted before, this profile is already in "Accepted" list. Please check.`, 400));
         }
         const didUser1AlreadyReceiveInterestFromUser2 = user1.interestsReceived.some((interest) => interest.interestSenderId === oktaUserId2);
         console.log('didUser1AlreadyReceiveInterestFromUser2', didUser1AlreadyReceiveInterestFromUser2);
         if (didUser1AlreadyReceiveInterestFromUser2) {
             yield session.abortTransaction();
             session.endSession();
-            return next(new CustomErrorResponse(`Interest already received from ${user2.name}. Please respond to it.`, 400));
+            return next(new CustomErrorResponse(`Interest already received from ${user2.name}. Please respond to it. If you've already accepted her interest, please check "Accepted" list.`, 400));
         }
         const maleImagePlaceholder = `https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png`;
         const femaleImagePlaceholder = `https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png`;
