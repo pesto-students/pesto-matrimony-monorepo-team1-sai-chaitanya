@@ -17,8 +17,6 @@ function SideBar() {
   const dispatch = useDispatch();
   const  location  = useParams();
 
-  console.log(location.pathname);
-
   const history = useHistory();
   const { oktaAuth, authState } = useOktaAuth();
 

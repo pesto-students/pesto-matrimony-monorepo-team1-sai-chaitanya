@@ -26,8 +26,6 @@ const UserInfoCardButtons = ({
 
   const currentPathName = location.pathname;
 
-  console.log(currentPathName);
-
   let buttonsToDisplay = (
     <>
       <Button onClick={sendInterestHandler} type="primary" shape="round" size="middle" icon={<HeartOutlined />}>

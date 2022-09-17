@@ -36,3 +36,10 @@
     font-size: 14px;
 }
 
+// css for website responsiveness
+@media only screen and (max-width: 768px){
+    .userProfileCard{
+        width: 340px;
+    }
+  }
+

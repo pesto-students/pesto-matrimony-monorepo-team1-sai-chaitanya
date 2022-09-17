@@ -113,3 +113,10 @@
 .headingUserList {
   color: black;
 }
+
+// css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .messagesBox {
+    width: 340px;
+  }
+}
