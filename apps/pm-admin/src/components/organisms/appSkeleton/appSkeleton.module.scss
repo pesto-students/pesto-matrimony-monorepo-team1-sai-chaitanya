@@ -10,13 +10,12 @@
   width: 100%;
   height: calc(100% - 60px);
   display: flex;
-  justify-content: space-between;
   overflow: hidden;
 }
 
 .sideBar {
   height: 100%;
-  width: 18%;
+  width: 100%;
   background-color: white;
   margin-right: 12px;
   overflow: auto;
@@ -28,7 +27,7 @@
 }
 
 .children {
-  width: 57%;
+  width: 80%;
   overflow: auto;
   padding: 1.2rem;
   margin: 1.8rem 0;
@@ -36,6 +35,7 @@
   h2 {
     font-size: 1.8rem;
     font-weight: 600;
+    color: #5a5b7f;
   }
 }
 
@@ -45,5 +45,37 @@
 
 .quickLinksCard {
   padding: 12px;
-  width: 25%;
+}
+
+// css for website responsiveness
+@media only screen and (max-width: 768px){
+  .children {
+    display: flex;
+    width: 100%;
+    overflow: auto;
+    padding: 1.2rem;
+    margin: 1.8rem 0;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+  }
+  .sideBar {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    margin-right: 12px;
+    overflow: auto;
+    z-index: 1000;
+  }
+  .quickLinksCard {
+    display: none;
+    padding: 12px;
+    width: 28%;
+  }
 }

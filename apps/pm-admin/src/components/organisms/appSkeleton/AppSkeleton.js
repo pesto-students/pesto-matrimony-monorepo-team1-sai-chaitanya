@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { NavBar } from '../../molecules';
 import { SideBar } from '../sideBar';
+import { Layout, Menu } from 'antd';
+const { Sider } = Layout;
 // import QuickLinksCard from '../quickLinksCard';
 import styles from './appSkeleton.module.scss';
 
@@ -11,9 +13,20 @@ function AppSkeleton({ children }) {
         <NavBar />
       </nav>
       <div className={styles.content}>
-        <div className={styles.sideBar}>
-          <SideBar />
-        </div>
+        <Sider
+          breakpoint="sm"
+          collapsedWidth="0"
+          onBreakpoint={(broken) => {
+            // console.log(broken);
+          }}
+          onCollapse={(collapsed, type) => {
+            // console.log(collapsed, type);
+          }}
+        >
+          <div className={styles.sideBar}>
+            <SideBar />
+          </div>
+        </Sider>
         <div className={styles.children}>{children}</div>
         {/* <div className={styles.quickLinksCard}>
           <QuickLinksCard />

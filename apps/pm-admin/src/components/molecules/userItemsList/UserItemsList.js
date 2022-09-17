@@ -12,7 +12,7 @@ const UserItemsList = () => {
 
   const getAllUsersData = async () => {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(herokuUrl);
       console.log(response);
       setUserData(response.data.user);
     } catch (err) {
@@ -39,7 +39,7 @@ const UserItemsList = () => {
       <h2>List of All users</h2>
       <div className="statsContaner">
         <div className="statsWraper">
-          <div>All Users :</div>
+          <div>Tolat :</div>
           <div>{totalUsers}</div>
         </div>
         <div className="statsWraper">
@@ -60,7 +60,7 @@ const UserItemsList = () => {
               className="listItemMeta"
               avatar={<Avatar src={item.images[0]} className="avatarInList" />}
               title={<a href="#">{item.name}</a>}
-              description={item.aboutMe}
+              description={`${item.email},  ${item.oktaUserId}`}
             />
           </List.Item>
         )}

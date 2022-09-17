@@ -1,7 +1,7 @@
 import { Security } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { BrowserRouter, useHistory } from 'react-router-dom';
-import * as Sentry from '@sentry/react';
+// import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 import Routes from '../routes';
 

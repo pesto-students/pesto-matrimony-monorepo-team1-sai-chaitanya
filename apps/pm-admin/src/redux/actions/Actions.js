@@ -1,14 +1,19 @@
 import { ActionTypes } from '../constants';
 import axios from 'axios';
 // import Apis from "../../apis";
-let mongoIdOfLoggedInUser = '';
+
+const localHost = 'http://localhost:8000';
+const herokuHost = 'https://pmapi-pesto.herokuapp.com';
+const baseUrl = herokuHost;
 
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
     try {
-      const url = `http://localhost:8000/api/v1/users/userprofile/${oktaUserId}`;
+      const url = `${baseUrl}/api/v1/users/userprofile/${oktaUserId}`;
 
       const response = await axios.get(url);
+
+      console.log(response)
 
       dispatch({
         type: ActionTypes.GET_USER_PROFILE,

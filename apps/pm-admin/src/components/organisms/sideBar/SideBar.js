@@ -23,8 +23,6 @@ function SideBar() {
     dispatch(getUserProfile(oktaUserId));
   }, []);
 
-  
-
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
