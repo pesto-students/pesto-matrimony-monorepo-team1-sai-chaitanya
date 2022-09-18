@@ -1,23 +1,23 @@
 .logo {
   font-family: 'Italianno', cursive, 'Lato', sans-serif;
-  background: linear-gradient(to right, #ff0000 -40%, #5c5fee 100%);
+  background: linear-gradient(to right, #ff0000 15%, #5c5fee 62%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0px 0px 9px #979797;
+  text-shadow: 0px 0px 8px #aaa9a9;
+  font-weight: 600;
 }
 
-.small{
+.small {
   @extend .logo;
   font-size: 35px;
 }
 
-.medium{
+.medium {
   @extend .logo;
   font-size: 45px;
 }
 
-.large{
+.large {
   @extend .logo;
   font-size: 55px;
 }
-
