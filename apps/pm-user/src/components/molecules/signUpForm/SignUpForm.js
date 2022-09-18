@@ -27,6 +27,7 @@ const SignUpForm = () => {
         },
       });
       if(response){
+        showNotification('success', 'Congratulations your account is created');
         history.push('/login');
       }
     } catch (err) {
