@@ -1,9 +1,10 @@
 .userProfileCard{
+    width: 600px;
     padding: 2rem;
-    border-bottom: 1px solid #5c5fee;
+    background-color: white;
     border-radius: 1.5rem;
-    margin: 1.5rem;
-    box-shadow: rgb(125 125 125 / 35%) 0px 1px 9px 1px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
 }
 
 .cardTitleWrpper{
@@ -16,8 +17,29 @@
     color: #616161;
 }
 
+.profileCardButton {
+    background-color: #5c5fee;
+    margin: 0.4rem 0rem;
+    height: 3.2rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 3px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+
+    &:hover{
+    background-color: #2d30d2;
+    box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+    }
+}
+
 .cardChildren{
     color: #a0a0a0;
     padding: 8px 8px 8px 0px;
     font-size: 14px;
 }
+
+// css for website responsiveness
+@media only screen and (max-width: 768px){
+    .userProfileCard{
+        width: 340px;
+    }
+  }
+

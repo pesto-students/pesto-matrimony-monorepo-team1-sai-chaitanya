@@ -4,7 +4,10 @@ import { showNotification } from '@pm/pm-ui';
 import { cmToFeet } from '@pm/pm-business';
 import styles from './searchProfiles.module.scss';
 import { useEffect, useState } from 'react';
+import { Empty, Spin } from 'antd';
+import _ from 'lodash';
 import axios from 'axios';
+import { useOktaAuth } from '@okta/okta-react';
 
 // constants
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
@@ -19,8 +22,14 @@ const SearchProfiles = () => {
   const [displayText, setDisplayText] = useState('Start your search...');
   const [authToken, setAuthToken] = useState(null);
   const [statesList, setStatesList] = useState([]);
+  const [responseForLoader, setResponseForLoader] = useState('noloading');
   const [citiesList, setCitiesList] = useState([]);
   const [matchesData, setMatchesData] = useState([]);
+  const { authState } = useOktaAuth();
+
+  //getting current user's oktaId
+  const oktaUserId = authState.accessToken.claims.uid;
+  // console.log('oktaUserId: ', oktaUserId);
 
   useEffect(() => {
     axios
@@ -36,8 +45,8 @@ const SearchProfiles = () => {
         setAuthToken(res.data.auth_token);
       })
       .catch((err) => {
-        showNotification('error', 'Country API Error!', 'Please refresh the page or try again after 30 seconds.');
-        console.log(err);
+        showNotification('error', 'Country API Error!', 'Please refresh the page or try again after 10 seconds.');
+        // console.log(err);
       });
   }, []);
 
@@ -90,26 +99,36 @@ const SearchProfiles = () => {
   };
 
   const onFinish = (values) => {
-    console.log('Success:');
-    console.log(values);
-    console.log(JSON.stringify(values));
-    setDisplayText('Loading... Please wait...');
-    // Send this values to DB and get response....
-    /// Save those  matching profiles (matchesData) in an array.
-    // setMatchesData(searchResults);
-    // That's all. It will automatically display search results.
-
+    setResponseForLoader('loading');
+    setDisplayText(<Empty description={<span>Found 0 matche(s) based on your search criteria.</span>} />);
     showNotification(
       'success',
       'Searching...',
       'Please wait while we search for profiles based on your criteria...',
       10
     );
+    axios
+      .post(`https://pmapi-pesto.herokuapp.com/api/v1/search/${oktaUserId}`, { ...values })
+      .then((res) => {
+        showNotification('success', 'Success', `Found ${res.data.number} matche(s) based on your search criteria.`);
+        // console.log(res);
+        setResponseForLoader('response');
+        setMatchesData(res.data.data);
+      })
+      .catch((err) => {
+        // console.log(err);
+        showNotification('error', 'Error!', err.error);
+      });
+
+    // Send this values to DB and get response....
+    /// Save those  matching profiles (matchesData) in an array.
+    // setMatchesData(searchResults);
+    // That's all. It will automatically display search results.
   };
 
   const onFinishFailed = (errorInfo) => {
     showNotification('error', 'Error!', 'Please re-check your search criteria and try again.');
-    console.log('Failed:', errorInfo);
+    // console.log('Failed:', errorInfo);
   };
 
   const handleCountryChange = (value) => {
@@ -129,9 +148,9 @@ const SearchProfiles = () => {
         showNotification(
           'error',
           'Country API Error!',
-          'Unable to fetch States... Please refresh the page or try again after 30 seconds.'
+          'Unable to fetch States... Please refresh the page or try again after 10 seconds.'
         );
-        console.log(err);
+        // console.log(err);
       });
   };
   const handleStateChange = (value) => {
@@ -144,16 +163,16 @@ const SearchProfiles = () => {
       })
       .then((res) => {
         const cities = res.data.map((cityObj) => cityObj.city_name);
-        console.log(cities);
+        // console.log(cities);
         setCitiesList(cities);
       })
       .catch((err) => {
         showNotification(
           'error',
           'Country API Error!',
-          'Unable to fetch Cities... Please refresh the page or try again after 30 seconds.'
+          'Unable to fetch Cities... Please refresh the page or try again after 10 seconds.'
         );
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -198,7 +217,7 @@ const SearchProfiles = () => {
                   <Option value="Awaiting Divorce">Awaiting Divorce</Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Religion" name="religon">
+              <Form.Item label="Religion" name="religion">
                 <Select bordered className="" defaultValue="Any">
                   <Option value="Hindu">Hindu</Option>
                   <Option value="Muslim">Muslim</Option>
@@ -211,7 +230,7 @@ const SearchProfiles = () => {
                   <Option value="Others">Others</Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Language" name="language">
+              <Form.Item label="Language" name="motherTongue">
                 <Select bordered className="" defaultValue="Any">
                   <Option value="Hindi">Hindi</Option>
                   <Option value="Bengali">Bengali</Option>
@@ -469,9 +488,18 @@ const SearchProfiles = () => {
           </div>
         </div>
       </Form>
-      <div className={styles.searchResults}>
-        {matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
-      </div>
+
+      {responseForLoader === 'noloading' ? (
+        <div className={styles.searchResults}>
+          {matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
+        </div>
+      ) : responseForLoader === 'loading' ? (
+        <Spin />
+      ) : (
+        <div className={styles.searchResults}>
+          {matchesData.length > 0 ? <UserInfoCardsList matchesData={matchesData} /> : <h2>{displayText}</h2>}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useOktaAuth } from '@okta/okta-react';
 import { FormWrapper, LoginForm } from '../../components';
 import { showNotification } from '@pm/pm-ui';
+import { Spin } from 'antd';
 import styles from './login.module.scss';
 
 function Login() {
@@ -29,7 +30,7 @@ function Login() {
       });
 
   if (!authState) {
-    return <div>Loading...</div>;
+    return <div><Spin className={styles.pageLoaderSpin} /></div>;
   }
   if (!authState.isAuthenticated) {
     return (

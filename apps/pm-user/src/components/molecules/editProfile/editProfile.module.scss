@@ -6,6 +6,7 @@
 
   h2 {
     font-size: 1.8rem;
+    color: rgb(90, 91, 127);
     font-weight: 600;
     text-align: center;
     margin: 2.4rem 0;
@@ -18,12 +19,22 @@
 
     .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector::after,
     .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item,
-    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-placeholder {
       line-height: 32px;
     }
 
     button.ant-btn.ant-btn-round {
-      margin: 0.4rem 0.4rem;
+      margin: 0.8rem 0.1rem;
+      height: 3.2rem;
+      border-radius: 0.6rem;
+      box-shadow: 0 3px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+
+      &:hover {
+        background-color: #2d30d2;
+        box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+      }
     }
 
     .ant-btn-primary {
@@ -50,7 +61,7 @@
       }
     }
 
-    .ant-form .ant-form-item-label>label {
+    .ant-form .ant-form-item-label > label {
       position: relative;
       display: flex;
       align-items: center;
@@ -113,19 +124,19 @@
         margin: 0 3rem;
       }
     }
-
   }
 
   .imagesSection {
-    width: 80%;
+    width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 1.2rem;
-    border-radius: 2.4rem;
-    border-bottom: 2px solid #5c5fee;
+    padding: 3.2rem 1.2rem;
+    border-radius: 0.8rem;
     margin-bottom: 1.8rem;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
   }
 
   .personalDetails,
@@ -133,15 +144,39 @@
   .educationDetails,
   .religionDetails,
   .partnerPreferences {
-    min-width: 80%;
+    min-width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0 3.6rem;
-    border-radius: 2.4rem;
+    border-radius: 0.8rem;
     padding-bottom: 1.2rem;
-    border-bottom: 2px solid #5c5fee;
     background-color: white;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+  }
+}
+
+// css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .editProfile {
+
+    :global {
+      .ant-col-offset-8{
+        margin-left: 0px
+      }
+    }
+
+    .imagesSection {
+      width: 340px;
+    }
+
+    .personalDetails,
+    .familyDetails,
+    .educationDetails,
+    .religionDetails,
+    .partnerPreferences {
+      min-width: 340px;
+    }
   }
 }

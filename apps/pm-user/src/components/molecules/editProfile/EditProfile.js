@@ -12,7 +12,6 @@ const EditProfile = () => {
   return (
     <div className={styles.editProfile}>
       <div className={styles.imagesSection}>
-        <h2>Upload Photos</h2>
         <ImageUploadSection />
       </div>
       <div className={styles.personalDetails}>

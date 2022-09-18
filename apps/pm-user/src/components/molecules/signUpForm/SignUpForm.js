@@ -7,11 +7,12 @@ import { showNotification } from '@pm/pm-ui';
 const SignUpForm = () => {
   const history = useHistory();
 
-  const url2 = 'http://localhost:8000/api/v1/users/oktasignup'
+  const localUrl = 'http://localhost:8000/api/v1/users/oktasignup'
+  const herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup'
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
-      const response = await axios.post(url2, {
+      const response = await axios.post(herokuUrl, {
         profile: {
           firstName,
           lastName,
@@ -25,17 +26,23 @@ const SignUpForm = () => {
           },
         },
       });
-      console.log("response", response);
-      history.push('/recommendations');
+      if(response){
+        showNotification('success', 'Congratulations your account is created');
+        history.push('/login');
+      }
     } catch (err) {
-      console.log('error:', err);
-      showNotification('error', 'please create strong password');
+      const errField = err.response.data.field
+
+      if(errField === "password"){
+        showNotification('error', 'Please create strong password');
+      }else if(errField === "login"){
+        showNotification('error', 'This user already exist in the Pesto Matrimony');
+      }
     }
   }
 
   const onFinish = (values) => {
     if (values.confirmPassword === values.password) {
-      console.log('Success:', values);
       signUpUser(values.firstName, values.lastName, values.email, values.gender, values.password);
     } else {
       showNotification('error', 'password and confirmPassword should be same');
@@ -43,7 +50,7 @@ const SignUpForm = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    // console.log('Failed:', errorInfo);
   };
 
   return (
@@ -171,19 +178,8 @@ const SignUpForm = () => {
             span: 24,
           }}
         >
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            shape="round"
-            size="medium"
-            style={{
-              backgroundColor: '#5b63e6',
-              border: 'none',
-              marginTop: '8px',
-            }}
-          >
-            Submit
+          <Button type="primary" htmlType="submit" block shape="round" size="medium" className={styles.signUpButton}>
+            SignUp
           </Button>
         </Form.Item>
       </Form>

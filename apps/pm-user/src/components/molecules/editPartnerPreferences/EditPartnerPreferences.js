@@ -37,7 +37,7 @@ const EditPartnerPreferences = () => {
   const responseData = useSelector((state) => state.updateUserProfileReducer.data || {});
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
-  console.log(userProfileInfo);
+  // console.log(userProfileInfo);
 
   const handleHeightSliderChange = (values) => {
     setMinHeight(values[0]);
@@ -110,18 +110,17 @@ const EditPartnerPreferences = () => {
   };
 
   const onFinish = (value) => {
-    setUserProfileData(value);
-
     Object.keys(value).forEach((key) => {
       if (value[key] === undefined || value[key] === null) {
         delete value[key];
       }
     });
 
-    console.log(JSON.stringify(value));
+    setUserProfileData(value);
+
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
-    history.push('/profile');
+    // history.push('/profile');
   };
   const onFinishFailed = () => {
     showNotification('error', 'Error Saving Values...', 'Please Try again later.');
@@ -203,6 +202,7 @@ const EditPartnerPreferences = () => {
             <Option value="Assamese">Assamese</Option>
             <Option value="Bodo">Bodo</Option>
             <Option value="Dogri">Dogri</Option>
+            <Option value="English">English</Option>
             <Option value="Kashmiri">Kashmiri</Option>
             <Option value="Konkani">Konkani</Option>
             <Option value="Maithili">Maithili</Option>
@@ -436,10 +436,10 @@ const EditPartnerPreferences = () => {
         </Form.Item>
         <Form.Item label="Eating Habits" name="partnerEatingHabits" initialValue={userProfileInfo?.partnerEatingHabits}>
           <Select bordered className="">
-            <Option value="vegetarian">Vegetarian</Option>
-            <Option value="eggetarian">Eggetarian</Option>
-            <Option value="non_vegetarian">Non-Vegetarian</Option>
-            <Option value="jain">Jain</Option>
+            <Option value="Vegetarian">Vegetarian</Option>
+            <Option value="Eggetarian">Eggetarian</Option>
+            <Option value="Non Vegetarian">Non-Vegetarian</Option>
+            <Option value="Jain">Jain</Option>
           </Select>
         </Form.Item>
 

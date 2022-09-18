@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../atoms';
 import { Link } from "react-router-dom";
+import _ from "lodash"
 import styles from './userProfileCard.module.scss';
 
-const UserProfileCard = ({ children, title }) => {
+const UserProfileCard = ({ button, children, title }) => {
+
   return (
     <div className={styles.userProfileCard}>
       <div className={styles.cardTitleWrpper}>
         <span>{title} </span>
         <Link to="/edit-profile">
-        <Button shape="round" size="middle" type="primary">
+        {button ? <Button className={styles.profileCardButton} size="middle" type="primary">
           Edit
-        </Button>
+        </Button> : ""}
+        
         </Link>
       </div>
       <div className={styles.cardChildren}>{children}</div>
@@ -21,12 +24,12 @@ const UserProfileCard = ({ children, title }) => {
 };
 
 UserProfileCard.propTypes = {
-  children: PropTypes.obj,
+  children: PropTypes.func,
   title: PropTypes.string,
 };
 
 UserProfileCard.defaultProps = {
-  children: {},
+  children: _.noop(),
   title: 'Card Title',
 };
 

@@ -4,9 +4,11 @@ import { OldMessages } from '..';
 import { showNotification } from '@pm/pm-ui';
 import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
+import axios from 'axios';
 
-// idOfLoggedInUser is the _id of the loggedin user.
 const MessagesBox = ({
+  buttonForMailBox,
+  classNamesObject,
   conversations,
   idOfLoggedInUser,
   interestSenderAge,
@@ -36,16 +38,29 @@ const MessagesBox = ({
   }
 
   function sendMessageHandler() {
-    const message = messageRef.current.resizableTextArea.props.value;
-    console.log(message);
+    const message = messageRef.current.resizableTextArea.props.value.trim();
+    
     // Connect with Backend and save this message inside both users.
 
     const messageReceiverName = idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName;
+    const messageReceiverId = idOfLoggedInUser === interestSenderId ? interestReceiverId : interestSenderId;
     if (message.trim().length > 0) {
-      setTimeout(() => {
-        handleNewMessageCancel();
-        showNotification('success', 'Message Sent', `Relax! Your message has been sent to ${messageReceiverName}`, 0);
-      }, 1500);
+      axios
+        .post(
+          `https://pmapi-pesto.herokuapp.com/api/v1/conversations?sender=${idOfLoggedInUser}&receiver=${messageReceiverId}`,
+          {
+            message,
+          }
+        )
+        .then((res) => {
+          
+          showNotification('success', 'Success!', `Your message has been sent to ${messageReceiverName}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          showNotification('error', 'Error!', "Couldn't send your message. Please try later.");
+        });
+      handleNewMessageCancel();
     } else {
       showNotification('warn', 'Error!', "Message can't be empty.");
     }
@@ -60,24 +75,31 @@ const MessagesBox = ({
     // open profile in new tab
     window.open(`/profile/${interestSenderId}`, '_blank');
   }
+
+  // console.log(classNamesObject?.messagesBox);
+
+  // const { messagesBox } = classNamesObject;
+
+  // console.log(messagesBox);
+
   return (
     <>
-      <div className={styles.messagesBox}>
-        <div className={styles.profileImage}>
+      <div className={styles[`${classNamesObject?.messagesBox}`]}>
+        <div className={styles[`${classNamesObject?.profileImage}`]}>
           <img
             src={idOfLoggedInUser === interestSenderId ? interestReceiverImage : interestSenderImage}
             alt={idOfLoggedInUser === interestSenderId ? interestReceiverName : interestSenderName}
             onClick={() => imageClickHandler(idOfLoggedInUser, interestSenderId, interestReceiverId)}
           />
         </div>
-        <div className={styles.profileBrief}>
+        <div className={styles[`${classNamesObject?.profileBrief}`]}>
           {idOfLoggedInUser === interestSenderId
             ? `${interestReceiverName}, ${interestReceiverAge}`
             : `${interestSenderName}, ${interestSenderAge}`}
         </div>
-        <div className={styles.buttons}>
+        <div className={styles[`${classNamesObject?.buttons}`]}>
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendNewMessageHandler}>
-            View & Send Messages
+            {buttonForMailBox ? 'View & Send' : ''}
           </Button>
         </div>
       </div>
@@ -92,15 +114,17 @@ const MessagesBox = ({
           destroyOnClose={true}
           footer={null}
         >
-          <h2 className={styles.heading}>Previous Messages:</h2>
+          <h2 className={styles[`${classNamesObject?.heading}`]}>Previous Messages:</h2>
           <OldMessages
             conversations={conversations}
             idOfLoggedInUser={idOfLoggedInUser}
+            interestSenderId={interestSenderId}
+            interestReceiverId={interestReceiverId}
             interestSenderImage={interestSenderImage}
             interestReceiverImage={interestReceiverImage}
           />
           <br />
-          <h2 className={styles.heading}>Type your message below : </h2>
+          <h2 className={styles[`${classNamesObject?.heading}`]}>Type your message below : </h2>
           <TextArea showCount maxLength={300} ref={messageRef} allowClear />
           <Button type="primary" shape="round" icon={<SendOutlined />} size="middle" onClick={sendMessageHandler}>
             Send Message
@@ -131,11 +155,11 @@ MessagesBox.propTypes = {
 MessagesBox.defaultProps = {
   conversations: [],
   idOfLoggedInUser: 'idOfLoggedInUser',
-  interestSenderAge: 99,
+  interestSenderAge: 21,
   interestSenderId: 'interstSenderId',
   interestSenderImage: 'https://placehold.jp/40x40.png',
   interestSenderName: 'interestSenderName',
-  interestReceiverAge: 99,
+  interestReceiverAge: 21,
   interestReceiverId: 'interestReceiverId',
   interestReceiverImage: 'https://placehold.jp/40x40.png',
   interestReceiverName: 'interestReceiverName',

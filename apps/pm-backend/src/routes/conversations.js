@@ -9,6 +9,6 @@ const router = express.Router();
 // All of these controller functions are working on that conversations array.
 router.route('/').post(sendMessage).put(markMessagesAsRead);
 
-router.route('/:userId').get(getMessages);
+router.route('/:oktaUserId').get(getMessages);
 
 module.exports = router;

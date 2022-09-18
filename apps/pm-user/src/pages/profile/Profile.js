@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../redux/actions/Actions';
 import { useOktaAuth } from '@okta/okta-react';
+import { useParams } from 'react-router-dom';
 import _ from 'lodash';
 import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } from '../../components';
 import { EditProfilePage } from '..';
+import axios from 'axios';
 
 const Profile = () => {
+  const [profileData, setProfileData] = useState([]);
   const { oktaAuth, authState } = useOktaAuth();
+  const { profileId } = useParams();
+  console.log('profileId : ', profileId);
+
   const dispatch = useDispatch();
   const [fillData, setFillData] = useState([]);
 
@@ -15,14 +21,27 @@ const Profile = () => {
   const oktaUserId = authState.accessToken.claims.uid;
 
   useEffect(() => {
-    dispatch(updateUserProfile(oktaUserId));
+    // dispatch(updateUserProfile(oktaUserId));
+    async function fetchProfileData() {
+      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${profileId}`);
+      const userData = res.data.currentUser[0];
+      setProfileData(userData);
+      console.log('from use effect: ', userData);
+    }
+    try {
+      fetchProfileData();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  console.log('profileData: ', profileData);
 
   //data from redux
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
-  const forHoobies = userProfileInfo.hobbies || [];
-  const forSpokenLanguages = userProfileInfo.spokenLanguages || [];
+  const forHobbies = userProfileInfo.hobbies || ['Not Specified'];
+  const forSpokenLanguages = userProfileInfo.spokenLanguages || ['Not Specified'];
 
   const { partnerAgeRange, partnerHeightRange, partnerIncomeRange } = userProfileInfo;
 
@@ -37,10 +56,33 @@ const Profile = () => {
   const showIncomRange =
     forPartnerIncome.length !== 0 ? `${partnerIncomeRange[0]} to ${partnerIncomeRange[1]}` : 'Not Specified';
 
+  const sisters = String(userProfileInfo?.sisters);
+
+  console.log(sisters);
+
   console.log(userProfileInfo);
 
-  // let ageRange =
+  let defaultImageArray = [];
+  let imageArray = [];
+  let userImagesArray = userProfileInfo?.images || [];
 
+  if (userProfileInfo?.gender === 'female') {
+    defaultImageArray[0] =
+      'https://res.cloudinary.com/pesto-matrimony/image/upload/v1662458482/tufqrbcs4pnkwcukvynw.png';
+  } else {
+    defaultImageArray[0] =
+      'https://res.cloudinary.com/pesto-matrimony/image/upload/v1662374871/e0kfqgvenrb2mhpzya4a.png';
+  }
+
+  if (userImagesArray.length === 0) {
+    imageArray = defaultImageArray;
+  } else {
+    imageArray = userProfileInfo?.images;
+  }
+
+  console.log(userProfileInfo?.images);
+
+  // let ageRange =
   // let heightRange = `${userProfileInfo?.partnerHeightRange[0]} to ${userProfileInfo?.partnerHeightRange[1]}`
   // let showHeightRange = userProfileInfo?.partnerHeightRange.length !== 0 ? heightRange : "Not Specified";
 
@@ -52,12 +94,12 @@ const Profile = () => {
       {/* <EditProfilePage /> */}
       <UserInfoCard
         profileLocation={userProfileInfo?.location || 'Not Specified'}
-        idOfLoggedInUser="abcd"
+        idOfLoggedInUser={oktaUserId}
         profileAboutMe=""
         profileAge={userProfileInfo?.age || 'Not Specified'}
         profileName={userProfileInfo?.name}
-        profileId="abcd"
-        profileImages={userProfileInfo?.images}
+        profileId={profileId}
+        profileImages={imageArray}
       />
       <UserProfileCard className="userProfileCard" title="Description">
         <UserProfileCardContent description={userProfileInfo?.aboutMe || 'Not Specified'} />
@@ -71,14 +113,17 @@ const Profile = () => {
         <UserProfileCardContent field="Mother Tongue" value={userProfileInfo?.motherTongue || 'Not Specified'} />
         <UserProfileCardContent field="Marriage Status" value={userProfileInfo?.marriageStatus || 'Not Specified'} />
         <UserProfileCardContent field="Citizenship" value={userProfileInfo?.citizenship || 'Not Specified'} />
-        <UserProfileCardContent field="Current Country" value="India" />
-        <UserProfileCardContent field="Current State" value="India" />
-        <UserProfileCardContent field="Current Location" value="India" />
-        <UserProfileCardContent field="Eating Habits" value="some value" />
-        <UserProfileCardContent field="Smoking Habits" value="some value" />
-        <UserProfileCardContent field="Drinking Habits" value="some value" />
-        <UserProfileCardContent field="Hobbies" value={forHoobies.map((hobby) => hobby)} />
-        <UserProfileCardContent field="Spoken Languages" value={forSpokenLanguages.map((language) => language)} />
+        <UserProfileCardContent field="Current Country" value={userProfileInfo?.country || 'Not Specified'} />
+        <UserProfileCardContent field="Current State" value={userProfileInfo?.state || 'Not Specified'} />
+        <UserProfileCardContent field="Current Location" value={userProfileInfo?.location || 'Not Specified'} />
+        <UserProfileCardContent field="Eating Habits" value={userProfileInfo?.eatingHabits || 'Not Specified'} />
+        <UserProfileCardContent field="Smoking Habits" value={userProfileInfo?.smokingHabits || 'Not Specified'} />
+        <UserProfileCardContent field="Drinking Habits" value={userProfileInfo?.drinkingHabits || 'Not Specified'} />
+        <UserProfileCardContent field="Hobbies" value={forHobbies.map((hobby) => `${hobby},   `)} />
+        <UserProfileCardContent
+          field="Spoken Languages"
+          value={forSpokenLanguages.map((language) => `${language},  `)}
+        />
       </UserProfileCard>
 
       <UserProfileCard className="userProfileCard" title="Education & Career Information">
@@ -90,13 +135,16 @@ const Profile = () => {
 
       <UserProfileCard className="userProfileCard" title="Family Details">
         <UserProfileCardContent field="About Family" value={userProfileInfo?.aboutFamily || 'Not Specified'} />
-        <UserProfileCardContent field="Brother(s)" value={userProfileInfo?.brothers || 'Not Specified'} />
+        <UserProfileCardContent field="Brother(s)" value={String(userProfileInfo?.brothers) || 'Not Specified'} />
         <UserProfileCardContent
           field="Married Brother(s)"
-          value={userProfileInfo?.marriedBrothers || 'Not Specified'}
+          value={String(userProfileInfo?.marriedBrothers) || 'Not Specified'}
         />
-        <UserProfileCardContent field="Sister(s)" value={userProfileInfo?.sisters || 'Not Specified'} />
-        <UserProfileCardContent field="Married Sister(s)" value={userProfileInfo?.marriedSisters || 'Not Specified'} />
+        <UserProfileCardContent field="Sister(s)" value={String(userProfileInfo?.sisters) || 'Not Specified'} />
+        <UserProfileCardContent
+          field="Married Sister(s)"
+          value={String(userProfileInfo?.marriedSisters) || 'Not Specified'}
+        />
         <UserProfileCardContent field="Family Status" value={userProfileInfo?.familyStatus || 'Not Specified'} />
       </UserProfileCard>
 
@@ -104,9 +152,9 @@ const Profile = () => {
         <UserProfileCardContent field="Religion" value={userProfileInfo?.religion || 'Not Specified'} />
         <UserProfileCardContent field="Zodiac sign" value={userProfileInfo?.zodiacSign || 'Not Specified'} />
         <UserProfileCardContent field="Gothram" value={userProfileInfo?.gothram || 'Not Specified'} />
-        <UserProfileCardContent field="Date of Birth" value={userProfileInfo?.dateOfBirth || 'Not Specified'} />
+        {/* <UserProfileCardContent field="Date of Birth" value={userProfileInfo?.dateOfBirth || 'Not Specified'} /> */}
         <UserProfileCardContent field="Place of birth" value={userProfileInfo?.placeOfBirth || 'Not Specified'} />
-        <UserProfileCardContent field="Time of Birth" value={userProfileInfo?.timeOfBirth || 'Not Specified'} />
+        {/* <UserProfileCardContent field="Time of Birth" value={userProfileInfo?.timeOfBirth || 'Not Specified'} /> */}
       </UserProfileCard>
 
       <UserProfileCard className="userProfileCard" title="Partner Preferences">

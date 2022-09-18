@@ -7,12 +7,12 @@ import './userItemsList.css';
 const UserItemsList = () => {
   const [userdata, setUserData] = useState([]);
 
+  const  herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/admin/getallusers';
   const url = 'http://localhost:8000/api/v1/admin/getallusers';
 
   const getAllUsersData = async () => {
     try {
-      const response = await axios.get(url);
-      console.log(response);
+      const response = await axios.get(herokuUrl);
       setUserData(response.data.user);
     } catch (err) {
       console.log(err.response.data);
@@ -38,7 +38,7 @@ const UserItemsList = () => {
       <h2>List of All users</h2>
       <div className="statsContaner">
         <div className="statsWraper">
-          <div>All Users :</div>
+          <div>Tolat :</div>
           <div>{totalUsers}</div>
         </div>
         <div className="statsWraper">
@@ -59,7 +59,7 @@ const UserItemsList = () => {
               className="listItemMeta"
               avatar={<Avatar src={item.images[0]} className="avatarInList" />}
               title={<a href="#">{item.name}</a>}
-              description={item.aboutMe}
+              description={`${item.email},  ${item.oktaUserId}`}
             />
           </List.Item>
         )}

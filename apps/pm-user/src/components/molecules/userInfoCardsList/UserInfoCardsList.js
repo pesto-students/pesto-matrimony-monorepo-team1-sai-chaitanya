@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 const UserInfoCardsList = ({ matchesData }) => {
   const renderUserInfoCardsList = matchesData?.map((match) => {
     return (
-      <UserInfoCard
-        profileAboutMe={match.profileAboutMe}
-        profileAge={match.profileAge}
-        profileId={match.profileId}
-        profileLocation={match.profileLocation}
-        profileImages={match.profileImages}
-        profileName={match.profileName}
-      />
+      <div key={Math.random()}>
+        <UserInfoCard
+          profileAboutMe={match?.aboutMe}
+          profileAge={match?.age}
+          profileId={match?.oktaUserId}
+          profileLocation={match?.location}
+          profileImages={match?.images}
+          profileName={match?.name}
+        />
+      </div>
     );
   });
   return <>{renderUserInfoCardsList}</>;

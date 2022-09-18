@@ -1,16 +1,24 @@
 import './formWrapper.css';
 import PropTypes from 'prop-types';
 import { Logo } from '../../atoms';
+import { Link } from 'react-router-dom';
 
-const FormWrapper = ({ bottomText, children, formTitle }) => {
+const FormWrapper = ({
+  bottomText,
+  children,
+  formDescription,
+  formTitle,
+}) => {
   return (
     <div className="superContainer">
-      <div className="loginBox">
-        <Logo size="medium" />
-        <div className="formTitle">{formTitle}</div>
-        {children}
+      <div className="rightContainer">
+        <div className="loginBox">
+          <Logo size="medium" />
+          <div className="formTitle">{formTitle}</div>
+          <div className="formDescription">{formDescription}</div>
+          {children}
+        </div>
       </div>
-      <p className="formBottomText">{bottomText}</p>
     </div>
   );
 };
@@ -22,9 +30,9 @@ FormWrapper.propTypes = {
 };
 
 FormWrapper.defaultProps = {
-  bottomText: 'If you have problem in login or forget password, please contact to developer!',
+  bottomText: 'already have account then!',
   children: {},
-  formTitle: 'Admin Login',
+  formTitle: 'SignUp',
 };
 
 export default FormWrapper;

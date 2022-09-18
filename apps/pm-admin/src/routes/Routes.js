@@ -4,15 +4,15 @@ import { LoginCallback, SecureRoute } from '@okta/okta-react';
 
 import { PATHS } from '../constants';
 import SecureRoutes from './SecureRoutes';
-import { AdminLogin } from '../pages';
+import { Login } from '../pages';
 
 function Routes() {
   return (
     <Switch>
-      <Route exact path={PATHS.ADMIN_LOGIN} component={AdminLogin} />
-      {/* <Route exact path={PATHS.LOGIN_CALLBACK} component={LoginCallback} /> */}
-      {/* <SecureRoute path="*" component={SecureRoutes} /> */}
-      <Route path="*" component={SecureRoutes} />
+      <Route exact path={PATHS.LOGIN} component={Login} />
+      <Route exact path={PATHS.LOGIN_CALLBACK} component={LoginCallback} />
+      <SecureRoute path="*" component={SecureRoutes} />
+      {/* <Route path="*" component={SecureRoutes} /> */}
     </Switch>
   );
 }

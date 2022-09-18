@@ -1,22 +1,26 @@
 .oldMessages {
+
   .sender,
   .receiver {
-    padding: 0.2rem 1rem;
+    padding: 0.5rem 0rem;
     display: flex;
     align-items: center;
-    justify-content: flex-start; // vertical
+    justify-content: flex-start;
+    border-bottom: 1px solid #edeaea;
+
     .image {
       img {
         border-radius: 50%;
-        border: 1px solid black;
+        // border: 1px solid black;
         margin: 0 1rem;
+        width: 4rem;
+        height: 4rem;
       }
     }
+
     .messageText {
       // text-align: justify;
     }
-    border-radius: 1.2rem;
-    border-bottom: 1px dotted #5c5fee;
   }
 
   .receiver {

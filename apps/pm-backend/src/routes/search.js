@@ -5,6 +5,6 @@ const { searchProfiles } = require('../controllers/search');
 
 // '/' in this router is equivalent to  '/api/v1/search'
 
-router.route('/').post(searchProfiles);
+router.route('/:oktaUserId').post(searchProfiles);
 
 module.exports = router;

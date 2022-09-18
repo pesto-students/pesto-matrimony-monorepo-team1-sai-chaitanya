@@ -6,6 +6,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../../../redux/actions/Actions';
 import _ from 'lodash';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const COUNTRY_API_URL = `https://www.universal-tutorial.com/api`;
@@ -27,6 +28,7 @@ const EditPersonalDetails = () => {
   const [userProfileData, setUserProfileData] = useState({});
   const { oktaAuth, authState } = useOktaAuth();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // getting current user's oktaId
   const oktaUserId = authState.accessToken.claims.uid;
@@ -151,8 +153,6 @@ const EditPersonalDetails = () => {
   const userProfileInfo = useSelector((state) => state.getUserProfileResponse.data || {});
 
   const onFinish = (value) => {
-    console.log(value);
-    setUserProfileData(value);
     value.age = value.age[0];
     value.height = value.height[0];
     value.weight = value.weight[0];
@@ -161,7 +161,8 @@ const EditPersonalDetails = () => {
         delete value[key];
       }
     });
-    console.log(JSON.stringify(value));
+    setUserProfileData(value);
+
     // save this value in DB and display success/failure notification!!
     showNotification('success', 'Save Successful!', 'Your information has been saved successfully.');
   };
@@ -185,7 +186,10 @@ const EditPersonalDetails = () => {
           placeholder={`Please write a few words about yourself. Maximum ${MAX_TEXT_LENGTH} characters allowed.`}
         />
       </Form.Item>
-      <Form.Item label="Age" name="age" initialValue={[userProfileInfo?.age || MINIMUM_ALLOWED_AGE]}>
+
+      {/* initialValue={[userProfileInfo?.age || MINIMUM_ALLOWED_AGE]} */}
+
+      <Form.Item label="Age" name="age" initialValue={[userProfileInfo?.age]}>
         <Slider
           range
           min={MINIMUM_ALLOWED_AGE}
@@ -246,6 +250,7 @@ const EditPersonalDetails = () => {
           <Option value="Assamese">Assamese</Option>
           <Option value="Bodo">Bodo</Option>
           <Option value="Dogri">Dogri</Option>
+          <Option value="English">English</Option>
           <Option value="Kashmiri">Kashmiri</Option>
           <Option value="Konkani">Konkani</Option>
           <Option value="Maithili">Maithili</Option>
@@ -676,7 +681,7 @@ const EditPersonalDetails = () => {
         <Select bordered>
           <Option value="Drinker">Drinker</Option>
           <Option value="Social Drinker">Social Drinker</Option>
-          <Option value="Teetotallers">Teetotaller</Option>
+          <Option value="Teetotaller">Teetotaller</Option>
         </Select>
       </Form.Item>
       <Form.Item label="Hobbies" name="hobbies" initialValue={userProfileInfo?.hobbies}>
@@ -704,6 +709,7 @@ const EditPersonalDetails = () => {
           <Option value="Assamese">Assamese</Option>
           <Option value="Bodo">Bodo</Option>
           <Option value="Dogri">Dogri</Option>
+          <Option value="English">English</Option>
           <Option value="Kashmiri">Kashmiri</Option>
           <Option value="Konkani">Konkani</Option>
           <Option value="Maithili">Maithili</Option>
