@@ -217,7 +217,7 @@ const SearchProfiles = () => {
                   <Option value="Awaiting Divorce">Awaiting Divorce</Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Religion" name="religon">
+              <Form.Item label="Religion" name="religion">
                 <Select bordered className="" defaultValue="Any">
                   <Option value="Hindu">Hindu</Option>
                   <Option value="Muslim">Muslim</Option>
