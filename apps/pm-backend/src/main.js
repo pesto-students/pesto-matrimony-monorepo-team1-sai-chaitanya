@@ -2,7 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const dbConnection = require('./config/database');
 const errorHandler = require('./middleware/error');
-const errMiddleware = require('./middleware/errMiddleware');
+// const errMiddleware = require('./middleware/errMiddleware');
 const bodyParser = require('body-parser');
 const Sentry = require('@sentry/node');
 const Tracing = require('@sentry/tracing');
@@ -84,7 +84,7 @@ console.log('mounting routes completed...');
 
 // error Handling middlewre.
 app.use(errorHandler);
-app.use(errMiddleware);
+// app.use(errMiddleware);
 
 const server = app.listen(
   process.env.PORT || 8000,

@@ -6,7 +6,11 @@ const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
 
-  console.log(error);
+  //error handling for signup form
+  if(err.errorCode === "E0000001"){
+    handleDuplicateKeyError(err, res);
+    return next();
+  }
 
   // Duplicate Phone/Email Used while Registration
   if (err.code === 11000) {
@@ -31,5 +35,21 @@ const errorHandler = (err, req, res, next) => {
     error: error.message || 'Server Error',
   });
 };
+
+//error handling for signup form
+const handleDuplicateKeyError = (err, res) => {
+  if(err.errorSummary === "Api validation failed: login"){
+      res.status(409).json({ 
+                      field : "login", 
+                      message: `this user already exists in pesto matrimony.`
+              })
+  }else if(err.errorSummary === "Api validation failed: password"){
+      res.status(409).json({ 
+          field : "password",  
+          message: `this user already exists in pesto matrimony.`
+  })
+  }
+}
+
 
 module.exports = errorHandler;

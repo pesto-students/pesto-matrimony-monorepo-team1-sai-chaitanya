@@ -29,7 +29,6 @@ const SignUpForm = () => {
       if(response){
         history.push('/login');
       }
-      console.log(response);
     } catch (err) {
       const errField = err.response.data.field
 
