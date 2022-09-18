@@ -92,7 +92,7 @@ Following system requirements need to be met in order for this application to ru
 
 ## User Credentials
 
- Uer Registration URL : https://pestomatrimony.netlify.app/signup
+ Uer Registration URL : https://pestomatrimony.netlify.app/signup <br/>
  User Login URL : https://pestomatrimony.netlify.app/login
 
  Male profiles:
@@ -103,7 +103,7 @@ Following system requirements need to be met in order for this application to ru
  johndoe@yopmail.com
  ahmednabil@yopmail.com
  ```
- + Password : ``` 565BHOPALkatara ``` (same for all male profiles)
+Password : ``` 565BHOPALkatara ``` (same for all male profiles)
 
  Female profiles:
  ```
@@ -115,7 +115,7 @@ Following system requirements need to be met in order for this application to ru
  tanu@yopmail.com
  rinky@yopmail.com
 ```
- + Password : ```565BHOPALkatara``` (same for all female profiles)
+Password : ```565BHOPALkatara``` (same for all female profiles)
 
 ## Admin Credentials
 
