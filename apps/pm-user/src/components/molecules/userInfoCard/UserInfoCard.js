@@ -8,6 +8,9 @@ import styles from './userInfoCard.module.scss';
 import { Button, Carousel, ClearOutlined, Modal, SendOutlined, TextArea } from '../../atoms';
 import axios from 'axios';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const UserInfoCard = ({
   idOfLoggedInUser,
   profileAboutMe,
@@ -38,7 +41,7 @@ const UserInfoCard = ({
   function acceptInterestHandler() {
     axios
       .put(
-        `https://pmapi-pesto.herokuapp.com/api/v1/interests/accept?sender=${profileId}&receiver=${oktaIdOfLoggedInUser}`
+        `${baseUrl}/api/v1/interests/accept?sender=${profileId}&receiver=${oktaIdOfLoggedInUser}`
       )
       .then((res) => {
         if (res.data.success) {
@@ -54,7 +57,7 @@ const UserInfoCard = ({
   function cancelInterestHandler() {
     axios
       .put(
-        `https://pmapi-pesto.herokuapp.com/api/v1/interests/cancel?sender=${oktaIdOfLoggedInUser}&receiver=${profileId}`
+        `${baseUrl}/api/v1/interests/cancel?sender=${oktaIdOfLoggedInUser}&receiver=${profileId}`
       )
       .then((res) => {
         if (res.data.success) {
@@ -70,7 +73,7 @@ const UserInfoCard = ({
   function rejectInterestHandler() {
     axios
       .put(
-        `https://pmapi-pesto.herokuapp.com/api/v1/interests/decline?sender=${profileId}&receiver=${oktaIdOfLoggedInUser}`
+        `${baseUrl}/api/v1/interests/decline?sender=${profileId}&receiver=${oktaIdOfLoggedInUser}`
       )
       .then((res) => {
         if (res.data.success) {
@@ -85,7 +88,7 @@ const UserInfoCard = ({
   }
   function sendInterestHandler() {
     axios
-      .post(`https://pmapi-pesto.herokuapp.com/api/v1/interests?sender=${oktaIdOfLoggedInUser}&receiver=${profileId}`)
+      .post(`${baseUrl}/api/v1/interests?sender=${oktaIdOfLoggedInUser}&receiver=${profileId}`)
       .then((res) => {
         if (res.data.success) {
           showNotification('success', 'Success!', `Your interest has been sent to ${profileName}`);
@@ -102,7 +105,7 @@ const UserInfoCard = ({
     if (message.length > 0) {
       axios
         .post(
-          `https://pmapi-pesto.herokuapp.com/api/v1/conversations?sender=${oktaIdOfLoggedInUser}&receiver=${profileId}`,
+          `${baseUrl}/api/v1/conversations?sender=${oktaIdOfLoggedInUser}&receiver=${profileId}`,
           {
             message,
           }
@@ -121,7 +124,7 @@ const UserInfoCard = ({
   function toggleShortlistHandler() {
     axios
       .put(
-        `https://pmapi-pesto.herokuapp.com/api/v1/toggleShortlist?shortlister=${oktaIdOfLoggedInUser}&shortlistee=${profileId}`
+        `${baseUrl}/api/v1/toggleShortlist?shortlister=${oktaIdOfLoggedInUser}&shortlistee=${profileId}`
       )
       .then((res) => {
         if (res.data.success) {

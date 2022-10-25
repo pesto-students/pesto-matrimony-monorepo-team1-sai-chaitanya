@@ -59,7 +59,8 @@ const ImageUploadSection = () => {
 
   const localHost = 'http://localhost:8000';
   const herokuHost = 'https://pmapi-pesto.herokuapp.com';
-  const baseUrl = herokuHost;
+  const renderDotComHost = 'https://pm-api-yr8y.onrender.com';
+  const baseUrl = renderDotComHost;
 
   //funtion to delete image
   const deleteImage = async (index) => {

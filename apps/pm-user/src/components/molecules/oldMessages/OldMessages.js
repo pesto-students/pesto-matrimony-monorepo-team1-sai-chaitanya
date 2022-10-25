@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import styles from './oldMessages.module.scss';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const OldMessages = ({
   conversations,
   idOfLoggedInUser,
@@ -17,11 +20,11 @@ const OldMessages = ({
   useEffect(() => {
     async function fetchImages() {
       const response1 = await axios.get(
-        `https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${interestSenderId}`
+        `${baseUrl}/api/v1/users/userprofile/${interestSenderId}`
       );
 
       const response2 = await axios.get(
-        `https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${interestReceiverId}`
+        `${baseUrl}/api/v1/users/userprofile/${interestReceiverId}`
       );
 
       setImageOfSender(response1.data.currentUser[0].images[0]);

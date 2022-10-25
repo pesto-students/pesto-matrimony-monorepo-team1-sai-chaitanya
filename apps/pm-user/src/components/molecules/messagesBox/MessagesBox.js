@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 import styles from './messagesBox.module.scss';
 import axios from 'axios';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const MessagesBox = ({
   buttonForMailBox,
   classNamesObject,
@@ -47,7 +50,7 @@ const MessagesBox = ({
     if (message.trim().length > 0) {
       axios
         .post(
-          `https://pmapi-pesto.herokuapp.com/api/v1/conversations?sender=${idOfLoggedInUser}&receiver=${messageReceiverId}`,
+          `${baseUrl}/api/v1/conversations?sender=${idOfLoggedInUser}&receiver=${messageReceiverId}`,
           {
             message,
           }

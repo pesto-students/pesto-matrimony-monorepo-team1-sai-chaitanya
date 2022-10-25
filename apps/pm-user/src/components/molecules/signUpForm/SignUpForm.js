@@ -9,10 +9,11 @@ const SignUpForm = () => {
 
   const localUrl = 'http://localhost:8000/api/v1/users/oktasignup'
   const herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup'
+  const baseUrl = 'https://pm-api-yr8y.onrender.com';
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
-      const response = await axios.post(herokuUrl, {
+      const response = await axios.post(baseUrl, {
         profile: {
           firstName,
           lastName,

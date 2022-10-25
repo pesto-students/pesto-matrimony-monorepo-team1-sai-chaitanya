@@ -46,7 +46,7 @@ const LoginForm = ({ onFormSubmit }) => {
           <Input
             className="antdInput"
             type="email"
-            placeholder="Email"
+            placeholder="tanu@yopmail.com"
             prefix={<MailOutlined className={styles.inputIcon} />}
             size="large"
           />
@@ -64,7 +64,7 @@ const LoginForm = ({ onFormSubmit }) => {
           <Input
             type="password"
             className="antdInput"
-            placeholder="Password"
+            placeholder="565BHOPALkatara"
             prefix={<KeyOutlined rotate="45" className={styles.inputIcon} size="large" />}
           />
         </Form.Item>

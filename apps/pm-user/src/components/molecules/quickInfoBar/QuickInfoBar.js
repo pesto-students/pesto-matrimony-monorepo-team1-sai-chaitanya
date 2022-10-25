@@ -5,6 +5,9 @@ import styles from './quickInfoBar.module.scss';
 import axios from 'axios';
 import { useOktaAuth } from '@okta/okta-react';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const QuickInfoBar = ({ onClick }) => {
   const { authState } = useOktaAuth();
   const oktaIdOfLoggedInUser = authState.accessToken.claims.uid;
@@ -14,7 +17,7 @@ const QuickInfoBar = ({ onClick }) => {
   const [receivedProfilesNumber, setReceivedProfilesNumber] = useState(0);
   useEffect(() => {
     async function getAllTypesOfProfiles() {
-      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
+      const res = await axios.get(`${baseUrl}/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
       const userData = res.data.currentUser[0];
       const allInterests = [...userData.interestsSent, ...userData.interestsReceived];
       const acceptedProfiles = [];

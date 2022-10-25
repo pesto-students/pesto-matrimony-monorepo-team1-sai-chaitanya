@@ -18,6 +18,9 @@ const MAXIMUM_ALLOWED_AGE = 50;
 const COUNTRIES_API_TOKEN = 'UZXlBoEnsLp9p54HXkWSBMYYv0-BQ06V0AyH8VVO3VgVYPUZFOklqwegWta3iC742jA';
 const COUNTRIES_API_REGISTERED_EMAIL = 'testapi@trash-mail.com';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = '${baseUrl}'; 
+
 const SearchProfiles = () => {
   const [displayText, setDisplayText] = useState('Start your search...');
   const [authToken, setAuthToken] = useState(null);
@@ -108,7 +111,7 @@ const SearchProfiles = () => {
       10
     );
     axios
-      .post(`https://pmapi-pesto.herokuapp.com/api/v1/search/${oktaUserId}`, { ...values })
+      .post(`${baseUrl}/api/v1/search/${oktaUserId}`, { ...values })
       .then((res) => {
         showNotification('success', 'Success', `Found ${res.data.number} matche(s) based on your search criteria.`);
         // console.log(res);
