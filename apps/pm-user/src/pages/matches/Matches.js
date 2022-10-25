@@ -8,6 +8,10 @@ import _ from 'lodash';
 import { Button, Empty, Spin } from 'antd';
 import axios from 'axios';
 
+
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const Matches = () => {
   const { authState } = useOktaAuth();
   const { matchStatus } = useParams();
@@ -25,7 +29,7 @@ const Matches = () => {
 
   useEffect(() => {
     async function getAllTypesOfProfiles() {
-      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
+      const res = await axios.get(`${baseUrl}/api/v1/users/userprofile/${oktaIdOfLoggedInUser}`);
       const userData = res.data.currentUser[0];
       const allInterests = [...userData.interestsSent, ...userData.interestsReceived];
       const acceptedProfiles = [];
@@ -68,7 +72,7 @@ const Matches = () => {
       async function fetchReceivedProfilesData() {
         const profilesData = await Promise.all(
           receivedProfilesOktaIds.map(async (id) => {
-            const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
+            const response = await axios.get(`${baseUrl}/api/v1/users/userprofile/${id}`);
             setResponseToCheck(response);
 
             return response.data.currentUser[0];
@@ -87,7 +91,7 @@ const Matches = () => {
       async function fetchSentProfilesData() {
         const profilesData = await Promise.all(
           sentProfilesOktaIds.map(async (id) => {
-            const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
+            const response = await axios.get(`${baseUrl}/api/v1/users/userprofile/${id}`);
             setResponseToCheck(response);
             return response.data.currentUser[0];
           })
@@ -105,7 +109,7 @@ const Matches = () => {
       async function fetchAcceptedProfilesData() {
         const profilesData = await Promise.all(
           acceptedProfilesOktaIds.map(async (id) => {
-            const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
+            const response = await axios.get(`${baseUrl}/api/v1/users/userprofile/${id}`);
             setResponseToCheck(response);
             return response.data.currentUser[0];
           })

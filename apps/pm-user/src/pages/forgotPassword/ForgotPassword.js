@@ -13,7 +13,8 @@ function ForgotPassword() {
 
   const callLink = async () => {
     try {
-      const res = await axios.get('http://localhost:3333/api/v1/forgotpassword');
+      // const res = await axios.get('http://localhost:3333/api/v1/forgotpassword');
+      const res = await axios.get('https://pm-api-yr8y.onrender.com/api/v1/forgotpassword');
       console.log(res);
     } catch (err) {
       console.log(err);

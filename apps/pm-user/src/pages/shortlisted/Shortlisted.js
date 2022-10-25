@@ -5,6 +5,9 @@ import axios from 'axios';
 import { Empty, Spin } from 'antd';
 import styles from './shortlisted.module.scss';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const Shortlisted = () => {
   const { authState } = useOktaAuth();
   const [shortlistedMatchesData, setShortlistedMatchesData] = useState([]);
@@ -19,11 +22,11 @@ const Shortlisted = () => {
   // let actualShortlistedMatcheshData = [];
   useEffect(() => {
     async function fetchProfilesData() {
-      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${oktaUserId}`);
+      const res = await axios.get(`${baseUrl}/api/v1/users/userprofile/${oktaUserId}`);
       const shortlistedUserIds = res.data.currentUser[0].shortlistedMatches;
       const userProfiles = await Promise.all(
         shortlistedUserIds.map(async (id) => {
-          const response = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${id}`);
+          const response = await axios.get(`${baseUrl}/api/v1/users/userprofile/${id}`);
          
           return response.data.currentUser[0];
         })

@@ -8,6 +8,11 @@ import { EditProfile, UserProfileCard, UserProfileCardContent, UserInfoCard } fr
 import { EditProfilePage } from '..';
 import axios from 'axios';
 
+
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
+
 const Profile = () => {
   const [profileData, setProfileData] = useState([]);
   const { oktaAuth, authState } = useOktaAuth();
@@ -23,7 +28,7 @@ const Profile = () => {
   useEffect(() => {
     // dispatch(updateUserProfile(oktaUserId));
     async function fetchProfileData() {
-      const res = await axios.get(`https://pmapi-pesto.herokuapp.com/api/v1/users/userprofile/${profileId}`);
+      const res = await axios.get(`${baseUrl}/api/v1/users/userprofile/${profileId}`);
       const userData = res.data.currentUser[0];
       setProfileData(userData);
       console.log('from use effect: ', userData);

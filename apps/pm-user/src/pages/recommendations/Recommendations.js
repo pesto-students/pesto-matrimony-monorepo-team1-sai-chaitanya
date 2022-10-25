@@ -6,6 +6,9 @@ import { Button, Empty, Spin } from 'antd';
 import _ from "lodash";
 import styles from './recommendations.module.scss';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 function Recommendations() {
   const { authState } = useOktaAuth();
   const [recommendations, setRecommendations] = useState([]);
@@ -17,7 +20,7 @@ function Recommendations() {
 
   useEffect(() => {
     axios
-      .get(`https://pmapi-pesto.herokuapp.com/api/v1/recommendations/${oktaUserId}`)
+      .get(`${baseUrl}/api/v1/recommendations/${oktaUserId}`)
       .then((res) => {
         setRecommendations(res.data.data);
         setResponse(res);

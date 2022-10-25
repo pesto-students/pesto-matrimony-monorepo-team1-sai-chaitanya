@@ -6,6 +6,9 @@ import _ from "lodash";
 import { Empty, Spin } from 'antd';
 import axios from 'axios';
 
+const baseUrl = 'https://pm-api-yr8y.onrender.com';
+const oldBaseUrl = 'https://pmapi-pesto.herokuapp.com'; 
+
 const MailBox = () => {
   const { oktaAuth, authState } = useOktaAuth();
   const oktaIdOfLoggedInUser = authState.accessToken.claims.uid;
@@ -15,7 +18,7 @@ const MailBox = () => {
 
   useEffect(() => {
     axios
-      .get(`https://pmapi-pesto.herokuapp.com/api/v1/conversations/${oktaIdOfLoggedInUser}`)
+      .get(`${baseUrl}/api/v1/conversations/${oktaIdOfLoggedInUser}`)
       .then((res) => {
         setResponseForLoader(res);
         setInterestsSentAndReceived([...res.data.interestsReceived, ...res.data.interestsSent]);
