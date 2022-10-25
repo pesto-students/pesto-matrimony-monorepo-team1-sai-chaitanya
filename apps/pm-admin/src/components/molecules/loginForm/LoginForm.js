@@ -3,19 +3,30 @@ import PropTypes from 'prop-types';
 import _noop from 'lodash';
 import { useHistory, Link } from 'react-router-dom';
 import { showNotification } from '@pm/pm-ui';
+import { useEffect } from 'react';
 import './loginForm.css';
 
 const LoginForm = ({ onFormSubmit }) => {
   const history = useHistory();
 
+  console.log('RUNNING LOGINFORM COMPONENT');
+
+  useEffect(() => {
+    showNotification(
+      'warning',
+      'Important!',
+      'Please use pre-filled login details. Our backend service auto-hibernates if not used for 15 minutes. So, if the application appears to be non-responsive... Please give it a minute...',
+      0
+    );
+  }, []);
+
   //jay@yopmail.com id the admin
   const onFinish = (values) => {
-    if(values.email === "jay@yopmail.com"){
+    if (values.email === 'jay@yopmail.com') {
       onFormSubmit(values.password, values.email);
-    }else{
+    } else {
       showNotification('error', 'Only admin can login');
-    }  
-    
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -26,6 +37,16 @@ const LoginForm = ({ onFormSubmit }) => {
     <>
       <Form
         name="basic"
+        fields={[
+          {
+            name: ['email'],
+            value: 'jay@yopmail.com',
+          },
+          {
+            name: ['password'],
+            value: '565BHOPALkatara',
+          },
+        ]}
         labelCol={{
           span: 8,
         }}

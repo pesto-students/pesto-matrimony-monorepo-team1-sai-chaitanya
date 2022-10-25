@@ -7,7 +7,7 @@ import './userItemsList.css';
 const UserItemsList = () => {
   const [userdata, setUserData] = useState([]);
 
-  const  herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/admin/getallusers';
+  const herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/admin/getallusers';
   const url = 'http://localhost:8000/api/v1/admin/getallusers';
 
   const getAllUsersData = async () => {
@@ -58,7 +58,7 @@ const UserItemsList = () => {
             <List.Item.Meta
               className="listItemMeta"
               avatar={<Avatar src={item.images[0]} className="avatarInList" />}
-              title={<a href="#">{item.name}</a>}
+              title={item.name}
               description={`${item.email},  ${item.oktaUserId}`}
             />
           </List.Item>

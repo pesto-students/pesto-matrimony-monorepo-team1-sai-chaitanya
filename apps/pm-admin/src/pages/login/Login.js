@@ -26,7 +26,7 @@ function Login() {
         }
       })
       .catch((err) => {
-        showNotification('error', 'email or password incorrect')
+        showNotification('error', 'email or password incorrect');
       });
 
   if (!authState) {

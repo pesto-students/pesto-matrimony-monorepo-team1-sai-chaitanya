@@ -7,8 +7,17 @@ import { showNotification } from '@pm/pm-ui';
 const SignUpForm = () => {
   const history = useHistory();
 
-  const localUrl = 'http://localhost:8000/api/v1/users/oktasignup'
-  const herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup'
+  setTimeout(() => {
+    showNotification(
+      'warning',
+      'Important!',
+      'Our backend service auto-hibernates if not used for 15 minutes. So, if the application appears non-responsive, please give it a minute to resume...',
+      0
+    );
+  }, 1000);
+
+  const localUrl = 'http://localhost:8000/api/v1/users/oktasignup';
+  const herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup';
   const baseUrl = 'https://pm-api-yr8y.onrender.com';
 
   async function signUpUser(firstName, lastName, email, gender, password) {
@@ -27,16 +36,16 @@ const SignUpForm = () => {
           },
         },
       });
-      if(response){
+      if (response) {
         showNotification('success', 'Congratulations your account is created');
         history.push('/login');
       }
     } catch (err) {
-      const errField = err.response.data.field
+      const errField = err.response.data.field;
 
-      if(errField === "password"){
+      if (errField === 'password') {
         showNotification('error', 'Please create strong password');
-      }else if(errField === "login"){
+      } else if (errField === 'login') {
         showNotification('error', 'This user already exist in the Pesto Matrimony');
       }
     }

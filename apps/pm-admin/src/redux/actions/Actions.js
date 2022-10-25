@@ -4,7 +4,8 @@ import axios from 'axios';
 
 const localHost = 'http://localhost:8000';
 const herokuHost = 'https://pmapi-pesto.herokuapp.com';
-const baseUrl = herokuHost;
+const renderDotComHost = 'https://pm-api-yr8y.onrender.com';
+const baseUrl = renderDotComHost;
 
 export const getUserProfile = (oktaUserId) => {
   return async (dispatch) => {
@@ -27,7 +28,7 @@ export const getUserProfile = (oktaUserId) => {
 export const updateUserProfile = (oktaUserId, value) => {
   try {
     return async (dispatch) => {
-      const url = `http://localhost:8000/api/v1/users/${oktaUserId}`;
+      const url = `${baseUrl}/api/v1/users/${oktaUserId}`;
       const response = await axios.put(url, value);
       dispatch({
         type: ActionTypes.UPDATE_USER_PROFILE,
@@ -58,7 +59,7 @@ export const updateUserImage = (oktaUserId, fileObj) => {
       imageUrlString,
     };
 
-    const url = `http://localhost:8000/api/v1/users/imageupload/${oktaUserId}`;
+    const url = `${baseUrl}/api/v1/users/imageupload/${oktaUserId}`;
     const response = await axios.post(url, payload);
     console.log(response);
     dispatch({

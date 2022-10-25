@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const localHost = 'http://localhost:8000';
 // const herokuHost = 'https://pmapi-pesto.herokuapp.com';
-const renderDotComHost = 'https://pm-api-yr8y.onrender.com/';
+const renderDotComHost = 'https://pm-api-yr8y.onrender.com';
 const baseUrl = renderDotComHost;
 
 // to get user's profile data in sidebar
