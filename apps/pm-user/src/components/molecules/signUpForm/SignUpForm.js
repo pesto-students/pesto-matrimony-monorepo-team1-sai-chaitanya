@@ -18,7 +18,7 @@ const SignUpForm = () => {
 
   const localUrl = 'http://localhost:8000/api/v1/users/oktasignup';
   const herokuUrl = 'https://pmapi-pesto.herokuapp.com/api/v1/users/oktasignup';
-  const baseUrl = 'https://pm-api-yr8y.onrender.com';
+  const baseUrl = 'https://pm-api-yr8y.onrender.com/api/v1/users/oktasignup';
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
