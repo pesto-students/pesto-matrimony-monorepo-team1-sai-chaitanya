@@ -21,7 +21,7 @@ const LoginForm = ({ onFormSubmit }) => {
     showNotification(
       'warning',
       'Important!',
-      'Please use pre-filled login details. Our backend service auto-hibernates if not used for 15 minutes. Please give it a minute to resume...',
+      'Please use pre-filled login details. Our backend service auto-hibernates if not used for 15 minutes. So, if the application appears non-responsive, please give it a minute...',
       0
     );
   }, 1000);
