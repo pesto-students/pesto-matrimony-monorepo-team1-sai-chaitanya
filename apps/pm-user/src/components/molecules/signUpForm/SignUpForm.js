@@ -11,7 +11,7 @@ const SignUpForm = () => {
     showNotification(
       'warning',
       'Important!',
-      'Our backend service auto-hibernates if not used for 15 minutes. So, if the application appears non-responsive, please give it a minute...',
+      'Our backend service auto-hibernates if not used for 15 minutes. So, if the application appears to be non-responsive, please give it a minute...',
       0
     );
   }, 1000);
