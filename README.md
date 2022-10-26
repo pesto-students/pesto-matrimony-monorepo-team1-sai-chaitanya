@@ -1,33 +1,47 @@
 # Pesto Matrimony:
 
-## In one line,
 
-
-Pesto Matrimony is a match-making service. A user registered with us can search for a life partner based on personal preferences.
-
-## Who is this for? (Persona)
-
-| Roles | Who are they? | Primary Goal(s) |
-|     :---:    |     :---      |     :---     |
-| End User     | (a) A Prospective Bride/ Groom </br> (b)Parent(s) </br> (c) Friend/Relative </br> (d) Client of Bride/Groom     | (a) To register the profile of a bride/groom. </br> (b) To search for prospects based on preferences. </br> (c) To interact (message/live chat)with prospects. </br> (d) Seek alliance. </br> (e) Contact Admin for any service-related problems. |
-| Admin    | A management-level employee of our organization. | An admin addresses problems faced by end-users. | 
-
-## How do they Benefit?
 There are many matchmaking services in the market. Superficially, it may appear that a central matchmaking service having prospective brides & grooms from all nationalities, religions/communities is enough, but this one-size fits all approach is over-optimistic and impractical. It would work only for a small percentage who are seeking alliances without restrictions on mother tongue, religion, nationality, etc. This is not the case for the majority.
 
-## How is this different?
-Indian society is multi-cultural and is heavily influenced by traditions. Choosing a partner outside one’s own religion… or even from a different sect of the same community is uncommon. Hence, every major matchmaking service created separate portals based on the mother tongue, religion, sect, etc of users. To serve the current demands of Indian society is paramount for any matchmaking service to succeed.
+# Table of Contents
 
----
+1. Demo</br>
+2. Installation</br>
+3. Technology Stack</br>
+4. Authors</br>
 
-## Live Links
+
+# Demo
+
+## Please Note:
+  1. We recommend using this app in Google Chrome
+  2. Use the app on any device you want.
  
-+ [User Module](https://pestomatrimony.netlify.app/login) </br>
-+ [Admin Module](https://pestomatrimony-admin.netlify.app/admin-login)
+## Test Credentials:
 
----
+### User Credentials and App Link: 
 
-## Usage
+ User Registration URL : https://pestomatrimony.netlify.app/signup <br/>
+ User Login URL : https://pestomatrimony.netlify.app/login
+
+* Male profiles Credentials:
+  * User Id : vikasverma@yopmail.com 
+  * Password : 565BHOPALkatara
+
+* Female profiles:
+  * User Id: shilpa@yopmail.com   
+  * Password : 565BHOPALkatara
+
+### Admin Credentials and App Link:
+ 
+ Admin Login URL : https://pestomatrimony-admin.netlify.app/login <br/>
+ Note: Admin signup is not supported.
+ 
+   * adminId : jay@yopmail.com
+   * password : 565BHOPALkatara   
+
+
+# Installation
 
 This Project has two modules accompanied by backend at https://github.com/pesto-students/pesto-matrimony-monorepo-team1-sai-chaitanya.
 1. User Module</br>
@@ -42,86 +56,16 @@ Running this project should be very easy, quick and automatic using monorepo.
 + Open http://localhost:3000 with your browser to see the result.</br>
 
 ***NOTE:*** *Please checkout dev-work branch to run locally.*
-
----
-
-## System Requirements
-Following system requirements need to be met in order for this application to run
-
-+ Node.js 12.0 or later
-+ MacOS, Windows, and Linux are supported
-
----
-
-## Environment
- + `REACT_APP_NODE_ENV` : Node Environment development | staging | production. </br>
- + `REACT_APP_CLOUDINARY_CLOUD_NAME` : Cloudinary Name and Presets. </br>
- + `OKTA_DEV_ACCOUNT` : Okta developer account key and token. </br>
-
----
-
-## Designs
-
-### Wireframes v1.0:
- + User Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
- + Admin Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
-###  Wireframes v2.0: </br>
- + User Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
- + Admin Module: [Figma Design](https://www.figma.com/file/RgRxSqmAd8yFDBiEBsgBUu/PestoMatrimony?node-id=0%3A1) </br>
-### HLD </br>
- + Design Link v1.0: [HLD](https://miro.com/app/board/uXjVOjzZcjw=/) </br>
- + Design Link v2.0: [HLD](https://miro.com/app/board/uXjVOjzZcjw=/) </br>
  
- ---
- 
-## Tech Stack
+# Technology Stack
  + Frontend- React, Redux. </br>
  + Backend- NodeJS, Express. </br>
  + Deployment- Netlify, Heroku, CI/CD. </br>
  + Database- Mongo DB </br>
  + Authentication- Okta. </br>
  + Tools- Version Control System (GIT), Github, Cloudinary. </br>
- 
- ---
- 
- ## Team Mentor 
-  + Sai Chaitanya Ramineni
 
- ## Developers
-  + Sai Karthik
+ # Authors
   + Vinit Sharma
+  + Sai Karthik
 
-## User Credentials
-
- Uer Registration URL : https://pestomatrimony.netlify.app/signup <br/>
- User Login URL : https://pestomatrimony.netlify.app/login
-
- Male profiles:
- ```
- vikasverma@yopmail.com 
- rohitsharma@yopmail.com 
- ntripathi@yopmail.com
- johndoe@yopmail.com
- ahmednabil@yopmail.com
- ```
-Password : ``` 565BHOPALkatara ``` (same for all male profiles)
-
- Female profiles:
- ```
- shilpa@yopmail.com   
- kiran@yopmail.com
- bindu@yopmail.com
- himani@yopmail.com
- kalpana@gm.com
- tanu@yopmail.com
- rinky@yopmail.com
-```
-Password : ```565BHOPALkatara``` (same for all female profiles)
-
-## Admin Credentials
-
-Admin Login URL : https://pestomatrimony-admin.netlify.app/login <br/>
-Note: Admin signup is not supported.
- 
- + userId - ```jay@yopmail.com```
- + password - ```565BHOPALkatara```
