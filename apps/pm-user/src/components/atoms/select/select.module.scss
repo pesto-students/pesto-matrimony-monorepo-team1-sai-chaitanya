@@ -1,0 +1,20 @@
+.antdSelect {
+  border: 2px solid #bababa;
+  padding: 4px 12px;
+  width: 300px !important;
+  border-radius: 0.8rem;
+  margin-bottom: -10px;
+  font-family: 'Lato';
+}
+
+.antdSelect:focus {
+  margin-left: -10px;
+}
+
+.ant-select > .ant-select-selector {
+  background-color: blue;
+}
+
+.ant-select.ant-select-in-form-item {
+  width: 250px;
+}

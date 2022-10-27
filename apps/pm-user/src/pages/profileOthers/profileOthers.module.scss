@@ -1,0 +1,24 @@
+.viewOthersProfilePageHeading {
+    width: 600px;
+    border-left: 5px solid rgb(93, 96, 238);
+    padding: 12px 32px;
+    box-shadow: rgb(227 227 227) 0px 0px 3px 0px;
+    color: rgb(90 91 127);
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    background-color: white;
+    border-radius: 0.4rem;
+  }
+
+  .userName{
+    color: #5c5fee;
+  }
+
+  // css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .viewOthersProfilePageHeading {
+    width: 340px;
+  }
+}

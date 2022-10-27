@@ -1,0 +1,169 @@
+.superContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .searchResults {
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+
+  form {
+    width: 100%;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+  background-color: white;
+  padding: 1.8rem 0 1.8rem 0;
+  border-radius: 0.8rem;
+  margin-bottom: 2.4rem;
+  width: 100%;
+
+}
+
+.searchProfiles {
+  margin-top: 2.4rem;
+  margin-left: -2.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.4rem;
+
+  .col1,
+  .col2 {
+    flex: 1 1 0;
+    padding: 1.6rem;
+    margin: 0.2rem;
+  }
+
+  :global {
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+      height: 32px;
+    }
+
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector::after,
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item,
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-placeholder {
+      line-height: 32px;
+    }
+
+    span.ant-slider-mark-text.ant-slider-mark-text-active:first-child {
+      padding-right: 2rem;
+      font-size: 1.2rem;
+    }
+
+    span.ant-slider-mark-text.ant-slider-mark-text-active:last-child {
+      padding-left: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .ant-slider-handle {
+      width: 1.8rem;
+      height: 1.8rem;
+      border: solid 2px #5c5fee;
+    }
+
+    .ant-slider:hover .ant-slider-track {
+      background-color: #5c5fee;
+      height: 8px;
+    }
+
+    .ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
+      border-color: #5c5fee;
+    }
+
+    .ant-slider-track {
+      position: absolute;
+      height: 8px;
+      background-color: #5c5fee;
+      border-radius: 2px;
+      transition: background-color 0.3s;
+    }
+
+    .ant-slider-rail {
+      position: absolute;
+      width: 100%;
+      height: 8px;
+      background-color: #857e7e;
+      border-radius: 2px;
+      transition: background-color 1s;
+
+      &:hover {
+        background-color: #5c5fee;
+      }
+    }
+
+    .ant-select {
+      width: 150px !important;
+    }
+
+    .ant-form-item-label {
+
+      // text-align: left;
+      label::after {
+        margin: 0 3rem 0 0;
+      }
+    }
+
+    .ant-form-item-label>label {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: 100%;
+      height: 32px;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 14px;
+      justify-content: space-between;
+    }
+  }
+}
+
+.submitBtn {
+  :global {
+    button.ant-btn.ant-btn-round {
+      margin: 0.4rem 0rem;
+      height: 3.2rem;
+      border-radius: 0.6rem;
+      box-shadow: 0 3px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+
+      &:hover {
+        background-color: #2d30d2;
+        box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+      }
+    }
+
+    .ant-btn-primary {
+      border-color: #5c5fee;
+      background: #5c5fee;
+    }
+
+    .ant-btn-round {
+      height: 36px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .searchProfiles {
+    margin-top: 2.4rem;
+    margin-left: -2.4rem;
+    display: flex;
+    gap: 2.4rem;
+    flex-direction: column;
+  
+    .col1,
+    .col2 {
+      flex: 1 1 0;
+      padding: 1.6rem;
+      margin: 0.2rem;
+    }
+  }
+}

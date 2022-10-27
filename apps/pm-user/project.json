@@ -1,0 +1,97 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/pm-user/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/pm-user",
+        "index": "apps/pm-user/src/index.html",
+        "baseHref": "/",
+        "main": "apps/pm-user/src/main.js",
+        "polyfills": "apps/pm-user/src/polyfills.js",
+        "tsConfig": "apps/pm-user/tsconfig.app.json",
+        "assets": ["apps/pm-user/src/favicon.ico", "apps/pm-user/src/assets", "apps/pm-user/src/netlify.toml"],
+        "styles": ["apps/pm-user/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/pm-user/src/environments/environment.js",
+              "with": "apps/pm-user/src/environments/environment.prod.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pm-user:build",
+        "hmr": true,
+        "port": 3000
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "pm-user:build:development"
+        },
+        "production": {
+          "buildTarget": "pm-user:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/pm-user/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/pm-user"],
+      "options": {
+        "jestConfig": "apps/pm-user/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "runAllApps": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "nx run pm-backend:serve"
+          },
+          {
+            "command": "nx run pm-user:serve"
+          },
+          {
+            "command": "nx run pm-admin:serve"
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}

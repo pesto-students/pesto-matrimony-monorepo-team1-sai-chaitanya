@@ -1,0 +1,51 @@
+@import 'antd/dist/antd.css';
+
+.statsContaner {
+  display: flex;
+}
+
+.statsWraper {
+  display: flex;
+}
+
+.statsWraper div:nth-child(1) {
+  font-size: 18px;
+  margin-right: 5px;
+  color: #595656;
+}
+
+.statsWraper div:nth-child(2) {
+  font-size: 16px;
+  margin-right: 20px;
+}
+
+.listItem {
+  background-color: rgb(249 249 251);
+  border: none;
+  margin-top: 10px;
+  width: 414px;
+  font-size: 16px;
+  color: #abaaaa;
+  padding: 8px 10px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 4px 1px #e0e0e0;
+}
+
+.listItemMeta {
+  display: flex;
+}
+
+.avatarInList {
+  border-radius: 12px;
+  display: inline-block;
+  background-color: white;
+  width: 60px;
+  margin-right: 10px;
+  height: 54px;
+}
+
+@media only screen and (max-width: 768px){
+  .listItem {
+    width: 340px;
+  }
+}
