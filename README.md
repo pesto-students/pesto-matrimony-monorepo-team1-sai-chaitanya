@@ -1,5 +1,4 @@
-# Pesto Matrimony:
-
+# Pesto Matrimony
 
 There are many matchmaking services in the market. Superficially, it may appear that a central matchmaking service having prospective brides & grooms from all nationalities, religions/communities is enough, but this one-size fits all approach is over-optimistic and impractical. It would work only for a small percentage who are seeking alliances without restrictions on mother tongue, religion, nationality, etc. This is not the case for the majority.
 
@@ -9,6 +8,7 @@ There are many matchmaking services in the market. Superficially, it may appear 
 2. Installation</br>
 3. Technology Stack</br>
 4. Authors</br>
+5. License</br>
 
 
 # Demo
@@ -17,9 +17,9 @@ There are many matchmaking services in the market. Superficially, it may appear 
   1. We recommend using this app in Google Chrome
   2. Use the app on any device you want.
  
-## Test Credentials:
+## Test Credentials
 
-### User Credentials and App Link: 
+### User Credentials and App Link
 
  User Registration URL : https://pestomatrimony.netlify.app/signup <br/>
  User Login URL : https://pestomatrimony.netlify.app/login
@@ -32,7 +32,7 @@ There are many matchmaking services in the market. Superficially, it may appear 
   * User Id: shilpa@yopmail.com   
   * Password : 565BHOPALkatara
 
-### Admin Credentials and App Link:
+### Admin Credentials and App Link
  
  Admin Login URL : https://pestomatrimony-admin.netlify.app/login <br/>
  Note: Admin signup is not supported.
@@ -65,7 +65,10 @@ Running this project should be very easy, quick and automatic using monorepo.
  + Authentication- Okta. </br>
  + Tools- Version Control System (GIT), Github, Cloudinary. </br>
 
- # Authors
-  + Vinit Sharma
-  + Sai Karthik
+# Authors
+ + Vinit Sharma
+ + Sai Karthik
+
+# License
+ + MIT
 
