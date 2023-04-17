@@ -116,7 +116,23 @@ const SignUpForm = () => {
           />
         </Form.Item>
 
-       
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your Email!',
+            },
+          ]}
+        >
+          <Input
+            className="antdInput"
+            type="email"
+            placeholder="Email"
+            prefix={<MailOutlined className={styles.inputIcon} />}
+            size="large"
+          />
+        </Form.Item>
 
         <Form.Item
           name="gender"
