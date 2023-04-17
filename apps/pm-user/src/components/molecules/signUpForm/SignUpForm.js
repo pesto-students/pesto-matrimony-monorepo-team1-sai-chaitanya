@@ -22,7 +22,7 @@ const SignUpForm = () => {
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
-      const response = await axios.post(baseUrl, {
+      const response = await axios.post(localUrl, {
         profile: {
           firstName,
           lastName,
@@ -37,10 +37,12 @@ const SignUpForm = () => {
         },
       });
       if (response) {
+        console.log("line 40", response);
         showNotification('success', 'Congratulations your account is created');
         history.push('/login');
       }
     } catch (err) {
+      console.log("line 40", err);
       const errField = err.response.data.field;
 
       if (errField === 'password') {
