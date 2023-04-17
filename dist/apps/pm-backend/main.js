@@ -716,10 +716,12 @@ const okta = __webpack_require__("@okta/okta-sdk-nodejs");
 /** ----------------------------------------- */
 //signing up user into okta
 exports.oktaSignUp = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    let oldToken = "00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P";
+    let newToken = "005Rdx3XVIzg2sRAFbBi-QX2_PYZul-cpCulQRgxfw";
     try {
         const client = new okta.Client({
             orgUrl: 'https://dev-42684472.okta.com/',
-            token: '00TW3soK2Eq883PaRVu5rjqRniqE6iaueZOivSe91P',
+            token: newToken,
         });
         const body = req.body;
         // async function createUserInOkta() {
@@ -735,6 +737,7 @@ exports.oktaSignUp = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 
             gender,
             email,
         };
+        console.log("mongoUser");
         //creting user in mongo db with data from the okta
         const user = yield User.create(mongoUser);
         res.status(200).send({
