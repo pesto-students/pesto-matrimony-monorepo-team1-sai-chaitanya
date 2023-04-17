@@ -44,7 +44,7 @@ exports.oktaSignUp = async (req, res, next) => {
         const user = await User.create(mongoUser);
   
       res.status(200).send({
-        res: user,
+        res: "just checking response",
       });
   }catch(err){
    next(err);

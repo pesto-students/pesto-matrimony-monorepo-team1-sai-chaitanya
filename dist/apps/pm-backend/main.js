@@ -741,7 +741,7 @@ exports.oktaSignUp = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 
         //creting user in mongo db with data from the okta
         const user = yield User.create(mongoUser);
         res.status(200).send({
-            res: user,
+            res: "just checking response",
         });
     }
     catch (err) {
