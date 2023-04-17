@@ -47,7 +47,7 @@ exports.oktaSignUp = async (req, res, next) => {
         res: "just checking response",
       });
   }catch(err){
-   next(err);
+   next("err");
   }
   
 };

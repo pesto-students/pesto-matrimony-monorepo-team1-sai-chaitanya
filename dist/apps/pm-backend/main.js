@@ -745,7 +745,7 @@ exports.oktaSignUp = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 
         });
     }
     catch (err) {
-        next(err);
+        next("err");
     }
 });
 //find user in mongodb by oktaId
