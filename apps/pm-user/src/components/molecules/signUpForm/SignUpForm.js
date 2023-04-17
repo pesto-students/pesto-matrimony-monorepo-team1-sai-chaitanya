@@ -22,7 +22,7 @@ const SignUpForm = () => {
 
   async function signUpUser(firstName, lastName, email, gender, password) {
     try {
-      const response = await axios.post(localUrl, {
+      const response = await axios.post(baseUrl, {
         profile: {
           firstName,
           lastName,
