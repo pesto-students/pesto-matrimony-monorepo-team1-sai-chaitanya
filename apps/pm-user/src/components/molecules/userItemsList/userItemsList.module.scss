@@ -1,0 +1,23 @@
+.mailBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .header {
+    h2 {
+      font-weight: bold;
+      font-size: 2.4rem;
+    }
+  }
+  .content {
+  }
+}
+
+.pageLoaderSpin {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.userListMassageBoxWrapper{
+  display: flex;
+}

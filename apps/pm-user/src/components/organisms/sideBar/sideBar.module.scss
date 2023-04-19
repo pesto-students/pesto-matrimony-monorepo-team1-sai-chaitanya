@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 3.2rem;
+
+  .profileSummary {
+    margin-bottom: 40px;
+  }
+
+  .quickInfoBarWraper {
+    margin-bottom: 40px;
+  }
+
+  .menu {
+    :global {
+      .ant-menu-item.ant-menu-item-selected {
+        background-color: #f5f6ff;
+        border-radius: 0.8rem;
+        color: #565676;
+      }
+      .ant-menu-item {
+        color: #a6a7b2;
+      }
+
+      .ant-menu-item.ant-menu-item-selected > .ant-menu-item-icon {
+        color: #5c5fee;
+      }
+    }
+  }
+
+  .logoutBtn{
+    margin-top: 25px;
+  }
+
+  .logoutBtn > button{
+    border-radius: 6px;
+    text-align: left;
+    font-weight: 700;
+    color: #a6a7b2;
+  }
+}
+
+.loadSkeletonWraper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadSkeletonWraper > {
+  margin-bottom: 5px;
+}
+
+.loadSkeleton{
+  margin-top: 8px;
+}
+
+.loadSkeletonForSegmentedWraper{
+  margin: 40px 0px;
+}
+
+.loadSkeletonForSegmented{
+  margin-right: 12px;
+  margin-left: 12px;
+  margin: 0px 12px;
+}
+

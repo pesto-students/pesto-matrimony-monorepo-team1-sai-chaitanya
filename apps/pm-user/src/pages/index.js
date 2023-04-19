@@ -1,0 +1,14 @@
+export { default as Faq } from './faq';
+export { default as ForgotPassword } from './forgotPassword';
+export { default as Home } from './home';
+export { default as Login } from './login';
+export { default as MailBox } from './mailBox';
+export { default as Matches } from './matches';
+export { default as PageNotFound } from './pageNotFound';
+export { default as Profile } from './profile';
+export { default as ProfileOthers } from './profileOthers';
+export { default as SignUp } from './signUp';
+export { default as Recommendations } from './recommendations';
+export { default as Search } from './search';
+export { default as EditProfilePage } from './editProfilePage';
+export { default as Shortlisted } from './shortlisted';

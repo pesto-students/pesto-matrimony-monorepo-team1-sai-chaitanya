@@ -1,0 +1,182 @@
+.editProfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-size: 1.8rem;
+    color: rgb(90, 91, 127);
+    font-weight: 600;
+    text-align: center;
+    margin: 2.4rem 0;
+  }
+
+  :global {
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+      height: 32px;
+    }
+
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector::after,
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-item,
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-placeholder {
+      line-height: 32px;
+    }
+
+    button.ant-btn.ant-btn-round {
+      margin: 0.8rem 0.1rem;
+      height: 3.2rem;
+      border-radius: 0.6rem;
+      box-shadow: 0 3px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+
+      &:hover {
+        background-color: #2d30d2;
+        box-shadow: 0 3px 6px 1px rgb(0 0 0 / 17%), 0 2px 4px -2px rgb(0 0 0 / 21%);
+      }
+    }
+
+    .ant-btn-primary {
+      border-color: #5c5fee;
+      background: #5c5fee;
+    }
+
+    .ant-btn-round {
+      height: 36px;
+    }
+
+    .ant-form-item-label {
+      label::after {
+        margin: 0 3rem;
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 1.2rem;
+
+      .ant-form-item-control-input-content {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .ant-form .ant-form-item-label > label {
+      position: relative;
+      display: flex;
+      align-items: center;
+      max-width: 100%;
+      height: 32px;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 14px;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    span.ant-slider-mark-text.ant-slider-mark-text-active:first-child {
+      padding-right: 2rem;
+      font-size: 1.2rem;
+    }
+
+    span.ant-slider-mark-text.ant-slider-mark-text-active:last-child {
+      padding-left: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .ant-slider-handle {
+      width: 1.8rem;
+      height: 1.8rem;
+      border: solid 2px #5c5fee;
+    }
+
+    .ant-slider:hover .ant-slider-track {
+      background-color: #5c5fee;
+      height: 8px;
+    }
+
+    .ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
+      border-color: #5c5fee;
+    }
+
+    .ant-slider-track {
+      position: absolute;
+      height: 8px;
+      background-color: #5c5fee;
+      border-radius: 2px;
+      transition: background-color 0.3s;
+    }
+
+    .ant-slider-rail {
+      position: absolute;
+      width: 100%;
+      height: 8px;
+      background-color: #857e7e;
+      border-radius: 2px;
+      transition: background-color 1s;
+
+      &:hover {
+        background-color: #5c5fee;
+      }
+    }
+
+    .ant-form-item-label {
+      label::after {
+        margin: 0 3rem;
+      }
+    }
+  }
+
+  .imagesSection {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3.2rem 1.2rem;
+    border-radius: 0.8rem;
+    margin-bottom: 1.8rem;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+  }
+
+  .personalDetails,
+  .familyDetails,
+  .educationDetails,
+  .religionDetails,
+  .partnerPreferences {
+    min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 3.6rem;
+    border-radius: 0.8rem;
+    padding-bottom: 1.2rem;
+    background-color: white;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+  }
+}
+
+// css for website responsiveness
+@media only screen and (max-width: 768px) {
+  .editProfile {
+
+    :global {
+      .ant-col-offset-8{
+        margin-left: 0px
+      }
+    }
+
+    .imagesSection {
+      width: 340px;
+    }
+
+    .personalDetails,
+    .familyDetails,
+    .educationDetails,
+    .religionDetails,
+    .partnerPreferences {
+      min-width: 340px;
+    }
+  }
+}

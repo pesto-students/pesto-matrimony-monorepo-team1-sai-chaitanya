@@ -1,0 +1,15 @@
+.myCard {
+  border-radius: 0.8rem;
+  margin-bottom: 12px;
+
+  :global {
+    .ant-card-head-title {
+      font-weight: 600;
+      color: #5a5b7f;
+    }
+    .ant-card-extra > a {
+      font-weight: 600;
+      color: #5b63e6;
+    }
+  }
+}

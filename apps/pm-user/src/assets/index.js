@@ -1,0 +1,1 @@
+export { loginBackground } from './images';
