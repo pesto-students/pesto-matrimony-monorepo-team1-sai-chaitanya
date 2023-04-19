@@ -38,16 +38,16 @@ exports.oktaSignUp = async (req, res, next) => {
           email,
         };
 
-        console.log("mongoUser");
+        
   
         //creting user in mongo db with data from the okta
         const user = await User.create(mongoUser);
   
       res.status(200).send({
-        res: "just checking response",
+        res: user,
       });
   }catch(err){
-   next("err");
+   next(err);
   }
   
 };
